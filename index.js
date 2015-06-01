@@ -44,13 +44,16 @@ ispapi.Client.command_encode = function(p_cmd){
  * @param {String} p_entity String specifying the system environment / entity. Use "1234" for OT&E, "54cd" for LIVE System 
  * @param {String} p_remoteaddr String specifying the remote address including remote port e.g. 1.2.3.4:80
  */
-ispapi.Client.prototype.login = function(p_user, p_pw, p_entity, p_remoteaddr){
+ispapi.Client.prototype.login = function(p_user, p_pw, p_entity, p_remoteaddr, p_subuser){
 	this.logincfg = {
 		login : p_user,
-		pw : p_pw
+		pw : p_pw		
 	};
 	if (p_entity){
 		this.logincfg.entity = p_entity;
+	}
+	if (p_subuser){
+		this.logincfg.user = p_subuser;
 	}
 	if (p_remoteaddr){
 		this.setRemoteAddr(p_remoteaddr);
