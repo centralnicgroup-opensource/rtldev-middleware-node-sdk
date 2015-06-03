@@ -1,8 +1,13 @@
 # ISPAPI JS
 
-Connector for 1API API
+This module is a connector library for the insanely fast 1API backend API.
+For further informations visit our homepage http://1api.net and do not hesitate to contact us. 
 
-## API
+## Installation
+
+    $ npm install ispapijs
+
+## Usage
 
 ```js
 var ispApi = require('ispapijs');
@@ -17,7 +22,7 @@ api.setRemoteAddr("1.2.3.4:80");
  * 2nd parameter: password
  * 3rd parameter: system environment / entity. Use "1234" for OT&E (Testsystem) and "54cd" for Production System
  */
-api.login("test.user", "test.passw0rd", "1234");
+api.login("test.user", "test.passw0rd", "1234");//OT&E demo user
 
 /** optional: set url for api connection
  * NOTE: if not set, default connection url will be used
@@ -39,6 +44,9 @@ api.on("error", function(e){
 	console.log(e.message);
 });
 ```
+
+## FAQ
+Nothing added yet.
 
 ## License
 
