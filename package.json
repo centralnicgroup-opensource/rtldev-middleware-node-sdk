@@ -1,22 +1,23 @@
 {
   "name": "ispapijs",
   "description": "1API API Connector for node.js",
-  "version": "0.0.1",
+  "version": "0.2.0-0",
   "author": {
-	  "name" : "Kai Schwarz",
-	  "email" : "kschwarz@1api.net"
-  }, 
+    "name": "Kai Schwarz",
+    "email": "kschwarz@1api.net"
+  },
   "main": "./index.js",
   "license": "MIT",
   "dependencies": {},
   "engines": {
-	  "node":"0.12.4"
+    "node": "0.12.4"
   },
   "homepage": "http://1api.net",
   "maintainers": [
-      {
-    	  "name" : "Kai Schwarz",
-    	  "email" : "kschwarz@1api.net"
-      }
-  ]
+    {
+      "name": "Kai Schwarz",
+      "email": "kschwarz@1api.net"
+    }
+  ],
+  "scripts": {}
 }
