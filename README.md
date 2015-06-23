@@ -10,8 +10,8 @@ For further informations visit our homepage http://1api.net and do not hesitate 
 ## Usage
 
 ```js
-var ispApi = require('ispapijs');
-var api = ispapijs.Client();
+var ispapijs = require('ispapijs')
+  , api = ispapijs.Client();
 
 //optional: set client remote address including remote port, e.g.:
 api.setRemoteAddr("1.2.3.4:80");
