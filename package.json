@@ -10,7 +10,7 @@
   "license": "MIT",
   "dependencies": {},
   "engines": {
-    "node": "0.12.4"
+    "node": ">=0.10.36"
   },
   "homepage": "http://1api.net",
   "maintainers": [
