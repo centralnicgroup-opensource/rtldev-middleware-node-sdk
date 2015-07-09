@@ -47,6 +47,7 @@ ispapi.Client.command_encode = function(p_cmd) {
  * Use "1234" for OT&E, "54cd" for LIVE System
  * @param {String} p_remoteaddr String specifying the remote address + port
  * e.g. 1.2.3.4:80
+ * @param {String} p_subuser String specifying a subuser for api requests
  */
 ispapi.Client.prototype.login = function(p_user, p_pw, p_entity, p_remoteaddr,
         p_subuser) {
