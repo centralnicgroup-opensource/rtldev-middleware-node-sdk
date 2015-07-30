@@ -1,7 +1,7 @@
 {
   "name": "ispapijs",
   "description": "1API API Connector for node.js",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "author": {
     "name": "Kai Schwarz",
     "email": "kschwarz@1api.net"
