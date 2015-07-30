@@ -9,7 +9,7 @@ var util = require("util")
 
 /**
  * Class ispapi.Client
- * 
+ *
  * @description Used to connect to 1API API Backend
  * @inherits from events.EventEmitter to be able to fire events Constructor
  */
@@ -80,7 +80,7 @@ ispapi.Client.prototype.connect = function(p_url) {
   this.socketcfg.method = 'POST';
   //disable socket pooling (limitation maxSockets: 5 sockets per host)
   this.socketcfg.agent = false;
-                                
+
   if (!this.socketcfg.port)
     this.socketcfg.port = (
       this.socketcfg.protocol.match(/^https/i) ?
@@ -116,7 +116,7 @@ ispapi.Client.prototype.request = function(p_cmd) {
   }
   data += encodeURIComponent("s_command");
   data += "=" + encodeURIComponent(ispapi.Client.command_encode(p_cmd));
-  
+
   req = require(oself.socketcfg.protocol.replace(/\:$/, '')).request(
           oself.socketcfg, function(res) {
             var response = "";
@@ -133,6 +133,12 @@ ispapi.Client.prototype.request = function(p_cmd) {
               oself.emit('error', e);
             });
           });
+  req.setTimeout(10000);
+  req.on('socket', function (socket) {
+    socket.on('timeout', function() {
+      req.abort();
+    });
+  });
   req.on('error', function(e) {
     e.message = 'problem with request: ' + e.message;
     oself.emit('error', e);
@@ -143,13 +149,13 @@ ispapi.Client.prototype.request = function(p_cmd) {
 
 /**
  * Class ispapi.Response
- * 
+ *
  * @description Used to handle the response of the 1API backend api Constructor
  * @param {String} p_r String specifying the unparsed plain api response
  */
 ispapi.Response = function(p_r) {
   p_r = (
-    (!p_r || p_r === "") 
+    (!p_r || p_r === "")
       ? "[RESPONSE]\ncode=423\ndescription=Empty response from API\nEOF\n"
       : p_r
   );
@@ -317,7 +323,7 @@ ispapi.Response.prototype = {
    * Boolean (false) if property is not found
    */
   get: function(p_prop) {
-    if (this.data.parsed.hasOwnProperty(p_prop)) 
+    if (this.data.parsed.hasOwnProperty(p_prop))
       return this.data.parsed[p_prop];
     return false;
   },
@@ -329,7 +335,7 @@ ispapi.Response.prototype = {
    */
   getColumn: function(p_prop) {
     var p = this.get("PROPERTY");
-    if (p && p.hasOwnProperty(p_prop)) return p[p_prop];// return whole column    
+    if (p && p.hasOwnProperty(p_prop)) return p[p_prop];// return whole column
     return false;
   },
   /**
