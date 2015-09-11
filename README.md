@@ -1,17 +1,17 @@
-# ISPAPI JS
+# ISPAPI-APICONNECTOR
 
 This module is a connector library for the insanely fast 1API backend API.
-For further informations visit our homepage http://1api.net and do not hesitate to contact us. 
+For further informations visit our homepage http://1api.net and do not hesitate to contact us.
 
 ## Installation
 
-    $ npm install ispapijs
+    $ npm install ispapi-apiconnector
 
 ## Usage
 
 ```js
-var ispapijs = require('ispapijs')
-  , api = ispapijs.Client();
+var apiconnector = require('ispapi-connector')
+  , api = apiconnector.Client();
 
 //optional: set client remote address including remote port, e.g.:
 api.setRemoteAddr("1.2.3.4:80");
