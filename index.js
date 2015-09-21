@@ -3,9 +3,63 @@
 
 'use strict';
 
-var util = require("util")
-  , events = require("events")
-  , ispapi = {};
+var util = require("util"),
+  events = require("events"),
+  ispapi = {};
+
+/**
+ * Class ispapi.Request
+ *
+ * @description Used to connect to 1API API Backend
+ * @inherits from events.EventEmitter to be able to fire events
+ * @param {Object} p_socketcfg socket configuration
+ * @param {String} p_data post request data
+ * Constructor
+ */
+ispapi.Request = function(p_socketcfg, p_data) {
+  events.EventEmitter.call(this);
+  this.socketcfg = p_socketcfg;
+  this.data = p_data;
+};
+util.inherits(ispapi.Request, events.EventEmitter);
+
+/**
+ * @method request
+ * @description perform a command request to the 1API backend api
+ */
+ispapi.Request.prototype.request = function() {
+  var oself = this,
+    req;
+  req = require(oself.socketcfg.protocol.replace(/\:$/, '')).request(
+    oself.socketcfg,
+    function(res) {
+      var response = "";
+      res.setEncoding('utf8');
+      res.on('data', function(chunk) {
+        response += chunk;
+      });
+      res.on('end', function() {
+        oself.emit("response", new ispapi.Response(response));
+        response = "";
+      });
+      res.on('error', function(e) {
+        e.message = 'problem with response: ' + e.message;
+        oself.emit('error', e);
+      });
+    });
+  req.setTimeout(10000);
+  req.on('socket', function(socket) {
+    socket.on('timeout', function() {
+      req.abort();
+    });
+  });
+  req.on('error', function(e) {
+    e.message = 'problem with request: ' + e.message;
+    oself.emit('error', e);
+  });
+  req.write(oself.data);
+  req.end();
+};
 
 /**
  * Class ispapi.Client
@@ -24,8 +78,7 @@ util.inherits(ispapi.Client, events.EventEmitter);
  * @param {Object} p_cmd Object specifying the command to encode
  */
 ispapi.Client.command_encode = function(p_cmd) {
-  var key
-    , tmp = "";
+  var key, tmp = "";
   if (!(typeof p_cmd === 'string' || p_cmd instanceof String)) {
     for (key in p_cmd) {
       if (p_cmd.hasOwnProperty(key)) {
@@ -50,7 +103,7 @@ ispapi.Client.command_encode = function(p_cmd) {
  * @param {String} p_subuser String specifying a subuser for api requests
  */
 ispapi.Client.prototype.login = function(p_user, p_pw, p_entity, p_remoteaddr,
-        p_subuser) {
+  p_subuser) {
   this.logincfg = {
     login: p_user,
     pw: p_pw
@@ -76,7 +129,7 @@ ispapi.Client.prototype.setRemoteAddr = function(p_remoteaddr) {
 ispapi.Client.prototype.connect = function(p_url) {
   this.socketcfg = require("url").parse(p_url);
   if (!this.socketcfg.protocol.match(/^(http|https):$/))
-    throw new Error( "Unsupported protocol within connection uri.");
+    throw new Error("Unsupported protocol within connection uri.");
   this.socketcfg.method = 'POST';
   //disable socket pooling (limitation maxSockets: 5 sockets per host)
   this.socketcfg.agent = false;
@@ -84,10 +137,10 @@ ispapi.Client.prototype.connect = function(p_url) {
   if (!this.socketcfg.port)
     this.socketcfg.port = (
       this.socketcfg.protocol.match(/^https/i) ?
-        '443' :
-        '80'
+      '443' :
+      '80'
     );
-  this.headers();// set the expect header performance improvement
+  this.headers(); // set the expect header performance improvement
 };
 /**
  * @method headers
@@ -96,20 +149,21 @@ ispapi.Client.prototype.connect = function(p_url) {
  */
 ispapi.Client.prototype.headers = function(p_head) {
   if (p_head && !p_head.hasOwnProperty('Expect')) p_head.Expect = '';
-  this.socketcfg.headers = (p_head || { 'Expect': '' });
+  this.socketcfg.headers = (p_head || {
+    'Expect': ''
+  });
 };
 /**
  * @method request
  * @description perform a command request to the 1API backend api
  * @param {Object} p_cmd Object specifying the command to request
  */
-ispapi.Client.prototype.request = function(p_cmd) {
-  var key
-    , data = ""
-    , req
-    , oself = this;
+ispapi.Client.prototype.createConnection = function(p_cmd) {
+  var key,
+    data = "",
+    oself = this;
   for (key in oself.logincfg) {
-    if (oself.logincfg.hasOwnProperty(key)){
+    if (oself.logincfg.hasOwnProperty(key)) {
       data += encodeURIComponent('s_' + key);
       data += "=" + encodeURIComponent(oself.logincfg[key]) + "&";
     }
@@ -117,34 +171,7 @@ ispapi.Client.prototype.request = function(p_cmd) {
   data += encodeURIComponent("s_command");
   data += "=" + encodeURIComponent(ispapi.Client.command_encode(p_cmd));
 
-  req = require(oself.socketcfg.protocol.replace(/\:$/, '')).request(
-          oself.socketcfg, function(res) {
-            var response = "";
-            res.setEncoding('utf8');
-            res.on('data', function(chunk) {
-              response += chunk;
-            });
-            res.on('end', function() {
-              oself.emit("response", new ispapi.Response(response));
-              response = "";
-            });
-            res.on('error', function(e) {
-              e.message = 'problem with response: ' + e.message;
-              oself.emit('error', e);
-            });
-          });
-  req.setTimeout(10000);
-  req.on('socket', function (socket) {
-    socket.on('timeout', function() {
-      req.abort();
-    });
-  });
-  req.on('error', function(e) {
-    e.message = 'problem with request: ' + e.message;
-    oself.emit('error', e);
-  });
-  req.write(data);
-  req.end();
+  return new ispapi.Request(oself.socketcfg, data);
 };
 
 /**
@@ -155,9 +182,9 @@ ispapi.Client.prototype.request = function(p_cmd) {
  */
 ispapi.Response = function(p_r) {
   p_r = (
-    (!p_r || p_r === "")
-      ? "[RESPONSE]\ncode=423\ndescription=Empty response from API\nEOF\n"
-      : p_r
+    (!p_r || p_r === "") ?
+    "[RESPONSE]\ncode=423\ndescription=Empty response from API\nEOF\n" :
+    p_r
   );
   this.colregexp = false;
   this.data = {
@@ -196,10 +223,9 @@ ispapi.Response = function(p_r) {
  * @return {Object}
  */
 ispapi.Response.parse = function(r) {
-  var hash = {}
-    , regexp = /^([^\=]*[^\t\= ])[\t ]*=[\t ]*(.*)$/
-    , m
-    , mm;
+  var hash = {},
+    regexp = /^([^\=]*[^\t\= ])[\t ]*=[\t ]*(.*)$/,
+    m, mm;
   r = r.replace("\r\n", "\n").split("\n");
   while (r.length) {
     m = (r.shift()).match(regexp);
@@ -210,8 +236,7 @@ ispapi.Response.parse = function(r) {
         mm[1] = mm[1].toUpperCase().replace(/\s/, '');
         if (!hash.PROPERTY.hasOwnProperty(mm[1])) hash.PROPERTY[mm[1]] = [];
         hash.PROPERTY[mm[1]].push(m[2].replace(/[\t ]*$/, ""));
-      }
-      else {
+      } else {
         hash[m[1].toUpperCase()] = m[2].replace(/[\t ]*$/, "");
       }
     }
@@ -227,9 +252,8 @@ ispapi.Response.parse = function(r) {
  */
 ispapi.Response.serialize = function(r) {
   if (r.DESCRIPTION === "") delete r.DESCRIPTION;
-  var plain = "[RESPONSE]"
-    , key
-    , i;
+  var plain = "[RESPONSE]",
+    key, i;
   if (r.hasOwnProperty("PROPERTY")) {
     for (key in r.PROPERTY) {
       if (r.PROPERTY.hasOwnProperty(key)) {
@@ -260,9 +284,7 @@ ispapi.Response.prototype = {
   useColumns: function(arr) {
     if (arr === "*") arr = false;
     this.colregexp = (
-      arr
-        ? new RegExp("^(" + arr.join("|") + ")$", "i")
-        : false
+      arr ? new RegExp("^(" + arr.join("|") + ")$", "i") : false
     );
   },
   /**
@@ -335,7 +357,7 @@ ispapi.Response.prototype = {
    */
   getColumn: function(p_prop) {
     var p = this.get("PROPERTY");
-    if (p && p.hasOwnProperty(p_prop)) return p[p_prop];// return whole column
+    if (p && p.hasOwnProperty(p_prop)) return p[p_prop]; // return whole column
     return false;
   },
   /**
@@ -350,10 +372,8 @@ ispapi.Response.prototype = {
     var col = this.getColumn(p_prop);
     if (col && col[p_idx])
       return (
-        p_cast_int
-          ? parseInt(col[p_idx], 10)
-          : col[p_idx]
-        );
+        p_cast_int ? parseInt(col[p_idx], 10) : col[p_idx]
+      );
     return false;
   },
   /**
@@ -372,11 +392,11 @@ ispapi.Response.prototype = {
    */
   as_hash: function() {
     if (this.colregexp) {
-      var d = JSON.parse(JSON.stringify(this.data.parsed))
-        , key;
+      var d = JSON.parse(JSON.stringify(this.data.parsed)),
+        key;
       if (d.hasOwnProperty("PROPERTY")) {
         for (key in d.PROPERTY) {
-          if (d.PROPERTY.hasOwnProperty(key)){
+          if (d.PROPERTY.hasOwnProperty(key)) {
             if (!key.match(this.colregexp)) delete d.PROPERTY[key];
           }
         }
@@ -391,13 +411,9 @@ ispapi.Response.prototype = {
    * @return {Object}
    */
   as_list: function() {
-    var r = this.as_hash()
-      , tmp = {}
-      , key
-      , row
-      , row2
-      , i
-      , count = 0;
+    var r = this.as_hash(),
+      tmp = {},
+      key, row, row2, i, count = 0;
     for (key in r) {
       if (r.hasOwnProperty(key) && !key.match(/^PROPERTY$/))
         tmp[key] = r[key];
@@ -406,17 +422,17 @@ ispapi.Response.prototype = {
       tmp.LIST = [];
       row = {};
       for (key in r.PROPERTY) {
-        if (r.PROPERTY.hasOwnProperty(key)){
-          if (!key.match(ispapi.Response.pagerRegexp)) {// paging info
+        if (r.PROPERTY.hasOwnProperty(key)) {
+          if (!key.match(ispapi.Response.pagerRegexp)) { // paging info
             row[key] = "";
             if (r.PROPERTY[key].length > count) count = r.PROPERTY[key].length;
           }
         }
       }
       if (count) {
-        for (i = 0; i < count; i++) {// run up to max index found
+        for (i = 0; i < count; i++) { // run up to max index found
           row2 = {};
-          for (key in row) {// run over all columns (properties) found
+          for (key in row) { // run over all columns (properties) found
             // NOTE: do not add column indexes that are not available
             // -- avoids blowing up response size
             // -- requires implementation of mechanisms to avoid access on
@@ -504,11 +520,10 @@ ispapi.Response.prototype = {
    * @return {Array}
    */
   columns: function() {
-    var key
-      , cols = []
-      , props = this.properties()
-      , regexp = ispapi.Response.pagerRegexp;
-    if (props){
+    var key, cols = [],
+      props = this.properties(),
+      regexp = ispapi.Response.pagerRegexp;
+    if (props) {
       for (key in props) {
         if (props.hasOwnProperty(key) && !key.match(regexp)) cols.push(key);
       }
@@ -547,10 +562,8 @@ ispapi.Response.prototype = {
    * @return {Integer}
    */
   count: function() {
-    var c = this.getColumnIndex("COUNT", 0, true)
-      , cols
-      , i
-      , max = 0;
+    var c = this.getColumnIndex("COUNT", 0, true),
+      cols, i, max = 0;
     if (c === false) {
       c = 0;
       cols = this.columns();
@@ -622,7 +635,8 @@ ispapi.Response.prototype = {
    * @return {Integer}
    */
   nextpage: function() {
-    var page = this.page() + 1, pages = this.pages();
+    var page = this.page() + 1,
+      pages = this.pages();
     return (page <= pages ? page : pages);
   }
 };
