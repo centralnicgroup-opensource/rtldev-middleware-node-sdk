@@ -11,7 +11,8 @@ For further informations visit our homepage http://1api.net and do not hesitate 
 
 ```js
 var apiconnector = require('ispapi-connector')
-  , api = apiconnector.Client();
+  , api = apiconnector.Client()
+  , c;
 
 //optional: set client remote address including remote port, e.g.:
 api.setRemoteAddr("1.2.3.4:80");
@@ -29,20 +30,24 @@ api.login("test.user", "test.passw0rd", "1234");//OT&E demo user
  */
 api.connect("https://coreapi.1API.net/api/call.cgi");
 
-//request result of an api command
-api.request({
+//create connection instance to work with
+c = api.createConnection({
 	COMMAND : "StatusUser"
 });
 
 //output api response when ready
-api.once("response", function(r){
+c.once("response", function(r){
 	console.dir(r.as_hash());
 });
 
 //react on error events
-api.on("error", function(e){
+c.on("error", function(e){
 	console.log(e.message);
 });
+
+//perform the request
+c.request();
+
 ```
 
 ## FAQ
