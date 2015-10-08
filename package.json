@@ -17,5 +17,9 @@
       "name": "Kai Schwarz",
       "email": "kschwarz@1api.net"
     }
+  ],
+  "keywords" : [
+    "1api", "domain", "api", "connector", "isp", "ispapi", "ssl", "cert",
+    "dns", "backorder", "premium", "preregistration", "registration"
   ]
 }
