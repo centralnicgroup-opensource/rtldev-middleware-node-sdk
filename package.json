@@ -1,7 +1,7 @@
 {
   "name": "ispapi-apiconnector",
   "description": "1API API Connector for node.js",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "author": {
     "name": "Kai Schwarz",
     "email": "kschwarz@1api.net"
@@ -18,8 +18,19 @@
       "email": "kschwarz@1api.net"
     }
   ],
-  "keywords" : [
-    "1api", "domain", "api", "connector", "isp", "ispapi", "ssl", "cert",
-    "dns", "backorder", "premium", "preregistration", "registration"
+  "keywords": [
+    "1api",
+    "domain",
+    "api",
+    "connector",
+    "isp",
+    "ispapi",
+    "ssl",
+    "cert",
+    "dns",
+    "backorder",
+    "premium",
+    "preregistration",
+    "registration"
   ]
 }
