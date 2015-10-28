@@ -1,20 +1,46 @@
+/*!
+ * ispapi-apiconnector
+ * Copyright(c) 2015 Kai Schwarz, 1API GmbH
+ * MIT Licensed
+ */
+
 /* jslint node:true */
 /* jshint node:true */
 
 'use strict';
 
-var util = require("util"),
-  events = require("events"),
-  ispapi = {};
+/**
+ * Util Module
+ * @private
+ */
+var util = require("util");
+/**
+ * Events Module
+ * @private
+ */
+var events = require("events");
 
 /**
- * Class ispapi.Request
- *
- * @description Used to connect to 1API API Backend
- * @inherits from events.EventEmitter to be able to fire events
+ * @typedef ispapi
+ * @type {Object}
+ * @property {Class} Request
+ * @property {Class} Client
+ * @property {Class} Response
+ */
+var ispapi = {};
+
+/**
+ * Module exports.
+ * @type {ispapi}
+ */
+
+/**
+ * @alias ispapi.Request
+ * @desc Used to connect to 1API API Backend
+ * @augments events.EventEmitter
  * @param {Object} p_socketcfg socket configuration
- * @param {String} p_data post request data
- * Constructor
+ * @param {String} p_data      post request data
+ * @constructor
  */
 ispapi.Request = function(p_socketcfg, p_data) {
   events.EventEmitter.call(this);
@@ -24,8 +50,7 @@ ispapi.Request = function(p_socketcfg, p_data) {
 util.inherits(ispapi.Request, events.EventEmitter);
 
 /**
- * @method request
- * @description perform a command request to the 1API backend api
+ * perform a command request to the 1API backend API
  */
 ispapi.Request.prototype.request = function() {
   var oself = this,
@@ -62,10 +87,9 @@ ispapi.Request.prototype.request = function() {
 };
 
 /**
- * Class ispapi.Client
- *
- * @description Used to connect to 1API API Backend
- * @inherits from events.EventEmitter to be able to fire events Constructor
+ * @alias ispapi.Client
+ * @desc Used to return 1API API Backend connections
+ * @augments events.EventEmitter
  */
 ispapi.Client = function() {
   events.EventEmitter.call(this);
@@ -73,8 +97,7 @@ ispapi.Client = function() {
 util.inherits(ispapi.Client, events.EventEmitter);
 
 /**
- * @method command_encode
- * @description convert given command object to string
+ * convert given command object to string
  * @param {Object} p_cmd Object specifying the command to encode
  */
 ispapi.Client.command_encode = function(p_cmd) {
@@ -92,15 +115,12 @@ ispapi.Client.command_encode = function(p_cmd) {
 };
 
 /**
- * @method login
- * @description set login config for later request(s)
- * @param {String} p_user String specifying the username
- * @param {String} p_pw String specifying the password
- * @param {String} p_entity String specifying the system environment / entity.
- * Use "1234" for OT&E, "54cd" for LIVE System
- * @param {String} p_remoteaddr String specifying the remote address + port
- * e.g. 1.2.3.4:80
- * @param {String} p_subuser String specifying a subuser for api requests
+ * set login config for later request(s)
+ * @param {String} p_user       String specifying the username
+ * @param {String} p_pw         String specifying the password
+ * @param {String} p_entity     String specifying the system environment / entity. Use "1234" for OT&E, "54cd" for LIVE System
+ * @param {String} p_remoteaddr String specifying the remote address + port e.g. 1.2.3.4:80
+ * @param {String} p_subuser    String specifying a subuser for API requests
  */
 ispapi.Client.prototype.login = function(p_user, p_pw, p_entity, p_remoteaddr,
   p_subuser) {
@@ -113,17 +133,14 @@ ispapi.Client.prototype.login = function(p_user, p_pw, p_entity, p_remoteaddr,
   if (p_remoteaddr) this.setRemoteAddr(p_remoteaddr);
 };
 /**
- * @method setRemoteAddr
- * @description set remote address including remote port e.g. 1.2.3.4:80
- * @param {String} p_remoteaddr String specifying the remote address + port
- * e.g. 1.2.3.4:80
+ * set remote address including remote port e.g. 1.2.3.4:80
+ * @param {String} p_remoteaddr String specifying the remote address + port e.g. 1.2.3.4:80
  */
 ispapi.Client.prototype.setRemoteAddr = function(p_remoteaddr) {
   this.logincfg.remoteaddr = p_remoteaddr;
 };
 /**
- * @method connect
- * @description set socket configuration for later request(s)
+ * set socket configuration for later request(s)
  * @param {String} p_url String specifying the connection uri
  */
 ispapi.Client.prototype.connect = function(p_url) {
@@ -143,8 +160,7 @@ ispapi.Client.prototype.connect = function(p_url) {
   this.headers(); // set the expect header performance improvement
 };
 /**
- * @method headers
- * @description set custom request headers
+ * set custom request headers
  * @param {Object} p_head Object specifying the headers to apply
  */
 ispapi.Client.prototype.headers = function(p_head) {
@@ -154,8 +170,7 @@ ispapi.Client.prototype.headers = function(p_head) {
   });
 };
 /**
- * @method request
- * @description perform a command request to the 1API backend api
+ * perform a command request to the 1API backend API
  * @param {Object} p_cmd Object specifying the command to request
  */
 ispapi.Client.prototype.createConnection = function(p_cmd) {
@@ -175,10 +190,9 @@ ispapi.Client.prototype.createConnection = function(p_cmd) {
 };
 
 /**
- * Class ispapi.Response
- *
- * @description Used to handle the response of the 1API backend api Constructor
- * @param {String} p_r String specifying the unparsed plain api response
+ * @alias ispapi.Response
+ * @desc Used to handle the response of the 1API backend API Constructor
+ * @param {String} p_r String specifying the unparsed plain API response
  */
 ispapi.Response = function(p_r) {
   p_r = (
@@ -217,10 +231,9 @@ ispapi.Response = function(p_r) {
   }(this.as_list().LIST || []));
 };
 /**
- * @method parse
- * @description convert unparsed plain api response string to object notation
- * @param {String} p_r String specifying the unparsed api response
- * @return {Object}
+ * convert unparsed plain API response string to object notation
+ * @param {String}   p_r String specifying the unparsed API response
+ * @return {Object}      Response in hash format
  */
 ispapi.Response.parse = function(r) {
   var hash = {},
@@ -245,10 +258,9 @@ ispapi.Response.parse = function(r) {
   return hash;
 };
 /**
- * @method serialize
- * @description convert parsed plain api response to unparsed string notation
- * @param {Object} p_r Object specifying the parsed api response
- * @return {Object}
+ * convert parsed plain API response to unparsed string notation
+ * @param  {Object} p_r Object specifying the parsed API response
+ * @return {Object}     Response in unparsed plain text
  */
 ispapi.Response.serialize = function(r) {
   if (r.DESCRIPTION === "") delete r.DESCRIPTION;
@@ -276,10 +288,8 @@ ispapi.Response.pagerRegexp = /^(TOTAL|FIRST|LAST|LIMIT|COUNT)$/;
 
 ispapi.Response.prototype = {
   /**
-   * @method useColumns
-   * @description sets the columns to be available in the response
-   * if false it returns all columns (default)
-   * @return {Object || null}
+   * sets the columns to be available in the response
+   * @param {String|Array} [arr] regexp or * to filter response columns
    */
   useColumns: function(arr) {
     if (arr === "*") arr = false;
@@ -288,61 +298,51 @@ ispapi.Response.prototype = {
     );
   },
   /**
-   * @method rewind
-   * @description resets the iterator to start value 0 and returns first row
-   * @return {Object || null}
+   * resets the iterator to start value 0 and returns first row
+   * @return {Object|null} iterator
    */
   rewind: function() {
     return this.it.rewind();
   },
   /**
-   * @method hasNext
-   * @description returns true if next row can be iterated, false otherwise
-   * @return {Boolean}
+   * checks if next row can be iterared
+   * @return {Boolean} returns true if next row can be iterated, false otherwise
    */
   hasNext: function() {
     return this.it.hasNext();
   },
   /**
-   * @method next
-   * @description returns the list row for the next iterator position
-   * @return {Object || null}
+   * returns the row of the next iterator position
+   * @return {Object|null} returns the row for the next iterator position
    */
   next: function() {
     return this.it.next();
   },
   /**
-   * @method hasNext
-   * @description returns true if prev. row can be iterated, false otherwise
-   * @return {Boolean}
+   * checks if previous row can be iterated
+   * @return {Boolean} returns true if prev. row can be iterated, false otherwise
    */
   hasPrevious: function() {
     return this.it.hasPrevious();
   },
   /**
-   * @method next
-   * @description returns the list row for the previous iterator position
-   * @return {Object || null}
+   * returns the row of the previous iterator position
+   * @return {Object|null} returns the row for the previous iterator position
    */
   previous: function() {
     return this.it.previous();
   },
   /**
-   * @method current
-   * @description returns the list row for the current iterator value
-   * @return {Object}
+   * returns the list row for the current iterator value
+   * @return {Object} the current iterator row
    */
   current: function() {
     return this.it.current();
   },
   /**
-   * @method get
-   * @description returns the property value of the response object if found
+   * returns the property value of the response object if found
    * @param {String} p_prop String specifying the property for value lookup
-   * @return {Object || String || Boolean}
-   * Object if property found and is of type Object
-   * String if property found and is of type String
-   * Boolean (false) if property is not found
+   * @return {Object|String|Boolean} Object/String if property found and is of type Object/String, false otherwise
    */
   get: function(p_prop) {
     if (this.data.parsed.hasOwnProperty(p_prop))
@@ -350,10 +350,9 @@ ispapi.Response.prototype = {
     return false;
   },
   /**
-   * @method getColumn
-   * @description return all values of the given column/property identifier
+   * return all values of the given column/property identifier
    * @param {String} p_prop String specifying the column/property identifier
-   * @return {Array}
+   * @return {Array}        column values
    */
   getColumn: function(p_prop) {
     var p = this.get("PROPERTY");
@@ -361,12 +360,11 @@ ispapi.Response.prototype = {
     return false;
   },
   /**
-   * @method getColumnIndex
-   * @description return the value by given row index and column identifier
-   * @param {String} p_prop String specifying the column identifier
-   * @param {Integer} p_idx Integer specifying the row index
+   * return the value by given row index and column identifier
+   * @param {String}  p_prop     String specifying the column identifier
+   * @param {Integer} p_idx      Integer specifying the row index
    * @param {Boolean} p_cast_int Boolean integer cast the value [optional]
-   * @return {String || Boolean} String if succeeded, Boolean (false) otherwise
+   * @return {String|Boolean} String if succeeded, Boolean (false) otherwise
    */
   getColumnIndex: function(p_prop, p_idx, p_cast_int) {
     var col = this.getColumn(p_prop);
@@ -377,18 +375,16 @@ ispapi.Response.prototype = {
     return false;
   },
   /**
-   * @method as_string
-   * @description return the unparsed api response
-   * @return {String}
+   * return the unparsed API response
+   * @return {String} unparsed API response
    */
   as_string: function() {
     if (this.colregexp) return ispapi.Response.serialize(this.as_hash());
     return this.data.unparsed;
   },
   /**
-   * @method as_hash
-   * @description return the parsed api response
-   * @return {Object}
+   * return the parsed API response
+   * @return {Object} parsed API response
    */
   as_hash: function() {
     if (this.colregexp) {
@@ -406,9 +402,8 @@ ispapi.Response.prototype = {
     return this.data.parsed;
   },
   /**
-   * @method as_list
-   * @description return the parsed api response as list
-   * @return {Object}
+   * return the parsed API response as list
+   * @return {Object} parse API response in list format
    */
   as_list: function() {
     var r = this.as_hash(),
@@ -451,73 +446,64 @@ ispapi.Response.prototype = {
     return tmp;
   },
   /**
-   * @method code
-   * @description return the api response code
-   * @return {String}
+   * return the API response code
+   * @return {String} API response code
    */
   code: function() {
     return this.get("CODE");
   },
   /**
-   * @method description
-   * @description return the api response description
-   * @return {String}
+   * return the API response description
+   * @return {String} API response description
    */
   description: function() {
     return this.get("DESCRIPTION");
   },
   /**
-   * @method properties
-   * @description return the api response PROPERTY Object
-   * @return {Object}
+   * return the API response PROPERTY Object
+   * @return {Object} API response PROPERTY Object
    */
   properties: function() {
     return this.get("PROPERTY");
   },
   /**
-   * @method runtime
-   * @description return the api response runtime
-   * @return {String}
+   * return the API response runtime
+   * @return {String} API response runtime
    */
   runtime: function() {
     return parseFloat(this.get("RUNTIME"));
   },
   /**
-   * @method queuetime
-   * @description return the api response queuetime
-   * @return {String}
+   * return the API response queuetime
+   * @return {String} API response queuetime
    */
   queuetime: function() {
     return parseFloat(this.get("QUEUETIME"));
   },
   /**
-   * @method is_success
-   * @description check if the api response code stands for success
-   * @return {Boolean}
+   * check if the API response code stands for success
+   * @return {Boolean} true if the API request succeeded, false otherwise
    */
   is_success: function() {
     return (this.get("CODE").charAt(0) === '2');
   },
   /**
-   * @method is_tmp_error
-   * @description check if the api response code stands for a temporary error
-   * @return {Boolean}
+   * check if the API response code stands for a temporary error
+   * @return {Boolean} true if the API request run into a temp. error, false otherwise
    */
   is_tmp_error: function() {
     return (this.get("CODE").charAt(0) === '4');
   },
   /**
-   * @method is_error
-   * @description check if the api response code stand for an error
-   * @return {Boolean}
+   * check if the API response code stand for an error
+   * @return {Boolean} true if the API request failed, false otherwise
    */
   is_error: function() {
     return !(this.is_success() || this.is_tmp_error());
   },
   /**
-   * @method columns
-   * @description return the api response PROPERTY key names
-   * @return {Array}
+   * return the API response PROPERTY key names
+   * @return {Array} API response PROPERTY key names
    */
   columns: function() {
     var key, cols = [],
@@ -531,9 +517,8 @@ ispapi.Response.prototype = {
     return cols;
   },
   /**
-   * @method getPagination
-   * @description return pagination meta data of the api response
-   * @return {Object}
+   * return pagination meta data of the API response
+   * @return {Object} pagination meta data
    */
   getPagination: function() {
     return {
@@ -549,17 +534,15 @@ ispapi.Response.prototype = {
     };
   },
   /**
-   * @method first
-   * @description return the index of the first response entry
-   * @return {Integer}
+   * return the index of the first response entry
+   * @return {Integer} index of the first response entry
    */
   first: function() {
     return (this.getColumnIndex("FIRST", 0, true) || 0);
   },
   /**
-   * @method count
-   * @description return the count of items in the api list response
-   * @return {Integer}
+   * return the count of items in the API list response
+   * @return {Integer} count of items in the response
    */
   count: function() {
     var c = this.getColumnIndex("COUNT", 0, true),
@@ -576,33 +559,29 @@ ispapi.Response.prototype = {
     return c;
   },
   /**
-   * @method last
-   * @description return the index of the last response entry
-   * @return {Integer}
+   * return the index of the last response entry
+   * @return {Integer} index of the last response entry
    */
   last: function() {
     return (this.getColumnIndex("LAST", 0, true) || this.count() - 1);
   },
   /**
-   * @method limit
-   * @description return the amount of items per page
-   * @return {Integer}
+   * @description return the count of items per page
+   * @return {Integer} count of items per page
    */
   limit: function() {
     return (this.getColumnIndex("LIMIT", 0, true) || this.count() || 100);
   },
   /**
-   * @method total
-   * @description return the amount of the total items matching the api request
-   * @return {Integer}
+   * return the count of the total items matching the API request
+   * @return {Integer} count of total items matching the API request
    */
   total: function() {
     return (this.getColumnIndex("TOTAL", 0, 10) || this.count());
   },
   /**
-   * @method pages
-   * @description return the count of result pages matching the request
-   * @return {Integer}
+   * return the count of result pages matching the request
+   * @return {Integer} count of result pages matching the request
    */
   pages: function() {
     var t = this.total();
@@ -610,9 +589,8 @@ ispapi.Response.prototype = {
     return 1;
   },
   /**
-   * @method page
-   * @description return the current page number
-   * @return {Integer}
+   * return the current page number
+   * @return {Integer} current page number
    */
   page: function() {
     if (this.count()) {
@@ -622,17 +600,15 @@ ispapi.Response.prototype = {
     return 1;
   },
   /**
-   * @method prevpage
-   * @description return the previous page number
-   * @return {Integer}
+   * return the previous page number
+   * @return {Integer} previous page number
    */
   prevpage: function() {
     return ((this.page() - 1) || 1);
   },
   /**
-   * @method nextpage
-   * @description return the next page number
-   * @return {Integer}
+   * return the next page number
+   * @return {Integer} next page number
    */
   nextpage: function() {
     var page = this.page() + 1,
