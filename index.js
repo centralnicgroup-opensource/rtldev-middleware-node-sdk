@@ -9,50 +9,28 @@
 
 'use strict';
 
-/**
- * Util Module
- * @private
- */
 var util = require("util");
-/**
- * Events Module
- * @private
- */
 var events = require("events");
 
 /**
- * @typedef ispapi
- * @type {Object}
- * @property {Class} Request
- * @property {Class} Client
- * @property {Class} Response
- */
-var ispapi = {};
-
-/**
- * Module exports.
- * @type {ispapi}
- */
-
-/**
- * @alias ispapi.Request
+ * @alias node.ispapi-apiconnector.Request
  * @desc Used to connect to 1API API Backend
  * @augments events.EventEmitter
  * @param {Object} p_socketcfg socket configuration
  * @param {String} p_data      post request data
  * @constructor
  */
-ispapi.Request = function(p_socketcfg, p_data) {
+var Request = function(p_socketcfg, p_data) {
   events.EventEmitter.call(this);
   this.socketcfg = p_socketcfg;
   this.data = p_data;
 };
-util.inherits(ispapi.Request, events.EventEmitter);
+util.inherits(Request, events.EventEmitter);
 
 /**
  * perform a command request to the 1API backend API
  */
-ispapi.Request.prototype.request = function() {
+Request.prototype.request = function() {
   var oself = this,
     req;
   req = require(oself.socketcfg.protocol.replace(/\:$/, '')).request(
@@ -86,21 +64,23 @@ ispapi.Request.prototype.request = function() {
   req.end();
 };
 
+ispapi.Request = Request;
+
 /**
- * @alias ispapi.Client
+ * @alias node.ispapi-apiconnector.Client
  * @desc Used to return 1API API Backend connections
  * @augments events.EventEmitter
+ * @constructor
  */
-ispapi.Client = function() {
+var Client = function() {
   events.EventEmitter.call(this);
 };
-util.inherits(ispapi.Client, events.EventEmitter);
-
+util.inherits(Client, events.EventEmitter);
 /**
  * convert given command object to string
  * @param {Object} p_cmd Object specifying the command to encode
  */
-ispapi.Client.command_encode = function(p_cmd) {
+Client.command_encode = function(p_cmd) {
   var key, tmp = "";
   if (!(typeof p_cmd === 'string' || p_cmd instanceof String)) {
     for (key in p_cmd) {
@@ -122,7 +102,7 @@ ispapi.Client.command_encode = function(p_cmd) {
  * @param {String} p_remoteaddr String specifying the remote address + port e.g. 1.2.3.4:80
  * @param {String} p_subuser    String specifying a subuser for API requests
  */
-ispapi.Client.prototype.login = function(p_user, p_pw, p_entity, p_remoteaddr,
+Client.prototype.login = function(p_user, p_pw, p_entity, p_remoteaddr,
   p_subuser) {
   this.logincfg = {
     login: p_user,
@@ -136,14 +116,14 @@ ispapi.Client.prototype.login = function(p_user, p_pw, p_entity, p_remoteaddr,
  * set remote address including remote port e.g. 1.2.3.4:80
  * @param {String} p_remoteaddr String specifying the remote address + port e.g. 1.2.3.4:80
  */
-ispapi.Client.prototype.setRemoteAddr = function(p_remoteaddr) {
+Client.prototype.setRemoteAddr = function(p_remoteaddr) {
   this.logincfg.remoteaddr = p_remoteaddr;
 };
 /**
  * set socket configuration for later request(s)
  * @param {String} p_url String specifying the connection uri
  */
-ispapi.Client.prototype.connect = function(p_url) {
+Client.prototype.connect = function(p_url) {
   this.socketcfg = require("url").parse(p_url);
   if (!this.socketcfg.protocol.match(/^(http|https):$/))
     throw new Error("Unsupported protocol within connection uri.");
@@ -163,7 +143,7 @@ ispapi.Client.prototype.connect = function(p_url) {
  * set custom request headers
  * @param {Object} p_head Object specifying the headers to apply
  */
-ispapi.Client.prototype.headers = function(p_head) {
+Client.prototype.headers = function(p_head) {
   if (p_head && !p_head.hasOwnProperty('Expect')) p_head.Expect = '';
   this.socketcfg.headers = (p_head || {
     'Expect': ''
@@ -173,7 +153,7 @@ ispapi.Client.prototype.headers = function(p_head) {
  * perform a command request to the 1API backend API
  * @param {Object} p_cmd Object specifying the command to request
  */
-ispapi.Client.prototype.createConnection = function(p_cmd) {
+Client.prototype.createConnection = function(p_cmd) {
   var key,
     data = "",
     oself = this;
@@ -189,12 +169,15 @@ ispapi.Client.prototype.createConnection = function(p_cmd) {
   return new ispapi.Request(oself.socketcfg, data);
 };
 
+ispapi.Client = Client;
+
 /**
- * @alias ispapi.Response
+ * @alias node.ispapi-apiconnector.Response
  * @desc Used to handle the response of the 1API backend API Constructor
  * @param {String} p_r String specifying the unparsed plain API response
+ * @constructor
  */
-ispapi.Response = function(p_r) {
+var Response = function(p_r) {
   p_r = (
     (!p_r || p_r === "") ?
     "[RESPONSE]\ncode=423\ndescription=Empty response from API\nEOF\n" :
@@ -235,7 +218,7 @@ ispapi.Response = function(p_r) {
  * @param {String}   p_r String specifying the unparsed API response
  * @return {Object}      Response in hash format
  */
-ispapi.Response.parse = function(r) {
+Response.parse = function(r) {
   var hash = {},
     regexp = /^([^\=]*[^\t\= ])[\t ]*=[\t ]*(.*)$/,
     m, mm;
@@ -262,7 +245,7 @@ ispapi.Response.parse = function(r) {
  * @param  {Object} p_r Object specifying the parsed API response
  * @return {Object}     Response in unparsed plain text
  */
-ispapi.Response.serialize = function(r) {
+Response.serialize = function(r) {
   if (r.DESCRIPTION === "") delete r.DESCRIPTION;
   var plain = "[RESPONSE]",
     key, i;
@@ -284,9 +267,9 @@ ispapi.Response.serialize = function(r) {
   return plain;
 };
 
-ispapi.Response.pagerRegexp = /^(TOTAL|FIRST|LAST|LIMIT|COUNT)$/;
+Response.pagerRegexp = /^(TOTAL|FIRST|LAST|LIMIT|COUNT)$/;
 
-ispapi.Response.prototype = {
+Response.prototype = {
   /**
    * sets the columns to be available in the response
    * @param {String|Array} [arr] regexp or * to filter response columns
@@ -615,6 +598,19 @@ ispapi.Response.prototype = {
       pages = this.pages();
     return (page <= pages ? page : pages);
   }
+};
+
+/**
+ * @alias node.ispapi-apiconnector
+ * @desc Used to interact with the 1API Backend API
+ * @property {node.ispapi-apiconnector.Request} Request
+ * @property {node.ispapi-apiconnector.Client} Client
+ * @property {node.ispapi-apiconnector.Response} Response
+ */
+var ispapi = {
+  Request: Request,
+  Client: Client,
+  Response: Response
 };
 
 module.exports = ispapi;
