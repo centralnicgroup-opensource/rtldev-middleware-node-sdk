@@ -64,8 +64,6 @@ Request.prototype.request = function() {
   req.end();
 };
 
-ispapi.Request = Request;
-
 /**
  * @alias node.ispapi-apiconnector.Client
  * @desc Used to return 1API API Backend connections
