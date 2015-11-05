@@ -167,8 +167,6 @@ Client.prototype.createConnection = function(p_cmd) {
   return new ispapi.Request(oself.socketcfg, data);
 };
 
-ispapi.Client = Client;
-
 /**
  * @alias node.ispapi-apiconnector.Response
  * @desc Used to handle the response of the 1API backend API Constructor
