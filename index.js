@@ -16,13 +16,13 @@ var events = require("events");
  * @alias node.ispapi-apiconnector.Request
  * @desc Used to connect to 1API API Backend
  * @augments events.EventEmitter
- * @param {Object} p_socketcfg socket configuration
- * @param {String} p_data      post request data
+ * @param {Object} p_cfg socket configuration
+ * @param {String} p_data post request data
  * @constructor
  */
-var Request = function(p_socketcfg, p_data) {
+var Request = function(p_cfg, p_data) {
   events.EventEmitter.call(this);
-  this.socketcfg = p_socketcfg;
+  this.socketcfg = p_cfg;
   this.data = p_data;
 };
 util.inherits(Request, events.EventEmitter);
@@ -31,8 +31,7 @@ util.inherits(Request, events.EventEmitter);
  * perform a command request to the 1API backend API
  */
 Request.prototype.request = function() {
-  var oself = this,
-    req;
+  var req, oself = this;
   req = require(oself.socketcfg.protocol.replace(/\:$/, '')).request(
     oself.socketcfg,
     function(res) {
@@ -93,78 +92,130 @@ Client.command_encode = function(p_cmd) {
 };
 
 /**
- * set login config for later request(s)
- * @param {String} p_user       String specifying the username
- * @param {String} p_pw         String specifying the password
- * @param {String} p_entity     String specifying the system environment / entity. Use "1234" for OT&E, "54cd" for LIVE System
- * @param {String} p_remoteaddr String specifying the remote address + port e.g. 1.2.3.4:80
- * @param {String} p_subuser    String specifying a subuser for API requests
+ * method to be used for api requests AFTER login procedure
+ * @param {Object} p_cmd        API command to request
+ * @param {Object} p_cfg        the socket config
+ * @param {Function} [p_cb]     the callback method (success case)
+ * @param {Function} [p_cberr]  the callback method (error case)
+ * @param {Function} [p_type]   the response type format: hash or list
  */
-Client.prototype.login = function(p_user, p_pw, p_entity, p_remoteaddr,
-  p_subuser) {
-  this.logincfg = {
-    login: p_user,
-    pw: p_pw
-  };
-  if (p_entity) this.logincfg.entity = p_entity;
-  if (p_subuser) this.logincfg.user = p_subuser;
-  if (p_remoteaddr) this.setRemoteAddr(p_remoteaddr);
-};
-/**
- * set remote address including remote port e.g. 1.2.3.4:80
- * @param {String} p_remoteaddr String specifying the remote address + port e.g. 1.2.3.4:80
- */
-Client.prototype.setRemoteAddr = function(p_remoteaddr) {
-  this.logincfg.remoteaddr = p_remoteaddr;
-};
-/**
- * set socket configuration for later request(s)
- * @param {String} p_url String specifying the connection uri
- */
-Client.prototype.connect = function(p_url) {
-  this.socketcfg = require("url").parse(p_url);
-  if (!this.socketcfg.protocol.match(/^(http|https):$/))
-    throw new Error("Unsupported protocol within connection uri.");
-  this.socketcfg.method = 'POST';
-  //disable socket pooling (limitation maxSockets: 5 sockets per host)
-  this.socketcfg.agent = false;
+Client.prototype.request = function(p_cmd, p_cfg, p_cb, p_cberr, p_type) {
+  if (!p_type || (p_type !== 'hash' && p_type !== 'list'))
+    p_type = 'hash';
+  //----- the socket configuration ----
+  //keys that may change in cfg:
+  //agent -> false to disable socket pooling (no parallel request limitation!),
+  //port -> the socket port
+  //protocol -> the socket protocol
+  //headers -> custom headers to use
+  var opts = p_cfg.options;
 
-  if (!this.socketcfg.port)
-    this.socketcfg.port = (
-      this.socketcfg.protocol.match(/^https/i) ?
-      '443' :
-      '80'
-    );
-  this.headers(); // set the expect header performance improvement
-};
-/**
- * set custom request headers
- * @param {Object} p_head Object specifying the headers to apply
- */
-Client.prototype.headers = function(p_head) {
-  if (p_head && !p_head.hasOwnProperty('Expect')) p_head.Expect = '';
-  this.socketcfg.headers = (p_head || {
-    'Expect': ''
+  // set the expect header for performance improvement if not set
+  if (!opts.headers)
+    opts.headers = {
+      Expect: ''
+    };
+  else if (!opts.headers.hasOwnProperty('Expect'))
+    opts.headers.Expect = '';
+
+  //----- the socket parameters ----
+  //object keys -> login, pw, entity, remoteaddr, user (aka. subuser)
+  //login -> the user account id to use for login
+  //pw -> the corresponding user account password
+  //entity -> system entity ("1234" for OT&E system, "54cd" for LIVE system)
+  //remoteaddr -> the remote ip address of the customer incl. port (1.2.3.4:80)
+
+  var c = this.createConnection(p_cmd, {
+    options: opts,
+    params: p_cfg.params
   });
+  if (p_cb) {
+    c.on("response", function(r) {
+      p_cb(r["as_" + p_type]());
+    });
+  }
+  if (p_cberr) {
+    c.on("error", function(e) {
+      p_cberr({
+        CODE: "500",
+        DESCRIPTION: e.message
+      });
+    });
+  }
+  c.request();
 };
+
+/**
+ * method for api login / session start
+ * @param {Object} p_params specifying the socket parameters
+ * @param {Function} p_cb callback method
+ * @param {String} [p_uri] specifying the socket uri to use
+ */
+Client.prototype.login = function(p_params, p_cb, p_uri) {
+  if (!p_uri)
+    p_uri = "https://coreapi.1api.net/api/call.cgi";
+  else if (!p_uri.match(/^(http|https):\/\//))
+    throw new Error("Unsupported protocol within api connection uri.");
+
+  var cb, tmp, cfg;
+  cfg = {
+    params: p_params,
+    options: {
+      method: 'POST',
+      agent: false
+    }
+  };
+  tmp = require("url").parse(p_uri);
+  cfg.options.port = (
+    tmp.port || (tmp.protocol.match(/^https/i) ? '443' : '80')
+  );
+  cfg.options.protocol = tmp.protocol;
+  cfg.options.host = tmp.host;
+  cfg.options.path = tmp.path;
+
+  cb = function(r) {
+    if (r.CODE === "200") {
+      delete cfg.params.pw;
+      delete cfg.params.login;
+      delete cfg.params.user;
+      cfg.params.session = r.PROPERTY.SESSION[0];
+    }
+    //return the socket configuration for reuse
+    p_cb(r, cfg);
+  };
+  this.request({
+    command: "StartSession"
+  }, cfg, cb, cb);
+};
+
+/**
+ * method for api logout / ending session
+ * @param {Object} p_cfg the socket config
+ * @param {Function} p_cb callback method
+ */
+Client.prototype.logout = function(p_cfg, p_cb) {
+  this.request({
+    command: "EndSession"
+  }, p_cfg, p_cb, p_cb);
+};
+
 /**
  * perform a command request to the 1API backend API
  * @param {Object} p_cmd Object specifying the command to request
+ * @param {Object} p_cfg the socket config
  */
-Client.prototype.createConnection = function(p_cmd) {
-  var key,
-    data = "",
-    oself = this;
-  for (key in oself.logincfg) {
-    if (oself.logincfg.hasOwnProperty(key)) {
+Client.prototype.createConnection = function(p_cmd, p_cfg) {
+  var key, data = "";
+  for (key in p_cfg.params) {
+    if (p_cfg.params.hasOwnProperty(key)) {
       data += encodeURIComponent('s_' + key);
-      data += "=" + encodeURIComponent(oself.logincfg[key]) + "&";
+      data += "=" + encodeURIComponent(p_cfg.params[key]) + "&";
     }
   }
   data += encodeURIComponent("s_command");
   data += "=" + encodeURIComponent(ispapi.Client.command_encode(p_cmd));
 
-  return new ispapi.Request(oself.socketcfg, data);
+  return new ispapi.Request(p_cfg.options, data);
 };
 
 /**
