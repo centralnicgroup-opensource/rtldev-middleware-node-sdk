@@ -9,43 +9,101 @@ For further informations visit our homepage http://1api.net and do not hesitate 
 
 ## Usage
 
+### API response format
+If you got the API communication working, you will notice that we provide two response formats via this library.
+a) hash format
+b) list format
+
+The response format can be switched by providing a 5th parameter to the request method e.g.:
+
+```js
+apiclient.request(command, socketconfig, callback, callbackError, type);
+//apiclient.request(command, socketconfig, callback, callbackError, "hash");
+//apiclient.request(command, socketconfig, callback, callbackError, "list");
+```
+The default value for type is "hash". Thus not providing this parameter automatically returns the hash format.
+The list format makes sense, if you're working with table libraries based on our list commands and need the hash format parsed into a list format.
+
+### API response codes
+The API response (a JSON object) provides always two keys: CODE and DESCRIPTION.
+CODE represents a return code which indicates the following cases:
+"200" -> The command has been processed successfully by the API
+"4xx" -> A temporary API error occured, retry later
+"5xx" -> An API error occured
+
+In case of a (temporary) error the DESCRIPTION may provide more details on the reason.
+
+The hash format provides a PROPERTY key that returns potential data.
+The list format provides a LIST key that returns potential data.
+
+### API login procedure
+
+```js
+var apiconnector = require('ispapi-connector')
+  , apiclient = new apiconnector.Client()
+  , socketparameters, cb;
+
+//--- socket parameters in JSON format
+socketparameters = {
+  entity: "1234",//OT&E system, use "54cd" for LIVE system
+  login: "test.user",//your user id, here: the OT&E demo user
+  pw: "test.passw0rd",//your user password
+  remoteaddr: "1.2.3.4:80"//optional: provide your remote ip address
+  //remoteaddr: provide it, if you have an ip address filter activated in your account for security reasons
+};
+
+//--- login callback method
+cb = function(r, socketcfg){
+  if (r.CODE!=="200")//login failed
+    return;
+  //login succeeded
+  //r.PROPERTY.SESSION[0] contains the api session id which is required for further api communication
+  //reuse socketcfg for every further api request or the api logout at end (it contains already the above mentioned session id)
+};
+
+//--- perform a login to the provided url
+apiclient.login(socketparameters, cb);
+```
+
+### API command request
+After login, you should reuse the above 'socketcfg' parameter in further requests which is the simplest and best way.
+
 ```js
 var apiconnector = require('ispapi-apiconnector')
-  , api = new apiconnector.Client()
-  , c;
+  , apiclient = new apiconnector.Client()
+  , cb, cberr;
 
-/** mandantory: set your account name and password for later requests
- * NOTE: if not set, credentials of demo user in OT&E (Test) system will be used by default as fallback
- * 1st parameter: account name
- * 2nd parameter: password
- * 3rd parameter: system environment / entity. Use "1234" for OT&E (Testsystem) and "54cd" for Production System
- * 4th parameter: your remote address including port (optional)
- * 5th parameter: subuser-id (optional)
- */
-api.login("test.user", "test.passw0rd", "1234", "1.2.3.4:80");//OT&E demo user
+//optional callback method (success case)
+cb = function(r){
+  //api communication succeeded
+  //r -> api response in hash/list format, read above
+  console.dir(r);
+};
 
-/** optional: set url for api connection
- * NOTE: if not set, default connection url will be used
- */
-api.connect("https://coreapi.1api.net/api/call.cgi");
+//optional callback method (error handler)
+cberr = function(r){
+  //this is the callback method that is called in any error case (network issue etc.)
+  //r -> api response in hash/list format, read above
+  console.dir(r);
+};
 
-//create connection instance to work with
-c = api.createConnection({
-	COMMAND : "StatusUser"
-});
+apiclient.request({ COMMAND : "StatusUser" }, socketcfg, cb, cberr);
+```
 
-//output api response when ready
-c.once("response", function(r){
-	console.dir(r.as_hash());
-});
+### API logout
+```js
+var apiconnector = require('ispapi-connector')
+  , apiclient = new apiconnector.Client()
+  , cb;
 
-//react on error events
-c.on("error", function(e){
-	console.log(e.message);
-});
+//optional callback method
+cb = function(r){
+  //r -> api response in hash/list format, read above
+  //r.CODE === "200": the api session is now destroyed
+  console.dir(r);
+};
 
-//perform the request
-c.request();
+api.logout(socketcfg, cb);
 ```
 
 ## FAQ
