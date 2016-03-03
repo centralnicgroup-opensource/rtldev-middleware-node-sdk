@@ -17,12 +17,13 @@ b) list format
 The response format can be switched by providing a 5th parameter to the request method e.g.:
 
 ```js
-apiclient.request(command, socketconfig, callback, callbackError, type);
-//apiclient.request(command, socketconfig, callback, callbackError, "hash");
-//apiclient.request(command, socketconfig, callback, callbackError, "list");
+apiclient.request(command, socketcfg, callbackSuccess, callbackError, type);
+//apiclient.request(command, socketconfig, callbackSuccess, callbackError, "hash");
+//apiclient.request(command, socketconfig, callbackSuccess, callbackError, "list");
 ```
 The default value for type is "hash". Thus not providing this parameter automatically returns the hash format.
 The list format makes sense, if you're working with table libraries based on our list commands and need the hash format parsed into a list format.
+NOTE: You have to login first. The login callback provides an updated socketcfg variable which has to be reused in the request and logout method.
 
 ### API response codes
 The API response (a JSON object) provides always two keys: CODE and DESCRIPTION.
@@ -89,6 +90,7 @@ cberr = function(r){
 
 apiclient.request({ COMMAND : "StatusUser" }, socketcfg, cb, cberr);
 ```
+NOTE: You have to login first. The login callback provides an updated socketcfg variable which has to be reused in the request and logout method.
 
 ### API logout
 ```js
@@ -104,6 +106,57 @@ cb = function(r){
 };
 
 api.logout(socketcfg, cb);
+```
+NOTE: You have to login first. The login callback provides an updated socketcfg variable which has to be reused in the request and logout method.
+
+## Working example
+```js
+/* jslint node:true, devel:true, nomen:true, regexp:true */
+/* jshint node:true, devel:true, nomen:true, regexp:true */
+
+'use strict';
+
+var apiconnector = require('ispapi-apiconnector'),
+  apiclient = new apiconnector.Client(),
+  socketparameters;
+
+//--- socket parameters in JSON format
+socketparameters = {
+  entity: "1234", //OT&E system, use "54cd" for LIVE system
+  login: "test.user", //your user id, here: the OT&E demo user
+  pw: "test.passw0rd", //your user password
+  //user: "...",//can be used to work with a subuser account - optional
+  remoteaddr: "1.2.3.4:80" //optional: provide your remote ip address (use for ip filter)
+};
+
+//--- perform a login to the provided url
+console.log("login ...");
+apiclient.login(socketparameters, function(r, socketcfg) {
+  if (r.CODE !== "200") { //login failed
+    console.log(" FAILED -> " + r.CODE + " " + r.DESCRIPTION);
+    return;
+  }
+  console.log(" SUCCESS");
+
+  console.log("requesting user status ...");
+  apiclient.request({
+    COMMAND: "StatusUser"
+  }, socketcfg, function(r) {
+
+    console.log("---- API response ----");
+    console.dir(r);
+
+    console.log("logout ...");
+    apiclient.logout(socketcfg, function(r) {
+      if (r.CODE !== "200") { //logout failed
+        console.log(" FAILED -> " + r.CODE + " " + r.DESCRIPTION);
+        return;
+      }
+      console.log(" SUCCESS");
+    });
+  });
+
+});
 ```
 
 ## FAQ
