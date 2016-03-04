@@ -11,6 +11,10 @@
 
 var util = require("util");
 var events = require("events");
+var expiredResponse = {
+  CODE: 507,
+  DESCRIPTION: "User session expired."
+};
 
 /**
  * @alias node.ispapi-apiconnector.Request
@@ -100,6 +104,8 @@ Client.command_encode = function(p_cmd) {
  * @param {Function} [p_type]   the response type format: hash or list
  */
 Client.prototype.request = function(p_cmd, p_cfg, p_cb, p_cberr, p_type) {
+  if (!p_cfg)
+    p_cb(expiredResponse);
   if (!p_type || (p_type !== 'hash' && p_type !== 'list'))
     p_type = 'hash';
   //----- the socket configuration ----
