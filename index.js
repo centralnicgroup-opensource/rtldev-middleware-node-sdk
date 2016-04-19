@@ -53,7 +53,7 @@ Request.prototype.request = function() {
         oself.emit('error', e);
       });
     });
-  req.setTimeout(10000);
+  req.setTimeout(250000); //250s (to be sure to get an API response)
   req.on('socket', function(socket) {
     socket.on('timeout', function() {
       req.abort();
@@ -143,8 +143,8 @@ Client.prototype.request = function(p_cmd, p_cfg, p_cb, p_cberr, p_type) {
   if (p_cberr) {
     c.on("error", function(e) {
       p_cberr({
-        CODE: "500",
-        DESCRIPTION: e.message
+        CODE: "421",
+        DESCRIPTION: "Service is temporarily not available"
       });
     });
   }
