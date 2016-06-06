@@ -211,7 +211,7 @@ Client.prototype.logout = function(p_cfg, p_cb) {
  * @param {Object} p_cfg the socket config
  */
 Client.prototype.createConnection = function(p_cmd, p_cfg) {
-  var key, cmdkey, data = "";
+  var key, data = "";
   for (key in p_cfg.params) {
     if (p_cfg.params.hasOwnProperty(key)) {
       data += encodeURIComponent('s_' + key);
