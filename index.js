@@ -11,9 +11,10 @@
 
 var util = require("util");
 var events = require("events");
-var expiredResponse = {
-  CODE: 507,
-  DESCRIPTION: "User session expired."
+var responses = {
+  expired: "[RESPONSE]\ncode=423\ndescription=Command failed due to server error. Client should try again (Could not get session)\nEOF\n", //-> had been 507 User session expired
+  empty: "[RESPONSE]\ncode=423\ndescription=Empty API response\nEOF\n",
+  error: "[RESPONSE]\ncode=421\ndescription=Command failed due to server error. Client should try again\nEOF\n"
 };
 
 /**
@@ -22,12 +23,14 @@ var expiredResponse = {
  * @augments events.EventEmitter
  * @param {Object} p_cfg socket configuration
  * @param {String} p_data post request data
+ * @param {Object} p_command the API command to request (included in p_data)
  * @constructor
  */
-var Request = function(p_cfg, p_data) {
+var Request = function(p_cfg, p_data, p_command) {
   events.EventEmitter.call(this);
   this.socketcfg = p_cfg;
   this.data = p_data;
+  this.cmd = p_command;
 };
 util.inherits(Request, events.EventEmitter);
 
@@ -45,12 +48,12 @@ Request.prototype.request = function() {
         response += chunk;
       });
       res.on('end', function() {
-        oself.emit("response", new ispapi.Response(response));
+        oself.emit("response", new ispapi.Response(response, this.command));
         response = "";
       });
       res.on('error', function(e) {
-        e.message = 'problem with response: ' + e.message;
-        oself.emit('error', e);
+        //e.message = 'problem with response: ' + e.message;
+        oself.emit('error', new ispapi.Response(responses.error, this.command));
       });
     });
   req.setTimeout(250000); //250s (to be sure to get an API response)
@@ -60,8 +63,8 @@ Request.prototype.request = function() {
     });
   });
   req.on('error', function(e) {
-    e.message = 'problem with request: ' + e.message;
-    oself.emit('error', e);
+    //e.message = 'problem with request: ' + e.message;
+    oself.emit('error', new ispapi.Response(responses.error));
   });
   req.write(oself.data);
   req.end();
@@ -105,7 +108,7 @@ Client.command_encode = function(p_cmd) {
  */
 Client.prototype.request = function(p_cmd, p_cfg, p_cb, p_cberr, p_type) {
   if (!p_cfg)
-    p_cb(expiredResponse);
+    p_cb(responses.expired);
   if (!p_type || (p_type !== 'hash' && p_type !== 'list'))
     p_type = 'hash';
   //----- the socket configuration ----
@@ -141,11 +144,8 @@ Client.prototype.request = function(p_cmd, p_cfg, p_cb, p_cberr, p_type) {
     });
   }
   if (p_cberr) {
-    c.on("error", function(e) {
-      p_cberr({
-        CODE: "421",
-        DESCRIPTION: "Service is temporarily not available"
-      });
+    c.on("error", function(r) {
+      p_cberr(r["as_" + p_type]());
     });
   }
   c.request();
@@ -211,7 +211,7 @@ Client.prototype.logout = function(p_cfg, p_cb) {
  * @param {Object} p_cfg the socket config
  */
 Client.prototype.createConnection = function(p_cmd, p_cfg) {
-  var key, data = "";
+  var key, cmdkey, data = "";
   for (key in p_cfg.params) {
     if (p_cfg.params.hasOwnProperty(key)) {
       data += encodeURIComponent('s_' + key);
@@ -221,26 +221,24 @@ Client.prototype.createConnection = function(p_cmd, p_cfg) {
   data += encodeURIComponent("s_command");
   data += "=" + encodeURIComponent(ispapi.Client.command_encode(p_cmd));
 
-  return new ispapi.Request(p_cfg.options, data);
+  return new ispapi.Request(p_cfg.options, data, p_cmd);
 };
 
 /**
  * @alias node.ispapi-apiconnector.Response
  * @desc Used to handle the response of the 1API backend API Constructor
  * @param {String} p_r String specifying the unparsed plain API response
+ * @param {Object} p_command the API command of that request
  * @constructor
  */
-var Response = function(p_r) {
-  p_r = (
-    (!p_r || p_r === "") ?
-    "[RESPONSE]\ncode=423\ndescription=Empty response from API\nEOF\n" :
-    p_r
-  );
+var Response = function(p_r, p_command) {
+  p_r = ((!p_r || p_r === "") ? responses.empty : p_r);
   this.colregexp = false;
   this.data = {
     unparsed: p_r,
     parsed: ispapi.Response.parse(p_r)
   };
+  this.cmd = p_command;
   this.it = (function(rows) {
     var index = 0;
     return {
@@ -411,6 +409,15 @@ Response.prototype = {
     return false;
   },
   /**
+   * Overridable method to apply custom changes to the API response
+   * Note: Adding new keys to the object may be a valid change (but use it with caution)
+   * @param  {Object} r the response object
+   * @return {Object} the customized response
+   */
+  applyCustomChanges: function(r) {
+    return r;
+  },
+  /**
    * return the unparsed API response
    * @return {String} unparsed API response
    */
@@ -423,9 +430,9 @@ Response.prototype = {
    * @return {Object} parsed API response
    */
   as_hash: function() {
+    var key, d;
     if (this.colregexp) {
-      var d = JSON.parse(JSON.stringify(this.data.parsed)),
-        key;
+      d = JSON.parse(JSON.stringify(this.data.parsed));
       if (d.hasOwnProperty("PROPERTY")) {
         for (key in d.PROPERTY) {
           if (d.PROPERTY.hasOwnProperty(key)) {
@@ -433,9 +440,8 @@ Response.prototype = {
           }
         }
       }
-      return d;
-    }
-    return this.data.parsed;
+    } else d = this.data.parsed;
+    return this.applyCustomChanges(d);
   },
   /**
    * return the parsed API response as list
