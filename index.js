@@ -1,4 +1,4 @@
-/*!
+/*
  * ispapi-apiconnector
  * Copyright(c) 2015 Kai Schwarz, 1API GmbH
  * MIT Licensed
@@ -30,7 +30,7 @@ var Request = function(p_cfg, p_data, p_command) {
   events.EventEmitter.call(this);
   this.socketcfg = p_cfg;
   this.data = p_data;
-  this.cmd = p_command;
+  this.cmd = JSON.parse(JSON.stringify(p_command));
 };
 util.inherits(Request, events.EventEmitter);
 
@@ -48,12 +48,12 @@ Request.prototype.request = function() {
         response += chunk;
       });
       res.on('end', function() {
-        oself.emit("response", new ispapi.Response(response, this.command));
+        oself.emit("response", new ispapi.Response(response, oself.cmd));
         response = "";
       });
       res.on('error', function(e) {
         //e.message = 'problem with response: ' + e.message;
-        oself.emit('error', new ispapi.Response(responses.error, this.command));
+        oself.emit('error', new ispapi.Response(responses.error, oself.cmd));
       });
     });
   req.setTimeout(250000); //250s (to be sure to get an API response)
@@ -64,7 +64,7 @@ Request.prototype.request = function() {
   });
   req.on('error', function(e) {
     //e.message = 'problem with request: ' + e.message;
-    oself.emit('error', new ispapi.Response(responses.error));
+    oself.emit('error', new ispapi.Response(responses.error, oself.cmd));
   });
   req.write(oself.data);
   req.end();
@@ -238,7 +238,7 @@ var Response = function(p_r, p_command) {
     unparsed: p_r,
     parsed: ispapi.Response.parse(p_r)
   };
-  this.cmd = p_command;
+  this.cmd = JSON.parse(JSON.stringify(p_command));
   this.it = (function(rows) {
     var index = 0;
     return {
