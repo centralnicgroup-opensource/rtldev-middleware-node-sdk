@@ -117,7 +117,7 @@ Client.prototype.request = function(p_cmd, p_cfg, p_cb, p_cberr, p_type) {
   //port -> the socket port
   //protocol -> the socket protocol
   //headers -> custom headers to use
-  var opts = p_cfg.options;
+  var opts = p_cfg.options || this.getDefaultOptions();
 
   // set the expect header for performance improvement if not set
   if (!opts.headers)
@@ -151,6 +151,22 @@ Client.prototype.request = function(p_cmd, p_cfg, p_cb, p_cberr, p_type) {
   c.request();
 };
 
+Client.prototype.getDefaultOptions = function(p_uri) {
+  var options = {
+    method: 'POST',
+    agent: false
+  };
+  var tmp = require("url").parse(p_uri ||
+    'https://coreapi.1api.net/api/call.cgi');
+  options.port = (
+    tmp.port || (tmp.protocol.match(/^https/i) ? '443' : '80')
+  );
+  options.protocol = tmp.protocol;
+  options.host = tmp.host;
+  options.path = tmp.path;
+  return options;
+};
+
 /**
  * method for api login / session start
  * @param {Object} p_params specifying the socket parameters
@@ -166,19 +182,8 @@ Client.prototype.login = function(p_params, p_cb, p_uri) {
   var cb, tmp, cfg;
   cfg = {
     params: p_params,
-    options: {
-      method: 'POST',
-      agent: false
-    }
+    options: this.getDefaultOptions(p_uri)
   };
-  tmp = require("url").parse(p_uri);
-  cfg.options.port = (
-    tmp.port || (tmp.protocol.match(/^https/i) ? '443' : '80')
-  );
-  cfg.options.protocol = tmp.protocol;
-  cfg.options.host = tmp.host;
-  cfg.options.path = tmp.path;
-
   cb = function(r) {
     if (r.CODE === "200") {
       delete cfg.params.pw;
@@ -220,7 +225,6 @@ Client.prototype.createConnection = function(p_cmd, p_cfg) {
   }
   data += encodeURIComponent("s_command");
   data += "=" + encodeURIComponent(ispapi.Client.command_encode(p_cmd));
-
   return new ispapi.Request(p_cfg.options, data, p_cmd);
 };
 

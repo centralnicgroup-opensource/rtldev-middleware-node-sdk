@@ -38,7 +38,6 @@ The hash format provides a PROPERTY key that returns potential data.
 The list format provides a LIST key that returns potential data.
 
 ### API login procedure
-
 ```js
 var apiconnector = require('ispapi-connector')
   , apiclient = new apiconnector.Client()
@@ -110,9 +109,11 @@ api.logout(socketcfg, cb);
 NOTE: You have to login first. The login callback provides an updated socketcfg variable which has to be reused in the request and logout method.
 
 ## Working example
+This example is thought for anyone who builds up his own frontend including user login and logout functionality.
+See how login and logout works and how the request method depends on the login mechanism!
+The logout can be done at any time separetely triggered. After logout no further requests are possible.
+Note: you have to first finish your requests before doing logout. Running requests may fail after logout.
 ```js
-/* jslint node:true, devel:true, nomen:true, regexp:true */
-/* jshint node:true, devel:true, nomen:true, regexp:true */
 
 'use strict';
 
@@ -146,6 +147,9 @@ apiclient.login(socketparameters, function(r, socketcfg) {
     console.log("---- API response ----");
     console.dir(r);
 
+    //... further commands ...
+
+    //--- finally do logout
     console.log("logout ...");
     apiclient.logout(socketcfg, function(r) {
       if (r.CODE !== "200") { //logout failed
@@ -155,7 +159,33 @@ apiclient.login(socketparameters, function(r, socketcfg) {
       console.log(" SUCCESS");
     });
   });
+});
+```
 
+## Working example (without API session)
+In the below example no login / logout procedure is required.
+This is thought for cases where a user session is not of interest.
+But in that case you always have to provide user and password accordingly.
+If you want to build your frontend based on this library, we suggest to base it on the above example.
+```js
+
+'use strict';
+
+var apiconnector = require('ispapi-apiconnector'),
+  apiclient = new apiconnector.Client(),
+  socketparameters =  {
+  	params: {
+      entity: '1234',
+      remoteaddr: '1.2.3.4:80',
+      login: 'test.user',
+      pw: 'test.passw0rd'
+    }
+  };
+
+apiclient.request({
+  COMMAND: "StatusAccount"
+}, socketparameters, function(r) {
+  console.dir(r);
 });
 ```
 
