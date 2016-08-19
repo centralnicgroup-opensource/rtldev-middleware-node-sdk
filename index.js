@@ -12,8 +12,8 @@
 var util = require("util");
 var events = require("events");
 var responses = {
-  expired: "[RESPONSE]\ncode=423\ndescription=Command failed due to client error. (no valid session)\nEOF\n", //-> had been 507 User session expired
-  empty: "[RESPONSE]\ncode=423\ndescription=Empty API response\nEOF\n",
+  expired: "[RESPONSE]\ncode=423\ndescription=Command failed due to client error. (no valid session)\nTRANSLATIONKEY=FAPI.423\nEOF\n",
+  empty: "[RESPONSE]\ncode=424\ndescription=Empty API response\nTRANSLATIONKEY=FAPI.424\nEOF\n",
   error: "[RESPONSE]\ncode=421\ndescription=Command failed due to server error. Client should try again\nEOF\n"
 };
 
