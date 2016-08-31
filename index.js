@@ -180,7 +180,7 @@ Client.prototype.login = function(p_params, p_cb, p_uri, p_cmd) {
   else if (!p_uri.match(/^(http|https):\/\//))
     throw new Error("Unsupported protocol within api connection uri.");
 
-  var cb, tmp, cfg;
+  var cb, cfg;
   cfg = {
     params: p_params,
     options: this.getDefaultOptions(p_uri)
