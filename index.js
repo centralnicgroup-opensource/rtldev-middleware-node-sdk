@@ -172,8 +172,9 @@ Client.prototype.getDefaultOptions = function(p_uri) {
  * @param {Object} p_params specifying the socket parameters
  * @param {Function} p_cb callback method
  * @param {String} [p_uri] specifying the socket uri to use
+ * @param {Object} [p_cmd] specifying additional startsession command paramaeters
  */
-Client.prototype.login = function(p_params, p_cb, p_uri) {
+Client.prototype.login = function(p_params, p_cb, p_uri, p_cmd) {
   if (!p_uri)
     p_uri = "https://coreapi.1api.net/api/call.cgi";
   else if (!p_uri.match(/^(http|https):\/\//))
@@ -194,9 +195,9 @@ Client.prototype.login = function(p_params, p_cb, p_uri) {
     //return the socket configuration for reuse
     p_cb(r, cfg);
   };
-  this.request({
+  this.request(Object.assign({
     command: "StartSession"
-  }, cfg, cb, cb);
+  }, p_cmd || {}), cfg, cb, cb);
 };
 
 /**
