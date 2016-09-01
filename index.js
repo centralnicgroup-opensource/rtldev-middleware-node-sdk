@@ -107,8 +107,11 @@ Client.command_encode = function(p_cmd) {
  * @param {Function} [p_type]   the response type format: hash or list
  */
 Client.prototype.request = function(p_cmd, p_cfg, p_cb, p_cberr, p_type) {
-  if (!p_cfg)
-    p_cb(responses.expired);
+  if (!p_cfg){
+    var r = new ispapi.Response(responses.expired, p_cmd);
+    p_cb(r["as_" + p_type]);
+    return;
+  }
   if (!p_type || (p_type !== 'hash' && p_type !== 'list'))
     p_type = 'hash';
   //----- the socket configuration ----
