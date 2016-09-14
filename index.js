@@ -328,6 +328,32 @@ Response.serialize = function (r) {
 Response.getTemplates = function () {
   return responses;
 };
+/**
+ * returns a default response template as parsed js object hash
+ * @param {String} p_tplid the id of the template to return
+ * @param {Boolean} p_parse flag to toggle the returned format. true: parsed, otherwise: unparsed
+ * @return {Object|String|Boolean}  default response template of false if not found
+ */
+Response.getTemplate = function (p_tplid, p_parse) {
+  if (responses[p_tplid])
+    if (p_parse)
+      return Response.parse(responses[p_tplid]);
+    else
+      return responses[p_tplid];
+  return false;
+};
+/**
+ * check if the given response matches a default response template
+ * @param  {Object} p_r given response
+ * @param  {String} p_tplid given default template id
+ * @return {Boolean}  the check result
+ */
+Response.isTemplateMatch = function (p_r, p_tplid) {
+  var tpl = Response.getTemplate(p_tplid, true);
+  if (tpl && p_r.CODE === tpl.CODE && p_r.DESCRIPTION === tpl.DESCRIPTION)
+    return true;
+  return false;
+};
 
 Response.pagerRegexp = /^(TOTAL|FIRST|LAST|LIMIT|COUNT)$/;
 
