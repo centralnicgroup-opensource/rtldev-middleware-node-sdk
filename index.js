@@ -11,11 +11,7 @@
 
 var util = require("util");
 var events = require("events");
-var responses = {
-  expired: "[RESPONSE]\ncode=530\ndescription=SESSION NOT FOUND.\nEOF\n",
-  empty: "[RESPONSE]\ncode=423\ndescription=Empty API response\nTRANSLATIONKEY=FAPI.424\nEOF\n",
-  error: "[RESPONSE]\ncode=421\ndescription=Command failed due to server error. Client should try again\nEOF\n"
-};
+var responses = require("./defaultresponses.js");
 
 /**
  * @alias node.ispapi-apiconnector.Request
@@ -26,43 +22,43 @@ var responses = {
  * @param {Object} p_command the API command to request (included in p_data)
  * @constructor
  */
-var Request = function(p_cfg, p_data, p_command) {
+var Request = function (p_cfg, p_data, p_command) {
   events.EventEmitter.call(this);
   this.socketcfg = p_cfg;
   this.data = p_data;
-  this.cmd = JSON.parse(JSON.stringify(p_command));
+  this.cmd = Object.assign({}, p_command);
 };
 util.inherits(Request, events.EventEmitter);
 
 /**
  * perform a command request to the 1API backend API
  */
-Request.prototype.request = function() {
+Request.prototype.request = function () {
   var req, oself = this;
   req = require(oself.socketcfg.protocol.replace(/\:$/, '')).request(
     oself.socketcfg,
-    function(res) {
+    function (res) {
       var response = "";
       res.setEncoding('utf8');
-      res.on('data', function(chunk) {
+      res.on('data', function (chunk) {
         response += chunk;
       });
-      res.on('end', function() {
+      res.on('end', function () {
         oself.emit("response", new ispapi.Response(response, oself.cmd));
         response = "";
       });
-      res.on('error', function(e) {
+      res.on('error', function (e) {
         //e.message = 'problem with response: ' + e.message;
         oself.emit('error', new ispapi.Response(responses.error, oself.cmd));
       });
     });
   req.setTimeout(250000); //250s (to be sure to get an API response)
-  req.on('socket', function(socket) {
-    socket.on('timeout', function() {
+  req.on('socket', function (socket) {
+    socket.on('timeout', function () {
       req.abort();
     });
   });
-  req.on('error', function(e) {
+  req.on('error', function (e) {
     //e.message = 'problem with request: ' + e.message;
     oself.emit('error', new ispapi.Response(responses.error, oself.cmd));
   });
@@ -76,7 +72,7 @@ Request.prototype.request = function() {
  * @augments events.EventEmitter
  * @constructor
  */
-var Client = function() {
+var Client = function () {
   events.EventEmitter.call(this);
 };
 util.inherits(Client, events.EventEmitter);
@@ -84,7 +80,7 @@ util.inherits(Client, events.EventEmitter);
  * convert given command object to string
  * @param {Object} p_cmd Object specifying the command to encode
  */
-Client.command_encode = function(p_cmd) {
+Client.command_encode = function (p_cmd) {
   var key, tmp = "";
   if (!(typeof p_cmd === 'string' || p_cmd instanceof String)) {
     for (key in p_cmd) {
@@ -106,8 +102,8 @@ Client.command_encode = function(p_cmd) {
  * @param {Function} [p_cberr]  the callback method (error case)
  * @param {Function} [p_type]   the response type format: hash or list
  */
-Client.prototype.request = function(p_cmd, p_cfg, p_cb, p_cberr, p_type) {
-  if (!p_cfg){
+Client.prototype.request = function (p_cmd, p_cfg, p_cb, p_cberr, p_type) {
+  if (!p_cfg) {
     var r = new ispapi.Response(responses.expired, p_cmd);
     p_cb(r["as_" + p_type]);
     return;
@@ -142,19 +138,19 @@ Client.prototype.request = function(p_cmd, p_cfg, p_cb, p_cberr, p_type) {
     params: p_cfg.params
   });
   if (p_cb) {
-    c.on("response", function(r) {
+    c.on("response", function (r) {
       p_cb(r["as_" + p_type]());
     });
   }
   if (p_cberr) {
-    c.on("error", function(r) {
+    c.on("error", function (r) {
       p_cberr(r["as_" + p_type]());
     });
   }
   c.request();
 };
 
-Client.prototype.getDefaultOptions = function(p_uri) {
+Client.prototype.getDefaultOptions = function (p_uri) {
   var options = {
     method: 'POST',
     agent: false
@@ -177,7 +173,7 @@ Client.prototype.getDefaultOptions = function(p_uri) {
  * @param {String} [p_uri] specifying the socket uri to use
  * @param {Object} [p_cmd] specifying additional startsession command paramaeters
  */
-Client.prototype.login = function(p_params, p_cb, p_uri, p_cmd) {
+Client.prototype.login = function (p_params, p_cb, p_uri, p_cmd) {
   if (!p_uri)
     p_uri = "https://coreapi.1api.net/api/call.cgi";
   else if (!p_uri.match(/^(http|https):\/\//))
@@ -188,7 +184,7 @@ Client.prototype.login = function(p_params, p_cb, p_uri, p_cmd) {
     params: p_params,
     options: this.getDefaultOptions(p_uri)
   };
-  cb = function(r) {
+  cb = function (r) {
     if (r.CODE === "200") {
       delete cfg.params.pw;
       delete cfg.params.login;
@@ -208,7 +204,7 @@ Client.prototype.login = function(p_params, p_cb, p_uri, p_cmd) {
  * @param {Object} p_cfg the socket config
  * @param {Function} p_cb callback method
  */
-Client.prototype.logout = function(p_cfg, p_cb) {
+Client.prototype.logout = function (p_cfg, p_cb) {
   this.request({
     command: "EndSession"
   }, p_cfg, p_cb, p_cb);
@@ -219,7 +215,7 @@ Client.prototype.logout = function(p_cfg, p_cb) {
  * @param {Object} p_cmd Object specifying the command to request
  * @param {Object} p_cfg the socket config
  */
-Client.prototype.createConnection = function(p_cmd, p_cfg) {
+Client.prototype.createConnection = function (p_cmd, p_cfg) {
   var key, data = "";
   for (key in p_cfg.params) {
     if (p_cfg.params.hasOwnProperty(key)) {
@@ -239,34 +235,34 @@ Client.prototype.createConnection = function(p_cmd, p_cfg) {
  * @param {Object} p_command the API command of that request
  * @constructor
  */
-var Response = function(p_r, p_command) {
+var Response = function (p_r, p_command) {
   p_r = ((!p_r || p_r === "") ? responses.empty : p_r);
   this.colregexp = false;
   this.data = {
     unparsed: p_r,
     parsed: ispapi.Response.parse(p_r)
   };
-  this.cmd = JSON.parse(JSON.stringify(p_command));
-  this.it = (function(rows) {
+  this.cmd = Object.assign({}, p_command);
+  this.it = (function (rows) {
     var index = 0;
     return {
-      previous: function() {
+      previous: function () {
         return (this.hasPrevious() ? rows[--index] : null);
       },
-      hasPrevious: function() {
+      hasPrevious: function () {
         return (index > 0);
       },
-      next: function() {
+      next: function () {
         return (this.hasNext() ? rows[++index] : null);
       },
-      hasNext: function() {
+      hasNext: function () {
         return (index < (rows.length - 1));
       },
-      rewind: function() {
+      rewind: function () {
         index = 0;
         return this.current();
       },
-      current: function() {
+      current: function () {
         return rows[index];
       }
     };
@@ -277,7 +273,7 @@ var Response = function(p_r, p_command) {
  * @param {String}   p_r String specifying the unparsed API response
  * @return {Object}      Response in hash format
  */
-Response.parse = function(r) {
+Response.parse = function (r) {
   var hash = {},
     regexp = /^([^\=]*[^\t\= ])[\t ]*=[\t ]*(.*)$/,
     m, mm;
@@ -304,7 +300,7 @@ Response.parse = function(r) {
  * @param  {Object} p_r Object specifying the parsed API response
  * @return {Object}     Response in unparsed plain text
  */
-Response.serialize = function(r) {
+Response.serialize = function (r) {
   if (r.DESCRIPTION === "") delete r.DESCRIPTION;
   var plain = "[RESPONSE]",
     key, i;
@@ -325,6 +321,13 @@ Response.serialize = function(r) {
   plain += "\n\nEOF\n";
   return plain;
 };
+/**
+ * returns the default response templates
+ * @return {Object}  default response templates
+ */
+Response.getTemplates = function () {
+  return responses;
+};
 
 Response.pagerRegexp = /^(TOTAL|FIRST|LAST|LIMIT|COUNT)$/;
 
@@ -333,7 +336,7 @@ Response.prototype = {
    * sets the columns to be available in the response
    * @param {String|Array} [arr] regexp or * to filter response columns
    */
-  useColumns: function(arr) {
+  useColumns: function (arr) {
     if (arr === "*") arr = false;
     this.colregexp = (
       arr ? new RegExp("^(" + arr.join("|") + ")$", "i") : false
@@ -343,42 +346,42 @@ Response.prototype = {
    * resets the iterator to start value 0 and returns first row
    * @return {Object|null} iterator
    */
-  rewind: function() {
+  rewind: function () {
     return this.it.rewind();
   },
   /**
    * checks if next row can be iterared
    * @return {Boolean} returns true if next row can be iterated, false otherwise
    */
-  hasNext: function() {
+  hasNext: function () {
     return this.it.hasNext();
   },
   /**
    * returns the row of the next iterator position
    * @return {Object|null} returns the row for the next iterator position
    */
-  next: function() {
+  next: function () {
     return this.it.next();
   },
   /**
    * checks if previous row can be iterated
    * @return {Boolean} returns true if prev. row can be iterated, false otherwise
    */
-  hasPrevious: function() {
+  hasPrevious: function () {
     return this.it.hasPrevious();
   },
   /**
    * returns the row of the previous iterator position
    * @return {Object|null} returns the row for the previous iterator position
    */
-  previous: function() {
+  previous: function () {
     return this.it.previous();
   },
   /**
    * returns the list row for the current iterator value
    * @return {Object} the current iterator row
    */
-  current: function() {
+  current: function () {
     return this.it.current();
   },
   /**
@@ -386,7 +389,7 @@ Response.prototype = {
    * @param {String} p_prop String specifying the property for value lookup
    * @return {Object|String|Boolean} Object/String if property found and is of type Object/String, false otherwise
    */
-  get: function(p_prop) {
+  get: function (p_prop) {
     if (this.data.parsed.hasOwnProperty(p_prop))
       return this.data.parsed[p_prop];
     return false;
@@ -396,7 +399,7 @@ Response.prototype = {
    * @param {String} p_prop String specifying the column/property identifier
    * @return {Array}        column values
    */
-  getColumn: function(p_prop) {
+  getColumn: function (p_prop) {
     var p = this.get("PROPERTY");
     if (p && p.hasOwnProperty(p_prop)) return p[p_prop]; // return whole column
     return false;
@@ -408,7 +411,7 @@ Response.prototype = {
    * @param {Boolean} p_cast_int Boolean integer cast the value [optional]
    * @return {String|Boolean} String if succeeded, Boolean (false) otherwise
    */
-  getColumnIndex: function(p_prop, p_idx, p_cast_int) {
+  getColumnIndex: function (p_prop, p_idx, p_cast_int) {
     var col = this.getColumn(p_prop);
     if (col && col[p_idx])
       return (
@@ -422,14 +425,14 @@ Response.prototype = {
    * @param  {Object} r the response object
    * @return {Object} the customized response
    */
-  applyCustomChanges: function(r) {
+  applyCustomChanges: function (r) {
     return r;
   },
   /**
    * return the unparsed API response
    * @return {String} unparsed API response
    */
-  as_string: function() {
+  as_string: function () {
     if (this.colregexp) return ispapi.Response.serialize(this.as_hash());
     return this.data.unparsed;
   },
@@ -437,10 +440,10 @@ Response.prototype = {
    * return the parsed API response
    * @return {Object} parsed API response
    */
-  as_hash: function() {
+  as_hash: function () {
     var key, d;
     if (this.colregexp) {
-      d = JSON.parse(JSON.stringify(this.data.parsed));
+      d = Object.assign({}, this.data.parsed);
       if (d.hasOwnProperty("PROPERTY")) {
         for (key in d.PROPERTY) {
           if (d.PROPERTY.hasOwnProperty(key)) {
@@ -455,7 +458,7 @@ Response.prototype = {
    * return the parsed API response as list
    * @return {Object} parse API response in list format
    */
-  as_list: function() {
+  as_list: function () {
     var r = this.as_hash(),
       tmp = {},
       key, row, row2, i, count = 0;
@@ -485,7 +488,7 @@ Response.prototype = {
             if (row.hasOwnProperty(key) && r.PROPERTY[key][i] !== undefined)
               row2[key] = r.PROPERTY[key][i];
           }
-          tmp.LIST.push(JSON.parse(JSON.stringify(row2)));
+          tmp.LIST.push(Object.assign({}, row2));
         }
       }
       tmp.meta = {
@@ -499,63 +502,63 @@ Response.prototype = {
    * return the API response code
    * @return {String} API response code
    */
-  code: function() {
+  code: function () {
     return this.get("CODE");
   },
   /**
    * return the API response description
    * @return {String} API response description
    */
-  description: function() {
+  description: function () {
     return this.get("DESCRIPTION");
   },
   /**
    * return the API response PROPERTY Object
    * @return {Object} API response PROPERTY Object
    */
-  properties: function() {
+  properties: function () {
     return this.get("PROPERTY");
   },
   /**
    * return the API response runtime
    * @return {String} API response runtime
    */
-  runtime: function() {
+  runtime: function () {
     return parseFloat(this.get("RUNTIME"));
   },
   /**
    * return the API response queuetime
    * @return {String} API response queuetime
    */
-  queuetime: function() {
+  queuetime: function () {
     return parseFloat(this.get("QUEUETIME"));
   },
   /**
    * check if the API response code stands for success
    * @return {Boolean} true if the API request succeeded, false otherwise
    */
-  is_success: function() {
+  is_success: function () {
     return (this.get("CODE").charAt(0) === '2');
   },
   /**
    * check if the API response code stands for a temporary error
    * @return {Boolean} true if the API request run into a temp. error, false otherwise
    */
-  is_tmp_error: function() {
+  is_tmp_error: function () {
     return (this.get("CODE").charAt(0) === '4');
   },
   /**
    * check if the API response code stand for an error
    * @return {Boolean} true if the API request failed, false otherwise
    */
-  is_error: function() {
+  is_error: function () {
     return !(this.is_success() || this.is_tmp_error());
   },
   /**
    * return the API response PROPERTY key names
    * @return {Array} API response PROPERTY key names
    */
-  columns: function() {
+  columns: function () {
     var key, cols = [],
       props = this.properties(),
       regexp = ispapi.Response.pagerRegexp;
@@ -570,7 +573,7 @@ Response.prototype = {
    * return pagination meta data of the API response
    * @return {Object} pagination meta data
    */
-  getPagination: function() {
+  getPagination: function () {
     return {
       FIRST: this.first(),
       LAST: this.last(),
@@ -587,14 +590,14 @@ Response.prototype = {
    * return the index of the first response entry
    * @return {Integer} index of the first response entry
    */
-  first: function() {
+  first: function () {
     return (this.getColumnIndex("FIRST", 0, true) || 0);
   },
   /**
    * return the count of items in the API list response
    * @return {Integer} count of items in the response
    */
-  count: function() {
+  count: function () {
     var c = this.getColumnIndex("COUNT", 0, true),
       cols, i, max = 0;
     if (c === false) {
@@ -612,28 +615,28 @@ Response.prototype = {
    * return the index of the last response entry
    * @return {Integer} index of the last response entry
    */
-  last: function() {
+  last: function () {
     return (this.getColumnIndex("LAST", 0, true) || this.count() - 1);
   },
   /**
    * @description return the count of items per page
    * @return {Integer} count of items per page
    */
-  limit: function() {
+  limit: function () {
     return (this.getColumnIndex("LIMIT", 0, true) || this.count() || 100);
   },
   /**
    * return the count of the total items matching the API request
    * @return {Integer} count of total items matching the API request
    */
-  total: function() {
+  total: function () {
     return (this.getColumnIndex("TOTAL", 0, 10) || this.count());
   },
   /**
    * return the count of result pages matching the request
    * @return {Integer} count of result pages matching the request
    */
-  pages: function() {
+  pages: function () {
     var t = this.total();
     if (t) return (Math.ceil(t / this.limit()) || 1);
     return 1;
@@ -642,7 +645,7 @@ Response.prototype = {
    * return the current page number
    * @return {Integer} current page number
    */
-  page: function() {
+  page: function () {
     if (this.count()) {
       var limit = this.limit();
       if (limit) return Math.floor(this.first() / limit) + 1;
@@ -653,14 +656,14 @@ Response.prototype = {
    * return the previous page number
    * @return {Integer} previous page number
    */
-  prevpage: function() {
+  prevpage: function () {
     return ((this.page() - 1) || 1);
   },
   /**
    * return the next page number
    * @return {Integer} next page number
    */
-  nextpage: function() {
+  nextpage: function () {
     var page = this.page() + 1,
       pages = this.pages();
     return (page <= pages ? page : pages);
