@@ -47,7 +47,7 @@ Request.prototype.request = function () {
         oself.emit("response", new ispapi.Response(response, oself.cmd));
         response = "";
       });
-      res.on('error', function (e) {
+      res.on('error', function () {
         //e.message = 'problem with response: ' + e.message;
         oself.emit('error', new ispapi.Response(responses.error, oself.cmd));
       });
@@ -58,7 +58,7 @@ Request.prototype.request = function () {
       req.abort();
     });
   });
-  req.on('error', function (e) {
+  req.on('error', function () {
     //e.message = 'problem with request: ' + e.message;
     oself.emit('error', new ispapi.Response(responses.error, oself.cmd));
   });
@@ -284,7 +284,7 @@ Response.parse = function (r) {
       mm = m[1].match(/^property\[([^\]]*)\]/i);
       if (mm) {
         if (!hash.hasOwnProperty("PROPERTY")) hash.PROPERTY = {};
-        mm[1] = mm[1].toUpperCase().replace(/\s/, '');
+        mm[1] = mm[1].toUpperCase().replace(/\s/g, '');
         if (!hash.PROPERTY.hasOwnProperty(mm[1])) hash.PROPERTY[mm[1]] = [];
         hash.PROPERTY[mm[1]].push(m[2].replace(/[\t ]*$/, ""));
       } else {
