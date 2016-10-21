@@ -104,7 +104,6 @@ Client.command_encode = function (p_cmd) {
  */
 Client.prototype.request = function (p_cmd, p_cfg, p_cb, p_cberr, p_type) {
   if (!p_cfg) {
-    console.log('SESSION EXPIRED [ispapi-apiconnector]: no socket config');
     var r = new ispapi.Response(responses.expired, p_cmd);
     p_cb(r["as_" + p_type]);
     return;
