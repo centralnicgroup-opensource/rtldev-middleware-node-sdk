@@ -147,6 +147,12 @@ Client.prototype.request = function (p_cmd, p_cfg, p_cb, p_cberr, p_type) {
       p_cberr(r["as_" + p_type]());
     });
   }
+  else {
+    c.on("error", function (r) {
+      console.error('ispapi-apiconnector: error event thrown in request method but no error callback method provided.');
+      console.error(JSON.stringify(r["as_" + p_type]()));
+    });
+  }
   c.request();
 };
 
