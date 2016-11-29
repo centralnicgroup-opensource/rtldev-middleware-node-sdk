@@ -139,11 +139,9 @@ apiclient.login(socketparameters, function(r, socketcfg) {
   }
   console.log(" SUCCESS");
 
-  console.log("requesting user status ...");
-  apiclient.request({
-    COMMAND: "StatusUser"
-  }, socketcfg, function(r) {
-
+  //define callback method which we use for success and error case
+  //you can also define a separate callback method for error case instead
+  var cb = function(r) {
     console.log("---- API response ----");
     console.dir(r);
 
@@ -158,7 +156,12 @@ apiclient.login(socketparameters, function(r, socketcfg) {
       }
       console.log(" SUCCESS");
     });
-  });
+  };
+
+  console.log("requesting user status ...");
+  apiclient.request({
+    COMMAND: "StatusUser"
+  }, socketcfg, cb, cb);
 });
 ```
 
@@ -182,11 +185,13 @@ var apiconnector = require('ispapi-apiconnector'),
     }
   };
 
+var cb = function(r) {
+  console.dir(r);
+};
+
 apiclient.request({
   COMMAND: "StatusAccount"
-}, socketparameters, function(r) {
-  console.dir(r);
-});
+}, socketparameters, cb, cb);
 ```
 
 ## FAQ
