@@ -4,3 +4,4 @@
 .metadata
 .externalToolBuilders
 node_modules/
+coverage/
