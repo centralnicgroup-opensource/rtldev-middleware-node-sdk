@@ -1,4 +1,4 @@
-3.6.0 / 2017-02-03
+4.0.0 / 2017-02-03
 ===================
 
   * Separate files for Request, Response and Client Module
