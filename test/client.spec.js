@@ -2,38 +2,45 @@
 /* jshint expr:true */
 "use strict";
 
+var testcmds = require('./test-commands.js');
 var expect = require('chai').expect;
-var apiconnector = require('../index.js');
 var events = require('events');
+var apiconnector = require('../index.js');
+var nock = require('nock');
+var Request = apiconnector.Request;
+var Response = apiconnector.Response;
+var Client = apiconnector.Client;
+var chkHlp = require('./check-helper.js');
+var expectPropertyFn = chkHlp.expectPropertyFn;
+var expectResponseHash = chkHlp.expectResponseHash;
+var expectValidSocketConfig = chkHlp.expectValidSocketConfig;
+
+after(function() {
+  nock.cleanAll();
+});
 
 describe("client.js", function() {
   this.timeout(250000);
   this.slow(1000);
-  var client;
+
   describe("check general class structure", function() {
     it("check constructor", function() {
-      expect(apiconnector).to.have.property('Client');
-      expect(apiconnector.Request).to.be.an('function');
-      client = apiconnector.Client;
-
-      var req = new client();
-      expect(req).to.be.instanceof(client);
+      var req = new Client();
+      expect(req).to.be.instanceof(Client);
       expect(req).to.be.instanceof(events.EventEmitter); //inheritance
     });
 
     var methods = ["command_encode", "getDefaultOptions"];
     methods.forEach(function(m) {
       it("check existance of non-prototype method '" + m + "'", function() {
-        expect(client).to.have.property(m);
-        expect(client[m]).to.be.an('function');
+        expectPropertyFn(Client, m);
       });
     });
 
     methods = ["request", "login", "logout", "createConnection"];
     methods.forEach(function(m) {
       it("check existance of prototype method '" + m + "'", function() {
-        expect(client.prototype).to.have.property(m);
-        expect(client.prototype[m]).to.be.an('function');
+        expectPropertyFn(Client.prototype, m);
       });
     });
   });
@@ -42,36 +49,30 @@ describe("client.js", function() {
     it("test if stringifying JSON object and data encoding works basically", function() {
       var enc, validate;
       validate = "COMMAND=ModifyDomain\nAUTH=gwrgwqg%&\\44t3*\n";
-      enc = client.command_encode({
+      enc = Client.command_encode({
         COMMAND: "ModifyDomain",
         AUTH: "gwrgwqg%&\\44t3*"
       });
       expect(enc).to.equal(validate);
-      enc = client.command_encode("gregergege");
-      expect(enc).to.be.a('string');
-      expect(enc).to.be.empty;
+      enc = Client.command_encode("gregergege");
+      expect(enc).to.equal('');
     });
   });
 
   describe("Client.getDefaultOptions", function() {
-    it("test if generating configuration defaults works", function() {
-      var cfg = client.getDefaultOptions();
+    it("test if generating socket configuration defaults works", function() {
+      var cfg = Client.getDefaultOptions();
       expect(cfg).to.be.an('object');
-      ['host', 'port', 'protocol', 'method', 'path'].forEach(function(key) {
-        expect(cfg).to.have.property(key);
-      });
       expect(cfg.protocol).to.equal('https:');
       expect(cfg.host).to.equal('coreapi.1api.net');
       expect(cfg.port).to.equal('443');
       expect(cfg.method).to.equal('POST');
       expect(cfg.path).to.equal('/api/call.cgi');
     });
+
     it("test if generating configuration default works for given uri", function() {
-      var cfg = client.getDefaultOptions('http://coreapi.1api.net/api/call.cgi');
+      var cfg = Client.getDefaultOptions('http://coreapi.1api.net/api/call.cgi');
       expect(cfg).to.be.an('object');
-      ['host', 'port', 'protocol', 'method', 'path'].forEach(function(key) {
-        expect(cfg).to.have.property(key);
-      });
       expect(cfg.protocol).to.equal('http:');
       expect(cfg.host).to.equal('coreapi.1api.net');
       expect(cfg.port).to.equal('80');
@@ -80,7 +81,7 @@ describe("client.js", function() {
     });
   });
 
-  var cl = new apiconnector.Client();
+  var cl = new Client();
   var socketcfg;
 
   describe("Client.createConnection", function() {
@@ -104,7 +105,7 @@ describe("client.js", function() {
         }
       });
       expect(c).to.be.an('object');
-      expect(c).to.be.instanceof(apiconnector.Request);
+      expect(c).to.be.instanceof(Request);
     });
   });
 
@@ -116,11 +117,32 @@ describe("client.js", function() {
           login: "test.user", //your user id, here: the OT&E demo user
           pw: "test.passw0rd" //your user password
           //remoteaddr: provide it, if you have an ip address filter activated in your account for security reasons
-        }, done, 'ftp://coreapi.1api.net/api/call/.cgi');
+        }, null, 'ftp://coreapi.1api.net/api/call.cgi');
       };
       expect(fn).to.throw(Error);
       done();
     });
+
+    it("perform an API login with invalid credentials", function(done) {
+      var fn = function() {
+        nock('http://coreapi.1api.net')
+          .post('/api/call.cgi')
+          .reply(200, "[RESPONSE]\r\ncode=530\r\ndescription=Authentication failed\r\nqueuetime=0\r\nruntime=0.001\r\nEOF\r\n");
+
+        cl.login({
+          entity: "1234", //OT&E system, use "54cd" for LIVE system
+          login: "test.user.donotexists", //your user id, here: the OT&E demo user
+          pw: "####" //your user password
+          //remoteaddr: provide it, if you have an ip address filter activated in your account for security reasons
+        }, function(r) {
+          nock.restore();
+          expectResponseHash(r, '530', 'Authentication failed'); //maybe we can improve here with apiconnector.Response instance
+          done();
+        }, 'http://coreapi.1api.net/api/call.cgi');
+      };
+      expect(fn).to.not.throw(Error);
+    });
+
     it("perform an API login with demo credentials", function(done) {
       var fn = function() {
         cl.login({
@@ -129,21 +151,13 @@ describe("client.js", function() {
           pw: "test.passw0rd" //your user password
           //remoteaddr: provide it, if you have an ip address filter activated in your account for security reasons
         }, function(r, sockcfg) {
-          expect(r).to.be.an('object'); //maybe we can improve here with apiconnector.Response instance
-          expect(r).to.have.property('CODE');
+          socketcfg = sockcfg;
+          expectResponseHash(r); //maybe we can improve here with apiconnector.Response instance
           if (r.CODE !== "200") {
-            expect(parseInt(r.CODE), 10).to.be.within(200, 499);
+            expect(parseInt(r.CODE, 10)).to.be.within(200, 499);
+            done();
             return;
           }
-          expect(sockcfg).to.be.an('object');
-          expect(sockcfg).to.have.property('options');
-          expect(sockcfg).to.have.property('params');
-          expect(sockcfg.params).to.have.property('session');
-          expect(sockcfg.params).to.have.property('entity');
-          expect(sockcfg.params).to.not.have.property('pw');
-          expect(sockcfg.params).to.not.have.property('login');
-          expect(sockcfg.params).to.not.have.property('user');
-          socketcfg = sockcfg;
           done();
         });
       };
@@ -152,9 +166,17 @@ describe("client.js", function() {
   });
 
   describe("Client.request", function() {
+
+    beforeEach(function() {
+      expectValidSocketConfig(socketcfg);
+    });
+
+    afterEach(function() {
+      nock.restore();
+    });
+
     var uidxCB = function(r, done) {
-      expect(r).to.be.an('object');
-      expect(r).to.have.property('CODE');
+      expectResponseHash(r);
       if (r.CODE === '200') {
         expect(r).to.have.property('PROPERTY');
         expect(r.PROPERTY).to.have.property('USERINDEX');
@@ -166,62 +188,57 @@ describe("client.js", function() {
     };
 
     it("perform an API request [no callback provided]", function() {
-      expect(socketcfg).to.be.an('object');
-      cl.request({
-        COMMAND: 'GetUserIndex'
-      }, socketcfg);
+      nock('https://coreapi.1api.net')
+        .post('/api/call.cgi')
+        .reply(200, testcmds.getuserindex.RESPONSE.success);
+      cl.request(testcmds.getuserindex.COMMAND, socketcfg);
     });
 
     it("perform an API request [no socket cfg provided]", function(done) {
+      //no connection will be established!
       var cb = function(r) {
-        expect(r).to.be.an('object');
-        expect(r).to.have.property('CODE');
-        expect(r.CODE).to.be.equal('530');
-        expect(r.DESCRIPTION).to.be.equal('SESSION NOT FOUND');
+        expectResponseHash(r, '530', 'SESSION NOT FOUND');
         done();
       };
-      cl.request({
-        COMMAND: 'GetUserIndex'
-      }, null, cb, cb, 'hash');
+      cl.request(testcmds.getuserindex.COMMAND, null, cb, cb, 'hash');
     });
 
     it("perform an API request [socket cfg w/o options and headers]", function(done) {
-      expect(socketcfg).to.be.an('object');
+      nock.activate(); //reuse setting from 2 test before
       var cb = function(r) {
         uidxCB(r, done);
       };
-      var newcfg = Object.assign({}, socketcfg);
+      var newcfg = JSON.parse(JSON.stringify(socketcfg));
       delete newcfg.options;
-      cl.request({
-        COMMAND: 'GetUserIndex'
-      }, newcfg, cb, cb, 'hash');
+      cl.request(testcmds.getuserindex.COMMAND, newcfg, cb, cb, 'hash');
     });
 
     it("perform an API request [socket cfg w/o expect header]", function(done) {
-      expect(socketcfg).to.be.an('object');
-      var newcfg = Object.assign({}, socketcfg);
+      nock.activate(); //reuse setting from last test
+      var newcfg = JSON.parse(JSON.stringify(socketcfg));
       var cb = function(r) {
         uidxCB(r, done);
       };
       newcfg.options.headers = {};
-      cl.request({
-        COMMAND: 'GetUserIndex'
-      }, newcfg, cb, cb, 'hash');
+      cl.request(testcmds.getuserindex.COMMAND, newcfg, cb, cb, 'hash');
     });
 
     it("perform an API request [hash response]", function(done) {
-      expect(socketcfg).to.be.an('object');
+      nock.cleanAll();
+      //NOTE: here we perform a real API request for test purpose
       var cb = function(r) {
         uidxCB(r, done);
       };
-      cl.request({
-        COMMAND: 'GetUserIndex'
-      }, socketcfg, cb, cb, 'hash');
+      cl.request(testcmds.getuserindex.COMMAND, socketcfg, cb, cb, 'hash');
     });
+
     it("perform an API request [list response]", function(done) {
+      //here we fake again to save test runtime
+      nock('https://coreapi.1api.net')
+        .post('/api/call.cgi')
+        .reply(200, testcmds.querydomainlist.success.RESPONSE);
       var cb = function(r) {
-        expect(r).to.be.an('object');
-        expect(r).to.have.property('CODE');
+        expectResponseHash(r);
         if (r.CODE === '200') {
           expect(r).to.have.property('LIST');
           expect(r.LIST).to.be.an('array');
@@ -229,20 +246,33 @@ describe("client.js", function() {
         }
         done();
       };
-      cl.request({
-        COMMAND: 'QueryDomainList',
-        LIMIT: 2
-      }, socketcfg, cb, cb, 'list');
+      cl.request(testcmds.querydomainlist.success.COMMAND, socketcfg, cb, cb, 'list');
+    });
+
+    it("perform an API request [connection error]", function(done) {
+      //cannot nock connection error as nock is not on the network layer
+      var cfg = JSON.parse(JSON.stringify(socketcfg));
+      cfg.options.port = '8123';
+      cfg.options.protocol = 'http:';
+      cfg.options.host = 'gregergegegegerwrgwe.com';
+      var cb = function(r) {
+        var rv = Response.parse(Response.responses.error);
+        expectResponseHash(rv);
+        expectResponseHash(r, rv.CODE);
+        done();
+      };
+      cl.request(testcmds.getuserindex.COMMAND, cfg, cb, cb, 'hash');
+      //perform it again without callback for code coverage
+      //that's basically ok, as someone might really just want to do an API
+      //request without caring about the api response
+      cl.request(testcmds.getuserindex.COMMAND, cfg);
     });
   });
 
   describe("Client.logout", function() {
     it("perform an API logout using previous session", function(done) {
-      expect(socketcfg).to.be.an('object');
       cl.logout(socketcfg, function(r) {
-        expect(r).to.be.an('object');
-        expect(r).to.have.property('CODE');
-        expect(r.CODE).to.equal('200');
+        expectResponseHash(r, '200'); //maybe better Response instance here
         done();
       });
     });

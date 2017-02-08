@@ -5,8 +5,6 @@
  */
 'use strict';
 
-var responses = require("./defaultresponses.js");
-
 /**
  * @alias node.ispapi-apiconnector.Response
  * @desc Used to handle the response of the 1API backend API Constructor
@@ -15,7 +13,7 @@ var responses = require("./defaultresponses.js");
  * @constructor
  */
 var Response = function(p_r, p_command) {
-  p_r = ((!p_r || p_r === "") ? responses.empty : p_r);
+  p_r = ((!p_r || p_r === "") ? Response.responses.empty : p_r);
   this.colregexp = false;
   this.data = {
     unparsed: p_r,
@@ -85,8 +83,8 @@ Response.serialize = function(p_r) {
   r = Object.assign({}, p_r);
   plain = "[RESPONSE]";
   if (r.hasOwnProperty("PROPERTY")) {
-    Object.keys(r.PROPERTY).forEach(function(key){
-      r.PROPERTY[key].forEach(function(val, index){
+    Object.keys(r.PROPERTY).forEach(function(key) {
+      r.PROPERTY[key].forEach(function(val, index) {
         plain += "\r\nPROPERTY[" + key + "][" + index + "]=" + val;
       });
     });
@@ -103,7 +101,7 @@ Response.serialize = function(p_r) {
  * @return {Object}  default response templates
  */
 Response.getTemplates = function() {
-  return responses;
+  return Response.responses;
 };
 /**
  * returns a default response template as parsed js object hash
@@ -112,11 +110,11 @@ Response.getTemplates = function() {
  * @return {Object|String|Boolean}  default response template of false if not found
  */
 Response.getTemplate = function(p_tplid, p_parse) {
-  if (responses[p_tplid])
+  if (Response.responses[p_tplid])
     if (p_parse)
-      return Response.parse(responses[p_tplid]);
+      return Response.parse(Response.responses[p_tplid]);
     else
-      return responses[p_tplid];
+      return Response.responses[p_tplid];
   return false;
 };
 /**
@@ -247,11 +245,9 @@ Response.prototype = {
     var d;
     if (this.colregexp) {
       d = Object.assign({}, this.data.parsed);
-      if (d.hasOwnProperty("PROPERTY")) {
-        Object.keys(d.PROPERTY).forEach(function(key){
-          if (!key.match(this.colregexp)) delete d.PROPERTY[key];
-        }.bind(this));
-      }
+      Object.keys(d.PROPERTY).forEach(function(key) {
+        if (!key.match(this.colregexp)) delete d.PROPERTY[key];
+      }.bind(this));
     }
     else d = this.data.parsed;
     return this.applyCustomChanges(d);
@@ -261,7 +257,7 @@ Response.prototype = {
    * @return {Object} parse API response in list format
    */
   as_list: function() {
-    var r, tmp, key, row, row2, i, count;
+    var r, tmp, key, row2, i, count, keys;
     r = this.as_hash();
     tmp = {};
     count = 0;
@@ -271,26 +267,25 @@ Response.prototype = {
     }
     if (r.CODE === "200") {
       tmp.LIST = [];
-      row = {};
-      for (key in r.PROPERTY) {
-        if (r.PROPERTY.hasOwnProperty(key)) {
-          if (!key.match(Response.pagerRegexp)) { // paging info
-            row[key] = "";
-            if (r.PROPERTY[key].length > count) count = r.PROPERTY[key].length;
-          }
-        }
-      }
-      if (count) {
+      if (r.PROPERTY) {
+        keys = Object.keys(r.PROPERTY).filter(function(key) {
+          return !key.match(Response.pagerRegexp); // paging info
+        });
+        keys.forEach(function(key) {
+          if (r.PROPERTY[key].length > count)
+            count = r.PROPERTY[key].length;
+        });
         for (i = 0; i < count; i++) { // run up to max index found
           row2 = {};
-          for (key in row) { // run over all columns (properties) found
-            // NOTE: do not add column indexes that are not available
-            // -- avoids blowing up response size
-            // -- requires implementation of mechanisms to avoid access on
-            // these not existing indexes later (not part of this lib!)
-            if (row.hasOwnProperty(key) && r.PROPERTY[key][i] !== undefined)
+          // run over all columns (properties) found
+          // NOTE: do not add column indexes that are not available
+          // -- avoids blowing up response size
+          // -- requires implementation of mechanisms to avoid access on
+          // these not existing indexes later (not part of this lib!)
+          keys.forEach(function(key) {
+            if (r.PROPERTY[key][i] !== undefined)
               row2[key] = r.PROPERTY[key][i];
-          }
+          });
           tmp.LIST.push(Object.assign({}, row2));
         }
       }
@@ -426,7 +421,7 @@ Response.prototype = {
    * @return {Integer} count of items per page
    */
   limit: function() {
-    return (this.getColumnIndex("LIMIT", 0, true) || this.count() || 100);
+    return (this.getColumnIndex("LIMIT", 0, true) || this.count());
   },
   /**
    * return the count of the total items matching the API request
@@ -441,7 +436,7 @@ Response.prototype = {
    */
   pages: function() {
     var t = this.total();
-    if (t) return (Math.ceil(t / this.limit()) || 1);
+    if (t) return Math.ceil(t / this.limit()); //will never be 0
     return 1;
   },
   /**
@@ -450,8 +445,8 @@ Response.prototype = {
    */
   page: function() {
     if (this.count()) {
-      var limit = this.limit();
-      if (limit) return Math.floor(this.first() / limit) + 1;
+      //limit cannot be 0 as this.count() will cover this, no worries
+      return Math.floor(this.first() / this.limit()) + 1;
     }
     return 1;
   },
@@ -472,5 +467,7 @@ Response.prototype = {
     return (page <= pages ? page : pages);
   }
 };
+
+Response.responses = require('./defaultresponses');
 
 module.exports = Response;

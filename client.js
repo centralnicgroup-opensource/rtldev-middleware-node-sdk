@@ -3,17 +3,12 @@
  * Copyright(c) 2015 Kai Schwarz, 1API GmbH
  * MIT Licensed
  */
-
-/* jslint node:true */
-/* jshint node:true */
-
 'use strict';
 
 var util = require("util");
 var events = require("events");
 var Request = require("./request.js");
 var Response = require("./response.js");
-var responses = require("./defaultresponses.js");
 
 /**
  * @alias node.ispapi-apiconnector.Client
@@ -49,7 +44,7 @@ Client.command_encode = function(p_cmd) {
  */
 Client.prototype.request = function(p_cmd, p_cfg, p_cb, p_cberr, p_type) {
   if (!p_cfg) {
-    var r = new Response(responses.expired, p_cmd);
+    var r = new Response(Response.responses.expired, p_cmd);
     p_cb(r["as_" + p_type]());
     return;
   }
@@ -93,9 +88,9 @@ Client.prototype.request = function(p_cmd, p_cfg, p_cb, p_cberr, p_type) {
     });
   }
   else {
-    c.on("error", function(r) {
-      console.error('ispapi-apiconnector: error event thrown in request method but no error callback method provided.');
-      console.error(JSON.stringify(r["as_" + p_type]()));
+    c.on("error", function(/*r*/) {
+      //console.error('ispapi-apiconnector: error event thrown in request method but no error callback method provided.');
+      //console.error(JSON.stringify(r["as_" + p_type]()));
     });
   }
   c.request();
@@ -127,7 +122,7 @@ Client.getDefaultOptions = function(p_uri) {
 Client.prototype.login = function(p_params, p_cb, p_uri, p_cmdparams) {
   if (!p_uri)
     p_uri = "https://coreapi.1api.net/api/call.cgi";
-  else if (!p_uri.match(/^(http|https):\/\//))
+  if (!p_uri.match(/^(http|https):\/\//))
     throw new Error("Unsupported protocol within api connection uri.");
 
   var cb, cfg;
