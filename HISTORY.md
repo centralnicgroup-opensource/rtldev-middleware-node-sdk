@@ -1,4 +1,4 @@
-4.0.2 / 2017-02-09
+4.0.3 / 2017-02-09
 ===================
 
   * Removed badges as they are not working, maybe coming back to it in future
