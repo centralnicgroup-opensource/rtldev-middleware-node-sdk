@@ -2,50 +2,28 @@
 /* jshint expr:true */
 "use strict";
 
-var assert = require('chai').assert;
 var expect = require('chai').expect;
-var apiconnector = require('../index.js');
-
-var responseHashFormatCheck = function(r) {
-  expect(r).to.be.an('object');
-  expect(r).to.have.property('CODE');
-  expect(r).to.have.property('DESCRIPTION');
-  expect(r.CODE).to.be.a('string');
-  expect(r.DESCRIPTION).to.be.a('string');
-};
-
-var responseListRowCheck = function(row) {
-  expect(row).to.be.an('object');
-  expect(row).to.be.an.instanceof(Object);
-};
-
-var arrayCheck = function(col) {
-  expect(col).to.be.an('array');
-  expect(col).to.be.an.instanceof(Array);
-};
-
-var stringCheck = function(str) {
-  expect(str).to.be.a('string');
-};
+var Response = require('../response.js');
+var chkHlp = require('./check-helper.js');
+var expectResponse = chkHlp.expectResponse;
+var expectResponseHash = chkHlp.expectResponseHash;
+var expectPropertyFn = chkHlp.expectPropertyFn;
 
 var defaultResponseTemplates = ['404', 'error', 'empty', 'expired'];
 describe("response.js", function() {
-  var response = apiconnector.Response;
 
   describe("check general class structure", function() {
     it("check constructor", function() {
-      expect(apiconnector).to.have.property('Response');
-      expect(apiconnector.Response).to.be.an('function');
+      expect(Response).to.be.an('function');
     });
     it("check non-prototype vars", function() {
-      expect(apiconnector.Response).to.have.property('pagerRegexp');
-      expect(apiconnector.Response.pagerRegexp).to.be.an('regexp');
+      expect(Response).to.have.property('pagerRegexp');
+      expect(Response.pagerRegexp).to.be.a('regexp');
     });
     var methods = ["parse", "serialize", "getTemplates", "getTemplate", "isTemplateMatch"];
     methods.forEach(function(m) {
       it("check existance of non-prototype method '" + m + "'", function() {
-        expect(apiconnector.Response).to.have.property(m);
-        expect(apiconnector.Response[m]).to.be.an('function');
+        expectPropertyFn(Response, m);
       });
     });
     methods = [
@@ -57,8 +35,7 @@ describe("response.js", function() {
     ];
     methods.forEach(function(m) {
       it("check existance of prototype method '" + m + "'", function() {
-        expect(apiconnector.Response.prototype).to.have.property(m);
-        expect(apiconnector.Response.prototype[m]).to.be.an('function');
+        expectPropertyFn(Response.prototype, m);
       });
     });
   });
@@ -67,26 +44,22 @@ describe("response.js", function() {
     defaultResponseTemplates.forEach(function(tpl) {
       (function(rtpl) {
         it("return unparsed template '" + rtpl + "'", function() {
-          var r = response.getTemplate(rtpl);
-          stringCheck(r);
+          expect(Response.getTemplate(rtpl)).to.be.a('string');
         });
         it("return parsed template '" + rtpl + "'", function() {
-          var r = response.getTemplate(rtpl, true);
-          responseHashFormatCheck(r);
+          expectResponseHash(Response.getTemplate(rtpl, true));
         });
       }(tpl));
     });
 
     it("return non existing template '__iWillNeverExist__'", function() {
-      var r = response.getTemplate('__iWillNeverExist__');
-      expect(r).to.be.false; //false
+      expect(Response.getTemplate('__iWillNeverExist__')).to.be.false;
     });
   });
 
   describe("Response.getTemplates", function() {
     it("return all default response templates", function() {
-      var tpls = response.getTemplates();
-      expect(tpls).to.be.an('object');
+      expect(Response.getTemplates()).to.be.an('object');
     });
   });
 
@@ -95,11 +68,13 @@ describe("response.js", function() {
       (function(rtpl) {
         it("return parsed response template response", function() {
           //the below equals to Response.getTemplate(tpl, true);
-          var r = response.getTemplate(rtpl);
-          var hash = response.parse(r);
-          responseHashFormatCheck(hash);
+          expectResponseHash(Response.parse(Response.getTemplate(rtpl)));
         });
       }(tpl));
+    });
+
+    it("return parsed response for a response without DESCRIPTION", function() {
+      expectResponseHash(Response.parse("[RESPONSE]\r\ncode=421\r\nEOF\r\n"), '421', "");
     });
   });
 
@@ -108,64 +83,66 @@ describe("response.js", function() {
       (function(rtpl) {
         it("return parsed response template response", function() {
           //the below equals to Response.getTemplate(tpl, true);
-          var r = response.getTemplate(rtpl);
-          var hash = response.parse(r);
-          responseHashFormatCheck(hash);
+          var r = Response.getTemplate(rtpl);
+          var hash = Response.parse(r);
+          expectResponseHash(hash);
         });
       }(tpl));
     });
     it("serialize a parsed API response to plain text", function() {
-      var r = response.getTemplate('error');
-      var hash = response.parse(r);
-      var plain = response.serialize(hash);
-      stringCheck(plain);
+      var r = Response.getTemplate('error');
+      var plain = Response.serialize(Response.parse(r));
+      expect(plain).to.be.a('string');
       expect(plain).to.equal(r);
+    });
+    it("serialize a parsed API response to plain text [w/o CODE and DESCRIPTION]", function() {
+      expect(Response.serialize({
+        QUEUETIME: "0.00"
+      })).to.equal("[RESPONSE]\r\nqueuetime=0.00\r\nEOF\r\n");
     });
   });
 
   describe("Response.isTemplateMatch", function() {
     it("check if parsed API response matches a default response template", function() {
-      var hash = response.getTemplate('error', true);
-      var ismatch = response.isTemplateMatch(hash, 'error');
+      var hash = Response.getTemplate('error', true);
+      var ismatch = Response.isTemplateMatch(hash, 'error');
       expect(ismatch).to.be.true;
-      ismatch = response.isTemplateMatch(hash, 'expired');
+      ismatch = Response.isTemplateMatch(hash, 'expired');
       expect(ismatch).to.be.false;
-      ismatch = response.isTemplateMatch(hash, '__iWillNeverExist__');
+      ismatch = Response.isTemplateMatch(hash, '__iWillNeverExist__');
       expect(ismatch).to.be.false;
     });
   });
 
   describe("Response Instance", function() {
-    var exampleTPL = require('./test-commands.js');
+    var testcmds = require('./test-commands.js').querydomainlist;
     var r;
 
-    it("construct success example response template", function() {
-      r = new apiconnector.Response(null, exampleTPL.success.COMMAND);
-      expect(r).to.be.an('object');
-      expect(r).to.be.an.instanceof(apiconnector.Response);
+    it("construct success example response template [w/o response]", function() {
+      r = new Response(null, testcmds.success.COMMAND);
+      expectResponse(r);
     });
 
     it("construct success example response template", function() {
-      r = new apiconnector.Response(exampleTPL.success.RESPONSE, exampleTPL.success.COMMAND);
-      expect(r).to.be.an('object');
-      expect(r).to.be.an.instanceof(apiconnector.Response);
+      r = new Response(testcmds.success.RESPONSE, testcmds.success.COMMAND);
+      expectResponse(r);
     });
 
     it("iterator and its methods", function() {
       var it = r.it;
       expect(it).to.be.an('object');
-      assert.isFunction(it.hasNext);
+      expectPropertyFn(it, 'hasNext');
+      expectPropertyFn(it, 'hasPrevious');
+      expectPropertyFn(it, 'rewind');
+      expectPropertyFn(it, 'previous');
+      expectPropertyFn(it, 'next');
+      expectPropertyFn(it, 'current');
       expect(it.hasNext()).to.equal(true);
-      assert.isFunction(it.hasPrevious);
       expect(it.hasPrevious()).to.equal(false);
-      assert.isFunction(it.rewind);
       expect(it.rewind()).to.equal(it.current());
-      assert.isFunction(it.previous);
       expect(it.previous()).to.equal(null);
-      assert.isFunction(it.next);
       expect(it.next()).to.not.equal(null);
       expect(it.next()).to.equal(null);
-      assert.isFunction(it.current);
       expect(it.current()).to.be.an('object');
       it.rewind();
     });
@@ -179,24 +156,17 @@ describe("response.js", function() {
     });
 
     it("hasNext", function() {
-      var flag;
-      assert.isFunction(r.hasNext);
-      flag = r.hasNext();
-      expect(flag).to.be.true; //index 0 (of two items)
+      expect(r.hasNext()).to.be.true; //index 0 (of two items)
     });
 
     it("hasPrevious", function() {
-      var flag;
-      assert.isFunction(r.hasPrevious);
-      flag = r.hasPrevious();
-      expect(flag).to.be.false; //index 0 (of two items)
+      expect(r.hasPrevious()).to.be.false; //index 0 (of two items)
     });
 
     it("rewind", function() {
       var row, flag;
-      assert.isFunction(r.rewind);
       row = r.rewind();
-      responseListRowCheck(row);
+      expect(row).to.be.an('object');
       flag = r.hasNext();
       expect(flag).to.be.true; //index 0 (of two items)
       flag = r.hasPrevious();
@@ -205,9 +175,8 @@ describe("response.js", function() {
 
     it("next", function() {
       var row, flag;
-      assert.isFunction(r.next);
       row = r.next();
-      responseListRowCheck(row);
+      expect(row).to.be.an('object');
       flag = r.hasNext();
       expect(flag).to.be.false; //index 1 (of two items)
       flag = r.hasPrevious();
@@ -216,9 +185,8 @@ describe("response.js", function() {
 
     it("previous", function() {
       var row, flag;
-      assert.isFunction(r.previous);
       row = r.previous();
-      responseListRowCheck(row);
+      expect(row).to.be.an('object');
       flag = r.hasNext();
       expect(flag).to.be.true; //index 0 (of two items)
       flag = r.hasPrevious();
@@ -226,35 +194,26 @@ describe("response.js", function() {
     });
 
     it("current", function() {
-      var row;
-      assert.isFunction(r.current);
-      row = r.current();
-      responseListRowCheck(row); //index 0
+      expect(r.current()).to.be.an('object'); //index 0
     });
 
     it("get", function() {
-      var pt;
-      assert.isFunction(r.get);
-      pt = r.get('PROPERTY');
+      var pt = r.get('PROPERTY');
       expect(pt).to.be.an('object');
       pt = r.get('__iWillNeverExist__');
       expect(pt).to.be.false;
     });
 
     it("getColumn", function() {
-      var col;
-      assert.isFunction(r.getColumn);
-      col = r.getColumn('CREATEDDATE');
-      arrayCheck(col);
+      var col = r.getColumn('CREATEDDATE');
+      expect(col).to.be.an('array');
       col = r.get('__iWillNeverExist__');
       expect(col).to.be.false;
     });
 
     it("getColumnIndex", function() {
-      var cell;
-      assert.isFunction(r.getColumnIndex);
-      cell = r.getColumnIndex('PREPAIDPERIOD', 1);
-      stringCheck(cell);
+      var cell = r.getColumnIndex('PREPAIDPERIOD', 1);
+      expect(cell).to.be.a('string');
       expect(cell).to.equal("0");
       cell = r.getColumnIndex('PREPAIDPERIOD', 1, true);
       expect(cell).to.be.a('number');
@@ -262,33 +221,30 @@ describe("response.js", function() {
     });
 
     it("applyCustomChanges", function() { //nothings changes here, but can be overriden on demand
-      assert.isFunction(r.applyCustomChanges);
-      var test = {
+      var test, tmp;
+      test = {
         test: true
       };
-      var tmp;
       tmp = r.applyCustomChanges(test);
       expect(tmp).to.equal(test);
     });
 
     it("as_string", function() {
-      assert.isFunction(r.as_string);
-      r.useColumns('*'); //reset to default
       var plain1, plain2;
+      r.useColumns('*'); //reset to default
       plain1 = r.as_string();
-      stringCheck(plain1);
+      expect(plain1).to.be.a('string');
       r.useColumns(["DOMAIN", "REPOSITORY"]);
       plain2 = r.as_string();
-      stringCheck(plain2);
+      expect(plain2).to.be.a('string');
       expect(plain1).to.not.equal(plain2);
       r.useColumns('*'); //reset to default
       plain2 = r.as_string();
-      stringCheck(plain2);
+      expect(plain2).to.be.a('string');
       expect(plain1).to.equal(plain2);
     });
 
     it("as_hash", function() {
-      assert.isFunction(r.as_hash);
       r.useColumns('*'); //reset to default
       var h1, h2;
       h1 = r.as_hash();
@@ -303,14 +259,11 @@ describe("response.js", function() {
     it("getPagination", function() {
       var pg = r.getPagination();
       expect(pg).to.be.an('object');
-      ['FIRST', 'LAST', 'COUNT', 'TOTAL', 'LIMIT', 'PAGES', 'PAGE', 'PAGENEXT', 'PAGEPREV'].forEach(function(key) {
-        expect(pg).to.have.property(key);
-      });
       expect(pg.FIRST).to.equal(0);
       expect(pg.LAST).to.equal(1);
       expect(pg.COUNT).to.equal(2);
       expect(pg.TOTAL).to.equal(2);
-      expect(pg.LIMIT).to.equal(exampleTPL.success.COMMAND.LIMIT);
+      expect(pg.LIMIT).to.equal(testcmds.success.COMMAND.LIMIT);
       expect(pg.PAGES).to.equal(1);
       expect(pg.PAGE).to.equal(1);
       expect(pg.PAGENEXT).to.equal(1);
@@ -318,9 +271,8 @@ describe("response.js", function() {
     });
 
     it("as_list", function() {
-      assert.isFunction(r.as_list);
-      r.useColumns('*'); //reset to default
       var l1, l2;
+      r.useColumns('*'); //reset to default
       l1 = r.as_list();
       r.useColumns(["DOMAIN", "REPOSITORY"]);
       l2 = r.as_list();
@@ -330,145 +282,122 @@ describe("response.js", function() {
       expect(l1).to.deep.equal(l2);
       //just in success case '200', we have:
       expect(l1).to.have.property('LIST');
-      arrayCheck(l1.LIST);
+      expect(l1.LIST).to.be.an('array');
       expect(l1).to.have.property('meta');
       expect(l1.meta).to.have.property('columns');
-      arrayCheck(l1.meta.columns);
+      expect(l1.meta.columns).to.be.an('array');
       expect(l1.meta).to.have.property('pg');
       expect(l1.meta.pg).to.be.an('object');
     });
 
+    it("as_list [with different hash property count]", function() {
+      //PROPERTY[TRANSFERLOCK][1] removed
+      //especially in domain list we might have properties with different hash property count
+      var r2 = new Response(testcmds.indexlength.RESPONSE, testcmds.indexlength.COMMAND);
+      var l = r2.as_list();
+      expect(l).to.have.property('LIST');
+      expect(l.LIST).to.be.an('array');
+      expect(l).to.have.property('meta');
+      expect(l.meta).to.have.property('columns');
+      expect(l.meta.columns).to.be.an('array');
+      expect(l.meta).to.have.property('pg');
+      expect(l.meta.pg).to.be.an('object');
+    });
+
     it("code", function() {
-      assert.isFunction(r.code);
-      var c = r.code();
-      stringCheck(c);
-      expect(c).to.equal('200');
+      expect(r.code()).to.equal('200');
     });
 
     it("description", function() {
-      assert.isFunction(r.description);
-      var d = r.description();
-      stringCheck(d);
-      expect(d).to.equal('Command completed successfully');
+      expect(r.description()).to.equal('Command completed successfully');
     });
 
     it("properties", function() {
-      assert.isFunction(r.properties);
-      var p = r.properties();
-      expect(p).to.be.a('object'); //in success case!
+      expect(r.properties()).to.be.a('object'); //in success case!
     });
 
     it("runtime", function() {
-      assert.isFunction(r.runtime);
       var p = r.runtime();
       expect(p).to.be.a('number');
       expect(p).to.equal(0.12);
     });
 
     it("queuetime", function() {
-      assert.isFunction(r.queuetime);
       var p = r.queuetime();
       expect(p).to.be.a('number');
       expect(p).to.equal(0);
     });
 
     it("is_success", function() {
-      assert.isFunction(r.is_success);
-      var p, r2;
-      p = r.is_success();
-      expect(p).to.equal(true);
-      r2 = new apiconnector.Response(exampleTPL.error.RESPONSE, exampleTPL.error.COMMAND);
-      p = r2.is_success();
-      expect(p).to.equal(false);
-      r2 = new apiconnector.Response(exampleTPL.tmperror.RESPONSE, exampleTPL.tmperror.COMMAND);
-      p = r2.is_success();
-      expect(p).to.equal(false);
+      var r2;
+      expect(r.is_success()).to.equal(true);
+      r2 = new Response(testcmds.error.RESPONSE, testcmds.error.COMMAND);
+      expect(r2.is_success()).to.equal(false);
+      r2 = new Response(testcmds.tmperror.RESPONSE, testcmds.tmperror.COMMAND);
+      expect(r2.is_success()).to.equal(false);
     });
 
     it("is_tmp_error", function() {
-      assert.isFunction(r.is_tmp_error);
-      var p, r2;
-      p = r.is_tmp_error();
-      expect(p).to.equal(false);
-      r2 = new apiconnector.Response(exampleTPL.error.RESPONSE, exampleTPL.error.COMMAND);
-      p = r2.is_tmp_error();
-      expect(p).to.equal(false);
-      r2 = new apiconnector.Response(exampleTPL.tmperror.RESPONSE, exampleTPL.tmperror.COMMAND);
-      p = r2.is_tmp_error();
-      expect(p).to.equal(true);
+      var r2;
+      expect(r.is_tmp_error()).to.equal(false);
+      r2 = new Response(testcmds.error.RESPONSE, testcmds.error.COMMAND);
+      expect(r2.is_tmp_error()).to.equal(false);
+      r2 = new Response(testcmds.tmperror.RESPONSE, testcmds.tmperror.COMMAND);
+      expect(r2.is_tmp_error()).to.equal(true);
     });
 
     it("is_error", function() {
-      assert.isFunction(r.is_error);
-      var p, r2;
-      p = r.is_error();
-      expect(p).to.be.false;
-      r2 = new apiconnector.Response(exampleTPL.error.RESPONSE, exampleTPL.error.COMMAND);
-      p = r2.is_error();
-      expect(p).to.be.true;
-      r2 = new apiconnector.Response(exampleTPL.tmperror.RESPONSE, exampleTPL.tmperror.COMMAND);
-      p = r2.is_error();
-      expect(p).to.be.false;
+      var r2;
+      expect(r.is_error()).to.be.false;
+      r2 = new Response(testcmds.error.RESPONSE, testcmds.error.COMMAND);
+      expect(r2.is_error()).to.be.true;
+      r2 = new Response(testcmds.tmperror.RESPONSE, testcmds.tmperror.COMMAND);
+      expect(r2.is_error()).to.be.false;
     });
 
     it("columns", function() {
-      assert.isFunction(r.columns);
-      var cols = r.columns();
-      arrayCheck(cols);
+      expect(r.columns()).to.be.an('array');
     });
 
     it("first", function() {
-      assert.isFunction(r.first);
-      var d = r.first();
-      expect(d).to.equal(0);
+      expect(r.first()).to.equal(0);
     });
 
     it("count", function() {
-      assert.isFunction(r.count);
-      var d = r.count();
-      expect(d).to.equal(2);
+      expect(r.count()).to.equal(2);
     });
 
     it("last", function() {
-      assert.isFunction(r.last);
-      var d = r.last();
-      expect(d).to.equal(1);
+      expect(r.last()).to.equal(1);
     });
 
     it("limit", function() {
-      assert.isFunction(r.limit);
-      var d = r.limit();
-      expect(d).to.equal(exampleTPL.success.COMMAND.LIMIT); //if not api would have it ignored
+      expect(r.limit()).to.equal(testcmds.success.COMMAND.LIMIT); //if not api would have it ignored
     });
 
     it("total", function() {
-      assert.isFunction(r.total);
-      var d = r.total();
-      expect(d).to.equal(2);
+      expect(r.total()).to.equal(2);
     });
 
     it("pages", function() {
-      assert.isFunction(r.pages);
-      var d = r.pages();
-      expect(d).to.equal(1);
+      expect(r.pages()).to.equal(1);
     });
 
     it("page", function() {
-      assert.isFunction(r.page);
-      var d = r.page();
-      expect(d).to.equal(1);
+      expect(r.page()).to.equal(1);
     });
 
     it("prevpage", function() {
-      assert.isFunction(r.prevpage);
-      var d = r.prevpage();
-      expect(d).to.equal(1);
+      expect(r.prevpage()).to.equal(1);
     });
 
     it("nextpage", function() {
-      assert.isFunction(r.nextpage);
-      var d = r.nextpage();
-      expect(d).to.equal(1);
+      expect(r.nextpage()).to.equal(1);
+    });
+
+    it("nextpage [response with multiple pages]", function() {
+      r = new Response(testcmds.multipage.RESPONSE, testcmds.multipage.COMMAND);
+      expect(r.nextpage()).to.equal(2);
     });
 
   });

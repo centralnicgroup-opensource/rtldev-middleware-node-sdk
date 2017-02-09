@@ -35,43 +35,48 @@ var Response = require("./response.js");
  */
 var Request = function(p_cfg, p_data, p_command) {
   events.EventEmitter.call(this);
-  this.socketcfg = p_cfg;
+  this.socketcfg = Object.assign({}, p_cfg);
   this.data = p_data;
   this.cmd = Object.assign({}, p_command);
 };
 util.inherits(Request, events.EventEmitter);
 
 /**
+ * http request callback method
+ * @param  {Object} res http client response object
+ */
+Request.prototype.requestCallback = function(res) {
+  var oself = this;
+  var response = "";
+  res.setEncoding('utf8');
+  res.on('data', function(chunk) {
+    response += chunk;
+  });
+  res.on('end', function() {
+    oself.emit("response", new Response(response, oself.cmd));
+    response = "";
+  });
+};
+
+/**
  * perform a command request to the 1API backend API
  */
 Request.prototype.request = function() {
-  var req, oself = this;
-  req = require(oself.socketcfg.protocol.replace(/\:$/, '')).request(oself.socketcfg, function(res) {
-    var response = "";
-    res.setEncoding('utf8');
-    res.on('data', function(chunk) {
-      response += chunk;
-    });
-    res.on('end', function() {
-      oself.emit("response", new Response(response, oself.cmd));
-      response = "";
-    });
-    res.on('error', function() {
-      //e.message = 'problem with response: ' + e.message;
-      oself.emit('error', new Response(Response.responses.error, oself.cmd));
-    });
-  });
-  req.setTimeout(250000); //250s (to be sure to get an API response)
+  var req;
+  req = require(this.socketcfg.protocol.replace(/\:$/, '')).request(
+    this.socketcfg,
+    this.requestCallback.bind(this)
+  );
   req.on('socket', function(socket) {
-    socket.on('timeout', function() {
+    socket.setTimeout(250000, function() { //250s (to be sure to get an API response)
       req.abort();
     });
   });
   req.on('error', function() {
     //e.message = 'problem with request: ' + e.message;
-    oself.emit('error', new Response(Response.responses.error, oself.cmd));
-  });
-  req.write(oself.data);
+    this.emit('error', new Response(Response.responses.error, this.cmd));
+  }.bind(this));
+  req.write(this.data);
   req.end();
 };
 
