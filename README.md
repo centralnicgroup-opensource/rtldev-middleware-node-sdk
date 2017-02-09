@@ -1,8 +1,5 @@
 # ispapi-apiconnector
 
-[![NPM Version][npm-image]][npm-url]
-[![NPM Downloads][downloads-image]][downloads-url]
-
 This module is a connector library for the insanely fast 1API backend API.
 For further informations visit our homepage http://1api.net and do not hesitate to contact us.
 
