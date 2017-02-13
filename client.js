@@ -43,13 +43,13 @@ Client.command_encode = function(p_cmd) {
  * @param {Function} [p_type]   the response type format: hash or list
  */
 Client.prototype.request = function(p_cmd, p_cfg, p_cb, p_cberr, p_type) {
+  if (!p_type || !/^(hash|list)$/.test(p_type))
+    p_type = 'hash';
   if (!p_cfg) {
     var r = new Response(Response.responses.expired, p_cmd);
     p_cb(r["as_" + p_type]());
     return;
   }
-  if (!p_type || (p_type !== 'hash' && p_type !== 'list'))
-    p_type = 'hash';
   //----- the socket configuration ----
   //keys that may change in cfg:
   //agent -> false to disable socket pooling (no parallel request limitation!),

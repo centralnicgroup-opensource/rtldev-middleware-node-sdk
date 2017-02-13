@@ -1,3 +1,8 @@
+4.0.4 / 2017-02-13
+===================
+
+  * Fix request method: in case no socket configuration and no response format type is provided (logout when not being logged in).
+
 4.0.3 / 2017-02-09
 ===================
 
