@@ -5,4 +5,4 @@
 .externalToolBuilders
 node_modules/
 coverage/
-npm-debug.log
+npm-debug.log*
