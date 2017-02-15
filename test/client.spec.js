@@ -272,8 +272,15 @@ describe("client.js", function() {
   describe("Client.logout", function() {
     it("perform an API logout using previous session", function(done) {
       cl.logout(socketcfg, function(r) {
+        socketcfg = null; //logged out
         expectResponseHash(r, '200'); //maybe better Response instance here
-        done();
+        //now try to logout again
+        //that's basically happening in case a customer opens the logout url
+        //even though he is not logged in
+        cl.logout(socketcfg, function(r) {
+          expectResponseHash(r, '530');
+          done();
+        });
       });
     });
   });
