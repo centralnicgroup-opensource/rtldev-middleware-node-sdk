@@ -1,3 +1,9 @@
+4.0.6 / 2017-02-27
+===================
+  * replaced regular expression match with test
+  * moved comments
+  * replaced for in with Object.keys / forEach
+
 4.0.5 / 2017-02-15
 ===================
 
