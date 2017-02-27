@@ -246,7 +246,8 @@ Response.prototype = {
     if (this.colregexp) {
       d = Object.assign({}, this.data.parsed);
       Object.keys(d.PROPERTY).forEach(function(key) {
-        if (!key.match(this.colregexp)) delete d.PROPERTY[key];
+        if (!this.colregexp.test(key))
+          delete d.PROPERTY[key];
       }.bind(this));
     }
     else d = this.data.parsed;
@@ -257,19 +258,19 @@ Response.prototype = {
    * @return {Object} parse API response in list format
    */
   as_list: function() {
-    var r, tmp, key, row2, i, count, keys;
+    var r, tmp, row2, i, count, keys;
     r = this.as_hash();
     tmp = {};
     count = 0;
-    for (key in r) {
-      if (r.hasOwnProperty(key) && !key.match(/^PROPERTY$/))
+    Object.keys(r).forEach(function(key) {
+      if (key !== 'PROPERTY')
         tmp[key] = r[key];
-    }
+    });
     if (r.CODE === "200") {
       tmp.LIST = [];
       if (r.PROPERTY) {
         keys = Object.keys(r.PROPERTY).filter(function(key) {
-          return !key.match(Response.pagerRegexp); // paging info
+          return !Response.pagerRegexp.test(key); // paging info
         });
         keys.forEach(function(key) {
           if (r.PROPERTY[key].length > count)
@@ -357,15 +358,15 @@ Response.prototype = {
    * @return {Array} API response PROPERTY key names
    */
   columns: function() {
-    var key, cols = [],
-      props = this.properties(),
-      regexp = Response.pagerRegexp;
+    var props, regexp;
+    props = this.properties();
+    regexp = Response.pagerRegexp;
     if (props) {
-      for (key in props) {
-        if (props.hasOwnProperty(key) && !key.match(regexp)) cols.push(key);
-      }
+      return Object.keys(props).filter(function(key) {
+        return !regexp.test(key);
+      });
     }
-    return cols;
+    return [];
   },
   /**
    * return pagination meta data of the API response

@@ -67,13 +67,14 @@ Request.prototype.request = function() {
     this.socketcfg,
     this.requestCallback.bind(this)
   );
+  //250s (to be sure to get an API response)
   req.on('socket', function(socket) {
-    socket.setTimeout(250000, function() { //250s (to be sure to get an API response)
+    socket.setTimeout(250000, function() {
       req.abort();
     });
   });
+  //e.message = 'problem with request: ' + e.message;
   req.on('error', function() {
-    //e.message = 'problem with request: ' + e.message;
     this.emit('error', new Response(Response.responses.error, this.cmd));
   }.bind(this));
   req.write(this.data);

@@ -88,7 +88,7 @@ Client.prototype.request = function(p_cmd, p_cfg, p_cb, p_cberr, p_type) {
     });
   }
   else {
-    c.on("error", function(/*r*/) {
+    c.on("error", function( /*r*/ ) {
       //console.error('ispapi-apiconnector: error event thrown in request method but no error callback method provided.');
       //console.error(JSON.stringify(r["as_" + p_type]()));
     });
@@ -104,7 +104,7 @@ Client.getDefaultOptions = function(p_uri) {
   var tmp = require("url").parse(p_uri ||
     'https://coreapi.1api.net/api/call.cgi');
   options.port = (
-    tmp.port || (tmp.protocol.match(/^https/i) ? '443' : '80')
+    tmp.port || (/^https/i.test(tmp.protocol) ? '443' : '80')
   );
   options.protocol = tmp.protocol;
   options.host = tmp.host;
@@ -122,7 +122,7 @@ Client.getDefaultOptions = function(p_uri) {
 Client.prototype.login = function(p_params, p_cb, p_uri, p_cmdparams) {
   if (!p_uri)
     p_uri = "https://coreapi.1api.net/api/call.cgi";
-  if (!p_uri.match(/^(http|https):\/\//))
+  if (!/^(http|https):\/\//.test(p_uri))
     throw new Error("Unsupported protocol within api connection uri.");
 
   var cb, cfg;
