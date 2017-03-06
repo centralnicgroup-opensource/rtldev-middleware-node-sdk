@@ -1,3 +1,7 @@
+4.0.7 / 2017-03-06
+===================
+  * added default response template for 500 Internal server error
+
 4.0.6 / 2017-02-27
 ===================
   * replaced regular expression match with test
