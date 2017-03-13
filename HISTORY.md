@@ -1,3 +1,13 @@
+4.0.9 / 2017-03-13
+===================
+  * Updated changelog
+
+4.0.8 / 2017-03-13
+===================
+  * Removed Expect Header usage (to support node.js 5.5.0++)
+    * [RFC2616](https://www.w3.org/Protocols/rfc2616/rfc2616-sec8.html)
+    * [node.js git issue #4651](https://github.com/nodejs/node-v0.x-archive/issues/4651)
+
 4.0.7 / 2017-03-06
 ===================
   * added default response template for 500 Internal server error
