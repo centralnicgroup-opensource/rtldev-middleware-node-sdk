@@ -98,10 +98,7 @@ describe("client.js", function() {
           port: '443',
           protocol: 'https:',
           host: 'coreapi.1api.net',
-          path: '/api/call.cgi',
-          headers: {
-            Expect: ''
-          }
+          path: '/api/call.cgi'
         }
       });
       expect(c).to.be.an('object');
@@ -210,16 +207,6 @@ describe("client.js", function() {
       };
       var newcfg = JSON.parse(JSON.stringify(socketcfg));
       delete newcfg.options;
-      cl.request(testcmds.getuserindex.COMMAND, newcfg, cb, cb, 'hash');
-    });
-
-    it("perform an API request [socket cfg w/o expect header]", function(done) {
-      nock.activate(); //reuse setting from last test
-      var newcfg = JSON.parse(JSON.stringify(socketcfg));
-      var cb = function(r) {
-        uidxCB(r, done);
-      };
-      newcfg.options.headers = {};
       cl.request(testcmds.getuserindex.COMMAND, newcfg, cb, cb, 'hash');
     });
 

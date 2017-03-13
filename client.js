@@ -58,13 +58,8 @@ Client.prototype.request = function(p_cmd, p_cfg, p_cb, p_cberr, p_type) {
   //headers -> custom headers to use
   var opts = p_cfg.options || Client.getDefaultOptions();
 
-  // set the expect header for performance improvement if not set
   if (!opts.headers)
-    opts.headers = {
-      Expect: ''
-    };
-  else if (!opts.headers.hasOwnProperty('Expect'))
-    opts.headers.Expect = '';
+    opts.headers = {};
 
   //----- the socket parameters ----
   //object keys -> login, pw, entity, remoteaddr, user (aka. subuser)
