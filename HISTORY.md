@@ -1,3 +1,7 @@
+4.0.10 / 2017-03-20
+===================
+  * added unauthorized default template
+
 4.0.9 / 2017-03-13
 ===================
   * Updated changelog
