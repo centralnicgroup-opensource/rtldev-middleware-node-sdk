@@ -1,3 +1,7 @@
+4.0.11 / 2017-03-20
+===================
+  * reviewed unauthorized default template
+
 4.0.10 / 2017-03-20
 ===================
   * added unauthorized default template
