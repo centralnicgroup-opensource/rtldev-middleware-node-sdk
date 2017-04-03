@@ -1,7 +1,7 @@
 "use strict";
 
 var expect = require('chai').expect;
-var Response = require('../response.js');
+var Response = require('./response.js');
 
 var expectResponse = function(r, code, description) {
   expect(r).to.be.an('object');
