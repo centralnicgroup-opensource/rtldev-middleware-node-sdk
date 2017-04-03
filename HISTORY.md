@@ -1,3 +1,12 @@
+4.0.12 / 2017-04-03
+===================
+  * review automated test process
+    * introduce nyc (state of the art istanbul command line interface)
+    * introduce cross-env (cross platform environment usage)
+    * move tests from their subdir to their source file path
+    * add usage of mocha.opts
+    * command line review of npm test scripts
+
 4.0.11 / 2017-03-20
 ===================
   * reviewed unauthorized default template

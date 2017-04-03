@@ -12,12 +12,10 @@
     "node": ">=0.10.36"
   },
   "homepage": "http://1api.net",
-  "maintainers": [
-    {
-      "name": "Kai Schwarz",
-      "email": "kschwarz@1api.net"
-    }
-  ],
+  "maintainers": [{
+    "name": "Kai Schwarz",
+    "email": "kschwarz@1api.net"
+  }],
   "keywords": [
     "1api",
     "domain",
@@ -34,16 +32,26 @@
     "registration",
     "application"
   ],
+  "nyc": {
+    "reporter": [
+      "html",
+      "text"
+    ],
+    "exclude": [
+      "**/*.spec.js"
+    ]
+  },
   "scripts": {
-    "test": "npm run test-unit --silent",
-    "test-unit": "NODE_ENV=development ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- --bail --use_strict --inline-diffs --require co-mocha $(find ./test -name '*.spec.js' -not -path './node_modules/*')"
+    "test": "npm run test-NODE --silent",
+    "test-NODE": "cross-env NODE_ENV=development nyc ./node_modules/.bin/_mocha --opts mocha.opts $(find . -type f -name '*.spec.js'  ! -path './nyc_output/*' ! -path './coverage/*' ! -path './node_modules/*')"
   },
   "devDependencies": {
     "chai": "3.5.0",
-    "co-mocha": "1.2.0",
-    "mocha": "3.2.0",
+    "cross-env": "4.0.0",
     "istanbul": "0.4.5",
-    "nock": "9.0.4"
+    "mocha": "3.2.0",
+    "nock": "9.0.11",
+    "nyc": "10.2.0"
   },
   "dependencies": {}
 }

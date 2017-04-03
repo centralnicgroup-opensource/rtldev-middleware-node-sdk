@@ -3,8 +3,8 @@
 "use strict";
 
 var expect = require('chai').expect;
-var Response = require('../response.js');
-var chkHlp = require('./check-helper.js');
+var Response = require('./response.js');
+var chkHlp = require('./test-check-helper.js');
 var expectResponse = chkHlp.expectResponse;
 var expectResponseHash = chkHlp.expectResponseHash;
 var expectPropertyFn = chkHlp.expectPropertyFn;

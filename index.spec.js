@@ -2,8 +2,8 @@
 /* jshint expr:true */
 "use strict";
 
-var apiconnector = require('../index.js');
-var expectPropertyFn = require('./check-helper.js').expectPropertyFn;
+var apiconnector = require('./index.js');
+var expectPropertyFn = require('./test-check-helper.js').expectPropertyFn;
 
 describe("response.js", function() {
   describe("check general class structure", function() {

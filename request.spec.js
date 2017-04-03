@@ -3,11 +3,11 @@
 "use strict";
 
 var expect = require('chai').expect;
-var Request = require('../request.js');
-var Response = require('../response.js');
+var Request = require('./request.js');
+var Response = require('./response.js');
 var events = require('events');
 var nock = require('nock');
-var chkHlp = require('./check-helper.js');
+var chkHlp = require('./test-check-helper.js');
 var expectPropertyFn = chkHlp.expectPropertyFn;
 var expectResponse = chkHlp.expectResponse;
 
