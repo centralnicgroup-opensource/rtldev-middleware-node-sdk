@@ -1,3 +1,7 @@
+4.0.13 / 2017-04-03
+===================
+  * updated exclude option for nyc
+
 4.0.12 / 2017-04-03
 ===================
   * review automated test process

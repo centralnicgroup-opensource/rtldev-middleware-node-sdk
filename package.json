@@ -40,7 +40,9 @@
       "text"
     ],
     "exclude": [
-      "**/*.spec.js"
+      "**/*.spec.js",
+      "test-check-helper.js",
+      "test-commands.js"
     ]
   },
   "scripts": {
