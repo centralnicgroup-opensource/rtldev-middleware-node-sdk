@@ -1,3 +1,8 @@
+4.0.14 / 2017-07-12
+===================
+  * delete port in hostname (e.g. when using 127.0.0.1:8033)
+  * increased API socket timeout to 300s
+
 4.0.13 / 2017-04-03
 ===================
   * updated exclude option for nyc
