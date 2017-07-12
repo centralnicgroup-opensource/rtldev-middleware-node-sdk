@@ -1,4 +1,4 @@
-4.0.15 / 2017-07-12 [FUTURE RELEASE]
+4.0.15 / 2017-07-12
 ===================
   * consider new API socket timeout in tests
   * deactivated timeout test [nock.js issue 754](https://github.com/node-nock/nock/issues/754)
