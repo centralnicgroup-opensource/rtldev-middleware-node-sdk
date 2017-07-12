@@ -5,6 +5,7 @@
  */
 'use strict';
 
+var DEFAULT_SOCKET_TIMEMOUT = 300000;
 var util = require("util");
 var events = require("events");
 var Response = require("./response.js");
@@ -67,9 +68,9 @@ Request.prototype.request = function() {
     this.socketcfg,
     this.requestCallback.bind(this)
   );
-  //250s (to be sure to get an API response)
+  //300s (to be sure to get an API response)
   req.on('socket', function(socket) {
-    socket.setTimeout(250000, function() {
+    socket.setTimeout(DEFAULT_SOCKET_TIMEMOUT, function() {
       req.abort();
     });
   });

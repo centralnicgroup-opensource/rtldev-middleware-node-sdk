@@ -96,13 +96,10 @@ Client.getDefaultOptions = function(p_uri) {
     method: 'POST'
     //, agent: false //default usage of http.globalAgent
   };
-  var tmp = require("url").parse(p_uri ||
-    'https://coreapi.1api.net/api/call.cgi');
-  options.port = (
-    tmp.port || (/^https/i.test(tmp.protocol) ? '443' : '80')
-  );
+  var tmp = require("url").parse(p_uri || 'https://coreapi.1api.net/api/call.cgi');
+  options.port = ( tmp.port || (/^https/i.test(tmp.protocol) ? '443' : '80'));
   options.protocol = tmp.protocol;
-  options.host = tmp.host;
+  options.host = tmp.host.replace(/\:.+$/, ''); //remove port
   options.path = tmp.path;
   return options;
 };
