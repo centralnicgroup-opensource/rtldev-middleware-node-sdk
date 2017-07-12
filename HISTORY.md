@@ -1,3 +1,9 @@
+4.0.15 / 2017-07-12 [FUTURE RELEASE]
+===================
+  * consider new API socket timeout in tests
+  * deactivated timeout test [nock.js issue 754](https://github.com/node-nock/nock/issues/754)
+  * dep bump of devDependencies
+
 4.0.14 / 2017-07-12
 ===================
   * delete port in hostname (e.g. when using 127.0.0.1:8033)

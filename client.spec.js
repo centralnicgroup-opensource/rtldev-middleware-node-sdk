@@ -20,7 +20,7 @@ after(function() {
 });
 
 describe("client.js", function() {
-  this.timeout(250000);
+  this.timeout(300000);
   this.slow(1000);
 
   describe("check general class structure", function() {

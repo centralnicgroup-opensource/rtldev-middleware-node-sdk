@@ -12,12 +12,10 @@
     "node": ">=0.10.36"
   },
   "homepage": "http://1api.net",
-  "maintainers": [
-    {
-      "name": "Kai Schwarz",
-      "email": "kschwarz@1api.net"
-    }
-  ],
+  "maintainers": [{
+    "name": "Kai Schwarz",
+    "email": "kschwarz@1api.net"
+  }],
   "keywords": [
     "1api",
     "domain",
@@ -50,12 +48,12 @@
     "test-NODE": "cross-env NODE_ENV=development nyc ./node_modules/.bin/_mocha --opts mocha.opts $(find . -type f -name '*.spec.js'  ! -path './nyc_output/*' ! -path './coverage/*' ! -path './node_modules/*')"
   },
   "devDependencies": {
-    "chai": "3.5.0",
-    "cross-env": "4.0.0",
+    "chai": "4.1.0",
+    "cross-env": "5.0.1",
     "istanbul": "0.4.5",
-    "mocha": "3.2.0",
-    "nock": "9.0.11",
-    "nyc": "10.2.0"
+    "mocha": "3.4.2",
+    "nock": "9.0.13",
+    "nyc": "11.0.3"
   },
   "dependencies": {}
 }

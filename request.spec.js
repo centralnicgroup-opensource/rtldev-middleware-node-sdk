@@ -12,10 +12,10 @@ var expectPropertyFn = chkHlp.expectPropertyFn;
 var expectResponse = chkHlp.expectResponse;
 
 describe("request.js", function() {
-  this.timeout(250000);
+  this.timeout(300000);
   this.slow(1000);
 
-  after(function(){
+  after(function() {
     nock.cleanAll();
   });
 
@@ -57,12 +57,14 @@ describe("request.js", function() {
       c.request();
     });
 
-    it("check connection error [connection timeout]", function(done) {
+    //Skipping in favor of: https://github.com/node-nock/nock/issues/754
+    //socketDelay not working in nock 9.0.8++ in node.js 6
+    it.skip("check connection error [connection timeout]", function(done) {
       nock('http://coreapi.1api.net')
         .post('/api/call.cgi')
-        .socketDelay(300000) //300s; API timeout is 250s
+        .socketDelay(300000) //300s; API timeout is 300s
         .reply(200, Response.responses.expired);
-      //note: even though timeout is defined, app comes directly backorder
+      //note: even though timeout is defined, app comes directly back
       //but as requested: as a timeout! great!
       var c = new Request({
           method: 'POST',
