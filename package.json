@@ -1,7 +1,7 @@
 {
   "name": "ispapi-apiconnector",
   "description": "1API API Connector for node.js",
-  "version": "4.0.14",
+  "version": "4.0.15",
   "author": {
     "name": "Kai Schwarz",
     "email": "kschwarz@1api.net"
@@ -12,10 +12,12 @@
     "node": ">=0.10.36"
   },
   "homepage": "http://1api.net",
-  "maintainers": [{
-    "name": "Kai Schwarz",
-    "email": "kschwarz@1api.net"
-  }],
+  "maintainers": [
+    {
+      "name": "Kai Schwarz",
+      "email": "kschwarz@1api.net"
+    }
+  ],
   "keywords": [
     "1api",
     "domain",
