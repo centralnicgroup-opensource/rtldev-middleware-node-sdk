@@ -28,7 +28,7 @@ Client.command_encode = function(p_cmd) {
   var tmp = "";
   if (!(typeof p_cmd === 'string' || p_cmd instanceof String)) {
     Object.keys(p_cmd).forEach(function(key) {
-      if (p_cmd[key]){//sentry #1785 "TypeError: Cannot read property 'toString' of null"
+      if (p_cmd[key]) { //sentry #1785 "TypeError: Cannot read property 'toString' of null"
         tmp += key + '=' + p_cmd[key].toString().replace(/\r|\n/g, "") + "\n";
       }
     });
@@ -99,7 +99,7 @@ Client.getDefaultOptions = function(p_uri) {
     //, agent: false //default usage of http.globalAgent
   };
   var tmp = require("url").parse(p_uri || 'https://coreapi.1api.net/api/call.cgi');
-  options.port = ( tmp.port || (/^https/i.test(tmp.protocol) ? '443' : '80'));
+  options.port = (tmp.port || (/^https/i.test(tmp.protocol) ? '443' : '80'));
   options.protocol = tmp.protocol;
   options.host = tmp.host.replace(/\:.+$/, ''); //remove port
   options.path = tmp.path;
