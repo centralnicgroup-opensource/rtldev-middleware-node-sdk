@@ -28,7 +28,9 @@ Client.command_encode = function(p_cmd) {
   var tmp = "";
   if (!(typeof p_cmd === 'string' || p_cmd instanceof String)) {
     Object.keys(p_cmd).forEach(function(key) {
-      tmp += key + '=' + p_cmd[key].toString().replace(/\r|\n/g, "") + "\n";
+      if (p_cmd[key]){//sentry #1785 "TypeError: Cannot read property 'toString' of null"
+        tmp += key + '=' + p_cmd[key].toString().replace(/\r|\n/g, "") + "\n";
+      }
     });
   }
   return tmp;
