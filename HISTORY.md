@@ -1,3 +1,13 @@
+4.0.16 / 2017-07-12
+===================
+  * fix toString() issue in Client.command_encode when having null or undefined values in command
+  * dep bump
+    * chai: 4.1.0 -> 4.1.1
+    * cross-env: 5.0.1 -> 5.0.5
+    * mocha: 3.4.2 -> 3.5.0
+    * nock: 9.0.13 -> 9.0.14
+    * nyc: 11.0.3 -> 11.1.0
+
 4.0.15 / 2017-07-12
 ===================
   * consider new API socket timeout in tests
