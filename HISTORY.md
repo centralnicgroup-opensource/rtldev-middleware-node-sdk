@@ -1,4 +1,4 @@
-4.0.16 / 2017-07-12
+4.0.16 / 2017-08-20
 ===================
   * fix toString() issue in Client.command_encode when having null or undefined values in command
   * dep bump
