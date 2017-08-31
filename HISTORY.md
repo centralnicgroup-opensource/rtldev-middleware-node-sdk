@@ -1,3 +1,7 @@
+4.0.17 / 2017-08.31
+===================
+  * error output added for commands including null values in a parameter
+
 4.0.16 / 2017-08-20
 ===================
   * fix toString() issue in Client.command_encode when having null or undefined values in command
