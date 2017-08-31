@@ -25,13 +25,21 @@ util.inherits(Client, events.EventEmitter);
  * @param {Object} p_cmd Object specifying the command to encode
  */
 Client.command_encode = function(p_cmd) {
-  var tmp = "";
+  var nullValueFound, tmp = "";
   if (!(typeof p_cmd === 'string' || p_cmd instanceof String)) {
+    nullValueFound = false;
     Object.keys(p_cmd).forEach(function(key) {
       if (p_cmd[key]) { //sentry #1785 "TypeError: Cannot read property 'toString' of null"
         tmp += key + '=' + p_cmd[key].toString().replace(/\r|\n/g, "") + "\n";
       }
+      else {
+        nullValueFound = true;
+      }
     });
+    if (nullValueFound) {
+      console.error('Command with null value in parameter.');
+      console.error(p_cmd);
+    }
   }
   return tmp;
 };
