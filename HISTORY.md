@@ -1,3 +1,7 @@
+4.0.18 / 2017-08.31
+===================
+  * review null value check of previous change
+
 4.0.17 / 2017-08.31
 ===================
   * error output added for commands including null values in a parameter
