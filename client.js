@@ -29,7 +29,7 @@ Client.command_encode = function(p_cmd) {
   if (!(typeof p_cmd === 'string' || p_cmd instanceof String)) {
     nullValueFound = false;
     Object.keys(p_cmd).forEach(function(key) {
-      if (p_cmd[key]) { //sentry #1785 "TypeError: Cannot read property 'toString' of null"
+      if (p_cmd[key]!==null||p_cmd[key]!==undefined) { // 'toString' won't work
         tmp += key + '=' + p_cmd[key].toString().replace(/\r|\n/g, "") + "\n";
       }
       else {
