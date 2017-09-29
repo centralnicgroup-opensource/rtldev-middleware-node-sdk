@@ -46,10 +46,12 @@
     ]
   },
   "scripts": {
+    "version": "auto-changelog --package --output HISTORY.md; git add HISTORY.md",
     "test": "npm run test-NODE --silent",
     "test-NODE": "cross-env NODE_ENV=development nyc ./node_modules/.bin/_mocha --opts mocha.opts $(find . -type f -name '*.spec.js'  ! -path './nyc_output/*' ! -path './coverage/*' ! -path './node_modules/*')"
   },
   "devDependencies": {
+    "auto-changelog": "0.3.3",
     "chai": "4.1.1",
     "cross-env": "5.0.5",
     "istanbul": "0.4.5",
