@@ -51,13 +51,13 @@
     "test-NODE": "cross-env NODE_ENV=development nyc ./node_modules/.bin/_mocha --opts mocha.opts $(find . -type f -name '*.spec.js'  ! -path './nyc_output/*' ! -path './coverage/*' ! -path './node_modules/*')"
   },
   "devDependencies": {
-    "auto-changelog": "0.3.3",
-    "chai": "4.1.1",
+    "auto-changelog": "0.3.5",
+    "chai": "4.1.2",
     "cross-env": "5.0.5",
     "istanbul": "0.4.5",
-    "mocha": "3.5.0",
-    "nock": "9.0.14",
-    "nyc": "11.1.0"
+    "mocha": "4.0.1",
+    "nock": "9.0.22",
+    "nyc": "11.2.1"
   },
   "dependencies": {}
 }
