@@ -1,7 +1,8 @@
 const DEFAULT_SOCKET_TIMEMOUT = 300000;
-import * as util from "util";
-import * as events from 'events';
-import * as Response from "./response";
+import * as events from "events";
+import * as http from "http";
+import * as net from "net";
+import * as clResponse from "./response";
 
 /**
  * @alias node.ispapi-apiconnector.Request
@@ -27,52 +28,54 @@ import * as Response from "./response";
     COMMAND: "EndSession"
   }
  */
-var Request = function(p_cfg, p_data, p_command) {
-  events.EventEmitter.call(this);
-  this.socketcfg = Object.assign({}, p_cfg);
-  this.data = p_data;
-  this.cmd = Object.assign({}, p_command);
-};
-util.inherits(Request, events.EventEmitter);
+export class Request extends events.EventEmitter {
 
-/**
- * http request callback method
- * @param  {Object} res http client response object
- */
-Request.prototype.requestCallback = function(res) {
-  var oself = this;
-  var response = "";
-  res.setEncoding('utf8');
-  res.on('data', function(chunk) {
-    response += chunk;
-  });
-  res.on('end', function() {
-    oself.emit("response", new Response(response, oself.cmd));
-    response = "";
-  });
-};
+  socketcfg: any;
+  data: any;
+  cmd: any;
 
-/**
- * perform a command request to the 1API backend API
- */
-Request.prototype.request = function() {
-  var req;
-  req = require(this.socketcfg.protocol.replace(/\:$/, '')).request(
-    this.socketcfg,
-    this.requestCallback.bind(this)
-  );
-  //300s (to be sure to get an API response)
-  req.on('socket', function(socket) {
-    socket.setTimeout(DEFAULT_SOCKET_TIMEMOUT, function() {
-      req.abort();
+  constructor(p_cfg: any, p_data: any, p_command: any) {
+    super();
+    this.socketcfg = Object.assign({}, p_cfg);
+    this.data = p_data;
+    this.cmd = Object.assign({}, p_command);
+  }
+
+  /**
+   * http request callback method
+   * @param  {Object} res http client response object
+   */
+  requestCallback(res: http.IncomingMessage) {
+    let response = "";
+    res.setEncoding('utf8');
+    res.on('data', (chunk: Buffer) => {
+      response += chunk;
     });
-  });
-  //e.message = 'problem with request: ' + e.message;
-  req.on('error', function() {
-    this.emit('error', new Response(Response.responses.error, this.cmd));
-  }.bind(this));
-  req.write(this.data);
-  req.end();
-};
+    res.on('end', () => {
+      this.emit("response", new clResponse.Response(response, this.cmd));
+      response = "";
+    });
+  };
 
-module.exports = Request;
+  /**
+   * perform a command request to the 1API backend API
+   */
+  request() {
+    let req = require(this.socketcfg.protocol.replace(/\:$/, '')).request(
+      this.socketcfg,
+      this.requestCallback
+    );
+    //300s (to be sure to get an API response)
+    req.on('socket', (socket: net.Socket) => {
+      socket.setTimeout(DEFAULT_SOCKET_TIMEMOUT, () => {
+        req.abort();
+      });
+    });
+    //e.message = 'problem with request: ' + e.message;
+    req.on('error', () => {
+      this.emit('error', new Response(clResponse.responses.error, this.cmd));
+    });
+    req.write(this.data);
+    req.end();
+  }
+};
