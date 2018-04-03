@@ -1,0 +1,29 @@
+{
+    "compileOnSave": true,
+    "compilerOptions": {
+      "experimentalDecorators": true,
+      "declaration": true,
+      "module": "commonjs",
+      "moduleResolution": "Node",
+      "noFallthroughCasesInSwitch": true,
+      "noImplicitReturns": true,
+      "noUnusedLocals": true,
+      "noUnusedParameters": true,
+      "outDir": "./dist",
+      "removeComments": true,
+      "sourceMap": true,
+      "strict": true,
+      "target": "es6",
+      "types": ["node"]
+    },
+    "include": [
+      "src/**/*.ts"
+    ],
+    "exclude": [
+      "node_modules",
+      "**/*.spec.ts",
+      "coverage",
+      ".nyc_output",
+      "docs"
+    ]
+  }

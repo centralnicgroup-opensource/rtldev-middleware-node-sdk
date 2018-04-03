@@ -1,14 +1,7 @@
-/*
- * ispapi-apiconnector
- * Copyright(c) 2015 Kai Schwarz, 1API GmbH
- * MIT Licensed
- */
-'use strict';
-
-var DEFAULT_SOCKET_TIMEMOUT = 300000;
-var util = require("util");
-var events = require("events");
-var Response = require("./response.js");
+const DEFAULT_SOCKET_TIMEMOUT = 300000;
+import * as util from "util";
+import * as events from 'events';
+import * as Response from "./response";
 
 /**
  * @alias node.ispapi-apiconnector.Request

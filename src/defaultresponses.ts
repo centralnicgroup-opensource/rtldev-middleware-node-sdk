@@ -3,7 +3,11 @@
  * we have to provide the templates in API plain text format.
  * Reason: the connector library uses two formats internally: unparsed and parsed one
  */
-module.exports = {
+export interface IResponseTemplates {
+  [propName: string]: string;
+}
+
+export const responses: IResponseTemplates = {
   '404': "[RESPONSE]\r\ncode=421\r\ndescription=Page not found\r\nEOF\r\n",
   '500': "[RESPONSE]\r\ncode=500\r\ndescription=Internal server error\r\nEOF\r\n",
   empty: "[RESPONSE]\r\ncode=423\r\ndescription=Empty API response\r\nTRANSLATIONKEY=FAPI.424\r\nEOF\r\n",

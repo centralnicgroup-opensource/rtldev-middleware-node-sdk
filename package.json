@@ -6,7 +6,7 @@
     "name": "Kai Schwarz",
     "email": "kschwarz@1api.net"
   },
-  "main": "index.js",
+  "main": "../dist/index.js",
   "license": "MIT",
   "engines": {
     "node": ">=0.10.36"
@@ -41,16 +41,25 @@
     ],
     "exclude": [
       "**/*.spec.js",
-      "test-check-helper.js",
-      "test-commands.js"
+      "src/test-check-helper.js",
+      "src/test-commands.js"
     ]
   },
   "scripts": {
-    "version": "auto-changelog --package --output HISTORY.md; git add HISTORY.md",
-    "test": "npm run test-NODE --silent",
-    "test-NODE": "cross-env NODE_ENV=development nyc ./node_modules/.bin/_mocha --opts mocha.opts $(find . -type f -name '*.spec.js'  ! -path './nyc_output/*' ! -path './coverage/*' ! -path './node_modules/*')"
+    "build": "tsc --version && tsc && npm run lint --silent",
+    "changelog": "auto-changelog --package --output HISTORY.md; git add HISTORY.md;",
+    "documentation": "npm run docco --silent && npm run typedoc --silent",
+    "docco": "docco -l parallel -o docs/docco src/index.ts",
+    "lint": "eslint --fix --config=./.eslintrc.js *.js README.md *.json dist/*.js src/*.spec.js",
+    "test": "npm run build && npm run test-NODE --silent",
+    "test-NODE": "cross-env NODE_ENV=development nyc ./node_modules/.bin/_mocha --opts mocha.opts $(find . -type f -name '*.spec.js'  ! -path './nyc_output/*' ! -path './coverage/*' ! -path './node_modules/*')",
+    "typedoc": "typedoc --out docs/typedoc --name ispapi-entitydetermination --readme ./README.md --mode file --includeDeclarations --excludeExternals src/index.ts",
+    "preversion": "git fetch origin --prune && git checkout master && git pull && npm test",
+    "version": "npm run changelog --silent",
+    "postversion": "git push && git push --tags"
   },
   "devDependencies": {
+    "@types/node": "^9.6.0",
     "auto-changelog": "0.3.5",
     "chai": "4.1.2",
     "cross-env": "5.0.5",
