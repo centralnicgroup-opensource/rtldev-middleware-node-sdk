@@ -11,19 +11,19 @@ import * as clResponse from "./response";
 export class Client extends events.EventEmitter {
   /**
    * method to be used for api requests AFTER login procedure
-   * @param {Object} p_cmd        API command to request
-   * @param {Object} p_cfg        the socket config
-   * @param {Function} [p_cb]     the callback method (success case)
-   * @param {Function} [p_cberr]  the callback method (error case)
-   * @param {String} [p_type]     the response type format: hash or list
+   * @param {Object} pcmd        API command to request
+   * @param {Object} pcfg        the socket config
+   * @param {Function} [pcb]     the callback method (success case)
+   * @param {Function} [pcberr]  the callback method (error case)
+   * @param {String} [ptype]     the response type format: hash or list
    */
-  request(p_cmd: any, p_cfg: any, p_cb: Function, p_cberr: Function, p_type: string = 'hash') {
-    if (!/^(hash|list)$/.test(p_type)){
-      p_type = 'hash';
+  request(pcmd: any, pcfg: any, pcb: Function, pcberr: Function, ptype: string = 'hash') {
+    if (!/^(hash|list)$/.test(ptype)){
+      ptype = 'hash';
     }
-    if (!p_cfg) {
-      const r = new clResponse.Response(clResponse.responses.expired, p_cmd);
-      p_cb((r as any)[`as_${p_type}`]());
+    if (!pcfg) {
+      const r = new clResponse.Response(clResponse.responses.expired, pcmd);
+      pcb((r as any)[`as_${ptype}`]());
       return;
     }
     //----- the socket configuration ----
@@ -32,7 +32,7 @@ export class Client extends events.EventEmitter {
     //port -> the socket port
     //protocol -> the socket protocol
     //headers -> custom headers to use
-    var opts = p_cfg.options || getDefaultOptions();
+    var opts = pcfg.options || getDefaultOptions();
 
     if (!opts.headers){
       opts.headers = {};
@@ -45,18 +45,18 @@ export class Client extends events.EventEmitter {
     //entity -> system entity ("1234" for OT&E system, "54cd" for LIVE system)
     //remoteaddr -> the remote ip address of the customer incl. port (1.2.3.4:80)
 
-    var c = this.createConnection(p_cmd, {
+    var c = this.createConnection(pcmd, {
       options: opts,
-      params: p_cfg.params
+      params: pcfg.params
     });
-    if (p_cb) {
+    if (pcb) {
       c.on("response", (r:clResponse.Response) => {
-        p_cb((r as any)[`as_${p_type}`]());
+        pcb((r as any)[`as_${ptype}`]());
       });
     }
-    if (p_cberr) {
+    if (pcberr) {
       c.on("error", (r:clResponse.Response) => {
-        p_cberr((r as any)[`as_${p_type}`]());
+        pcberr((r as any)[`as_${ptype}`]());
       });
     }
     else {
@@ -70,17 +70,17 @@ export class Client extends events.EventEmitter {
 
   /**
    * method for api login / session start
-   * @param {Object} p_params specifying the socket parameters
-   * @param {Function} p_cb callback method
-   * @param {String} [p_uri] specifying the socket uri to use
-   * @param {Object} [p_cmdparams] specifying additional startsession command paramaeters
+   * @param {Object} pparams specifying the socket parameters
+   * @param {Function} pcb callback method
+   * @param {String} [puri] specifying the socket uri to use
+   * @param {Object} [pcmdparams] specifying additional startsession command paramaeters
    */
-    login(p_params: any, p_cb: Function, p_uri: string = "https://coreapi.1api.net/api/call.cgi", p_cmdparams: any) {
-      if (!/^(http|https):\/\//.test(p_uri))
+    login(pparams: any, pcb: Function, puri: string = "https://coreapi.1api.net/api/call.cgi", pcmdparams: any) {
+      if (!/^(http|https):\/\//.test(puri))
         throw new Error("Unsupported protocol within api connection uri.");
       let cfg = {
-        params: p_params,
-        options: getDefaultOptions(p_uri)
+        params: pparams,
+        options: getDefaultOptions(puri)
       };
       const cb = (r: any) => {
         if (r.CODE === "200") {
@@ -90,53 +90,53 @@ export class Client extends events.EventEmitter {
           cfg.params.session = r.PROPERTY.SESSION[0];
         }
         //return the socket configuration for reuse
-        p_cb(r, cfg);
+        pcb(r, cfg);
       };
       this.request(Object.assign({
         command: "StartSession"
-      }, p_cmdparams || {}), cfg, cb, cb);
+      }, pcmdparams || {}), cfg, cb, cb);
   };
 
   /**
    * method for api logout / ending session
-   * @param {Object} p_cfg the socket config
-   * @param {Function} p_cb callback method
+   * @param {Object} pcfg the socket config
+   * @param {Function} pcb callback method
    */
-  logout(p_cfg: any, p_cb: Function) {
+  logout(pcfg: any, pcb: Function) {
     this.request({
       command: "EndSession"
-    }, p_cfg, p_cb, p_cb);
+    }, pcfg, pcb, pcb);
   };
 
   /**
    * perform a command request to the 1API backend API
-   * @param {Object} p_cmd Object specifying the command to request
-   * @param {Object} p_cfg the socket config
+   * @param {Object} pcmd Object specifying the command to request
+   * @param {Object} pcfg the socket config
    */
-  createConnection(p_cmd: any, p_cfg: any) {
+  createConnection(pcmd: any, pcfg: any) {
     let data = "";
-    Object.keys(p_cfg.params).forEach((key) => {
+    Object.keys(pcfg.params).forEach((key) => {
       data += encodeURIComponent('s_' + key);
-      data += "=" + encodeURIComponent(p_cfg.params[key]) + "&";
+      data += "=" + encodeURIComponent(pcfg.params[key]) + "&";
     });
     data += encodeURIComponent("s_command");
-    data += "=" + encodeURIComponent(command_encode(p_cmd));
-    return new clRequest.Request(p_cfg.options, data, p_cmd);
+    data += "=" + encodeURIComponent(command_encode(pcmd));
+    return new clRequest.Request(pcfg.options, data, pcmd);
   };
 };
 
 /**
  * convert given command object to string
- * @param {Object} p_cmd Object specifying the command to encode
+ * @param {Object} pcmd Object specifying the command to encode
  */
-export const command_encode = (p_cmd: any): string => {
+export const command_encode = (pcmd: any): string => {
   let nullValueFound: boolean;
   let tmp: string = "";
-  if (!(typeof p_cmd === 'string' || p_cmd instanceof String)) {
+  if (!(typeof pcmd === 'string' || pcmd instanceof String)) {
     nullValueFound = false;
-    Object.keys(p_cmd).forEach((key: string) => {
-      if (p_cmd[key]!==null||p_cmd[key]!==undefined) { // 'toString' won't work
-        tmp += key + '=' + p_cmd[key].toString().replace(/\r|\n/g, "") + "\n";
+    Object.keys(pcmd).forEach((key: string) => {
+      if (pcmd[key]!==null||pcmd[key]!==undefined) { // 'toString' won't work
+        tmp += key + '=' + pcmd[key].toString().replace(/\r|\n/g, "") + "\n";
       }
       else {
         nullValueFound = true;
@@ -144,20 +144,20 @@ export const command_encode = (p_cmd: any): string => {
     });
     if (nullValueFound) {
       console.error('Command with null value in parameter.');
-      console.error(p_cmd);
+      console.error(pcmd);
     }
   }
   return tmp;
 };
 
-export const getDefaultOptions = (p_uri: string = 'https://coreapi.1api.net/api/call.cgi'): any => {
-  const tmp = require("url").parse(p_uri);
+export const getDefaultOptions = (puri: string = 'https://coreapi.1api.net/api/call.cgi'): any => {
+  const tmp = require("url").parse(puri);
   return {
     method: 'POST',
     //, agent: false //default usage of http.globalAgent
     port: (tmp.port || (/^https/i.test(tmp.protocol) ? '443' : '80')),
     protocol: tmp.protocol,
-    host: tmp.host.replace(/\:.+$/, ''), //remove port
+    host: tmp.host.replace(/:.+$/, ''), //remove port
     path: tmp.path
   };
 };

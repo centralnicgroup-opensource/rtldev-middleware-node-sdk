@@ -5,7 +5,7 @@ export declare class Request extends events.EventEmitter {
     socketcfg: any;
     data: any;
     cmd: any;
-    constructor(p_cfg: any, p_data: any, p_command: any);
+    constructor(pcfg: any, pdata: any, pcommand: any);
     requestCallback(res: http.IncomingMessage): void;
     request(): void;
 }

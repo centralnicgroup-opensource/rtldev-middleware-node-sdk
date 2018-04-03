@@ -1,12 +1,12 @@
-import * as defresponses from './defaultresponses';
+import * as defresponses from "./defaultresponses";
 
 export const responses = defresponses.responses;
 
 export const pagerRegexp: RegExp = /^(TOTAL|FIRST|LAST|LIMIT|COUNT)$/;
 
 export class ResponseIterator {
-  rows: any[];
-  index: number = 0;
+  public rows: any[];
+  public index: number = 0;
 
   constructor(rows: any[]) {
     this.rows = rows;
@@ -32,25 +32,25 @@ export class ResponseIterator {
     this.index = 0;
     return this.current();
   }
-    
+
   public current(): any {
     return this.rows[this.index];
   }
-};
+}
 
 /**
  * @alias node.ispapi-apiconnector.Response
  * @desc Used to handle the response of the 1API backend API Constructor
- * @param {String} p_r String specifying the unparsed plain API response
- * @param {Object} p_command the API command of that request
+ * @param {String} pr String specifying the unparsed plain API response
+ * @param {Object} pcommand the API command of that request
  * @constructor
  */
 export class Response {
-  usecolregexp: boolean;
-  colregexp: RegExp = /\*/;
-  data: any;
-  cmd: any;
-  it: ResponseIterator;
+  public usecolregexp: boolean;
+  public colregexp: RegExp = /\*/;
+  public data: any;
+  public cmd: any;
+  public it: ResponseIterator;
 
   constructor(p_r: any, p_command: any){
     p_r = ((!p_r || p_r === "") ? responses.empty : p_r);
@@ -103,7 +103,7 @@ export class Response {
    */
   public next(): any {
     return this.it.next();
-  };
+  }
 
   /**
    * checks if previous row can be iterated
@@ -119,7 +119,7 @@ export class Response {
    */
   public previous(): any {
     return this.it.previous();
-  };
+  }
 
   /**
    * returns the list row for the current iterator value
@@ -176,7 +176,7 @@ export class Response {
    */
   public applyCustomChanges(r: any): any {
     return r;
-  };
+  }
 
   /**
    * return the unparsed API response
@@ -198,8 +198,9 @@ export class Response {
     if (this.usecolregexp) {
       d = Object.assign({}, this.data.parsed);
       Object.keys(d.PROPERTY).forEach((key: string) => {
-        if (!this.colregexp.test(key))
+        if (!this.colregexp.test(key)) {
           delete d.PROPERTY[key];
+        }
       });
     }
     else d = this.data.parsed;
@@ -218,8 +219,9 @@ export class Response {
     const r = this.as_hash();
     const tmp: any = {};
     Object.keys(r).forEach( (key: string) => {
-      if (key !== 'PROPERTY')
+      if (key !== 'PROPERTY') {
         tmp[key] = r[key];
+      }
     });
     if (r.CODE === "200") {
       tmp.LIST = [];
@@ -228,8 +230,9 @@ export class Response {
           return !pagerRegexp.test(key); // paging info
         });
         keys.forEach((key: string) => {
-          if (r.PROPERTY[key].length > count)
+          if (r.PROPERTY[key].length > count) {
             count = r.PROPERTY[key].length;
+          }
         });
         for (i = 0; i < count; i++) { // run up to max index found
           row2 = {};
@@ -239,8 +242,9 @@ export class Response {
           // -- requires implementation of mechanisms to avoid access on
           // these not existing indexes later (not part of this lib!)
           keys.forEach((key: string) => {
-            if (r.PROPERTY[key][i] !== undefined)
+            if (r.PROPERTY[key][i] !== undefined) {
               row2[key] = r.PROPERTY[key][i];
+            }
           });
           tmp.LIST.push(Object.assign({}, row2));
         }
@@ -259,7 +263,7 @@ export class Response {
    */
   public code(): string | null {
     return this.get("CODE");
-  };
+  }
 
   /**
    * return the API response description
@@ -320,7 +324,7 @@ export class Response {
   public is_error(): boolean {
     return !(this.is_success() || this.is_tmp_error());
   };
-  
+
   /**
    * return the API response PROPERTY key names
    * @return {Array} API response PROPERTY key names
@@ -333,7 +337,7 @@ export class Response {
       });
     }
     return [];
-  };
+  }
 
   /**
    * return pagination meta data of the API response
@@ -351,7 +355,7 @@ export class Response {
       PAGENEXT: this.nextpage(),
       PAGEPREV: this.prevpage()
     };
-  };
+  }
 
   /**
    * return the index of the first response entry
@@ -359,7 +363,7 @@ export class Response {
    */
   public first(): number {
     return (this.getColumnIndex("FIRST", 0, true) || 0);
-  };
+  }
 
   /**
    * return the count of items in the API list response
@@ -373,12 +377,12 @@ export class Response {
       cols = this.columns();
       for (i = 0; i < cols.length; i++) {
         c = this.getColumn(cols[i]).length;
-        if (c > max) max = c;
+        if (c > max) { max = c; }
       }
       c = max;
     }
     return c;
-  };
+  }
 
   /**
    * return the index of the last response entry
@@ -386,7 +390,7 @@ export class Response {
    */
   public last(): number {
     return (this.getColumnIndex("LAST", 0, true) || this.count() - 1);
-  };
+  }
 
   /**
    * @description return the count of items per page
@@ -394,7 +398,7 @@ export class Response {
    */
   public limit(): number {
     return (this.getColumnIndex("LIMIT", 0, true) || this.count());
-  };
+  }
 
   /**
    * return the count of the total items matching the API request
@@ -402,7 +406,7 @@ export class Response {
    */
   public total(): number {
     return (this.getColumnIndex("TOTAL", 0, true) || this.count());
-  };
+  }
 
   /**
    * return the count of result pages matching the request
@@ -410,9 +414,9 @@ export class Response {
    */
   public pages(): number {
     const t = this.total();
-    if (t) return Math.ceil(t / this.limit()); //will never be 0
+    if (t) { return Math.ceil(t / this.limit()); } // will never be 0
     return 1;
-  };
+  }
 
   /**
    * return the current page number
@@ -420,11 +424,11 @@ export class Response {
    */
   public page(): number {
     if (this.count()) {
-      //limit cannot be 0 as this.count() will cover this, no worries
+      // limit cannot be 0 as this.count() will cover this, no worries
       return Math.floor(this.first() / this.limit()) + 1;
     }
     return 1;
-  };
+  }
 
   /**
    * return the previous page number
@@ -432,8 +436,8 @@ export class Response {
    */
   public prevpage(): number {
     return ((this.page() - 1) || 1);
-  };
-  
+  }
+
   /**
    * return the next page number
    * @return {Integer} next page number
@@ -442,7 +446,7 @@ export class Response {
     const page = this.page() + 1;
     const pages = this.pages();
     return (page <= pages ? page : pages);
-  };
+  }
 }
 
 /**
@@ -450,29 +454,28 @@ export class Response {
  * @param {String}   p_r String specifying the unparsed API response
  * @return {Object}      Response in hash format
  */
-export const parse = (r:any): any => {
+export const parse = (r: any): any => {
   let m, mm;
   const hash: any = {};
   const regexp: RegExp = /^([^\=]*[^\t\= ])[\t ]*=[\t ]*(.*)$/;
-  r = r.replace(/\r\n/g, '\n').split('\n');
+  r = r.replace(/\r\n/g, "\n").split("\n");
   while (r.length) {
     m = (r.shift()).match(regexp);
     if (m) {
       mm = m[1].match(/^property\[([^\]]*)\]/i);
       if (mm) {
-        if (!hash.hasOwnProperty("PROPERTY")) hash.PROPERTY = {};
-        mm[1] = mm[1].toUpperCase().replace(/\s/g, '');
-        if (!hash.PROPERTY.hasOwnProperty(mm[1])) hash.PROPERTY[mm[1]] = [];
+        if (!hash.hasOwnProperty("PROPERTY")) { hash.PROPERTY = {}; }
+        mm[1] = mm[1].toUpperCase().replace(/\s/g, "");
+        if (!hash.PROPERTY.hasOwnProperty(mm[1])) { hash.PROPERTY[mm[1]] = []; }
         hash.PROPERTY[mm[1]].push(m[2].replace(/[\t ]*$/, ""));
-      }
-      else {
+      } else {
         hash[m[1].toUpperCase()] = m[2].replace(/[\t ]*$/, "");
       }
     }
   }
-  if (!hash.hasOwnProperty("DESCRIPTION")) hash.DESCRIPTION = "";
+  if (!hash.hasOwnProperty("DESCRIPTION")) { hash.DESCRIPTION = ""; }
   return hash;
-}
+};
 
 /**
  * convert parsed plain API response to unparsed string notation
@@ -484,18 +487,18 @@ export const serialize = (p_r: any): string => {
   let plain: string = "[RESPONSE]";
   if (r.hasOwnProperty("PROPERTY")) {
     Object.keys(r.PROPERTY).forEach(function(key) {
-      r.PROPERTY[key].forEach((val:string, index:number) => {
+      r.PROPERTY[key].forEach((val: string, index: number) => {
         plain += "\r\nPROPERTY[" + key + "][" + index + "]=" + val;
       });
     });
   }
-  if (r.hasOwnProperty("CODE")) plain += "\r\ncode=" + r.CODE;
-  if (r.hasOwnProperty("DESCRIPTION")) plain += "\r\ndescription=" + r.DESCRIPTION;
-  if (r.hasOwnProperty("QUEUETIME")) plain += "\r\nqueuetime=" + r.QUEUETIME;
-  if (r.hasOwnProperty("RUNTIME")) plain += "\r\nruntime=" + r.RUNTIME;
+  if (r.hasOwnProperty("CODE")) { plain += "\r\ncode=" + r.CODE; }
+  if (r.hasOwnProperty("DESCRIPTION")) { plain += "\r\ndescription=" + r.DESCRIPTION; }
+  if (r.hasOwnProperty("QUEUETIME")) { plain += "\r\nqueuetime=" + r.QUEUETIME; }
+  if (r.hasOwnProperty("RUNTIME")) { plain += "\r\nruntime=" + r.RUNTIME; }
   plain += "\r\nEOF\r\n";
   return plain;
-}
+};
 
 /**
  * returns the default response templates
@@ -512,11 +515,13 @@ export const getTemplates = (): defresponses.IResponseTemplates => {
  * @return {Object|String|Boolean}  default response template of false if not found
  */
 export const getTemplate = (p_tplid: string, p_parse: boolean): any => {
-  if (responses[p_tplid])
-    if (p_parse)
+  if (responses[p_tplid]) {
+    if (p_parse) {
       return parse(responses[p_tplid]);
-    else
+    } else {
       return responses[p_tplid];
+    }
+  }
   return false;
 };
 
@@ -527,7 +532,7 @@ export const getTemplate = (p_tplid: string, p_parse: boolean): any => {
  * @return {Boolean}  the check result
  */
 export const isTemplateMatch = (p_r: any, p_tplid: string): boolean => {
-  var tpl = getTemplate(p_tplid, true);
+  const tpl = getTemplate(p_tplid, true);
   return (
     tpl &&
     p_r.CODE === tpl.CODE &&

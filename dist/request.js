@@ -4,11 +4,11 @@ const DEFAULT_SOCKET_TIMEMOUT = 300000
 const events = require('events')
 const clResponse = require('./response')
 class Request extends events.EventEmitter {
-  constructor (p_cfg, p_data, p_command) {
+  constructor (pcfg, pdata, pcommand) {
     super()
-    this.socketcfg = Object.assign({}, p_cfg)
-    this.data = p_data
-    this.cmd = Object.assign({}, p_command)
+    this.socketcfg = Object.assign({}, pcfg)
+    this.data = pdata
+    this.cmd = Object.assign({}, pcommand)
   }
   requestCallback (res) {
     let response = ''
@@ -21,21 +21,19 @@ class Request extends events.EventEmitter {
       response = ''
     })
   }
-  ;
   request () {
-    let req = require(this.socketcfg.protocol.replace(/\:$/, '')).request(this.socketcfg, this.requestCallback)
+    const req = require(this.socketcfg.protocol.replace(/:$/, '')).request(this.socketcfg, this.requestCallback)
     req.on('socket', (socket) => {
       socket.setTimeout(DEFAULT_SOCKET_TIMEMOUT, () => {
         req.abort()
       })
     })
     req.on('error', () => {
-      this.emit('error', new Response(clResponse.responses.error, this.cmd))
+      this.emit('error', new clResponse.Response(clResponse.responses.error, this.cmd))
     })
     req.write(this.data)
     req.end()
   }
 }
 exports.Request = Request
-
 // # sourceMappingURL=request.js.map
