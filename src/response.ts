@@ -1,42 +1,9 @@
 import * as defresponses from "./defaultresponses";
+import * as it from "./iterator";
 
 export const responses = defresponses.responses;
 
 export const pagerRegexp: RegExp = /^(TOTAL|FIRST|LAST|LIMIT|COUNT)$/;
-
-export class ResponseIterator {
-  public rows: any[];
-  public index: number = 0;
-
-  constructor(rows: any[]) {
-    this.rows = rows;
-  }
-
-  public hasPrevious(): boolean {
-    return (this.index > 0);
-  }
-
-  public previous(): any {
-    return (this.hasPrevious() ? this.rows[--this.index] : null);
-  }
-
-  public next(): any {
-    return (this.hasNext() ? this.rows[++this.index] : null);
-  }
-
-  public hasNext(): boolean {
-    return (this.index < (this.rows.length - 1));
-  }
-
-  public rewind(): any {
-    this.index = 0;
-    return this.current();
-  }
-
-  public current(): any {
-    return this.rows[this.index];
-  }
-}
 
 /**
  * @alias node.ispapi-apiconnector.Response
@@ -50,36 +17,35 @@ export class Response {
   public colregexp: RegExp = /\*/;
   public data: any;
   public cmd: any;
-  public it: ResponseIterator;
+  public it: it.ResponseIterator;
 
-  constructor(p_r: any, p_command: any){
-    p_r = ((!p_r || p_r === "") ? responses.empty : p_r);
+  constructor(pr: any, pcommand: any) {
+    pr = ((!pr || pr === "") ? responses.empty : pr);
     this.usecolregexp = false;
     this.data = {
-      unparsed: p_r,
-      parsed: parse(p_r)
+      parsed: parse(pr),
+      unparsed: pr,
     };
-    this.cmd = Object.assign({}, p_command);
-    this.it = new ResponseIterator(this.as_list().LIST || []);
+    this.cmd = Object.assign({}, pcommand);
+    this.it = new it.ResponseIterator(this.asList().LIST || []);
   }
 
   /**
    * sets the columns to be available in the response
    * @param {String|Array} [arr] regexp or * to filter response columns
    */
-  public useColumns(arr?: String | String[]) {
+  public useColumns(arr?: string | string[]) {
     this.usecolregexp = false;
-    if (arr){
-      if (Array.isArray(arr)){
+    if (arr) {
+      if (Array.isArray(arr)) {
         this.usecolregexp = true;
         this.colregexp = new RegExp("^(" + arr.join("|") + ")$", "i");
-      }
-      else if (arr!=='*'){
+      } else if (arr !== "*") {
         this.usecolregexp = true;
         this.colregexp = new RegExp("^" + arr + "$", "i");
       }
     }
-  };
+  }
 
   /**
    * resets the iterator to start value 0 and returns first row
@@ -87,7 +53,7 @@ export class Response {
    */
   public rewind() {
     return this.it.rewind();
-  };
+  }
 
   /**
    * checks if next row can be iterared
@@ -95,7 +61,7 @@ export class Response {
    */
   public hasNext() {
     return this.it.hasNext();
-  };
+  }
 
   /**
    * returns the row of the next iterator position
@@ -111,7 +77,7 @@ export class Response {
    */
   public hasPrevious(): boolean {
     return this.it.hasPrevious();
-  };
+  }
 
   /**
    * returns the row of the previous iterator position
@@ -127,46 +93,47 @@ export class Response {
    */
   public current(): any {
     return this.it.current();
-  };
+  }
 
   /**
    * returns the property value of the response object if found
-   * @param {String} p_prop String specifying the property for value lookup
+   * @param {String} pprop String specifying the property for value lookup
    * @return {Object|String|Boolean} Object/String if property found and is of type Object/String, false otherwise
    */
-  public get(p_prop: string): string | null {
-    if (this.data.parsed.hasOwnProperty(p_prop))
-      return this.data.parsed[p_prop];
+  public get(pprop: string): string | null {
+    if (this.data.parsed.hasOwnProperty(pprop)) {
+      return this.data.parsed[pprop];
+    }
     return null;
-  };
+  }
 
   /**
    * return all values of the given column/property identifier
-   * @param {String} p_prop String specifying the column/property identifier
+   * @param {String} pprop String specifying the column/property identifier
    * @return {Array}        column values
    */
-  public getColumn(p_prop: string): any {
-    var p: any = this.data.parsed.PROPERTY;
-    if (p && p.hasOwnProperty(p_prop)){
-      return p[p_prop]; // return whole column
+  public getColumn(pprop: string): any {
+    const p: any = this.data.parsed.PROPERTY;
+    if (p && p.hasOwnProperty(pprop)) {
+      return p[pprop]; // return whole column
     }
     return false;
-  };
+  }
 
   /**
    * return the value by given row index and column identifier
-   * @param {String}  p_prop     String specifying the column identifier
-   * @param {Integer} p_idx      Integer specifying the row index
-   * @param {Boolean} p_cast_int Boolean integer cast the value [optional]
+   * @param {String}  pprop     String specifying the column identifier
+   * @param {Integer} pidx      Integer specifying the row index
+   * @param {Boolean} pcastint Boolean integer cast the value [optional]
    * @return {String|Boolean} String if succeeded, Boolean (false) otherwise
    */
-  public getColumnIndex(p_prop: string, p_idx: number, p_cast_int: boolean): any {
-    const col = this.getColumn(p_prop);
-    if (col && col[p_idx]){
-      return ( p_cast_int ? parseInt(col[p_idx], 10) : col[p_idx] );
+  public getColumnIndex(pprop: string, pidx: number, pcastint: boolean): any {
+    const col = this.getColumn(pprop);
+    if (col && col[pidx]) {
+      return ( pcastint ? parseInt(col[pidx], 10) : col[pidx] );
     }
     return false;
-  };
+  }
 
   /**
    * Overridable method to apply custom changes to the API response
@@ -182,18 +149,18 @@ export class Response {
    * return the unparsed API response
    * @return {String} unparsed API response
    */
-  public as_string(): string {
-    if (this.usecolregexp){
-      return serialize(this.as_hash());
+  public asString(): string {
+    if (this.usecolregexp) {
+      return serialize(this.asHash());
     }
     return this.data.unparsed;
-  };
+  }
 
   /**
    * return the parsed API response
    * @return {Object} parsed API response
    */
-  public as_hash(): any {
+  public asHash(): any {
     let d: any;
     if (this.usecolregexp) {
       d = Object.assign({}, this.data.parsed);
@@ -202,24 +169,23 @@ export class Response {
           delete d.PROPERTY[key];
         }
       });
-    }
-    else d = this.data.parsed;
+    } else { d = this.data.parsed; }
     return this.applyCustomChanges(d);
-  };
-  
+  }
+
   /**
    * return the parsed API response as list
    * @return {Object} parse API response in list format
    */
-  public as_list(): any {
+  public asList(): any {
     let row2: any;
     let i: number;
     let count: number = 0;
     let keys: string[];
-    const r = this.as_hash();
+    const r = this.asHash();
     const tmp: any = {};
     Object.keys(r).forEach( (key: string) => {
-      if (key !== 'PROPERTY') {
+      if (key !== "PROPERTY") {
         tmp[key] = r[key];
       }
     });
@@ -251,11 +217,11 @@ export class Response {
       }
       tmp.meta = {
         columns: this.columns(),
-        pg: this.getPagination()
+        pg: this.getPagination(),
       };
     }
     return tmp;
-  };
+  }
 
   /**
    * return the API response code
@@ -271,7 +237,7 @@ export class Response {
    */
   public description(): string | null {
     return this.get("DESCRIPTION");
-  };
+  }
 
   /**
    * return the API response PROPERTY Object
@@ -279,7 +245,7 @@ export class Response {
    */
   public properties(): any {
     return this.get("PROPERTY");
-  };
+  }
 
   /**
    * return the API response runtime
@@ -288,7 +254,7 @@ export class Response {
   public runtime(): number | null {
     const rt = this.get("RUNTIME");
     return rt ? parseFloat(rt) : null;
-  };
+  }
 
   /**
    * return the API response queuetime
@@ -297,33 +263,33 @@ export class Response {
   public queuetime(): number | null {
     const qt = this.get("QUEUETIME");
     return qt ? parseFloat(qt) : null;
-  };
+  }
 
   /**
    * check if the API response code stands for success
    * @return {Boolean} true if the API request succeeded, false otherwise
    */
-  public is_success(): boolean {
+  public isSuccess(): boolean {
     const code = this.get("CODE");
-    return (code ? code.charAt(0) === '2' : false);
-  };
+    return (code ? code.charAt(0) === "2" : false);
+  }
 
   /**
    * check if the API response code stands for a temporary error
    * @return {Boolean} true if the API request run into a temp. error, false otherwise
    */
-  public is_tmp_error(): boolean {
+  public isTmpError(): boolean {
     const code = this.get("CODE");
-    return (code ? code.charAt(0) === '4' : false);
-  };
+    return (code ? code.charAt(0) === "4" : false);
+  }
 
   /**
    * check if the API response code stand for an error
    * @return {Boolean} true if the API request failed, false otherwise
    */
-  public is_error(): boolean {
-    return !(this.is_success() || this.is_tmp_error());
-  };
+  public isError(): boolean {
+    return !(this.isSuccess() || this.isTmpError());
+  }
 
   /**
    * return the API response PROPERTY key names
@@ -345,15 +311,15 @@ export class Response {
    */
   public getPagination(): any {
     return {
+      COUNT: this.count(),
       FIRST: this.first(),
       LAST: this.last(),
-      COUNT: this.count(),
-      TOTAL: this.total(),
       LIMIT: this.limit(),
-      PAGES: this.pages(),
       PAGE: this.page(),
       PAGENEXT: this.nextpage(),
-      PAGEPREV: this.prevpage()
+      PAGEPREV: this.prevpage(),
+      PAGES: this.pages(),
+      TOTAL: this.total(),
     };
   }
 
@@ -371,7 +337,9 @@ export class Response {
    */
   public count(): number {
     let c = this.getColumnIndex("COUNT", 0, true);
-    let cols, i, max = 0;
+    let cols;
+    let i;
+    let max = 0;
     if (c === false) {
       c = 0;
       cols = this.columns();
@@ -451,13 +419,14 @@ export class Response {
 
 /**
  * convert unparsed plain API response string to object notation
- * @param {String}   p_r String specifying the unparsed API response
+ * @param {String}   r String specifying the unparsed API response
  * @return {Object}      Response in hash format
  */
 export const parse = (r: any): any => {
-  let m, mm;
+  let m;
+  let mm;
   const hash: any = {};
-  const regexp: RegExp = /^([^\=]*[^\t\= ])[\t ]*=[\t ]*(.*)$/;
+  const regexp: RegExp = /^([^=]*[^\t= ])[\t ]*=[\t ]*(.*)$/;
   r = r.replace(/\r\n/g, "\n").split("\n");
   while (r.length) {
     m = (r.shift()).match(regexp);
@@ -479,14 +448,14 @@ export const parse = (r: any): any => {
 
 /**
  * convert parsed plain API response to unparsed string notation
- * @param  {Object} p_r Object specifying the parsed API response
+ * @param  {Object} pr Object specifying the parsed API response
  * @return {String}     Response in unparsed plain text
  */
-export const serialize = (p_r: any): string => {
-  const r = Object.assign({}, p_r);
+export const serialize = (pr: any): string => {
+  const r = Object.assign({}, pr);
   let plain: string = "[RESPONSE]";
   if (r.hasOwnProperty("PROPERTY")) {
-    Object.keys(r.PROPERTY).forEach(function(key) {
+    Object.keys(r.PROPERTY).forEach((key: string) => {
       r.PROPERTY[key].forEach((val: string, index: number) => {
         plain += "\r\nPROPERTY[" + key + "][" + index + "]=" + val;
       });
@@ -510,16 +479,16 @@ export const getTemplates = (): defresponses.IResponseTemplates => {
 
 /**
  * returns a default response template as parsed js object hash
- * @param {String} p_tplid the id of the template to return
- * @param {Boolean} p_parse flag to toggle the returned format. true: parsed, otherwise: unparsed
+ * @param {String} ptplid the id of the template to return
+ * @param {Boolean} pparse flag to toggle the returned format. true: parsed, otherwise: unparsed
  * @return {Object|String|Boolean}  default response template of false if not found
  */
-export const getTemplate = (p_tplid: string, p_parse: boolean): any => {
-  if (responses[p_tplid]) {
-    if (p_parse) {
-      return parse(responses[p_tplid]);
+export const getTemplate = (ptplid: string, pparse: boolean): any => {
+  if (responses[ptplid]) {
+    if (pparse) {
+      return parse(responses[ptplid]);
     } else {
-      return responses[p_tplid];
+      return responses[ptplid];
     }
   }
   return false;
@@ -527,15 +496,15 @@ export const getTemplate = (p_tplid: string, p_parse: boolean): any => {
 
 /**
  * check if the given response matches a default response template
- * @param  {Object} p_r given response
- * @param  {String} p_tplid given default template id
+ * @param  {Object} pr given response
+ * @param  {String} ptplid given default template id
  * @return {Boolean}  the check result
  */
-export const isTemplateMatch = (p_r: any, p_tplid: string): boolean => {
-  const tpl = getTemplate(p_tplid, true);
+export const isTemplateMatch = (pr: any, ptplid: string): boolean => {
+  const tpl = getTemplate(ptplid, true);
   return (
     tpl &&
-    p_r.CODE === tpl.CODE &&
-    p_r.DESCRIPTION === tpl.DESCRIPTION
+    pr.CODE === tpl.CODE &&
+    pr.DESCRIPTION === tpl.DESCRIPTION
   );
 };
