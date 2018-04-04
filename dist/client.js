@@ -13,7 +13,7 @@ class Client extends events.EventEmitter {
       pcb(r[`as_${ptype}`]())
       return
     }
-    const opts = pcfg.options || exports.getDefaultOptions()
+    const opts = pcfg.options || this.getDefaultOptions()
     if (!opts.headers) {
       opts.headers = {}
     }
@@ -41,7 +41,7 @@ class Client extends events.EventEmitter {
       throw new Error('Unsupported protocol within api connection uri.')
     }
     const cfg = {
-      options: exports.getDefaultOptions(puri),
+      options: this.getDefaultOptions(puri),
       params: pparams
     }
     const cb = (r) => {
@@ -69,38 +69,38 @@ class Client extends events.EventEmitter {
       data += '=' + encodeURIComponent(pcfg.params[key]) + '&'
     })
     data += encodeURIComponent('s_command')
-    data += '=' + encodeURIComponent(exports.commandEncode(pcmd))
+    data += '=' + encodeURIComponent(this.commandEncode(pcmd))
     return new clRequest.Request(pcfg.options, data, pcmd)
+  }
+  commandEncode (pcmd) {
+    let nullValueFound
+    let tmp = ''
+    if (!(typeof pcmd === 'string' || pcmd instanceof String)) {
+      nullValueFound = false
+      Object.keys(pcmd).forEach((key) => {
+        if (pcmd[key] !== null || pcmd[key] !== undefined) {
+          tmp += key + '=' + pcmd[key].toString().replace(/\r|\n/g, '') + '\n'
+        } else {
+          nullValueFound = true
+        }
+      })
+      if (nullValueFound) {
+        console.error('Command with null value in parameter.')
+        console.error(pcmd)
+      }
+    }
+    return tmp
+  }
+  getDefaultOptions (puri = 'https://coreapi.1api.net/api/call.cgi') {
+    const tmp = require('url').parse(puri)
+    return {
+      host: tmp.host.replace(/:.+$/, ''),
+      method: 'POST',
+      path: tmp.path,
+      port: (tmp.port || (/^https/i.test(tmp.protocol) ? '443' : '80')),
+      protocol: tmp.protocol
+    }
   }
 }
 exports.Client = Client
-exports.commandEncode = (pcmd) => {
-  let nullValueFound
-  let tmp = ''
-  if (!(typeof pcmd === 'string' || pcmd instanceof String)) {
-    nullValueFound = false
-    Object.keys(pcmd).forEach((key) => {
-      if (pcmd[key] !== null || pcmd[key] !== undefined) {
-        tmp += key + '=' + pcmd[key].toString().replace(/\r|\n/g, '') + '\n'
-      } else {
-        nullValueFound = true
-      }
-    })
-    if (nullValueFound) {
-      console.error('Command with null value in parameter.')
-      console.error(pcmd)
-    }
-  }
-  return tmp
-}
-exports.getDefaultOptions = (puri = 'https://coreapi.1api.net/api/call.cgi') => {
-  const tmp = require('url').parse(puri)
-  return {
-    host: tmp.host.replace(/:.+$/, ''),
-    method: 'POST',
-    path: tmp.path,
-    port: (tmp.port || (/^https/i.test(tmp.protocol) ? '443' : '80')),
-    protocol: tmp.protocol
-  }
-}
 // # sourceMappingURL=client.js.map

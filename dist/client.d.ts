@@ -6,6 +6,6 @@ export declare class Client extends events.EventEmitter {
     login(pparams: any, pcb: any, puri: string | undefined, pcmdparams: any): void;
     logout(pcfg: any, pcb: any): void;
     createConnection(pcmd: any, pcfg: any): clRequest.Request;
+    commandEncode(pcmd: any): string;
+    getDefaultOptions(puri?: string): any;
 }
-export declare const commandEncode: (pcmd: any) => string;
-export declare const getDefaultOptions: (puri?: string) => any;

@@ -10,7 +10,7 @@ class Response {
     pr = ((!pr || pr === '') ? exports.responses.empty : pr)
     this.usecolregexp = false
     this.data = {
-      parsed: exports.parse(pr),
+      parsed: this.parse(pr),
       unparsed: pr
     }
     this.cmd = Object.assign({}, pcommand)
@@ -71,7 +71,7 @@ class Response {
   }
   asString () {
     if (this.usecolregexp) {
-      return exports.serialize(this.asHash())
+      return this.serialize(this.asHash())
     }
     return this.data.unparsed
   }
@@ -230,79 +230,79 @@ class Response {
     const pages = this.pages()
     return (page <= pages ? page : pages)
   }
-}
-exports.Response = Response
-exports.parse = (r) => {
-  let m
-  let mm
-  const hash = {}
-  const regexp = /^([^=]*[^\t= ])[\t ]*=[\t ]*(.*)$/
-  r = r.replace(/\r\n/g, '\n').split('\n')
-  while (r.length) {
-    m = (r.shift()).match(regexp)
-    if (m) {
-      mm = m[1].match(/^property\[([^\]]*)\]/i)
-      if (mm) {
-        if (!hash.hasOwnProperty('PROPERTY')) {
-          hash.PROPERTY = {}
+  parse (r) {
+    let m
+    let mm
+    const hash = {}
+    const regexp = /^([^=]*[^\t= ])[\t ]*=[\t ]*(.*)$/
+    r = r.replace(/\r\n/g, '\n').split('\n')
+    while (r.length) {
+      m = (r.shift()).match(regexp)
+      if (m) {
+        mm = m[1].match(/^property\[([^\]]*)\]/i)
+        if (mm) {
+          if (!hash.hasOwnProperty('PROPERTY')) {
+            hash.PROPERTY = {}
+          }
+          mm[1] = mm[1].toUpperCase().replace(/\s/g, '')
+          if (!hash.PROPERTY.hasOwnProperty(mm[1])) {
+            hash.PROPERTY[mm[1]] = []
+          }
+          hash.PROPERTY[mm[1]].push(m[2].replace(/[\t ]*$/, ''))
+        } else {
+          hash[m[1].toUpperCase()] = m[2].replace(/[\t ]*$/, '')
         }
-        mm[1] = mm[1].toUpperCase().replace(/\s/g, '')
-        if (!hash.PROPERTY.hasOwnProperty(mm[1])) {
-          hash.PROPERTY[mm[1]] = []
-        }
-        hash.PROPERTY[mm[1]].push(m[2].replace(/[\t ]*$/, ''))
-      } else {
-        hash[m[1].toUpperCase()] = m[2].replace(/[\t ]*$/, '')
       }
     }
-  }
-  if (!hash.hasOwnProperty('DESCRIPTION')) {
-    hash.DESCRIPTION = ''
-  }
-  return hash
-}
-exports.serialize = (pr) => {
-  const r = Object.assign({}, pr)
-  let plain = '[RESPONSE]'
-  if (r.hasOwnProperty('PROPERTY')) {
-    Object.keys(r.PROPERTY).forEach((key) => {
-      r.PROPERTY[key].forEach((val, index) => {
-        plain += '\r\nPROPERTY[' + key + '][' + index + ']=' + val
-      })
-    })
-  }
-  if (r.hasOwnProperty('CODE')) {
-    plain += '\r\ncode=' + r.CODE
-  }
-  if (r.hasOwnProperty('DESCRIPTION')) {
-    plain += '\r\ndescription=' + r.DESCRIPTION
-  }
-  if (r.hasOwnProperty('QUEUETIME')) {
-    plain += '\r\nqueuetime=' + r.QUEUETIME
-  }
-  if (r.hasOwnProperty('RUNTIME')) {
-    plain += '\r\nruntime=' + r.RUNTIME
-  }
-  plain += '\r\nEOF\r\n'
-  return plain
-}
-exports.getTemplates = () => {
-  return exports.responses
-}
-exports.getTemplate = (ptplid, pparse) => {
-  if (exports.responses[ptplid]) {
-    if (pparse) {
-      return exports.parse(exports.responses[ptplid])
-    } else {
-      return exports.responses[ptplid]
+    if (!hash.hasOwnProperty('DESCRIPTION')) {
+      hash.DESCRIPTION = ''
     }
+    return hash
   }
-  return false
+  serialize (pr) {
+    const r = Object.assign({}, pr)
+    let plain = '[RESPONSE]'
+    if (r.hasOwnProperty('PROPERTY')) {
+      Object.keys(r.PROPERTY).forEach((key) => {
+        r.PROPERTY[key].forEach((val, index) => {
+          plain += '\r\nPROPERTY[' + key + '][' + index + ']=' + val
+        })
+      })
+    }
+    if (r.hasOwnProperty('CODE')) {
+      plain += '\r\ncode=' + r.CODE
+    }
+    if (r.hasOwnProperty('DESCRIPTION')) {
+      plain += '\r\ndescription=' + r.DESCRIPTION
+    }
+    if (r.hasOwnProperty('QUEUETIME')) {
+      plain += '\r\nqueuetime=' + r.QUEUETIME
+    }
+    if (r.hasOwnProperty('RUNTIME')) {
+      plain += '\r\nruntime=' + r.RUNTIME
+    }
+    plain += '\r\nEOF\r\n'
+    return plain
+  }
+  getTemplates () {
+    return exports.responses
+  }
+  getTemplate (ptplid, pparse) {
+    if (exports.responses[ptplid]) {
+      if (pparse) {
+        return this.parse(exports.responses[ptplid])
+      } else {
+        return exports.responses[ptplid]
+      }
+    }
+    return false
+  }
+  isTemplateMatch (pr, ptplid) {
+    const tpl = this.getTemplate(ptplid, true)
+    return (tpl &&
+            pr.CODE === tpl.CODE &&
+            pr.DESCRIPTION === tpl.DESCRIPTION)
+  }
 }
-exports.isTemplateMatch = (pr, ptplid) => {
-  const tpl = exports.getTemplate(ptplid, true)
-  return (tpl &&
-        pr.CODE === tpl.CODE &&
-        pr.DESCRIPTION === tpl.DESCRIPTION)
-}
+exports.Response = Response
 // # sourceMappingURL=response.js.map

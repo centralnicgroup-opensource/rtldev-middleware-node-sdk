@@ -32,7 +32,7 @@ export class Client extends events.EventEmitter {
     // port -> the socket port
     // protocol -> the socket protocol
     // headers -> custom headers to use
-    const opts = pcfg.options || getDefaultOptions();
+    const opts = pcfg.options || this.getDefaultOptions();
 
     if (!opts.headers) {
       opts.headers = {};
@@ -79,7 +79,7 @@ export class Client extends events.EventEmitter {
         throw new Error("Unsupported protocol within api connection uri.");
       }
       const cfg = {
-        options: getDefaultOptions(puri),
+        options: this.getDefaultOptions(puri),
         params: pparams,
       };
       const cb = (r: any) => {
@@ -120,43 +120,43 @@ export class Client extends events.EventEmitter {
       data += "=" + encodeURIComponent(pcfg.params[key]) + "&";
     });
     data += encodeURIComponent("s_command");
-    data += "=" + encodeURIComponent(commandEncode(pcmd));
+    data += "=" + encodeURIComponent(this.commandEncode(pcmd));
     return new clRequest.Request(pcfg.options, data, pcmd);
   }
-}
 
-/**
- * convert given command object to string
- * @param {Object} pcmd Object specifying the command to encode
- */
-export const commandEncode = (pcmd: any): string => {
-  let nullValueFound: boolean;
-  let tmp: string = "";
-  if (!(typeof pcmd === "string" || pcmd instanceof String)) {
-    nullValueFound = false;
-    Object.keys(pcmd).forEach((key: string) => {
-      if (pcmd[key] !== null || pcmd[key] !== undefined) { // 'toString' won't work
-        tmp += key + "=" + pcmd[key].toString().replace(/\r|\n/g, "") + "\n";
-      } else {
-        nullValueFound = true;
+  /**
+   * convert given command object to string
+   * @param {Object} pcmd Object specifying the command to encode
+   */
+  public commandEncode(pcmd: any): string {
+    let nullValueFound: boolean;
+    let tmp: string = "";
+    if (!(typeof pcmd === "string" || pcmd instanceof String)) {
+      nullValueFound = false;
+      Object.keys(pcmd).forEach((key: string) => {
+        if (pcmd[key] !== null || pcmd[key] !== undefined) { // 'toString' won't work
+          tmp += key + "=" + pcmd[key].toString().replace(/\r|\n/g, "") + "\n";
+        } else {
+          nullValueFound = true;
+        }
+      });
+      if (nullValueFound) {
+        console.error("Command with null value in parameter.");
+        console.error(pcmd);
       }
-    });
-    if (nullValueFound) {
-      console.error("Command with null value in parameter.");
-      console.error(pcmd);
     }
+    return tmp;
   }
-  return tmp;
-};
 
-export const getDefaultOptions = (puri: string = "https://coreapi.1api.net/api/call.cgi"): any => {
-  const tmp = require("url").parse(puri);
-  return {
-    host: tmp.host.replace(/:.+$/, ""), // remove port
-    method: "POST",
-    // , agent: false //default usage of http.globalAgent
-    path: tmp.path,
-    port: (tmp.port || (/^https/i.test(tmp.protocol) ? "443" : "80")),
-    protocol: tmp.protocol,
-  };
-};
+  public getDefaultOptions(puri: string = "https://coreapi.1api.net/api/call.cgi"): any {
+    const tmp = require("url").parse(puri);
+    return {
+      host: tmp.host.replace(/:.+$/, ""), // remove port
+      method: "POST",
+      // , agent: false //default usage of http.globalAgent
+      path: tmp.path,
+      port: (tmp.port || (/^https/i.test(tmp.protocol) ? "443" : "80")),
+      protocol: tmp.protocol,
+    };
+  }
+}

@@ -42,9 +42,9 @@ export declare class Response {
     page(): number;
     prevpage(): number;
     nextpage(): number;
+    parse(r: any): any;
+    serialize(pr: any): string;
+    getTemplates(): defresponses.IResponseTemplates;
+    getTemplate(ptplid: string, pparse: boolean): any;
+    isTemplateMatch(pr: any, ptplid: string): boolean;
 }
-export declare const parse: (r: any) => any;
-export declare const serialize: (pr: any) => string;
-export declare const getTemplates: () => defresponses.IResponseTemplates;
-export declare const getTemplate: (ptplid: string, pparse: boolean) => any;
-export declare const isTemplateMatch: (pr: any, ptplid: string) => boolean;

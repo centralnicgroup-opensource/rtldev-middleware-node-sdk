@@ -23,7 +23,7 @@ export class Response {
     pr = ((!pr || pr === "") ? responses.empty : pr);
     this.usecolregexp = false;
     this.data = {
-      parsed: parse(pr),
+      parsed: this.parse(pr),
       unparsed: pr,
     };
     this.cmd = Object.assign({}, pcommand);
@@ -151,7 +151,7 @@ export class Response {
    */
   public asString(): string {
     if (this.usecolregexp) {
-      return serialize(this.asHash());
+      return this.serialize(this.asHash());
     }
     return this.data.unparsed;
   }
@@ -415,96 +415,96 @@ export class Response {
     const pages = this.pages();
     return (page <= pages ? page : pages);
   }
-}
 
-/**
- * convert unparsed plain API response string to object notation
- * @param {String}   r String specifying the unparsed API response
- * @return {Object}      Response in hash format
- */
-export const parse = (r: any): any => {
-  let m;
-  let mm;
-  const hash: any = {};
-  const regexp: RegExp = /^([^=]*[^\t= ])[\t ]*=[\t ]*(.*)$/;
-  r = r.replace(/\r\n/g, "\n").split("\n");
-  while (r.length) {
-    m = (r.shift()).match(regexp);
-    if (m) {
-      mm = m[1].match(/^property\[([^\]]*)\]/i);
-      if (mm) {
-        if (!hash.hasOwnProperty("PROPERTY")) { hash.PROPERTY = {}; }
-        mm[1] = mm[1].toUpperCase().replace(/\s/g, "");
-        if (!hash.PROPERTY.hasOwnProperty(mm[1])) { hash.PROPERTY[mm[1]] = []; }
-        hash.PROPERTY[mm[1]].push(m[2].replace(/[\t ]*$/, ""));
-      } else {
-        hash[m[1].toUpperCase()] = m[2].replace(/[\t ]*$/, "");
+  /**
+   * convert unparsed plain API response string to object notation
+   * @param {String}   r String specifying the unparsed API response
+   * @return {Object}      Response in hash format
+   */
+  public parse(r: any): any {
+    let m;
+    let mm;
+    const hash: any = {};
+    const regexp: RegExp = /^([^=]*[^\t= ])[\t ]*=[\t ]*(.*)$/;
+    r = r.replace(/\r\n/g, "\n").split("\n");
+    while (r.length) {
+      m = (r.shift()).match(regexp);
+      if (m) {
+        mm = m[1].match(/^property\[([^\]]*)\]/i);
+        if (mm) {
+          if (!hash.hasOwnProperty("PROPERTY")) { hash.PROPERTY = {}; }
+          mm[1] = mm[1].toUpperCase().replace(/\s/g, "");
+          if (!hash.PROPERTY.hasOwnProperty(mm[1])) { hash.PROPERTY[mm[1]] = []; }
+          hash.PROPERTY[mm[1]].push(m[2].replace(/[\t ]*$/, ""));
+        } else {
+          hash[m[1].toUpperCase()] = m[2].replace(/[\t ]*$/, "");
+        }
       }
     }
+    if (!hash.hasOwnProperty("DESCRIPTION")) { hash.DESCRIPTION = ""; }
+    return hash;
   }
-  if (!hash.hasOwnProperty("DESCRIPTION")) { hash.DESCRIPTION = ""; }
-  return hash;
-};
 
-/**
- * convert parsed plain API response to unparsed string notation
- * @param  {Object} pr Object specifying the parsed API response
- * @return {String}     Response in unparsed plain text
- */
-export const serialize = (pr: any): string => {
-  const r = Object.assign({}, pr);
-  let plain: string = "[RESPONSE]";
-  if (r.hasOwnProperty("PROPERTY")) {
-    Object.keys(r.PROPERTY).forEach((key: string) => {
-      r.PROPERTY[key].forEach((val: string, index: number) => {
-        plain += "\r\nPROPERTY[" + key + "][" + index + "]=" + val;
+  /**
+   * convert parsed plain API response to unparsed string notation
+   * @param  {Object} pr Object specifying the parsed API response
+   * @return {String}     Response in unparsed plain text
+   */
+  public serialize(pr: any): string {
+    const r = Object.assign({}, pr);
+    let plain: string = "[RESPONSE]";
+    if (r.hasOwnProperty("PROPERTY")) {
+      Object.keys(r.PROPERTY).forEach((key: string) => {
+        r.PROPERTY[key].forEach((val: string, index: number) => {
+          plain += "\r\nPROPERTY[" + key + "][" + index + "]=" + val;
+        });
       });
-    });
-  }
-  if (r.hasOwnProperty("CODE")) { plain += "\r\ncode=" + r.CODE; }
-  if (r.hasOwnProperty("DESCRIPTION")) { plain += "\r\ndescription=" + r.DESCRIPTION; }
-  if (r.hasOwnProperty("QUEUETIME")) { plain += "\r\nqueuetime=" + r.QUEUETIME; }
-  if (r.hasOwnProperty("RUNTIME")) { plain += "\r\nruntime=" + r.RUNTIME; }
-  plain += "\r\nEOF\r\n";
-  return plain;
-};
-
-/**
- * returns the default response templates
- * @return {Object}  default response templates
- */
-export const getTemplates = (): defresponses.IResponseTemplates => {
-  return responses;
-};
-
-/**
- * returns a default response template as parsed js object hash
- * @param {String} ptplid the id of the template to return
- * @param {Boolean} pparse flag to toggle the returned format. true: parsed, otherwise: unparsed
- * @return {Object|String|Boolean}  default response template of false if not found
- */
-export const getTemplate = (ptplid: string, pparse: boolean): any => {
-  if (responses[ptplid]) {
-    if (pparse) {
-      return parse(responses[ptplid]);
-    } else {
-      return responses[ptplid];
     }
+    if (r.hasOwnProperty("CODE")) { plain += "\r\ncode=" + r.CODE; }
+    if (r.hasOwnProperty("DESCRIPTION")) { plain += "\r\ndescription=" + r.DESCRIPTION; }
+    if (r.hasOwnProperty("QUEUETIME")) { plain += "\r\nqueuetime=" + r.QUEUETIME; }
+    if (r.hasOwnProperty("RUNTIME")) { plain += "\r\nruntime=" + r.RUNTIME; }
+    plain += "\r\nEOF\r\n";
+    return plain;
   }
-  return false;
-};
 
-/**
- * check if the given response matches a default response template
- * @param  {Object} pr given response
- * @param  {String} ptplid given default template id
- * @return {Boolean}  the check result
- */
-export const isTemplateMatch = (pr: any, ptplid: string): boolean => {
-  const tpl = getTemplate(ptplid, true);
-  return (
-    tpl &&
-    pr.CODE === tpl.CODE &&
-    pr.DESCRIPTION === tpl.DESCRIPTION
-  );
-};
+  /**
+   * returns the default response templates
+   * @return {Object}  default response templates
+   */
+  public getTemplates(): defresponses.IResponseTemplates {
+    return responses;
+  }
+
+  /**
+   * returns a default response template as parsed js object hash
+   * @param {String} ptplid the id of the template to return
+   * @param {Boolean} pparse flag to toggle the returned format. true: parsed, otherwise: unparsed
+   * @return {Object|String|Boolean}  default response template of false if not found
+   */
+  public getTemplate(ptplid: string, pparse: boolean): any {
+    if (responses[ptplid]) {
+      if (pparse) {
+        return this.parse(responses[ptplid]);
+      } else {
+        return responses[ptplid];
+      }
+    }
+    return false;
+  }
+
+  /**
+   * check if the given response matches a default response template
+   * @param  {Object} pr given response
+   * @param  {String} ptplid given default template id
+   * @return {Boolean}  the check result
+   */
+  public isTemplateMatch(pr: any, ptplid: string): boolean {
+    const tpl = this.getTemplate(ptplid, true);
+    return (
+      tpl &&
+      pr.CODE === tpl.CODE &&
+      pr.DESCRIPTION === tpl.DESCRIPTION
+    );
+  }
+}
