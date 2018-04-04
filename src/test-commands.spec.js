@@ -1,5 +1,3 @@
-/* jshint -W024 */
-/* jshint expr:true */
 'use strict'
 
 var expect = require('chai').expect

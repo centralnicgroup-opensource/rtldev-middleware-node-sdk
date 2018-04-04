@@ -1,8 +1,8 @@
-import * as libRequest from './request';
-import * as libClient from './client';
-import * as libResponse from './response';
+import * as libClient from "./client";
+import * as libRequest from "./request";
+import * as libResponse from "./response";
 export declare const ispapi: {
-    Request: typeof libRequest;
-    Client: typeof libClient;
-    Response: typeof libResponse;
+    Client: typeof libClient.Client;
+    Request: typeof libRequest.Request;
+    Response: typeof libResponse.Response;
 };

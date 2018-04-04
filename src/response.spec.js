@@ -4,7 +4,7 @@ var chai = require('chai')
 var dirtyChai = require('dirty-chai')
 var expect = chai.expect
 chai.use(dirtyChai)
-var Response = require('./response.js')
+var Response = require('../dist/response.js')
 var chkHlp = require('./test-check-helper.js')
 var expectResponse = chkHlp.expectResponse
 var expectResponseHash = chkHlp.expectResponseHash

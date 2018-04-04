@@ -1,11 +1,9 @@
-/* jshint -W024 */
-/* jshint expr:true */
 'use strict'
 
 var testcmds = require('./test-commands.js')
 var expect = require('chai').expect
 var events = require('events')
-var apiconnector = require('./index.js')
+var apiconnector = require('../dist/index.js')
 var nock = require('nock')
 var Request = apiconnector.Request
 var Response = apiconnector.Response

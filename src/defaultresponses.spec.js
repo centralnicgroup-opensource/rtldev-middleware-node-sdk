@@ -1,9 +1,7 @@
-/* jshint -W024 */
-/* jshint expr:true */
 'use strict'
 
 var expect = require('chai').expect
-var tpls = require('./defaultresponses.js')
+var tpls = require('../dist/defaultresponses.js')
 var tplKeys = ['404', 'empty', 'error', 'expired']
 
 describe('defaultresponses.js', function () {

@@ -1,6 +1,6 @@
-import * as libRequest from './request';
-import * as libClient from './client';
-import * as libResponse from './response';
+import * as libClient from "./client";
+import * as libRequest from "./request";
+import * as libResponse from "./response";
 
 /**
  * @alias node.ispapi-apiconnector
@@ -10,7 +10,7 @@ import * as libResponse from './response';
  * @property {node.ispapi-apiconnector.Response} Response
  */
 export const ispapi = {
-  Request: libRequest,
-  Client: libClient,
-  Response: libResponse
+  Client: libClient.Client,
+  Request: libRequest.Request,
+  Response: libResponse.Response,
 };
