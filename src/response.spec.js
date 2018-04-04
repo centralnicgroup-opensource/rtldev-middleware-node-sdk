@@ -1,8 +1,9 @@
-/* jshint -W024 */
-/* jshint expr:true */
 'use strict'
 
-var expect = require('chai').expect
+var chai = require('chai')
+var dirtyChai = require('dirty-chai')
+var expect = chai.expect
+chai.use(dirtyChai)
 var Response = require('./response.js')
 var chkHlp = require('./test-check-helper.js')
 var expectResponse = chkHlp.expectResponse
@@ -52,7 +53,7 @@ describe('response.js', function () {
     })
 
     it("return non existing template '__iWillNeverExist__'", function () {
-      expect(Response.getTemplate('__iWillNeverExist__')).to.be.false
+      expect(Response.getTemplate('__iWillNeverExist__')).to.be.false()
     })
   })
 
@@ -105,11 +106,11 @@ describe('response.js', function () {
     it('check if parsed API response matches a default response template', function () {
       var hash = Response.getTemplate('error', true)
       var ismatch = Response.isTemplateMatch(hash, 'error')
-      expect(ismatch).to.be.true
+      expect(ismatch).to.be.true()
       ismatch = Response.isTemplateMatch(hash, 'expired')
-      expect(ismatch).to.be.false
+      expect(ismatch).to.be.false()
       ismatch = Response.isTemplateMatch(hash, '__iWillNeverExist__')
-      expect(ismatch).to.be.false
+      expect(ismatch).to.be.false()
     })
   })
 
@@ -151,15 +152,15 @@ describe('response.js', function () {
       expect(r.colregexp).to.be.an('regexp')
       expect(r.colregexp.toString()).to.equal('/^(DOMAIN|REPOSITORY)$/i')
       r.useColumns('*') // restore defaults: this.colregexp set to false
-      expect(r.colregexp).to.be.false
+      expect(r.colregexp).to.be.false()
     })
 
     it('hasNext', function () {
-      expect(r.hasNext()).to.be.true // index 0 (of two items)
+      expect(r.hasNext()).to.be.true() // index 0 (of two items)
     })
 
     it('hasPrevious', function () {
-      expect(r.hasPrevious()).to.be.false // index 0 (of two items)
+      expect(r.hasPrevious()).to.be.false() // index 0 (of two items)
     })
 
     it('rewind', function () {
@@ -167,9 +168,9 @@ describe('response.js', function () {
       row = r.rewind()
       expect(row).to.be.an('object')
       flag = r.hasNext()
-      expect(flag).to.be.true // index 0 (of two items)
+      expect(flag).to.be.true() // index 0 (of two items)
       flag = r.hasPrevious()
-      expect(flag).to.be.false // index 0 (of two items)
+      expect(flag).to.be.false() // index 0 (of two items)
     })
 
     it('next', function () {
@@ -177,9 +178,9 @@ describe('response.js', function () {
       row = r.next()
       expect(row).to.be.an('object')
       flag = r.hasNext()
-      expect(flag).to.be.false // index 1 (of two items)
+      expect(flag).to.be.false() // index 1 (of two items)
       flag = r.hasPrevious()
-      expect(flag).to.be.true // index 1 (of two items)
+      expect(flag).to.be.true() // index 1 (of two items)
     })
 
     it('previous', function () {
@@ -187,9 +188,9 @@ describe('response.js', function () {
       row = r.previous()
       expect(row).to.be.an('object')
       flag = r.hasNext()
-      expect(flag).to.be.true // index 0 (of two items)
+      expect(flag).to.be.true() // index 0 (of two items)
       flag = r.hasPrevious()
-      expect(flag).to.be.false // index 0 (of two items)
+      expect(flag).to.be.false() // index 0 (of two items)
     })
 
     it('current', function () {
@@ -200,14 +201,14 @@ describe('response.js', function () {
       var pt = r.get('PROPERTY')
       expect(pt).to.be.an('object')
       pt = r.get('__iWillNeverExist__')
-      expect(pt).to.be.false
+      expect(pt).to.be.false()
     })
 
     it('getColumn', function () {
       var col = r.getColumn('CREATEDDATE')
       expect(col).to.be.an('array')
       col = r.get('__iWillNeverExist__')
-      expect(col).to.be.false
+      expect(col).to.be.false()
     })
 
     it('getColumnIndex', function () {
@@ -347,11 +348,11 @@ describe('response.js', function () {
 
     it('is_error', function () {
       var r2
-      expect(r.is_error()).to.be.false
+      expect(r.is_error()).to.be.false()
       r2 = new Response(testcmds.error.RESPONSE, testcmds.error.COMMAND)
-      expect(r2.is_error()).to.be.true
+      expect(r2.is_error()).to.be.true()
       r2 = new Response(testcmds.tmperror.RESPONSE, testcmds.tmperror.COMMAND)
-      expect(r2.is_error()).to.be.false
+      expect(r2.is_error()).to.be.false()
     })
 
     it('columns', function () {
