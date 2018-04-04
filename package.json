@@ -59,10 +59,10 @@
     "postversion": "git push && git push --tags"
   },
   "devDependencies": {
-    "@types/node": "^9.6.0",
-    "auto-changelog": "0.3.5",
+    "@types/node": "^9.6.2",
+    "auto-changelog": "^1.4.6",
     "chai": "4.1.2",
-    "cross-env": "5.0.5",
+    "cross-env": "^5.1.4",
     "dirty-chai": "^2.0.1",
     "docco": "^0.8.0",
     "eslint": "^4.19.1",
@@ -74,13 +74,11 @@
     "eslint-plugin-promise": "^3.7.0",
     "eslint-plugin-standard": "^3.0.1",
     "istanbul": "0.4.5",
-    "mocha": "4.0.1",
-    "nock": "9.0.22",
-    "nyc": "11.2.1",
-    "tsc": "^1.20150623.0",
+    "mocha": "^5.0.5",
+    "nock": "^9.2.3",
+    "nyc": "^11.6.0",
     "tslint": "^5.9.1",
     "typedoc": "^0.11.1",
     "typescript": "^2.8.1"
-  },
-  "dependencies": {}
+  }
 }

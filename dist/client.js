@@ -13,11 +13,11 @@ class Client extends events.EventEmitter {
       pcb(r[`as_${ptype}`]())
       return
     }
-    var opts = pcfg.options || exports.getDefaultOptions()
+    const opts = pcfg.options || exports.getDefaultOptions()
     if (!opts.headers) {
       opts.headers = {}
     }
-    var c = this.createConnection(pcmd, {
+    const c = this.createConnection(pcmd, {
       options: opts,
       params: pcfg.params
     })
@@ -31,17 +31,18 @@ class Client extends events.EventEmitter {
         pcberr(r[`as_${ptype}`]())
       })
     } else {
-      c.on('error', function () {
+      c.on('error', () => {
       })
     }
     c.request()
   }
-  ;
   login (pparams, pcb, puri = 'https://coreapi.1api.net/api/call.cgi', pcmdparams) {
-    if (!/^(http|https):\/\//.test(puri)) { throw new Error('Unsupported protocol within api connection uri.') }
-    let cfg = {
-      params: pparams,
-      options: exports.getDefaultOptions(puri)
+    if (!/^(http|https):\/\//.test(puri)) {
+      throw new Error('Unsupported protocol within api connection uri.')
+    }
+    const cfg = {
+      options: exports.getDefaultOptions(puri),
+      params: pparams
     }
     const cb = (r) => {
       if (r.CODE === '200') {
@@ -56,13 +57,11 @@ class Client extends events.EventEmitter {
       command: 'StartSession'
     }, pcmdparams || {}), cfg, cb, cb)
   }
-  ;
   logout (pcfg, pcb) {
     this.request({
       command: 'EndSession'
     }, pcfg, pcb, pcb)
   }
-  ;
   createConnection (pcmd, pcfg) {
     let data = ''
     Object.keys(pcfg.params).forEach((key) => {
@@ -70,14 +69,12 @@ class Client extends events.EventEmitter {
       data += '=' + encodeURIComponent(pcfg.params[key]) + '&'
     })
     data += encodeURIComponent('s_command')
-    data += '=' + encodeURIComponent(exports.command_encode(pcmd))
+    data += '=' + encodeURIComponent(exports.commandEncode(pcmd))
     return new clRequest.Request(pcfg.options, data, pcmd)
   }
-  ;
 }
 exports.Client = Client
-
-exports.command_encode = (pcmd) => {
+exports.commandEncode = (pcmd) => {
   let nullValueFound
   let tmp = ''
   if (!(typeof pcmd === 'string' || pcmd instanceof String)) {
@@ -99,11 +96,11 @@ exports.command_encode = (pcmd) => {
 exports.getDefaultOptions = (puri = 'https://coreapi.1api.net/api/call.cgi') => {
   const tmp = require('url').parse(puri)
   return {
-    method: 'POST',
-    port: (tmp.port || (/^https/i.test(tmp.protocol) ? '443' : '80')),
-    protocol: tmp.protocol,
     host: tmp.host.replace(/:.+$/, ''),
-    path: tmp.path
+    method: 'POST',
+    path: tmp.path,
+    port: (tmp.port || (/^https/i.test(tmp.protocol) ? '443' : '80')),
+    protocol: tmp.protocol
   }
 }
 // # sourceMappingURL=client.js.map
