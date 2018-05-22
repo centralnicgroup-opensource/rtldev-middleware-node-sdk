@@ -37,7 +37,7 @@ Client.command_encode = function(p_cmd) {
       }
     });
     if (nullValueFound) {
-      console.error('Command with null value in parameter.');
+      console.error('Command with null/undefined value in parameter.');
       console.error(p_cmd);
     }
   }

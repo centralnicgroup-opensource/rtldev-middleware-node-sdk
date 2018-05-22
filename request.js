@@ -53,6 +53,9 @@ Request.prototype.requestCallback = function(res) {
   res.on('data', function(chunk) {
     response += chunk;
   });
+  res.on('error', function() {
+    this.emit('error', new Response(Response.responses.error, this.cmd));
+  });
   res.on('end', function() {
     oself.emit("response", new Response(response, oself.cmd));
     response = "";
