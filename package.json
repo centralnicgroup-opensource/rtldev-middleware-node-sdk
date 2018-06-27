@@ -1,5 +1,5 @@
 {
-  "name": "ispapi-apiconnector",
+  "name": "@hexonet/ispapi-apiconnector",
   "description": "Node.js SDK for the insanely fast HEXONET API",
   "version": "4.3.0",
   "author": {
