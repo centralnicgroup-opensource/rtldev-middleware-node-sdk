@@ -1,15 +1,17 @@
-# ispapi-apiconnector
+# node-sdk
 
-This module is a connector library for the insanely fast 1API backend API.
-For further informations visit our homepage http://1api.net and do not hesitate to contact us.
+This module is a connector library for the insanely fast HEXONET Backend API. For further informations visit our [homepage](https://www.hexonet.net) and do not hesitate to [contact us](https://www.hexonet.net/contact).
 
 ## Installation
 
-    $ npm install ispapi-apiconnector
+```bash
+    npm install @hexonet/ispapi-apiconnector@latest
+```
 
 ## Usage
 
 ### API response format
+
 If you got the API communication working, you will notice that we provide two response formats via this library.
 a) hash format
 b) list format
@@ -21,11 +23,13 @@ apiclient.request(command, socketcfg, callbackSuccess, callbackError, type);
 //apiclient.request(command, socketconfig, callbackSuccess, callbackError, "hash");
 //apiclient.request(command, socketconfig, callbackSuccess, callbackError, "list");
 ```
+
 The default value for type is "hash". Thus not providing this parameter automatically returns the hash format.
 The list format makes sense, if you're working with table libraries based on our list commands and need the hash format parsed into a list format.
 NOTE: You have to login first. The login callback provides an updated socketcfg variable which has to be reused in the request and logout method.
 
 ### API response codes
+
 The API response (a JSON object) provides always two keys: CODE and DESCRIPTION.
 CODE represents a return code which indicates the following cases:
 "200" -> The command has been processed successfully by the API
@@ -38,8 +42,9 @@ The hash format provides a PROPERTY key that returns potential data.
 The list format provides a LIST key that returns potential data.
 
 ### API login procedure
+
 ```js
-var apiconnector = require('ispapi-connector')
+var apiconnector = require('@hexonet/ispapi-connector')
   , apiclient = new apiconnector.Client()
   , socketparameters, cb;
 
@@ -66,10 +71,11 @@ apiclient.login(socketparameters, cb);
 ```
 
 ### API command request
+
 After login, you should reuse the above 'socketcfg' parameter in further requests which is the simplest and best way.
 
 ```js
-var apiconnector = require('ispapi-apiconnector')
+var apiconnector = require('@hexonet/ispapi-apiconnector')
   , apiclient = new apiconnector.Client()
   , cb, cberr;
 
@@ -89,11 +95,15 @@ cberr = function(r){
 
 apiclient.request({ COMMAND : "StatusUser" }, socketcfg, cb, cberr);
 ```
+
 NOTE: You have to login first. The login callback provides an updated socketcfg variable which has to be reused in the request and logout method.
 
 ### API logout
+
 ```js
-var apiconnector = require('ispapi-connector')
+'use strict';
+
+var apiconnector = require('@hexonet/ispapi-connector')
   , apiclient = new apiconnector.Client()
   , cb;
 
@@ -106,18 +116,20 @@ cb = function(r){
 
 api.logout(socketcfg, cb);
 ```
+
 NOTE: You have to login first. The login callback provides an updated socketcfg variable which has to be reused in the request and logout method.
 
 ## Working example
+
 This example is thought for anyone who builds up his own frontend including user login and logout functionality.
 See how login and logout works and how the request method depends on the login mechanism!
 The logout can be done at any time separetely triggered. After logout no further requests are possible.
 Note: you have to first finish your requests before doing logout. Running requests may fail after logout.
-```js
 
+```js
 'use strict';
 
-var apiconnector = require('ispapi-apiconnector'),
+var apiconnector = require('@hexonet/ispapi-apiconnector'),
   apiclient = new apiconnector.Client(),
   socketparameters;
 
@@ -166,18 +178,19 @@ apiclient.login(socketparameters, function(r, socketcfg) {
 ```
 
 ## Working example (without API session)
+
 In the below example no login / logout procedure is required.
 This is thought for cases where a user session is not of interest.
 But in that case you always have to provide user and password accordingly.
 If you want to build your frontend based on this library, we suggest to base it on the above example.
-```js
 
+```js
 'use strict';
 
-var apiconnector = require('ispapi-apiconnector'),
+var apiconnector = require('@hexonet/ispapi-apiconnector'),
   apiclient = new apiconnector.Client(),
   socketparameters =  {
-  	params: {
+    params: {
       entity: '1234',
       remoteaddr: '1.2.3.4:80',
       login: 'test.user',
@@ -195,7 +208,9 @@ apiclient.request({
 ```
 
 ## FAQ
+
 Nothing added yet.
 
 ## License
+
 MIT
