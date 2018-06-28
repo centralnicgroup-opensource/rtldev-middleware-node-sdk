@@ -1,7 +1,7 @@
 {
   "name": "@hexonet/ispapi-apiconnector",
   "description": "Node.js SDK for the insanely fast HEXONET API",
-  "version": "4.3.5",
+  "version": "4.3.6",
   "private": false,
   "author": {
     "name": "Kai Schwarz",
@@ -13,7 +13,7 @@
     "node": ">=4.0.0"
   },
   "homepage": "https://github.com/hexonet/node-sdk",
-  "repository" : "github:hexonet/node-sdk",
+  "repository": "github:hexonet/node-sdk",
   "bugs": "https://github.com/hexonet/node-sdk/issues",
   "maintainers": [
     {
