@@ -1,7 +1,7 @@
 {
   "name": "@hexonet/ispapi-apiconnector",
   "description": "Node.js SDK for the insanely fast HEXONET API",
-  "version": "4.3.7",
+  "version": "4.3.8",
   "private": false,
   "author": {
     "name": "Kai Schwarz",
@@ -49,8 +49,9 @@
     ]
   },
   "scripts": {
-    "publish": "git push && git push --tags",
+    "preversion": "git fetch origin --prune && git checkout master && git pull && npm test",
     "version": "auto-changelog --commit-limit false --package --output HISTORY.md; git add HISTORY.md",
+    "postversion": "git push && git push --tags",
     "test": "npm run test-NODE --silent",
     "test-NODE": "cross-env NODE_ENV=development nyc ./node_modules/.bin/_mocha --opts mocha.opts $(find . -type f -name '*.spec.js'  ! -path './nyc_output/*' ! -path './coverage/*' ! -path './node_modules/*')"
   },
