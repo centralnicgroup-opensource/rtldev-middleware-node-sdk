@@ -11,7 +11,7 @@ var events = require("events");
 var Response = require("./response.js");
 
 /**
- * @alias node.ispapi-apiconnector.Request
+ * @alias @hexonet/ispapi-apiconnector.Request
  * @desc Used to connect to 1API API Backend
  * @augments events.EventEmitter
  * @param {Object} p_cfg socket configuration

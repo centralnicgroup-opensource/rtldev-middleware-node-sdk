@@ -10,11 +10,11 @@
 'use strict';
 
 /**
- * @alias node.ispapi-apiconnector
+ * @alias @hexonet/ispapi-apiconnector
  * @desc Used to interact with the 1API Backend API
- * @property {node.ispapi-apiconnector.Request} Request
- * @property {node.ispapi-apiconnector.Client} Client
- * @property {node.ispapi-apiconnector.Response} Response
+ * @property {@hexonet/ispapi-apiconnector.Request} Request
+ * @property {@hexonet/ispapi-apiconnector.Client} Client
+ * @property {@hexonet/ispapi-apiconnector.Response} Response
  */
 var ispapi = {
   Request: require('./request.js'),

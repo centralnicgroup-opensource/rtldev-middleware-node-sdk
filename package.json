@@ -49,6 +49,7 @@
     ]
   },
   "scripts": {
+    "docs": "jsdoc -c ./jsdoc.conf index.js client.js defaultresponses.js request.js response.js",
     "preversion": "git fetch origin --prune && git checkout master && git pull && npm test",
     "version": "auto-changelog --commit-limit false --package --output HISTORY.md; git add HISTORY.md",
     "postversion": "git push && git push --tags",
@@ -60,6 +61,8 @@
     "chai": "4.1.2",
     "cross-env": "5.2.0",
     "istanbul": "0.4.5",
+    "jsdoc": "3.5.5",
+    "jsdoc-oblivion": "0.0.9",
     "mocha": "5.2.0",
     "nock": "9.3.3",
     "nyc": "12.0.2"
