@@ -12,15 +12,15 @@ This module is a connector library for the insanely fast HEXONET Backend API. Fo
 
 ## Resources
 
-* [Usage Guide](https://github.com/hexonet/go-sdk/blob/master/README.md#how-to-use-this-module-in-your-project)
-* [SDK Documenation](https://godoc.org/github.com/hexonet/go-sdk)
+* [Usage Guide](https://github.com/hexonet/node-sdk/blob/master/README.md#how-to-use-this-module-in-your-project)
+* [SDK Documenation](http://rawgit.com/hexonet/node-sdk/master/docs/index.html)
 * [HEXONET Backend API Documentation](https://github.com/hexonet/hexonet-api-documentation/tree/master/API)
-* [Release Notes](https://github.com/hexonet/go-sdk/releases)
-* [Development Guide](https://github.com/hexonet/go-sdk/wiki/Development-Guide)
+* [Release Notes](https://github.com/hexonet/node-sdk/releases)
+* [Development Guide](https://github.com/hexonet/node-sdk/wiki/Development-Guide)
 
 ## How to use this module in your project
 
-We have also a demo app available showing how to integrate and use our SDK. See [here](https://github.com/hexonet/php-sdk-demo).
+We have also a demo app available showing how to integrate and use our SDK. See [here](https://github.com/hexonet/node-sdk-demo).
 
 ### Requirements
 
