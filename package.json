@@ -49,7 +49,7 @@
     ]
   },
   "scripts": {
-    "changelog": "auto-changelog --commit-limit false --package --output HISTORY.md; git add HISTORY.md",
+    "changelog": "auto-changelog --template https://raw.githubusercontent.com/hexonet/auto-changelog-templates/master/compact.hts --commit-limit false --output HISTORY.md; git add HISTORY.md",
     "docs": "jsdoc -c ./jsdoc.conf index.js client.js defaultresponses.js request.js response.js; git add docs",
     "preversion": "git fetch origin --prune && git checkout master && git pull && npm test",
     "version": "npm run changelog --silent && npm run docs --silent",
@@ -58,7 +58,6 @@
     "test-NODE": "cross-env NODE_ENV=development nyc ./node_modules/.bin/_mocha --opts mocha.opts $(find . -type f -name '*.spec.js'  ! -path './nyc_output/*' ! -path './coverage/*' ! -path './node_modules/*')"
   },
   "devDependencies": {
-    "auto-changelog": "1.7.2",
     "chai": "4.1.2",
     "cross-env": "5.2.0",
     "istanbul": "0.4.5",
