@@ -1,0 +1,32 @@
+import { Response } from "./response";
+export declare class APIClient {
+    private static readonly socketTimeout;
+    private socketURL;
+    private socketConfig;
+    private debugMode;
+    constructor();
+    enableDebugMode(): APIClient;
+    disableDebugMode(): APIClient;
+    getPOSTData(cmd: any): string;
+    getURL(): string;
+    getVersion(): string;
+    saveSession(session: any): APIClient;
+    reuseSession(session: any): APIClient;
+    setURL(value: string): APIClient;
+    setOTP(value: string): APIClient;
+    setSession(value: string): APIClient;
+    setRemoteIPAddress(value: string): APIClient;
+    setCredentials(uid: string, pw: string): APIClient;
+    setRoleCredentials(uid: string, role: string, pw: string): APIClient;
+    login(otp?: string): Promise<Response>;
+    loginExtended(params: any, otp?: string): Promise<Response>;
+    logout(): Promise<Response>;
+    request(cmd: any): Promise<Response>;
+    requestNextResponsePage(rr: Response): Promise<Response | null>;
+    requestAllResponsePages(cmd: any): Promise<Response[]>;
+    setUserView(uid: string): APIClient;
+    resetUserView(): APIClient;
+    useOTESystem(): APIClient;
+    useLIVESystem(): APIClient;
+    private toUpperCaseKeys;
+}

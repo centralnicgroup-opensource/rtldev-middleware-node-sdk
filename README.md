@@ -26,31 +26,41 @@ We have also a demo app available showing how to integrate and use our SDK. See 
 
 * Installed nodejs/npm. We suggest using [nvm](https://github.com/creationix/nvm).
 
+### NodeJS Version Compatibility
+
+| Version | NodeJS |
+| ------- | ------ |
+| 4.x and below | >= 4.x |
+| 5.x     |  >= 7.6.0 |
+
 ### Installation / Update
 
 ```bash
-    npm install @hexonet/ispapi-apiconnector@latest --save
+    npm i @hexonet/ispapi-apiconnector@latest --save
 ```
 
 ### Usage Examples
 
+We provide only documentation and examples for the latest release.
+
 #### API response format
 
 If you got the API communication working, you will notice that we provide two response formats via this library.
-a) hash format
-b) list format
+a) Plain Format
+b) Hash Format
+c) ListHash Format
 
-The response format can be switched by providing a 5th parameter to the request method e.g.:
+The different response formats can be accessed through the Response object itself that is returned by login, logout and request method:
 
 ```js
-apiclient.request(command, socketcfg, callbackSuccess, callbackError, type);
-//apiclient.request(command, socketconfig, callbackSuccess, callbackError, "hash");
-//apiclient.request(command, socketconfig, callbackSuccess, callbackError, "list");
+// console.log(r.getPlain())
+// console.log(r.getHash())
+// console.log(l.getListHash())
 ```
 
-The default value for type is "hash". Thus not providing this parameter automatically returns the hash format.
+The plain format represents the API plain response.
+The hash format represents the API response parsed into a js object.
 The list format makes sense, if you're working with table libraries based on our list commands and need the hash format parsed into a list format.
-NOTE: You have to login first. The login callback provides an updated socketcfg variable which has to be reused in the request and logout method.
 
 #### API response codes
 
@@ -62,8 +72,8 @@ CODE represents a return code which indicates the following cases:
 
 In case of a (temporary) error the DESCRIPTION may provide more details on the reason.
 
-The hash format provides a PROPERTY key that returns potential data.
-The list format provides a LIST key that returns potential data.
+The hash format provides a PROPERTY key that covers potential data.
+The list format provides a LIST key that covers potential data.
 
 #### Session based API Communication
 
@@ -73,55 +83,60 @@ The logout can be done at any time separetely triggered. After logout no further
 Note: you have to first finish your requests before doing logout. Running queued requests may fail after logout.
 
 ```js
-'use strict';
+async function main () {
+  const apiconnector = require('@hexonet/ispapi-apiconnector')
+  const cl = new apiconnector.APIClient()
+  // Use OT&E system, omitting this points by default to the LIVE system
+  cl.useOTESystem()
+  // Set your user id, here: the OT&E demo user
+  cl.setCredentials('test.user', 'test.passw0rd')
+  // Set Remote IP Address (in case of IP Filter setting)
+  cl.setRemoteIPAddress('1.2.3.4:80')
+  // Set a subuser view
+  // cl.setSubuserView('hexotestman.com');
 
-var apiconnector = require('@hexonet/ispapi-apiconnector'),
-  apiclient = new apiconnector.Client(),
-  socketparameters;
-
-//--- socket parameters in JSON format
-socketparameters = {
-  entity: "1234", //OT&E system, use "54cd" for LIVE system
-  login: "test.user", //your user id, here: the OT&E demo user
-  pw: "test.passw0rd", //your user password
-  //user: "...",//can be used to work with a subuser account - optional
-  remoteaddr: "1.2.3.4:80" //optional: provide your remote ip address (use for ip filter)
-};
-
-//--- perform a login to the provided url
-console.log("login ...");
-apiclient.login(socketparameters, function(r, socketcfg) {
-  if (r.CODE !== "200") { //login failed
-    console.log(" FAILED -> " + r.CODE + " " + r.DESCRIPTION);
-    return;
+  console.log('login ...')
+  let r = await cl.login()
+  // Provide an one time password (active 2FA)
+  // const r = await cl.login('12345678');
+  if (r.getCode() !== '200') { // login failed
+    console.log(`LOGIN FAILED -> ${r.getCode()} ${r.getDescription()}`)
+    return
   }
-  console.log(" SUCCESS");
+  console.log('LOGIN SUCCEEDED')
 
-  //define callback method which we use for success and error case
-  //you can also define a separate callback method for error case instead
-  var cb = function(r) {
-    console.log("---- API response ----");
-    console.dir(r);
+  console.log('request further commands ...')
+  r = await cl.request({
+    COMMAND: 'StatusUser'
+  })
+  console.log(`RESPONSE -> ${r.getCode()} ${r.getDescription()}`)
 
-    //... further commands ...
-
-    //--- finally do logout
-    console.log("logout ...");
-    apiclient.logout(socketcfg, function(r) {
-      if (r.CODE !== "200") { //logout failed
-        console.log(" FAILED -> " + r.CODE + " " + r.DESCRIPTION);
-        return;
-      }
-      console.log(" SUCCESS");
-    });
-  };
-
-  console.log("requesting user status ...");
-  apiclient.request({
-    COMMAND: "StatusUser"
-  }, socketcfg, cb, cb);
-});
+  console.log('logout ...')
+  r = await cl.logout()
+  if (r.getCode() !== '200') { // login failed
+    console.log(`LOGOUT FAILED -> ${r.getCode()} ${r.getDescription()}`)
+    return
+  }
+  console.log('LOGOUT SUCCEEDED')
+}
+main()
 ```
+
+##### Create your own frontend app on top
+
+If you want to create your own frontend application based on our SDK, you will have to know how you can
+save APIClient's session configuration data to the nodejs session and how to rebuild a new APIClient
+instance out of it on next incoming request.
+
+After successful login, use `cl.saveSession(req.session)` to save APIClient's session into the nodejs one.
+This snippet is an example for the expressjs framework where `req` is the incoming ClientRequest and
+`req.session` the expressjs session instance.
+
+In your generic route for making API calls use `cl.reuseSession(req.session)` to rebuild APIClient's session
+out of the previously saved data.
+
+We cannot provide integration examples for part depends on your app itself and your own needs.
+Still feel free to contact us in case you're stuck.
 
 #### Sessionless API Communication
 
@@ -131,26 +146,71 @@ But in that case you always have to provide user and password accordingly.
 If you want to build your frontend based on this library, we suggest to base it on the above example.
 
 ```js
-'use strict';
+async function main () {
+  const apiconnector = require('@hexonet/ispapi-apiconnector')
+  const cl = new apiconnector.APIClient()
+  // Use OT&E system, omitting this points by default to the LIVE system
+  cl.useOTESystem()
+  // Set your user id, here: the OT&E demo user
+  cl.setCredentials('test.user', 'test.passw0rd')
+  // Set Remote IP Address (in case of IP Filter setting)
+  cl.setRemoteIPAddress('1.2.3.4:80')
+  // Set a subuser view
+  // cl.setSubuserView('hexotestman.com');
+  // Set a one time password (active 2FA)
+  // cl.setOTP('12345678');
 
-var apiconnector = require('@hexonet/ispapi-apiconnector'),
-  apiclient = new apiconnector.Client(),
-  socketparameters =  {
-    params: {
-      entity: '1234',
-      remoteaddr: '1.2.3.4:80',
-      login: 'test.user',
-      pw: 'test.passw0rd'
-    }
-  };
+  const r = cl.request({
+    COMMAND: 'StatusUser'
+  })
+  console.log(r.getPlain())
+}
+main()
+```
 
-var cb = function(r) {
-  console.dir(r);
-};
+### Promise based
 
-apiclient.request({
-  COMMAND: "StatusAccount"
-}, socketparameters, cb, cb);
+No need to play with async / await.
+
+```js
+const apiconnector = require('@hexonet/ispapi-apiconnector')
+const cl = new apiconnector.APIClient()
+// Use OT&E system, omitting this points by default to the LIVE system
+cl.useOTESystem()
+// Set your user id, here: the OT&E demo user
+cl.setCredentials('test.user', 'test.passw0rd')
+// Set Remote IP Address (in case of IP Filter setting)
+cl.setRemoteIPAddress('1.2.3.4:80')
+// Set a subuser view
+// cl.setSubuserView('hexotestman.com');
+// Set a one time password (active 2FA)
+// cl.setOTP('12345678');
+
+cl.request({
+  COMMAND: 'StatusUser'
+}).then((r) => {
+  console.log(r.getPlain())
+})
+```
+
+### Use of method chaining
+
+Shorten your code by using method chaining
+
+```js
+const apiconnector = require('@hexonet/ispapi-apiconnector')
+const cl = new apiconnector.APIClient()
+cl.useOTESystem()
+  .setCredentials('test.user', 'test.passw0rd')
+  .setRemoteIPAddress('1.2.3.4:80')
+// .setSubuserView('hexotestman.com');
+// .setOTP('12345678');
+
+cl.request({
+  COMMAND: 'StatusUser'
+}).then((r) => {
+  console.log(r.getPlain())
+})
 ```
 
 ## Contributing
