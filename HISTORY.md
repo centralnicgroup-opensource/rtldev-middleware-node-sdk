@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+### [v5.0.0](https://github.com/hexonet/node-sdk/compare/v4.4.0...v5.0.0) (21 September 2018)
+
+- HM-235 typescript release v5.0.0 [`#1`](https://github.com/hexonet/node-sdk/pull/1)
+- HM-235 initial commit [`3f69df6`](https://github.com/hexonet/node-sdk/commit/3f69df6c9f3173c5d179846ac540fbb8d9161ffc)
+- HM-329 changed changelog template [`31d049f`](https://github.com/hexonet/node-sdk/commit/31d049f9050db890d7023d3af1d9c0c2a006ab6b)
+- HM-235 fix: version script [`ba56ceb`](https://github.com/hexonet/node-sdk/commit/ba56ceb7154ab6a901f296d40978fbea67ef3d89)
+- Update README.md [`9091438`](https://github.com/hexonet/node-sdk/commit/90914384d5f8156341c8681854bb8716d4245635)
+
 #### [v4.4.0](https://github.com/hexonet/node-sdk/compare/v4.3.9...v4.4.0) (4 July 2018)
 
 - added sdk documentation and generator [`3485a78`](https://github.com/hexonet/node-sdk/commit/3485a7896b4dcf323ec62914ace1dc9670c0f911)
