@@ -13,7 +13,7 @@ This module is a connector library for the insanely fast HEXONET Backend API. Fo
 ## Resources
 
 * [Usage Guide](https://github.com/hexonet/node-sdk/blob/master/README.md#how-to-use-this-module-in-your-project)
-* [SDK Documenation](http://rawgit.com/hexonet/node-sdk/master/docs/index.html)
+* [SDK Documenation](http://rawgit.com/hexonet/node-sdk/master/docs/typedoc/index.html)
 * [HEXONET Backend API Documentation](https://github.com/hexonet/hexonet-api-documentation/tree/master/API)
 * [Release Notes](https://github.com/hexonet/node-sdk/releases)
 * [Development Guide](https://github.com/hexonet/node-sdk/wiki/Development-Guide)
