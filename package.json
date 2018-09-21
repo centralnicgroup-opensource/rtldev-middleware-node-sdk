@@ -58,7 +58,7 @@
     "test-NODE": "cross-env NODE_ENV=development nyc ./node_modules/.bin/_mocha --opts mocha.opts $(find ./test -type f -name '*.spec.js')",
     "typedoc": "typedoc --out docs/typedoc --name @hexonet/ispapi-apiconnector --readme ./README.md --mode file --includeDeclarations --excludeExternals src/*.ts",
     "preversion": "git fetch origin --prune && git checkout master && git pull && npm test",
-    "version": "npm run changelog --silent && npm run docs --silent",
+    "version": "npm run changelog --silent && npm run documentation --silent",
     "postversion": "git push && git push --tags"
   },
   "devDependencies": {
