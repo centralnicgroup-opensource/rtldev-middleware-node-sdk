@@ -7,3 +7,8 @@ node_modules/
 coverage/
 npm-debug.log*
 .nyc_output/
+bin/**
+local.properties
+.loadpath
+.DS_Store
+dump.rdb

@@ -7,10 +7,10 @@
     "name": "Kai Schwarz",
     "email": "kschwarz@hexonet.net"
   },
-  "main": "index.js",
+  "main": "dist/index.js",
   "license": "MIT",
   "engines": {
-    "node": ">=4.0.0"
+    "node": ">=7.6.0"
   },
   "homepage": "https://github.com/hexonet/node-sdk",
   "repository": "github:hexonet/node-sdk",
@@ -49,23 +49,46 @@
     ]
   },
   "scripts": {
+    "build": "tsc --version && tsc && npm run lint --silent",
     "changelog": "auto-changelog --template https://raw.githubusercontent.com/hexonet/auto-changelog-templates/master/compact.hts --commit-limit false --output HISTORY.md; git add HISTORY.md",
-    "docs": "jsdoc -c ./jsdoc.conf index.js client.js defaultresponses.js request.js response.js; git add docs",
+    "documentation": "npm run docco --silent && npm run typedoc --silent",
+    "docco": "docco -l parallel -o docs/docco src/*.ts",
+    "lint": "eslint --fix --config=./.eslintrc.js *.js README.md *.json test/*.spec.js",
+    "test": "npm run build && npm run test-NODE --silent",
+    "test-NODE": "cross-env NODE_ENV=development nyc ./node_modules/.bin/_mocha --opts mocha.opts $(find ./test -type f -name '*.spec.js')",
+    "typedoc": "typedoc --out docs/typedoc --name @hexonet/ispapi-apiconnector --readme ./README.md --mode file --includeDeclarations --excludeExternals src/*.ts",
     "preversion": "git fetch origin --prune && git checkout master && git pull && npm test",
     "version": "npm run changelog --silent && npm run docs --silent",
-    "postversion": "git push && git push --tags",
-    "test": "npm run test-NODE --silent",
-    "test-NODE": "cross-env NODE_ENV=development nyc ./node_modules/.bin/_mocha --opts mocha.opts $(find . -type f -name '*.spec.js'  ! -path './nyc_output/*' ! -path './coverage/*' ! -path './node_modules/*')"
+    "postversion": "git push && git push --tags"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.116",
+    "@types/request": "2.47.1",
     "chai": "4.1.2",
+    "chai-as-promised": "7.1.1",
     "cross-env": "5.2.0",
+    "dirty-chai": "2.0.1",
+    "docco": "0.8.0",
+    "eslint": "5.6.0",
+    "eslint-config-standard": "12.0.0",
+    "eslint-plugin-import": "2.14.0",
+    "eslint-plugin-json": "1.2.1",
+    "eslint-plugin-markdown": "1.0.0-beta.6",
+    "eslint-plugin-node": "7.0.1",
+    "eslint-plugin-promise": "4.0.1",
+    "eslint-plugin-standard": "4.0.0",
     "istanbul": "0.4.5",
     "jsdoc": "3.5.5",
     "jsdoc-oblivion": "0.0.9",
     "mocha": "5.2.0",
-    "nock": "9.3.3",
-    "nyc": "12.0.2"
+    "nock": "10.0.0",
+    "nyc": "13.0.1",
+    "supertest": "3.3.0",
+    "tslint": "5.11.0",
+    "typedoc": "0.12.0",
+    "typescript": "3.0.3"
   },
-  "dependencies": {}
+  "dependencies": {
+    "request": "2.88.0"
+  }
 }
