@@ -32,7 +32,8 @@ We have also a demo app available showing how to integrate and use our SDK. See 
 | Version | NodeJS |
 | ------- | ------ |
 | 4.x and below | >= 4.x |
-| 5.x     |  >= 7.6.0 |
+| 5.0.0 - 5.0.1 | >= 7.6.0 |
+| >= 5.0.2 | >= 8.3.0 |
 
 ### Installation / Update
 
