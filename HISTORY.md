@@ -1,3 +1,12 @@
+Changelog
+
+## [5.0.2](https://github.com/hexonet/node-sdk/compare/v5.0.1...v5.0.2) (2018-09-25)
+
+
+### Bug Fixes
+
+* **pkg:** update nodejs engine version requirements ([200715f](https://github.com/hexonet/node-sdk/commit/200715f))
+
 ### Changelog
 
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
