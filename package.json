@@ -1,7 +1,7 @@
 {
   "name": "@hexonet/ispapi-apiconnector",
   "description": "Node.js SDK for the insanely fast HEXONET API",
-  "version": "5.0.1",
+  "version": "0.0.0-development",
   "private": false,
   "author": {
     "name": "Kai Schwarz",
@@ -10,7 +10,7 @@
   "main": "dist/index.js",
   "license": "MIT",
   "engines": {
-    "node": ">=7.6.0"
+    "node": ">=8.3.0"
   },
   "homepage": "https://github.com/hexonet/node-sdk",
   "repository": "github:hexonet/node-sdk",
@@ -49,19 +49,18 @@
     ]
   },
   "scripts": {
-    "build": "tsc --version && tsc && npm run lint --silent",
-    "changelog": "auto-changelog --template https://raw.githubusercontent.com/hexonet/auto-changelog-templates/master/compact.hts --commit-limit false --output HISTORY.md; git add HISTORY.md",
-    "documentation": "npm run docco --silent && npm run typedoc --silent",
-    "docco": "docco -l parallel -o docs/docco src/*.ts",
+    "build": "tsc --version && tsc",
+    "documentation": "npm run documentation_docco --silent && npm run documentation_typedoc --silent",
+    "documentation_docco": "docco -l parallel -o docs/docco src/*.ts",
+    "documentation_typedoc": "typedoc --out docs/typedoc --name @hexonet/ispapi-apiconnector --readme ./README.md --mode file --includeDeclarations --excludeExternals src/*.ts",
     "lint": "eslint --fix --config=./.eslintrc.js *.js README.md *.json test/*.spec.js",
-    "test": "npm run build && npm run test-NODE --silent",
-    "test-NODE": "cross-env NODE_ENV=development nyc ./node_modules/.bin/_mocha --opts mocha.opts $(find ./test -type f -name '*.spec.js')",
-    "typedoc": "typedoc --out docs/typedoc --name @hexonet/ispapi-apiconnector --readme ./README.md --mode file --includeDeclarations --excludeExternals src/*.ts",
-    "preversion": "git fetch origin --prune && git checkout master && git pull && npm test",
-    "version": "npm run changelog --silent && npm run documentation --silent",
-    "postversion": "git push && git push --tags"
+    "test": "cross-env NODE_ENV=development nyc ./node_modules/.bin/_mocha --opts mocha.opts $(find ./test -type f -name '*.spec.js')"
   },
   "devDependencies": {
+    "@semantic-release/changelog": "3.0.0",
+    "@semantic-release/git": "7.0.4",
+    "@semantic-release/github": "5.0.5",
+    "@semantic-release/npm": "5.0.4",
     "@types/lodash": "^4.14.116",
     "@types/request": "2.47.1",
     "chai": "4.1.2",
@@ -83,12 +82,47 @@
     "mocha": "5.2.0",
     "nock": "10.0.0",
     "nyc": "13.0.1",
+    "semantic-release": "^15.9.16",
     "supertest": "3.3.0",
     "tslint": "5.11.0",
     "typedoc": "0.12.0",
-    "typescript": "3.0.3"
+    "typescript": "3.0.3",
+    "travis-deploy-once": "5.0.8"
   },
   "dependencies": {
     "request": "2.88.0"
+  },
+  "release": {
+    "debug": false,
+    "verifyConditions": [
+      "@semantic-release/changelog",
+      "@semantic-release/npm",
+      "@semantic-release/git",
+      "@semantic-release/github"
+    ],
+    "prepare": [
+      {
+        "path": "@semantic-release/changelog",
+        "changelogFile": "HISTORY.md",
+        "changelogTitle": "Changelog"
+      },
+      "@semantic-release/npm",
+      {
+        "path": "@semantic-release/git",
+        "assets": [
+          "HISTORY.md",
+          "package.json",
+          "package-lock.json",
+          "npm-shrinkwrap.json",
+          "docs",
+          "dist"
+        ],
+        "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+      }
+    ],
+    "publish": [
+      "@semantic-release/npm",
+      "@semantic-release/github"
+    ]
   }
 }
