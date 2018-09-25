@@ -2,6 +2,7 @@
 
 [![npm version](https://img.shields.io/npm/v/@hexonet/ispapi-apiconnector.svg?style=flat)](https://www.npmjs.com/package/@hexonet/ispapi-apiconnector)
 [![node](https://img.shields.io/node/v/@hexonet/ispapi-apiconnector.svg)](https://www.npmjs.com/package/@hexonet/ispapi-apiconnector)
+[![build](https://travis-ci.org/hexonet/node-sdk.svg?branch=master)](https://travis-ci.org/hexonet/node-sdk)
 [![dependencies](https://david-dm.org/@hexonet/ispapi-apiconnector.svg)](https://david-dm.org/@hexonet/ispapi-apiconnector)
 [![devDependencies](https://david-dm.org/@hexonet/ispapi-apiconnector/dev-status.svg)](https://david-dm.org/@hexonet/ispapi-apiconnector#info=devDependencies)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
