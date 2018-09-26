@@ -94,6 +94,15 @@
   },
   "release": {
     "debug": false,
+    "generateNotes": {
+      "preset": "angular",
+      "writerOpts": {
+        "mainTemplate": "./src/templates/template.hbs",
+        "headerPartial": "./src/templates/header.hbs",
+        "commitPartial": "./src/templates/commit.hbs",
+        "footerPartial": "./src/templates/footer.hbs"
+      }
+    },
     "verifyConditions": [
       "@semantic-release/changelog",
       "@semantic-release/npm",
