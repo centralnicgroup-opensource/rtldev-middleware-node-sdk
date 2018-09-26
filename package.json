@@ -112,8 +112,7 @@
     "prepare": [
       {
         "path": "@semantic-release/changelog",
-        "changelogFile": "HISTORY.md",
-        "changelogTitle": "Changelog"
+        "changelogFile": "HISTORY.md"
       },
       "@semantic-release/npm",
       {
