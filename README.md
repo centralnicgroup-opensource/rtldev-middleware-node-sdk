@@ -3,8 +3,6 @@
 [![npm version](https://img.shields.io/npm/v/@hexonet/ispapi-apiconnector.svg?style=flat)](https://www.npmjs.com/package/@hexonet/ispapi-apiconnector)
 [![node](https://img.shields.io/node/v/@hexonet/ispapi-apiconnector.svg)](https://www.npmjs.com/package/@hexonet/ispapi-apiconnector)
 [![build](https://travis-ci.org/hexonet/node-sdk.svg?branch=master)](https://travis-ci.org/hexonet/node-sdk)
-[![dependencies](https://david-dm.org/@hexonet/ispapi-apiconnector.svg)](https://david-dm.org/@hexonet/ispapi-apiconnector)
-[![devDependencies](https://david-dm.org/@hexonet/ispapi-apiconnector/dev-status.svg)](https://david-dm.org/@hexonet/ispapi-apiconnector#info=devDependencies)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/hexonet/node-sdk/blob/master/CONTRIBUTING.md)
 [![Slack Widget](https://camo.githubusercontent.com/984828c0b020357921853f59eaaa65aaee755542/68747470733a2f2f73332e65752d63656e7472616c2d312e616d617a6f6e6177732e636f6d2f6e6774756e612f6a6f696e2d75732d6f6e2d736c61636b2e706e67)](https://hexonet-sdk.slack.com/messages/CBFDZ6G3W) [![Greenkeeper badge](https://badges.greenkeeper.io/hexonet/node-sdk.svg)](https://greenkeeper.io/)
