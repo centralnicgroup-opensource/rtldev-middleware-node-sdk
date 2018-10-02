@@ -16,7 +16,7 @@ class Column {
         return this.hasDataIndex(idx) ? this.data[idx] : null;
     }
     hasDataIndex(idx) {
-        return (idx >= 0 && idx < this.data.length);
+        return (idx >= 0 && idx < this.length);
     }
 }
 exports.Column = Column;

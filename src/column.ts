@@ -52,6 +52,6 @@ export class Column {
      * @returns boolean result
      */
     private hasDataIndex(idx: number): boolean {
-        return (idx >= 0 && idx < this.data.length);
+        return (idx >= 0 && idx < this.length);
     }
 }
