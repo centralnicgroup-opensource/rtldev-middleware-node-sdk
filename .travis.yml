@@ -24,7 +24,6 @@ node_js:
 before_install:
 - npm prune
 install:
-- npm i -g auto-changelog
 - npm i
 before_script:
 - npm run build
@@ -33,7 +32,7 @@ script:
 - npm run test
 after_success:
 - if [[ "$TRAVIS_BRANCH" == "master" && "$TRAVIS_PULL_REQUEST" == "false" ]]; then
-  npm run documentation && npx travis-deploy-once "npx semantic-release" ; fi
+    npx travis-deploy-once "npx semantic-release" ; fi
 branches:
   except:
     - /^v\d+\.\d+\.\d+$/
