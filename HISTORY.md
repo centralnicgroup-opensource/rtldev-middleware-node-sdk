@@ -1,3 +1,5 @@
+./src/templates/template.hbs
+
 Changelog
 
 ## [5.0.2](https://github.com/hexonet/node-sdk/compare/v5.0.1...v5.0.2) (2018-09-25)
