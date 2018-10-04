@@ -72,7 +72,7 @@ describe('APIClient class', function () {
     })
   })
 
-  describe('#.enableDebugMode', function () {
+  describe('#.disableDebugMode', function () {
     it('deactivate debug mode', function () {
       cl.disableDebugMode()
     })
