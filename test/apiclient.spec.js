@@ -234,7 +234,7 @@ describe('APIClient class', function () {
         .post('/api/call.cgi')
         .reply(200, tpl.getPlain())
       cl.useOTESystem()
-      cl.setRoleCredentials('test.user', 'myrole', 'test.passw0rd')
+      cl.setRoleCredentials('test.user', 'testrole', 'test.passw0rd')
       const r = await cl.login()
       expect(r).to.be.instanceOf(response.Response)
       expect(r.isSuccess()).to.be.true()
@@ -312,9 +312,7 @@ describe('APIClient class', function () {
       expect(r).to.be.instanceOf(response.Response)
       expect(r.isSuccess()).to.be.true()
     })
-  })
 
-  describe('#.logout', function () {
     it('validate against mocked API response [logout failed; session no longer exists]', async function () {
       const tpl = new response.Response(rtm.getTemplate('login200').getPlain())
       nock('https://coreapi.1api.net')

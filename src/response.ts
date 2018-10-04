@@ -71,7 +71,7 @@ export class Response extends ResponseTemplate {
 
     /**
      * Add a column to the column list
-     * @param key column key
+     * @param key column name
      * @param data array of column data
      * @returns Current Response Instance for method chaining
      */
@@ -165,7 +165,9 @@ export class Response extends ResponseTemplate {
         const col = this.getColumn("FIRST");
         if (col) {
             const f = col.getDataByIndex(0);
-            return f === null ? 0 : parseInt(f, 10);
+            if (f !== null ) {
+                return parseInt(f, 10);
+            }
         }
         if (this.records.length) {
             return 0;
@@ -181,10 +183,13 @@ export class Response extends ResponseTemplate {
         const col = this.getColumn("LAST");
         if (col) {
             const l = col.getDataByIndex(0);
-            return ((l === null) ? this.getRecordsCount() - 1 : parseInt(l, 10));
+            if (l !== null) {
+                return parseInt(l, 10);
+            }
         }
-        if (this.records.length) {
-            return this.getRecordsCount() - 1;
+        const len = this.getRecordsCount();
+        if (len) {
+            return (len - 1);
         }
         return null;
     }
@@ -338,7 +343,9 @@ export class Response extends ResponseTemplate {
         const col = this.getColumn("LIMIT");
         if (col) {
             const l = col.getDataByIndex(0);
-            return ((l === null) ? this.getRecordsCount() : parseInt(l, 10));
+            if (l !== null) {
+                return parseInt(l, 10);
+            }
         }
         return this.getRecordsCount();
     }

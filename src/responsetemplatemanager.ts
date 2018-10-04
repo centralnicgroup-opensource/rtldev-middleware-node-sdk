@@ -85,6 +85,7 @@ export class ResponseTemplateManager {
 
     /**
      * Check if given template exists in template container
+     * @param id template id
      * @returns boolean result
      */
     public hasTemplate(id: string): boolean {

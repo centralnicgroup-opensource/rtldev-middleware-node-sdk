@@ -203,7 +203,7 @@ describe('Response class', function () {
     })
   })
 
-  describe('#.getNextPageNumber', function () {
+  describe('#.getPreviousPageNumber', function () {
     it('check return value [no rows]', function () {
       const r = new Response(rtm.getTemplate('OK').getPlain())
       expect(r.getPreviousPageNumber()).to.be.null()

@@ -25,7 +25,7 @@ export class Record {
 
     /**
      * get row data for given column
-     * @param key column key
+     * @param key column name
      * @returns row data for given column or null if column does not exist
      */
     public getDataByKey(key: string): string | null {
