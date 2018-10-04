@@ -1,5 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.fixedURLEnc = (str) => {
+    return encodeURIComponent(str).replace(/[!'()*]/g, (c) => {
+        return `%${c.charCodeAt(0).toString(16).toUpperCase()}`;
+    });
+};
 class SocketConfig {
     constructor() {
         this.entity = "";
@@ -13,25 +18,25 @@ class SocketConfig {
     getPOSTData() {
         let data = "";
         if (this.entity !== "") {
-            data += `${encodeURIComponent("s_entity")}=${encodeURIComponent(this.entity)}&`;
+            data += `${exports.fixedURLEnc("s_entity")}=${exports.fixedURLEnc(this.entity)}&`;
         }
         if (this.login !== "") {
-            data += `${encodeURIComponent("s_login")}=${encodeURIComponent(this.login)}&`;
+            data += `${exports.fixedURLEnc("s_login")}=${exports.fixedURLEnc(this.login)}&`;
         }
         if (this.otp !== "") {
-            data += `${encodeURIComponent("s_otp")}=${encodeURIComponent(this.otp)}&`;
+            data += `${exports.fixedURLEnc("s_otp")}=${exports.fixedURLEnc(this.otp)}&`;
         }
         if (this.pw !== "") {
-            data += `${encodeURIComponent("s_pw")}=${encodeURIComponent(this.pw)}&`;
+            data += `${exports.fixedURLEnc("s_pw")}=${exports.fixedURLEnc(this.pw)}&`;
         }
         if (this.remoteaddr !== "") {
-            data += `${encodeURIComponent("s_remoteaddr")}=${encodeURIComponent(this.remoteaddr)}&`;
+            data += `${exports.fixedURLEnc("s_remoteaddr")}=${exports.fixedURLEnc(this.remoteaddr)}&`;
         }
         if (this.session !== "") {
-            data += `${encodeURIComponent("s_session")}=${encodeURIComponent(this.session)}&`;
+            data += `${exports.fixedURLEnc("s_session")}=${exports.fixedURLEnc(this.session)}&`;
         }
         if (this.user !== "") {
-            data += `${encodeURIComponent("s_user")}=${encodeURIComponent(this.user)}&`;
+            data += `${exports.fixedURLEnc("s_user")}=${exports.fixedURLEnc(this.user)}&`;
         }
         return data;
     }

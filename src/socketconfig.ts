@@ -1,3 +1,9 @@
+export const fixedURLEnc = (str: string): string => {
+    return encodeURIComponent(str).replace(/[!'()*]/g, (c) => {
+        return `%${c.charCodeAt(0).toString(16).toUpperCase()}`;
+    });
+};
+
 /**
  * SocketConfig Class
  */
@@ -48,25 +54,25 @@ export class SocketConfig {
     public getPOSTData(): string {
         let data = "";
         if (this.entity !== "") {
-            data += `${encodeURIComponent("s_entity")}=${encodeURIComponent(this.entity)}&`;
+            data += `${fixedURLEnc("s_entity")}=${fixedURLEnc(this.entity)}&`;
         }
         if (this.login !== "") {
-            data += `${encodeURIComponent("s_login")}=${encodeURIComponent(this.login)}&`;
+            data += `${fixedURLEnc("s_login")}=${fixedURLEnc(this.login)}&`;
         }
         if (this.otp !== "") {
-            data += `${encodeURIComponent("s_otp")}=${encodeURIComponent(this.otp)}&`;
+            data += `${fixedURLEnc("s_otp")}=${fixedURLEnc(this.otp)}&`;
         }
         if (this.pw !== "") {
-            data += `${encodeURIComponent("s_pw")}=${encodeURIComponent(this.pw)}&`;
+            data += `${fixedURLEnc("s_pw")}=${fixedURLEnc(this.pw)}&`;
         }
         if (this.remoteaddr !== "") {
-            data += `${encodeURIComponent("s_remoteaddr")}=${encodeURIComponent(this.remoteaddr)}&`;
+            data += `${fixedURLEnc("s_remoteaddr")}=${fixedURLEnc(this.remoteaddr)}&`;
         }
         if (this.session !== "") {
-            data += `${encodeURIComponent("s_session")}=${encodeURIComponent(this.session)}&`;
+            data += `${fixedURLEnc("s_session")}=${fixedURLEnc(this.session)}&`;
         }
         if (this.user !== "") {
-            data += `${encodeURIComponent("s_user")}=${encodeURIComponent(this.user)}&`;
+            data += `${fixedURLEnc("s_user")}=${fixedURLEnc(this.user)}&`;
         }
         return data;
     }

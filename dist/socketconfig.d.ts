@@ -1,3 +1,4 @@
+export declare const fixedURLEnc: (str: string) => string;
 export declare class SocketConfig {
     private entity;
     private login;

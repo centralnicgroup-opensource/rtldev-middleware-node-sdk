@@ -41,7 +41,7 @@ class APIClient {
             });
         }
         tmp = tmp.replace(/\n$/, "");
-        data += `${encodeURIComponent("s_command")}=${encodeURIComponent(tmp)}`;
+        data += `${socketconfig_1.fixedURLEnc("s_command")}=${socketconfig_1.fixedURLEnc(tmp)}`;
         return data;
     }
     getURL() {

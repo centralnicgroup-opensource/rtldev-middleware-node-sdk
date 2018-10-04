@@ -77,7 +77,9 @@ class Response extends responsetemplate_1.ResponseTemplate {
         const col = this.getColumn("FIRST");
         if (col) {
             const f = col.getDataByIndex(0);
-            return f === null ? 0 : parseInt(f, 10);
+            if (f !== null) {
+                return parseInt(f, 10);
+            }
         }
         if (this.records.length) {
             return 0;
@@ -88,10 +90,13 @@ class Response extends responsetemplate_1.ResponseTemplate {
         const col = this.getColumn("LAST");
         if (col) {
             const l = col.getDataByIndex(0);
-            return ((l === null) ? this.getRecordsCount() - 1 : parseInt(l, 10));
+            if (l !== null) {
+                return parseInt(l, 10);
+            }
         }
-        if (this.records.length) {
-            return this.getRecordsCount() - 1;
+        const len = this.getRecordsCount();
+        if (len) {
+            return (len - 1);
         }
         return null;
     }
@@ -183,7 +188,9 @@ class Response extends responsetemplate_1.ResponseTemplate {
         const col = this.getColumn("LIMIT");
         if (col) {
             const l = col.getDataByIndex(0);
-            return ((l === null) ? this.getRecordsCount() : parseInt(l, 10));
+            if (l !== null) {
+                return parseInt(l, 10);
+            }
         }
         return this.getRecordsCount();
     }

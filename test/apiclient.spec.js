@@ -34,7 +34,7 @@ describe('APIClient class', function () {
 
   describe('#.getPOSTData', function () {
     it('test object input with special chars', function () {
-      const validate = 's_entity=54cd&s_command=COMMAND%3DModifyDomain%0AAUTH%3Dgwrgwqg%25%26%5C44t3*'
+      const validate = 's_entity=54cd&s_command=COMMAND%3DModifyDomain%0AAUTH%3Dgwrgwqg%25%26%5C44t3%2A'
       let enc = cl.getPOSTData({
         COMMAND: 'ModifyDomain',
         AUTH: 'gwrgwqg%&\\44t3*'
@@ -200,7 +200,7 @@ describe('APIClient class', function () {
       const tmp = cl.getPOSTData({
         COMMAND: 'StatusAccount'
       })
-      expect(tmp).to.equal('s_entity=54cd&s_login=myaccountid!myroleid&s_pw=mypassword&s_command=COMMAND%3DStatusAccount')
+      expect(tmp).to.equal('s_entity=54cd&s_login=myaccountid%21myroleid&s_pw=mypassword&s_command=COMMAND%3DStatusAccount')
     })
 
     it('validate getPOSTData response [role credentials reset]', function () {

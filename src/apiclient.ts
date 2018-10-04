@@ -2,7 +2,7 @@ import * as path from "path";
 import * as request from "request";
 import { Response } from "./response";
 import { ResponseTemplateManager } from "./responsetemplatemanager";
-import { SocketConfig } from "./socketconfig";
+import { fixedURLEnc, SocketConfig } from "./socketconfig";
 
 const rtm = ResponseTemplateManager.getInstance();
 
@@ -69,7 +69,7 @@ export class APIClient {
             });
         }
         tmp = tmp.replace(/\n$/, "");
-        data += `${encodeURIComponent("s_command")}=${encodeURIComponent(tmp)}`;
+        data += `${fixedURLEnc("s_command")}=${fixedURLEnc(tmp)}`;
         return data;
     }
 
