@@ -1,3 +1,10 @@
+## [5.0.4](https://github.com/hexonet/node-sdk/compare/v5.0.3...v5.0.4) (2018-10-04)
+
+
+### Bug Fixes
+
+* **CLIENT:** use of fixed version of urlencode ([e067ded](https://github.com/hexonet/node-sdk/commit/e067ded))
+
 ./src/templates/template.hbs
 
 Changelog
