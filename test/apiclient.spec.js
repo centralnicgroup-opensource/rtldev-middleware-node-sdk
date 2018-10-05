@@ -19,13 +19,13 @@ after(() => {
 before(() => {
   cl = new apiclient.APIClient()
   rtm.addTemplate('login200', '[RESPONSE]\r\nPROPERTY[SESSION][0]=h8JLZZHdF2WgWWXlwbKWzEG3XrzoW4yshhvtqyg0LCYiX55QnhgYX9cB0W4mlpbx\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.169\r\nEOF\r\n')
-  rtm.addTemplate('login500', rtm.generateTemplate('530', 'Authentication failed'))
-  rtm.addTemplate('OK', rtm.generateTemplate('200', 'Command completed successfully'))
-  rtm.addTemplate('listP0', '[RESPONSE]\r\nPROPERTY[TOTAL][0]=2701\r\nPROPERTY[FIRST][0]=0\r\nPROPERTY[DOMAIN][0]=0-60motorcycletimes.com\r\nPROPERTY[DOMAIN][1]=0-be-s01-0.com\r\nPROPERTY[COUNT][0]=2\r\nPROPERTY[LAST][0]=1\r\nPROPERTY[LIMIT][0]=2\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.023\r\nEOF\r\n')
-  rtm.addTemplate('listP1', '[RESPONSE]\r\nPROPERTY[TOTAL][0]=2701\r\nPROPERTY[FIRST][0]=2\r\nPROPERTY[DOMAIN][0]=0-qas-ao17-0.org\r\nPROPERTY[DOMAIN][1]=0-sunnyda222y.com\r\nPROPERTY[COUNT][0]=2\r\nPROPERTY[LAST][0]=3\r\nPROPERTY[LIMIT][0]=2\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.032\r\nEOF\r\n')
-  rtm.addTemplate('listFP0', '[RESPONSE]\r\nPROPERTY[TOTAL][0]=3\r\nPROPERTY[FIRST][0]=0\r\nPROPERTY[DOMAIN][0]=0-60motorcycletimes.com\r\nPROPERTY[COUNT][0]=1\r\nPROPERTY[LAST][0]=1\r\nPROPERTY[LIMIT][0]=1\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.023\r\nEOF\r\n')
-  rtm.addTemplate('listFP1', '[RESPONSE]\r\nPROPERTY[TOTAL][0]=3\r\nPROPERTY[FIRST][0]=1\r\nPROPERTY[DOMAIN][0]=0-be-s01-0.com\r\nPROPERTY[COUNT][0]=1\r\nPROPERTY[LAST][0]=2\r\nPROPERTY[LIMIT][0]=1\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.032\r\nEOF\r\n')
-  rtm.addTemplate('listFP2', '[RESPONSE]\r\nPROPERTY[TOTAL][0]=3\r\nPROPERTY[FIRST][0]=2\r\nPROPERTY[DOMAIN][0]=0-qas-ao17-0.org\r\nPROPERTY[COUNT][0]=2\r\nPROPERTY[LAST][0]=3\r\nPROPERTY[LIMIT][0]=1\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.032\r\nEOF\r\n')
+    .addTemplate('login500', rtm.generateTemplate('530', 'Authentication failed'))
+    .addTemplate('OK', rtm.generateTemplate('200', 'Command completed successfully'))
+    .addTemplate('listP0', '[RESPONSE]\r\nPROPERTY[TOTAL][0]=2701\r\nPROPERTY[FIRST][0]=0\r\nPROPERTY[DOMAIN][0]=0-60motorcycletimes.com\r\nPROPERTY[DOMAIN][1]=0-be-s01-0.com\r\nPROPERTY[COUNT][0]=2\r\nPROPERTY[LAST][0]=1\r\nPROPERTY[LIMIT][0]=2\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.023\r\nEOF\r\n')
+    .addTemplate('listP1', '[RESPONSE]\r\nPROPERTY[TOTAL][0]=2701\r\nPROPERTY[FIRST][0]=2\r\nPROPERTY[DOMAIN][0]=0-qas-ao17-0.org\r\nPROPERTY[DOMAIN][1]=0-sunnyda222y.com\r\nPROPERTY[COUNT][0]=2\r\nPROPERTY[LAST][0]=3\r\nPROPERTY[LIMIT][0]=2\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.032\r\nEOF\r\n')
+    .addTemplate('listFP0', '[RESPONSE]\r\nPROPERTY[TOTAL][0]=3\r\nPROPERTY[FIRST][0]=0\r\nPROPERTY[DOMAIN][0]=0-60motorcycletimes.com\r\nPROPERTY[COUNT][0]=1\r\nPROPERTY[LAST][0]=1\r\nPROPERTY[LIMIT][0]=1\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.023\r\nEOF\r\n')
+    .addTemplate('listFP1', '[RESPONSE]\r\nPROPERTY[TOTAL][0]=3\r\nPROPERTY[FIRST][0]=1\r\nPROPERTY[DOMAIN][0]=0-be-s01-0.com\r\nPROPERTY[COUNT][0]=1\r\nPROPERTY[LAST][0]=2\r\nPROPERTY[LIMIT][0]=1\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.032\r\nEOF\r\n')
+    .addTemplate('listFP2', '[RESPONSE]\r\nPROPERTY[TOTAL][0]=3\r\nPROPERTY[FIRST][0]=2\r\nPROPERTY[DOMAIN][0]=0-qas-ao17-0.org\r\nPROPERTY[COUNT][0]=2\r\nPROPERTY[LAST][0]=3\r\nPROPERTY[LIMIT][0]=1\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.032\r\nEOF\r\n')
 })
 
 describe('APIClient class', function () {
@@ -123,8 +123,8 @@ describe('APIClient class', function () {
     it('validate getPOSTData response [credentials and session set] ', function () {
       // credentials and otp code have to be unset when session id is set
       cl.setRoleCredentials('myaccountid', 'myrole', 'mypassword')
-      cl.setOTP('12345678')
-      cl.setSession('12345678')
+        .setOTP('12345678')
+        .setSession('12345678')
       const tmp = cl.getPOSTData({
         COMMAND: 'StatusAccount'
       })
@@ -148,7 +148,7 @@ describe('APIClient class', function () {
     it('validate correct settings', function () {
       let sessionobj = {}
       cl.setSession('12345678')
-      cl.saveSession(sessionobj)
+        .saveSession(sessionobj)
       const cl2 = new apiclient.APIClient()
       cl2.reuseSession(sessionobj)
       const tmp = cl2.getPOSTData({
@@ -219,7 +219,7 @@ describe('APIClient class', function () {
         .post('/api/call.cgi')
         .reply(200, tpl.getPlain())
       cl.useOTESystem()
-      cl.setCredentials('test.user', 'test.passw0rd')
+        .setCredentials('test.user', 'test.passw0rd')
       const r = await cl.login()
       expect(r).to.be.instanceOf(response.Response)
       expect(r.isSuccess()).to.be.true()
@@ -234,7 +234,7 @@ describe('APIClient class', function () {
         .post('/api/call.cgi')
         .reply(200, tpl.getPlain())
       cl.useOTESystem()
-      cl.setRoleCredentials('test.user', 'testrole', 'test.passw0rd')
+        .setRoleCredentials('test.user', 'testrole', 'test.passw0rd')
       const r = await cl.login()
       expect(r).to.be.instanceOf(response.Response)
       expect(r.isSuccess()).to.be.true()
@@ -275,7 +275,7 @@ describe('APIClient class', function () {
         .post('/api/call.cgi')
         .reply(200, tpl.getPlain())
       cl.useOTESystem()
-      cl.setCredentials('test.user', 'test.passw0rd')
+        .setCredentials('test.user', 'test.passw0rd')
       const r = await cl.login()
       expect(r).to.be.instanceOf(response.Response)
       expect(r.isSuccess()).to.be.true()
@@ -291,7 +291,7 @@ describe('APIClient class', function () {
         .post('/api/call.cgi')
         .reply(200, tpl.getPlain())
       cl.useOTESystem()
-      cl.setCredentials('test.user', 'test.passw0rd')
+        .setCredentials('test.user', 'test.passw0rd')
       const r = await cl.loginExtended({
         TIMEOUT: 60
       })
@@ -319,7 +319,7 @@ describe('APIClient class', function () {
         .post('/api/call.cgi')
         .reply(200, rtm.getTemplate('login500').getPlain())
       cl.enableDebugMode()
-      cl.setSession(tpl.getRecord(0).getDataByKey('SESSION'))
+        .setSession(tpl.getRecord(0).getDataByKey('SESSION'))
       const r = await cl.logout()
       expect(r).to.be.instanceOf(response.Response)
       expect(r.isError()).to.be.true()
@@ -334,8 +334,8 @@ describe('APIClient class', function () {
         .post('/api/call.cgi')
         .reply(404, rtm.getTemplate('404').getPlain())
       cl.enableDebugMode()
-      cl.setCredentials('test.user', 'test.passw0rd')
-      cl.useOTESystem()
+        .setCredentials('test.user', 'test.passw0rd')
+        .useOTESystem()
       const r = await cl.request({ COMMAND: 'GetUserIndex' })
       expect(r).to.be.instanceOf(response.Response)
       expect(r.isTmpError()).to.be.true()

@@ -90,9 +90,9 @@ async function main () {
   // Use OT&E system, omitting this points by default to the LIVE system
   cl.useOTESystem()
   // Set your user id, here: the OT&E demo user
-  cl.setCredentials('test.user', 'test.passw0rd')
+    .setCredentials('test.user', 'test.passw0rd')
   // Set Remote IP Address (in case of IP Filter setting)
-  cl.setRemoteIPAddress('1.2.3.4:80')
+    .setRemoteIPAddress('1.2.3.4:80')
   // Set a subuser view
   // cl.setSubuserView('hexotestman.com');
 
@@ -153,13 +153,13 @@ async function main () {
   // Use OT&E system, omitting this points by default to the LIVE system
   cl.useOTESystem()
   // Set your user id, here: the OT&E demo user
-  cl.setCredentials('test.user', 'test.passw0rd')
+    .setCredentials('test.user', 'test.passw0rd')
   // Set Remote IP Address (in case of IP Filter setting)
-  cl.setRemoteIPAddress('1.2.3.4:80')
+    .setRemoteIPAddress('1.2.3.4:80')
   // Set a subuser view
-  // cl.setSubuserView('hexotestman.com');
+  // .setSubuserView('hexotestman.com')
   // Set a one time password (active 2FA)
-  // cl.setOTP('12345678');
+  // .setOTP('12345678')
 
   const r = cl.request({
     COMMAND: 'StatusUser'
