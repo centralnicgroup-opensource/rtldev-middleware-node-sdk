@@ -1,3 +1,10 @@
+# [5.1.0](https://github.com/hexonet/node-sdk/compare/v5.0.4...v5.1.0) (2018-10-15)
+
+
+### Features
+
+* **client:** add getSession method ([c22884c](https://github.com/hexonet/node-sdk/commit/c22884c))
+
 ## [5.0.4](https://github.com/hexonet/node-sdk/compare/v5.0.3...v5.0.4) (2018-10-04)
 
 
