@@ -74,6 +74,15 @@ export class APIClient {
     }
 
     /**
+     * Get the API Session that is currently set
+     * @returns API Session or null
+     */
+    public getSession(): string | null {
+        const sessid = this.socketConfig.getSession();
+        return (sessid === "") ? null : sessid;
+    }
+
+    /**
      * Get the API connection url that is currently set
      * @returns API connection url currently in use
      */

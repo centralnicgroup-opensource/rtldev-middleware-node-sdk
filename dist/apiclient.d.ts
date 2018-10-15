@@ -8,6 +8,7 @@ export declare class APIClient {
     enableDebugMode(): APIClient;
     disableDebugMode(): APIClient;
     getPOSTData(cmd: any): string;
+    getSession(): string | null;
     getURL(): string;
     getVersion(): string;
     saveSession(session: any): APIClient;

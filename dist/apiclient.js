@@ -44,6 +44,10 @@ class APIClient {
         data += `${socketconfig_1.fixedURLEnc("s_command")}=${socketconfig_1.fixedURLEnc(tmp)}`;
         return data;
     }
+    getSession() {
+        const sessid = this.socketConfig.getSession();
+        return (sessid === "") ? null : sessid;
+    }
     getURL() {
         return this.socketURL;
     }

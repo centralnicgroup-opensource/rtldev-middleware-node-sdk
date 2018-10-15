@@ -78,6 +78,23 @@ describe('APIClient class', function () {
     })
   })
 
+  describe('#.getSession', function () {
+    it('validate response', function () {
+      const session = cl.getSession()
+      expect(session).to.be.null()
+    })
+  })
+
+  describe('#.getSession', function () {
+    it('validate response', function () {
+      const sessid = 'testSessionID12345678'
+      cl.setSession(sessid)
+      const session = cl.getSession()
+      expect(session).to.be.equal(sessid)
+      cl.setSession('')
+    })
+  })
+
   describe('#.getURL', function () {
     it('validate default socket url', function () {
       const url = cl.getURL()
