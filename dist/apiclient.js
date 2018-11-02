@@ -14,6 +14,14 @@ const response_1 = require("./response");
 const responsetemplatemanager_1 = require("./responsetemplatemanager");
 const socketconfig_1 = require("./socketconfig");
 const rtm = responsetemplatemanager_1.ResponseTemplateManager.getInstance();
+const defaultLogger = (post, r, error) => {
+    console.dir(r.getCommand());
+    console.log(post);
+    if (error) {
+        console.error("HTTP communication failed:", error);
+    }
+    console.log(r.getPlain());
+};
 class APIClient {
     constructor() {
         this.socketURL = "";
@@ -21,6 +29,15 @@ class APIClient {
         this.setURL("https://coreapi.1api.net/api/call.cgi");
         this.socketConfig = new socketconfig_1.SocketConfig();
         this.useLIVESystem();
+        this.logger = defaultLogger;
+    }
+    setCustomLogger(customLogger) {
+        this.logger = customLogger;
+        return this;
+    }
+    setDefaultLogger() {
+        this.logger = defaultLogger;
+        return this;
     }
     enableDebugMode() {
         this.debugMode = true;
@@ -147,22 +164,12 @@ class APIClient {
                 }
                 if (error) {
                     body = rtm.getTemplate("httperror").getPlain();
-                    if (this.debugMode) {
-                        console.log(this.socketURL);
-                        console.dir(data);
-                        console.error("HTTP communication failed:", error);
-                        console.log(body);
-                    }
-                    resolve(new response_1.Response(body, cmd));
                 }
-                else {
-                    if (this.debugMode) {
-                        console.log(this.socketURL);
-                        console.dir(data);
-                        console.log(body);
-                    }
-                    resolve(new response_1.Response(body, cmd));
+                const rr = new response_1.Response(body, cmd);
+                if (this.debugMode) {
+                    this.logger(data, rr, error);
                 }
+                resolve(rr);
             });
         });
     }

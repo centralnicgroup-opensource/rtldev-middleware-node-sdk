@@ -4,7 +4,10 @@ export declare class APIClient {
     private socketURL;
     private socketConfig;
     private debugMode;
+    private logger;
     constructor();
+    setCustomLogger(customLogger: (post: string, r: Response, error?: Error) => any): APIClient;
+    setDefaultLogger(): APIClient;
     enableDebugMode(): APIClient;
     disableDebugMode(): APIClient;
     getPOSTData(cmd: any): string;

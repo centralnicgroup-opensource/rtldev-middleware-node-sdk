@@ -6,6 +6,15 @@ import { fixedURLEnc, SocketConfig } from "./socketconfig";
 
 const rtm = ResponseTemplateManager.getInstance();
 
+const defaultLogger = (post: string, r: Response, error?: Error) => {
+    console.dir(r.getCommand());
+    console.log(post);
+    if (error) {
+        console.error("HTTP communication failed:", error);
+    }
+    console.log(r.getPlain());
+};
+
 /**
  * APIClient class
  */
@@ -26,6 +35,10 @@ export class APIClient {
      * activity flag for debug mode
      */
     private debugMode: boolean;
+    /**
+     * logger function for debug mode
+     */
+    private logger: (post: string, r: Response, error?: Error) => any;
 
     public constructor() {
         this.socketURL = "";
@@ -33,8 +46,26 @@ export class APIClient {
         this.setURL("https://coreapi.1api.net/api/call.cgi");
         this.socketConfig = new SocketConfig();
         this.useLIVESystem();
+        this.logger = defaultLogger;
     }
 
+    /**
+     * set custom logger to use instead of default one
+     * @param customLogger
+     * @returns Current APIClient instance for method chaining
+     */
+    public setCustomLogger(customLogger: (post: string, r: Response, error?: Error) => any): APIClient {
+        this.logger = customLogger;
+        return this;
+    }
+    /**
+     * set default logger to use
+     * @returns Current APIClient instance for method chaining
+     */
+    public setDefaultLogger(): APIClient {
+        this.logger = defaultLogger;
+        return this;
+    }
     /**
      * Enable Debug Output to STDOUT
      * @returns Current APIClient instance for method chaining
@@ -265,22 +296,12 @@ export class APIClient {
                 }
                 if (error) {
                     body = rtm.getTemplate("httperror").getPlain();
-                    if (this.debugMode) {
-                        console.log(this.socketURL);
-                        console.dir(data);
-                        console.error("HTTP communication failed:", error);
-                        console.log(body);
-                    }
-                    resolve(new Response(body, cmd));
-                } else {
-                    if (this.debugMode) {
-                        console.log(this.socketURL);
-                        console.dir(data);
-                        console.log(body);
-                    }
-                    resolve(new Response(body, cmd));
                 }
-
+                const rr = new Response(body, cmd);
+                if (this.debugMode) {
+                    this.logger(data, rr, error);
+                }
+                resolve(rr);
             });
         });
     }
