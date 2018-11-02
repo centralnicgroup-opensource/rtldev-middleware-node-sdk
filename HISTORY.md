@@ -1,3 +1,10 @@
+# [5.2.0](https://github.com/hexonet/node-sdk/compare/v5.1.0...v5.2.0) (2018-11-02)
+
+
+### Features
+
+* **logger:** possibility to set a customer logger ([4231369](https://github.com/hexonet/node-sdk/commit/4231369))
+
 # [5.1.0](https://github.com/hexonet/node-sdk/compare/v5.0.4...v5.1.0) (2018-10-15)
 
 
