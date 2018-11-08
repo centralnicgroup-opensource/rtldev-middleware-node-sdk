@@ -92,9 +92,18 @@
 <span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> request <span class="hljs-keyword">from</span> <span class="hljs-string">"request"</span>;
 <span class="hljs-keyword">import</span> { Response } <span class="hljs-keyword">from</span> <span class="hljs-string">"./response"</span>;
 <span class="hljs-keyword">import</span> { ResponseTemplateManager } <span class="hljs-keyword">from</span> <span class="hljs-string">"./responsetemplatemanager"</span>;
-<span class="hljs-keyword">import</span> { SocketConfig } <span class="hljs-keyword">from</span> <span class="hljs-string">"./socketconfig"</span>;
+<span class="hljs-keyword">import</span> { fixedURLEnc, SocketConfig } <span class="hljs-keyword">from</span> <span class="hljs-string">"./socketconfig"</span>;
 
 <span class="hljs-keyword">const</span> rtm = ResponseTemplateManager.getInstance();
+
+<span class="hljs-keyword">const</span> defaultLogger = <span class="hljs-function">(<span class="hljs-params">post: <span class="hljs-built_in">string</span>, r: Response, error?: <span class="hljs-built_in">Error</span></span>) =&gt;</span> {
+    <span class="hljs-built_in">console</span>.dir(r.getCommand());
+    <span class="hljs-built_in">console</span>.log(post);
+    <span class="hljs-keyword">if</span> (error) {
+        <span class="hljs-built_in">console</span>.error(<span class="hljs-string">"HTTP communication failed:"</span>, error);
+    }
+    <span class="hljs-built_in">console</span>.log(r.getPlain());
+};
 
 <span class="hljs-comment">/**
  * APIClient class
@@ -116,6 +125,10 @@
      * activity flag for debug mode
      */</span>
     <span class="hljs-keyword">private</span> debugMode: <span class="hljs-built_in">boolean</span>;
+    <span class="hljs-comment">/**
+     * logger function for debug mode
+     */</span>
+    <span class="hljs-keyword">private</span> logger: <span class="hljs-function">(<span class="hljs-params">post: <span class="hljs-built_in">string</span>, r: Response, error?: <span class="hljs-built_in">Error</span></span>) =&gt;</span> <span class="hljs-built_in">any</span>;
 
     <span class="hljs-keyword">public</span> <span class="hljs-keyword">constructor</span>(<span class="hljs-params"></span>) {
         <span class="hljs-keyword">this</span>.socketURL = <span class="hljs-string">""</span>;
@@ -123,8 +136,26 @@
         <span class="hljs-keyword">this</span>.setURL(<span class="hljs-string">"https://coreapi.1api.net/api/call.cgi"</span>);
         <span class="hljs-keyword">this</span>.socketConfig = <span class="hljs-keyword">new</span> SocketConfig();
         <span class="hljs-keyword">this</span>.useLIVESystem();
+        <span class="hljs-keyword">this</span>.logger = defaultLogger;
     }
 
+    <span class="hljs-comment">/**
+     * set custom logger to use instead of default one
+     * @param customLogger
+     * @returns Current APIClient instance for method chaining
+     */</span>
+    <span class="hljs-keyword">public</span> setCustomLogger(customLogger: <span class="hljs-function">(<span class="hljs-params">post: <span class="hljs-built_in">string</span>, r: Response, error?: <span class="hljs-built_in">Error</span></span>) =&gt;</span> <span class="hljs-built_in">any</span>): APIClient {
+        <span class="hljs-keyword">this</span>.logger = customLogger;
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
+    }
+    <span class="hljs-comment">/**
+     * set default logger to use
+     * @returns Current APIClient instance for method chaining
+     */</span>
+    <span class="hljs-keyword">public</span> setDefaultLogger(): APIClient {
+        <span class="hljs-keyword">this</span>.logger = defaultLogger;
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
+    }
     <span class="hljs-comment">/**
      * Enable Debug Output to STDOUT
      * @returns Current APIClient instance for method chaining
@@ -159,8 +190,17 @@
             });
         }
         tmp = tmp.replace(<span class="hljs-regexp">/\n$/</span>, <span class="hljs-string">""</span>);
-        data += <span class="hljs-string">`<span class="hljs-subst">${encodeURIComponent("s_command")}</span>=<span class="hljs-subst">${encodeURIComponent(tmp)}</span>`</span>;
+        data += <span class="hljs-string">`<span class="hljs-subst">${fixedURLEnc("s_command")}</span>=<span class="hljs-subst">${fixedURLEnc(tmp)}</span>`</span>;
         <span class="hljs-keyword">return</span> data;
+    }
+
+    <span class="hljs-comment">/**
+     * Get the API Session that is currently set
+     * @returns API Session or null
+     */</span>
+    <span class="hljs-keyword">public</span> getSession(): <span class="hljs-built_in">string</span> | <span class="hljs-literal">null</span> {
+        <span class="hljs-keyword">const</span> sessid = <span class="hljs-keyword">this</span>.socketConfig.getSession();
+        <span class="hljs-keyword">return</span> (sessid === <span class="hljs-string">""</span>) ? <span class="hljs-literal">null</span> : sessid;
     }
 
     <span class="hljs-comment">/**
@@ -359,22 +399,12 @@
                 }
                 <span class="hljs-keyword">if</span> (error) {
                     body = rtm.getTemplate(<span class="hljs-string">"httperror"</span>).getPlain();
-                    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.debugMode) {
-                        <span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">this</span>.socketURL);
-                        <span class="hljs-built_in">console</span>.dir(data);
-                        <span class="hljs-built_in">console</span>.error(<span class="hljs-string">"HTTP communication failed:"</span>, error);
-                        <span class="hljs-built_in">console</span>.log(body);
-                    }
-                    resolve(<span class="hljs-keyword">new</span> Response(body, cmd));
-                } <span class="hljs-keyword">else</span> {
-                    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.debugMode) {
-                        <span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">this</span>.socketURL);
-                        <span class="hljs-built_in">console</span>.dir(data);
-                        <span class="hljs-built_in">console</span>.log(body);
-                    }
-                    resolve(<span class="hljs-keyword">new</span> Response(body, cmd));
                 }
-
+                <span class="hljs-keyword">const</span> rr = <span class="hljs-keyword">new</span> Response(body, cmd);
+                <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.debugMode) {
+                    <span class="hljs-keyword">this</span>.logger(data, rr, error);
+                }
+                resolve(rr);
             });
         });
     }

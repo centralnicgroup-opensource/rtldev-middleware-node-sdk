@@ -88,7 +88,13 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-comment">/**
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> fixedURLEnc = (str: <span class="hljs-built_in">string</span>): <span class="hljs-function"><span class="hljs-params">string</span> =&gt;</span> {
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">encodeURIComponent</span>(str).replace(<span class="hljs-regexp">/[!'()*]/g</span>, <span class="hljs-function">(<span class="hljs-params">c</span>) =&gt;</span> {
+        <span class="hljs-keyword">return</span> <span class="hljs-string">`%<span class="hljs-subst">${c.charCodeAt(0).toString(16).toUpperCase()}</span>`</span>;
+    });
+};
+
+<span class="hljs-comment">/**
  * SocketConfig Class
  */</span>
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> SocketConfig {
@@ -138,25 +144,25 @@
     <span class="hljs-keyword">public</span> getPOSTData(): <span class="hljs-built_in">string</span> {
         <span class="hljs-keyword">let</span> data = <span class="hljs-string">""</span>;
         <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.entity !== <span class="hljs-string">""</span>) {
-            data += <span class="hljs-string">`<span class="hljs-subst">${encodeURIComponent("s_entity")}</span>=<span class="hljs-subst">${encodeURIComponent(this.entity)}</span>&amp;`</span>;
+            data += <span class="hljs-string">`<span class="hljs-subst">${fixedURLEnc("s_entity")}</span>=<span class="hljs-subst">${fixedURLEnc(this.entity)}</span>&amp;`</span>;
         }
         <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.login !== <span class="hljs-string">""</span>) {
-            data += <span class="hljs-string">`<span class="hljs-subst">${encodeURIComponent("s_login")}</span>=<span class="hljs-subst">${encodeURIComponent(this.login)}</span>&amp;`</span>;
+            data += <span class="hljs-string">`<span class="hljs-subst">${fixedURLEnc("s_login")}</span>=<span class="hljs-subst">${fixedURLEnc(this.login)}</span>&amp;`</span>;
         }
         <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.otp !== <span class="hljs-string">""</span>) {
-            data += <span class="hljs-string">`<span class="hljs-subst">${encodeURIComponent("s_otp")}</span>=<span class="hljs-subst">${encodeURIComponent(this.otp)}</span>&amp;`</span>;
+            data += <span class="hljs-string">`<span class="hljs-subst">${fixedURLEnc("s_otp")}</span>=<span class="hljs-subst">${fixedURLEnc(this.otp)}</span>&amp;`</span>;
         }
         <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.pw !== <span class="hljs-string">""</span>) {
-            data += <span class="hljs-string">`<span class="hljs-subst">${encodeURIComponent("s_pw")}</span>=<span class="hljs-subst">${encodeURIComponent(this.pw)}</span>&amp;`</span>;
+            data += <span class="hljs-string">`<span class="hljs-subst">${fixedURLEnc("s_pw")}</span>=<span class="hljs-subst">${fixedURLEnc(this.pw)}</span>&amp;`</span>;
         }
         <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.remoteaddr !== <span class="hljs-string">""</span>) {
-            data += <span class="hljs-string">`<span class="hljs-subst">${encodeURIComponent("s_remoteaddr")}</span>=<span class="hljs-subst">${encodeURIComponent(this.remoteaddr)}</span>&amp;`</span>;
+            data += <span class="hljs-string">`<span class="hljs-subst">${fixedURLEnc("s_remoteaddr")}</span>=<span class="hljs-subst">${fixedURLEnc(this.remoteaddr)}</span>&amp;`</span>;
         }
         <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.session !== <span class="hljs-string">""</span>) {
-            data += <span class="hljs-string">`<span class="hljs-subst">${encodeURIComponent("s_session")}</span>=<span class="hljs-subst">${encodeURIComponent(this.session)}</span>&amp;`</span>;
+            data += <span class="hljs-string">`<span class="hljs-subst">${fixedURLEnc("s_session")}</span>=<span class="hljs-subst">${fixedURLEnc(this.session)}</span>&amp;`</span>;
         }
         <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.user !== <span class="hljs-string">""</span>) {
-            data += <span class="hljs-string">`<span class="hljs-subst">${encodeURIComponent("s_user")}</span>=<span class="hljs-subst">${encodeURIComponent(this.user)}</span>&amp;`</span>;
+            data += <span class="hljs-string">`<span class="hljs-subst">${fixedURLEnc("s_user")}</span>=<span class="hljs-subst">${fixedURLEnc(this.user)}</span>&amp;`</span>;
         }
         <span class="hljs-keyword">return</span> data;
     }

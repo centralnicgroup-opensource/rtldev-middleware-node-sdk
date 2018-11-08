@@ -94,13 +94,13 @@ async function main () {
   // Set Remote IP Address (in case of IP Filter setting)
     .setRemoteIPAddress('1.2.3.4:80')
   // Set a subuser view
-  // cl.setSubuserView('hexotestman.com');
+  // cl.setUserView('hexotestman.com');
 
   console.log('login ...')
   let r = await cl.login()
   // Provide an one time password (active 2FA)
   // const r = await cl.login('12345678');
-  if (r.getCode() !== '200') { // login failed
+  if (r.getCode() !== 200) { // login failed
     console.log(`LOGIN FAILED -> ${r.getCode()} ${r.getDescription()}`)
     return
   }
@@ -157,7 +157,7 @@ async function main () {
   // Set Remote IP Address (in case of IP Filter setting)
     .setRemoteIPAddress('1.2.3.4:80')
   // Set a subuser view
-  // .setSubuserView('hexotestman.com')
+  // .setUserView('hexotestman.com')
   // Set a one time password (active 2FA)
   // .setOTP('12345678')
 
@@ -183,7 +183,7 @@ cl.setCredentials('test.user', 'test.passw0rd')
 // Set Remote IP Address (in case of IP Filter setting)
 cl.setRemoteIPAddress('1.2.3.4:80')
 // Set a subuser view
-// cl.setSubuserView('hexotestman.com');
+// cl.setUserView('hexotestman.com');
 // Set a one time password (active 2FA)
 // cl.setOTP('12345678');
 
@@ -204,7 +204,7 @@ const cl = new apiconnector.APIClient()
 cl.useOTESystem()
   .setCredentials('test.user', 'test.passw0rd')
   .setRemoteIPAddress('1.2.3.4:80')
-// .setSubuserView('hexotestman.com');
+// .setUserView('hexotestman.com');
 // .setOTP('12345678');
 
 cl.request({

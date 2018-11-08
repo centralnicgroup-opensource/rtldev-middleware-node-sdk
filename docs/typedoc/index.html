@@ -73,6 +73,7 @@
 				<h2 id="resources">Resources</h2>
 				<ul>
 					<li><a href="https://github.com/hexonet/node-sdk/blob/master/README.md#how-to-use-this-module-in-your-project">Usage Guide</a></li>
+					<li><a href="https://github.com/hexonet/node-sdk/wiki/Migration-Guide">Migration Guide</a></li>
 					<li><a href="http://rawgit.com/hexonet/node-sdk/master/docs/typedoc/index.html">SDK Documenation</a></li>
 					<li><a href="https://github.com/hexonet/hexonet-api-documentation/tree/master/API">HEXONET Backend API Documentation</a></li>
 					<li><a href="https://github.com/hexonet/node-sdk/releases">Release Notes</a></li>
@@ -141,17 +142,17 @@
   <span class="hljs-comment">// Use OT&amp;E system, omitting this points by default to the LIVE system</span>
   cl.useOTESystem()
   <span class="hljs-comment">// Set your user id, here: the OT&amp;E demo user</span>
-  cl.setCredentials(<span class="hljs-string">'test.user'</span>, <span class="hljs-string">'test.passw0rd'</span>)
+    .setCredentials(<span class="hljs-string">'test.user'</span>, <span class="hljs-string">'test.passw0rd'</span>)
   <span class="hljs-comment">// Set Remote IP Address (in case of IP Filter setting)</span>
-  cl.setRemoteIPAddress(<span class="hljs-string">'1.2.3.4:80'</span>)
+    .setRemoteIPAddress(<span class="hljs-string">'1.2.3.4:80'</span>)
   <span class="hljs-comment">// Set a subuser view</span>
-  <span class="hljs-comment">// cl.setSubuserView('hexotestman.com');</span>
+  <span class="hljs-comment">// cl.setUserView('hexotestman.com');</span>
 
   <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'login ...'</span>)
   <span class="hljs-keyword">let</span> r = <span class="hljs-keyword">await</span> cl.login()
   <span class="hljs-comment">// Provide an one time password (active 2FA)</span>
   <span class="hljs-comment">// const r = await cl.login('12345678');</span>
-  <span class="hljs-keyword">if</span> (r.getCode() !== <span class="hljs-string">'200'</span>) { <span class="hljs-comment">// login failed</span>
+  <span class="hljs-keyword">if</span> (r.getCode() !== <span class="hljs-number">200</span>) { <span class="hljs-comment">// login failed</span>
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`LOGIN FAILED -&gt; <span class="hljs-subst">${r.getCode()}</span> <span class="hljs-subst">${r.getDescription()}</span>`</span>)
     <span class="hljs-keyword">return</span>
   }
@@ -194,13 +195,13 @@ main()</code></pre>
   <span class="hljs-comment">// Use OT&amp;E system, omitting this points by default to the LIVE system</span>
   cl.useOTESystem()
   <span class="hljs-comment">// Set your user id, here: the OT&amp;E demo user</span>
-  cl.setCredentials(<span class="hljs-string">'test.user'</span>, <span class="hljs-string">'test.passw0rd'</span>)
+    .setCredentials(<span class="hljs-string">'test.user'</span>, <span class="hljs-string">'test.passw0rd'</span>)
   <span class="hljs-comment">// Set Remote IP Address (in case of IP Filter setting)</span>
-  cl.setRemoteIPAddress(<span class="hljs-string">'1.2.3.4:80'</span>)
+    .setRemoteIPAddress(<span class="hljs-string">'1.2.3.4:80'</span>)
   <span class="hljs-comment">// Set a subuser view</span>
-  <span class="hljs-comment">// cl.setSubuserView('hexotestman.com');</span>
+  <span class="hljs-comment">// .setUserView('hexotestman.com')</span>
   <span class="hljs-comment">// Set a one time password (active 2FA)</span>
-  <span class="hljs-comment">// cl.setOTP('12345678');</span>
+  <span class="hljs-comment">// .setOTP('12345678')</span>
 
   <span class="hljs-keyword">const</span> r = cl.request({
     <span class="hljs-attr">COMMAND</span>: <span class="hljs-string">'StatusUser'</span>
@@ -219,7 +220,7 @@ cl.setCredentials(<span class="hljs-string">'test.user'</span>, <span class="hlj
 <span class="hljs-comment">// Set Remote IP Address (in case of IP Filter setting)</span>
 cl.setRemoteIPAddress(<span class="hljs-string">'1.2.3.4:80'</span>)
 <span class="hljs-comment">// Set a subuser view</span>
-<span class="hljs-comment">// cl.setSubuserView('hexotestman.com');</span>
+<span class="hljs-comment">// cl.setUserView('hexotestman.com');</span>
 <span class="hljs-comment">// Set a one time password (active 2FA)</span>
 <span class="hljs-comment">// cl.setOTP('12345678');</span>
 
@@ -235,7 +236,7 @@ cl.request({
 cl.useOTESystem()
   .setCredentials(<span class="hljs-string">'test.user'</span>, <span class="hljs-string">'test.passw0rd'</span>)
   .setRemoteIPAddress(<span class="hljs-string">'1.2.3.4:80'</span>)
-<span class="hljs-comment">// .setSubuserView('hexotestman.com');</span>
+<span class="hljs-comment">// .setUserView('hexotestman.com');</span>
 <span class="hljs-comment">// .setOTP('12345678');</span>
 
 cl.request({
@@ -290,6 +291,12 @@ cl.request({
 					</li>
 					<li class=" tsd-kind-variable tsd-is-not-exported">
 						<a href="globals.html#rtm" class="tsd-kind-icon">rtm</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#defaultlogger" class="tsd-kind-icon">default<wbr>Logger</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#fixedurlenc" class="tsd-kind-icon">fixedURLEnc</a>
 					</li>
 				</ul>
 			</nav>
