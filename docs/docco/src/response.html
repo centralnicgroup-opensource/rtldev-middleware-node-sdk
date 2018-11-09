@@ -161,7 +161,7 @@
 
     <span class="hljs-comment">/**
      * Add a column to the column list
-     * @param key column key
+     * @param key column name
      * @param data array of column data
      * @returns Current Response Instance for method chaining
      */</span>
@@ -255,7 +255,9 @@
         <span class="hljs-keyword">const</span> col = <span class="hljs-keyword">this</span>.getColumn(<span class="hljs-string">"FIRST"</span>);
         <span class="hljs-keyword">if</span> (col) {
             <span class="hljs-keyword">const</span> f = col.getDataByIndex(<span class="hljs-number">0</span>);
-            <span class="hljs-keyword">return</span> f === <span class="hljs-literal">null</span> ? <span class="hljs-number">0</span> : <span class="hljs-built_in">parseInt</span>(f, <span class="hljs-number">10</span>);
+            <span class="hljs-keyword">if</span> (f !== <span class="hljs-literal">null</span> ) {
+                <span class="hljs-keyword">return</span> <span class="hljs-built_in">parseInt</span>(f, <span class="hljs-number">10</span>);
+            }
         }
         <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.records.length) {
             <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
@@ -271,10 +273,13 @@
         <span class="hljs-keyword">const</span> col = <span class="hljs-keyword">this</span>.getColumn(<span class="hljs-string">"LAST"</span>);
         <span class="hljs-keyword">if</span> (col) {
             <span class="hljs-keyword">const</span> l = col.getDataByIndex(<span class="hljs-number">0</span>);
-            <span class="hljs-keyword">return</span> ((l === <span class="hljs-literal">null</span>) ? <span class="hljs-keyword">this</span>.getRecordsCount() - <span class="hljs-number">1</span> : <span class="hljs-built_in">parseInt</span>(l, <span class="hljs-number">10</span>));
+            <span class="hljs-keyword">if</span> (l !== <span class="hljs-literal">null</span>) {
+                <span class="hljs-keyword">return</span> <span class="hljs-built_in">parseInt</span>(l, <span class="hljs-number">10</span>);
+            }
         }
-        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.records.length) {
-            <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.getRecordsCount() - <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">const</span> len = <span class="hljs-keyword">this</span>.getRecordsCount();
+        <span class="hljs-keyword">if</span> (len) {
+            <span class="hljs-keyword">return</span> (len - <span class="hljs-number">1</span>);
         }
         <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;
     }
@@ -428,7 +433,9 @@
         <span class="hljs-keyword">const</span> col = <span class="hljs-keyword">this</span>.getColumn(<span class="hljs-string">"LIMIT"</span>);
         <span class="hljs-keyword">if</span> (col) {
             <span class="hljs-keyword">const</span> l = col.getDataByIndex(<span class="hljs-number">0</span>);
-            <span class="hljs-keyword">return</span> ((l === <span class="hljs-literal">null</span>) ? <span class="hljs-keyword">this</span>.getRecordsCount() : <span class="hljs-built_in">parseInt</span>(l, <span class="hljs-number">10</span>));
+            <span class="hljs-keyword">if</span> (l !== <span class="hljs-literal">null</span>) {
+                <span class="hljs-keyword">return</span> <span class="hljs-built_in">parseInt</span>(l, <span class="hljs-number">10</span>);
+            }
         }
         <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.getRecordsCount();
     }
