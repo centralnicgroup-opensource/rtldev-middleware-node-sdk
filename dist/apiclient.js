@@ -69,6 +69,12 @@ class APIClient {
     getURL() {
         return this.socketURL;
     }
+    setUserAgent(str, rv) {
+        this.ua = (`${str} ` +
+            `(${process.platform}; ${process.arch}; rv:${rv}) ` +
+            `node-sdk${this.getVersion()} ` +
+            `node${process.version}`);
+    }
     getUserAgent() {
         if (!this.ua.length) {
             this.ua = `NODE-SDK (${process.platform}; ${process.arch}; rv:${this.getVersion()}) node${process.version}`;

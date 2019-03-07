@@ -125,6 +125,14 @@ describe('APIClient class', function () {
     })
   })
 
+  describe('#.setUserAgent', function () {
+    it('validate response', function () {
+      cl.setUserAgent('WHMCS', '7.7.0')
+      const ua = cl.getUserAgent()
+      expect(ua).to.equal(`WHMCS (${process.platform}; ${process.arch}; rv:7.7.0) node-sdk${cl.getVersion()} node${process.version}`)
+    })
+  })
+
   describe('#.setURL', function () {
     it('validate http socket url', function () {
       const url = cl.setURL('http://coreapi.1api.net/api/call.cgi').getURL()
