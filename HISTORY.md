@@ -1,3 +1,10 @@
+# [5.3.0](https://github.com/hexonet/node-sdk/compare/v5.2.0...v5.3.0) (2019-03-07)
+
+
+### Features
+
+* **user-agent:** review user-agent header value ([e182cd4](https://github.com/hexonet/node-sdk/commit/e182cd4))
+
 # [5.2.0](https://github.com/hexonet/node-sdk/compare/v5.1.0...v5.2.0) (2018-11-02)
 
 

@@ -96,6 +96,7 @@
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="apiclient.html#logger" class="tsd-kind-icon">logger</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="apiclient.html#socketconfig" class="tsd-kind-icon">socket<wbr>Config</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="apiclient.html#socketurl" class="tsd-kind-icon">socketURL</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="apiclient.html#ua" class="tsd-kind-icon">ua</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-static"><a href="apiclient.html#sockettimeout" class="tsd-kind-icon">socket<wbr>Timeout</a></li>
 							</ul>
 						</section>
@@ -107,6 +108,7 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="apiclient.html#getpostdata" class="tsd-kind-icon">getPOSTData</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="apiclient.html#getsession" class="tsd-kind-icon">get<wbr>Session</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="apiclient.html#geturl" class="tsd-kind-icon">getURL</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="apiclient.html#getuseragent" class="tsd-kind-icon">get<wbr>User<wbr>Agent</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="apiclient.html#getversion" class="tsd-kind-icon">get<wbr>Version</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="apiclient.html#login" class="tsd-kind-icon">login</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="apiclient.html#loginextended" class="tsd-kind-icon">login<wbr>Extended</a></li>
@@ -146,7 +148,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/f3379a3/src/apiclient.ts#L41">apiclient.ts:41</a></li>
+									<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/32e9f91/src/apiclient.ts#L45">apiclient.ts:45</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="apiclient.html" class="tsd-signature-type">APIClient</a></h4>
@@ -162,7 +164,7 @@
 					<div class="tsd-signature tsd-kind-icon">debug<wbr>Mode<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/f3379a3/src/apiclient.ts#L37">apiclient.ts:37</a></li>
+							<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/32e9f91/src/apiclient.ts#L41">apiclient.ts:41</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -177,7 +179,7 @@
 					<div class="tsd-signature tsd-kind-icon">logger<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/f3379a3/src/apiclient.ts#L41">apiclient.ts:41</a></li>
+							<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/32e9f91/src/apiclient.ts#L45">apiclient.ts:45</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -219,7 +221,7 @@
 					<div class="tsd-signature tsd-kind-icon">socket<wbr>Config<span class="tsd-signature-symbol">:</span> <a href="socketconfig.html" class="tsd-signature-type">SocketConfig</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/f3379a3/src/apiclient.ts#L33">apiclient.ts:33</a></li>
+							<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/32e9f91/src/apiclient.ts#L37">apiclient.ts:37</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -234,12 +236,27 @@
 					<div class="tsd-signature tsd-kind-icon">socketURL<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/f3379a3/src/apiclient.ts#L29">apiclient.ts:29</a></li>
+							<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/32e9f91/src/apiclient.ts#L33">apiclient.ts:33</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 							<p>API connection url</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="ua" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> ua</h3>
+					<div class="tsd-signature tsd-kind-icon">ua<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/32e9f91/src/apiclient.ts#L29">apiclient.ts:29</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>User Agent string</p>
 						</div>
 					</div>
 				</section>
@@ -249,7 +266,7 @@
 					<div class="tsd-signature tsd-kind-icon">socket<wbr>Timeout<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;300000</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/f3379a3/src/apiclient.ts#L25">apiclient.ts:25</a></li>
+							<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/32e9f91/src/apiclient.ts#L25">apiclient.ts:25</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -271,7 +288,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/f3379a3/src/apiclient.ts#L82">apiclient.ts:82</a></li>
+									<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/32e9f91/src/apiclient.ts#L87">apiclient.ts:87</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -294,7 +311,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/f3379a3/src/apiclient.ts#L73">apiclient.ts:73</a></li>
+									<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/32e9f91/src/apiclient.ts#L78">apiclient.ts:78</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -317,7 +334,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/f3379a3/src/apiclient.ts#L92">apiclient.ts:92</a></li>
+									<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/32e9f91/src/apiclient.ts#L97">apiclient.ts:97</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -349,7 +366,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/f3379a3/src/apiclient.ts#L111">apiclient.ts:111</a></li>
+									<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/32e9f91/src/apiclient.ts#L116">apiclient.ts:116</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -375,7 +392,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/f3379a3/src/apiclient.ts#L120">apiclient.ts:120</a></li>
+									<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/32e9f91/src/apiclient.ts#L125">apiclient.ts:125</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -389,6 +406,29 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getuseragent" class="tsd-anchor"></a>
+					<h3>get<wbr>User<wbr>Agent</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>User<wbr>Agent<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/32e9f91/src/apiclient.ts#L133">apiclient.ts:133</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get the User Agent</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+							<p>User Agent string</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="getversion" class="tsd-anchor"></a>
 					<h3>get<wbr>Version</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -398,7 +438,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/f3379a3/src/apiclient.ts#L128">apiclient.ts:128</a></li>
+									<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/32e9f91/src/apiclient.ts#L144">apiclient.ts:144</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -421,7 +461,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/f3379a3/src/apiclient.ts#L227">apiclient.ts:227</a></li>
+									<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/32e9f91/src/apiclient.ts#L243">apiclient.ts:243</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -453,7 +493,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/f3379a3/src/apiclient.ts#L244">apiclient.ts:244</a></li>
+									<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/32e9f91/src/apiclient.ts#L260">apiclient.ts:260</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -492,7 +532,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/f3379a3/src/apiclient.ts#L260">apiclient.ts:260</a></li>
+									<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/32e9f91/src/apiclient.ts#L276">apiclient.ts:276</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -515,7 +555,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/f3379a3/src/apiclient.ts#L275">apiclient.ts:275</a></li>
+									<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/32e9f91/src/apiclient.ts#L291">apiclient.ts:291</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -547,7 +587,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/f3379a3/src/apiclient.ts#L341">apiclient.ts:341</a></li>
+									<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/32e9f91/src/apiclient.ts#L357">apiclient.ts:357</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -579,7 +619,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/f3379a3/src/apiclient.ts#L315">apiclient.ts:315</a></li>
+									<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/32e9f91/src/apiclient.ts#L331">apiclient.ts:331</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -612,7 +652,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/f3379a3/src/apiclient.ts#L367">apiclient.ts:367</a></li>
+									<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/32e9f91/src/apiclient.ts#L383">apiclient.ts:383</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -635,7 +675,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/f3379a3/src/apiclient.ts#L152">apiclient.ts:152</a></li>
+									<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/32e9f91/src/apiclient.ts#L168">apiclient.ts:168</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -668,7 +708,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/f3379a3/src/apiclient.ts#L138">apiclient.ts:138</a></li>
+									<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/32e9f91/src/apiclient.ts#L154">apiclient.ts:154</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -700,7 +740,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/f3379a3/src/apiclient.ts#L205">apiclient.ts:205</a></li>
+									<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/32e9f91/src/apiclient.ts#L221">apiclient.ts:221</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -738,7 +778,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/f3379a3/src/apiclient.ts#L57">apiclient.ts:57</a></li>
+									<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/32e9f91/src/apiclient.ts#L62">apiclient.ts:62</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -791,7 +831,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/f3379a3/src/apiclient.ts#L65">apiclient.ts:65</a></li>
+									<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/32e9f91/src/apiclient.ts#L70">apiclient.ts:70</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -814,7 +854,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/f3379a3/src/apiclient.ts#L173">apiclient.ts:173</a></li>
+									<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/32e9f91/src/apiclient.ts#L189">apiclient.ts:189</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -846,7 +886,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/f3379a3/src/apiclient.ts#L194">apiclient.ts:194</a></li>
+									<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/32e9f91/src/apiclient.ts#L210">apiclient.ts:210</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -879,7 +919,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/f3379a3/src/apiclient.ts#L218">apiclient.ts:218</a></li>
+									<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/32e9f91/src/apiclient.ts#L234">apiclient.ts:234</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -923,7 +963,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/f3379a3/src/apiclient.ts#L183">apiclient.ts:183</a></li>
+									<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/32e9f91/src/apiclient.ts#L199">apiclient.ts:199</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -955,7 +995,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/f3379a3/src/apiclient.ts#L163">apiclient.ts:163</a></li>
+									<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/32e9f91/src/apiclient.ts#L179">apiclient.ts:179</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -987,7 +1027,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/f3379a3/src/apiclient.ts#L358">apiclient.ts:358</a></li>
+									<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/32e9f91/src/apiclient.ts#L374">apiclient.ts:374</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1019,7 +1059,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/f3379a3/src/apiclient.ts#L395">apiclient.ts:395</a></li>
+									<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/32e9f91/src/apiclient.ts#L411">apiclient.ts:411</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1051,7 +1091,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/f3379a3/src/apiclient.ts#L385">apiclient.ts:385</a></li>
+									<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/32e9f91/src/apiclient.ts#L401">apiclient.ts:401</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1074,7 +1114,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/f3379a3/src/apiclient.ts#L376">apiclient.ts:376</a></li>
+									<li>Defined in <a href="https://github.com/hexonet/node-sdk/blob/32e9f91/src/apiclient.ts#L392">apiclient.ts:392</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1119,6 +1159,9 @@
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="apiclient.html#socketurl" class="tsd-kind-icon">socketURL</a>
 							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="apiclient.html#ua" class="tsd-kind-icon">ua</a>
+							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-static">
 								<a href="apiclient.html#sockettimeout" class="tsd-kind-icon">socket<wbr>Timeout</a>
 							</li>
@@ -1136,6 +1179,9 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="apiclient.html#geturl" class="tsd-kind-icon">getURL</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="apiclient.html#getuseragent" class="tsd-kind-icon">get<wbr>User<wbr>Agent</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="apiclient.html#getversion" class="tsd-kind-icon">get<wbr>Version</a>

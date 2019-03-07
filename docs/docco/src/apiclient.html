@@ -114,6 +114,10 @@
      */</span>
     <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> readonly socketTimeout: <span class="hljs-built_in">number</span> = <span class="hljs-number">300000</span>;
     <span class="hljs-comment">/**
+     * User Agent string
+     */</span>
+    <span class="hljs-keyword">private</span> ua: <span class="hljs-built_in">string</span>;
+    <span class="hljs-comment">/**
      * API connection url
      */</span>
     <span class="hljs-keyword">private</span> socketURL: <span class="hljs-built_in">string</span>;
@@ -131,6 +135,7 @@
     <span class="hljs-keyword">private</span> logger: <span class="hljs-function">(<span class="hljs-params">post: <span class="hljs-built_in">string</span>, r: Response, error?: <span class="hljs-built_in">Error</span></span>) =&gt;</span> <span class="hljs-built_in">any</span>;
 
     <span class="hljs-keyword">public</span> <span class="hljs-keyword">constructor</span>(<span class="hljs-params"></span>) {
+        <span class="hljs-keyword">this</span>.ua = <span class="hljs-string">""</span>;
         <span class="hljs-keyword">this</span>.socketURL = <span class="hljs-string">""</span>;
         <span class="hljs-keyword">this</span>.debugMode = <span class="hljs-literal">false</span>;
         <span class="hljs-keyword">this</span>.setURL(<span class="hljs-string">"https://coreapi.1api.net/api/call.cgi"</span>);
@@ -209,6 +214,17 @@
      */</span>
     <span class="hljs-keyword">public</span> getURL(): <span class="hljs-built_in">string</span> {
         <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.socketURL;
+    }
+
+    <span class="hljs-comment">/**
+     * Get the User Agent
+     * @returns User Agent string
+     */</span>
+    <span class="hljs-keyword">public</span> getUserAgent(): <span class="hljs-built_in">string</span> {
+        <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.ua.length) {
+            <span class="hljs-keyword">this</span>.ua = <span class="hljs-string">`NODE-SDK (<span class="hljs-subst">${process.platform}</span>; <span class="hljs-subst">${process.arch}</span>; rv:<span class="hljs-subst">${this.getVersion()}</span>) node<span class="hljs-subst">${process.version}</span>`</span>;
+        }
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.ua;
     }
 
     <span class="hljs-comment">/**
@@ -316,7 +332,7 @@
      */</span>
     <span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> login(otp: <span class="hljs-built_in">string</span> = <span class="hljs-string">""</span>): <span class="hljs-built_in">Promise</span>&lt;Response&gt; {
         <span class="hljs-keyword">this</span>.setOTP(otp || <span class="hljs-string">""</span>);
-        <span class="hljs-keyword">const</span> rr = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.request({ COMMAND: <span class="hljs-string">"StartSession"</span>});
+        <span class="hljs-keyword">const</span> rr = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.request({ COMMAND: <span class="hljs-string">"StartSession"</span> });
         <span class="hljs-keyword">if</span> (rr.isSuccess()) {
             <span class="hljs-keyword">const</span> col = rr.getColumn(<span class="hljs-string">"SESSION"</span>);
             <span class="hljs-keyword">this</span>.setSession(col ? col.getData()[<span class="hljs-number">0</span>] : <span class="hljs-string">""</span>);
@@ -384,7 +400,7 @@
                 form: data,
                 gzip: <span class="hljs-literal">true</span>,
                 headers: {
-                    <span class="hljs-string">"User-Agent"</span>: <span class="hljs-string">`node-sdk::<span class="hljs-subst">${this.getVersion()}</span>`</span>,
+                    <span class="hljs-string">"User-Agent"</span>: <span class="hljs-keyword">this</span>.getUserAgent(),
                 },
                 method: <span class="hljs-string">"POST"</span>,
                 timeout: APIClient.socketTimeout,
