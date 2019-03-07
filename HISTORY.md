@@ -1,3 +1,10 @@
+# [5.4.0](https://github.com/hexonet/node-sdk/compare/v5.3.0...v5.4.0) (2019-03-07)
+
+
+### Features
+
+* **user-agent:** added functionality to customize default value ([4406c4e](https://github.com/hexonet/node-sdk/commit/4406c4e))
+
 # [5.3.0](https://github.com/hexonet/node-sdk/compare/v5.2.0...v5.3.0) (2019-03-07)
 
 
