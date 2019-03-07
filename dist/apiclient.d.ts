@@ -1,6 +1,7 @@
 import { Response } from "./response";
 export declare class APIClient {
     private static readonly socketTimeout;
+    private ua;
     private socketURL;
     private socketConfig;
     private debugMode;
@@ -13,6 +14,7 @@ export declare class APIClient {
     getPOSTData(cmd: any): string;
     getSession(): string | null;
     getURL(): string;
+    getUserAgent(): string;
     getVersion(): string;
     saveSession(session: any): APIClient;
     reuseSession(session: any): APIClient;

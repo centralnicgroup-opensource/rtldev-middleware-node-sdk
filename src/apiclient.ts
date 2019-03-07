@@ -24,6 +24,10 @@ export class APIClient {
      */
     private static readonly socketTimeout: number = 300000;
     /**
+     * User Agent string
+     */
+    private ua: string;
+    /**
      * API connection url
      */
     private socketURL: string;
@@ -41,6 +45,7 @@ export class APIClient {
     private logger: (post: string, r: Response, error?: Error) => any;
 
     public constructor() {
+        this.ua = "";
         this.socketURL = "";
         this.debugMode = false;
         this.setURL("https://coreapi.1api.net/api/call.cgi");
@@ -119,6 +124,17 @@ export class APIClient {
      */
     public getURL(): string {
         return this.socketURL;
+    }
+
+    /**
+     * Get the User Agent
+     * @returns User Agent string
+     */
+    public getUserAgent(): string {
+        if (!this.ua.length) {
+            this.ua = `NODE-SDK (${process.platform}; ${process.arch}; rv:${this.getVersion()}) node${process.version}`;
+        }
+        return this.ua;
     }
 
     /**
@@ -226,7 +242,7 @@ export class APIClient {
      */
     public async login(otp: string = ""): Promise<Response> {
         this.setOTP(otp || "");
-        const rr = await this.request({ COMMAND: "StartSession"});
+        const rr = await this.request({ COMMAND: "StartSession" });
         if (rr.isSuccess()) {
             const col = rr.getColumn("SESSION");
             this.setSession(col ? col.getData()[0] : "");
@@ -281,7 +297,7 @@ export class APIClient {
                 form: data,
                 gzip: true,
                 headers: {
-                    "User-Agent": `node-sdk::${this.getVersion()}`,
+                    "User-Agent": this.getUserAgent(),
                 },
                 method: "POST",
                 timeout: APIClient.socketTimeout,

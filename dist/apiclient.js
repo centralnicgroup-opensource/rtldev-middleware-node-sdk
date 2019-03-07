@@ -24,6 +24,7 @@ const defaultLogger = (post, r, error) => {
 };
 class APIClient {
     constructor() {
+        this.ua = "";
         this.socketURL = "";
         this.debugMode = false;
         this.setURL("https://coreapi.1api.net/api/call.cgi");
@@ -67,6 +68,12 @@ class APIClient {
     }
     getURL() {
         return this.socketURL;
+    }
+    getUserAgent() {
+        if (!this.ua.length) {
+            this.ua = `NODE-SDK (${process.platform}; ${process.arch}; rv:${this.getVersion()}) node${process.version}`;
+        }
+        return this.ua;
     }
     getVersion() {
         const packageInfo = require(path.join(__dirname, "/../package.json"));
@@ -151,7 +158,7 @@ class APIClient {
                 form: data,
                 gzip: true,
                 headers: {
-                    "User-Agent": `node-sdk::${this.getVersion()}`,
+                    "User-Agent": this.getUserAgent(),
                 },
                 method: "POST",
                 timeout: APIClient.socketTimeout,
