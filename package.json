@@ -61,7 +61,7 @@
     "@semantic-release/git": "7.0.8",
     "@semantic-release/github": "5.2.10",
     "@semantic-release/npm": "5.1.4",
-    "@types/lodash": "^4.14.116",
+    "@types/lodash": "4.14.122",
     "@types/request": "2.48.1",
     "chai": "4.2.0",
     "chai-as-promised": "7.1.1",
@@ -82,12 +82,12 @@
     "mocha": "5.2.0",
     "nock": "10.0.6",
     "nyc": "13.3.0",
-    "semantic-release": "^15.10.5",
+    "semantic-release": "15.13.3",
     "supertest": "3.4.2",
+    "travis-deploy-once": "5.0.11",
     "tslint": "5.13.1",
     "typedoc": "0.14.2",
-    "typescript": "3.3.3333",
-    "travis-deploy-once": "5.0.11"
+    "typescript": "3.3.3333"
   },
   "dependencies": {
     "request": "2.88.0"
