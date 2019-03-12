@@ -54,7 +54,7 @@
     "documentation_docco": "docco -l parallel -o docs/docco src/*.ts",
     "documentation_typedoc": "typedoc --out docs/typedoc --name @hexonet/ispapi-apiconnector --readme ./README.md --mode file --includeDeclarations --excludeExternals src/*.ts",
     "lint": "eslint --fix --config=./.eslintrc.js *.js README.md *.json test/*.spec.js",
-    "test": "cross-env NODE_ENV=development nyc ./node_modules/.bin/_mocha --opts mocha.opts $(find ./test -type f -name '*.spec.js')"
+    "test": "cross-env NODE_ENV=development nyc ./node_modules/.bin/_mocha $(find ./test -type f -name '*.spec.js')"
   },
   "devDependencies": {
     "@semantic-release/changelog": "3.0.2",
@@ -79,7 +79,7 @@
     "istanbul": "0.4.5",
     "jsdoc": "3.5.5",
     "jsdoc-oblivion": "0.0.9",
-    "mocha": "5.2.0",
+    "mocha": "6.0.2",
     "nock": "10.0.6",
     "nyc": "13.3.0",
     "semantic-release": "15.13.3",
