@@ -1,3 +1,10 @@
+## [5.4.1](https://github.com/hexonet/node-sdk/compare/v5.4.0...v5.4.1) (2019-03-29)
+
+
+### Bug Fixes
+
+* **apiclient:** useragent string missing slashes; security bump; ([2704c7e](https://github.com/hexonet/node-sdk/commit/2704c7e))
+
 # [5.4.0](https://github.com/hexonet/node-sdk/compare/v5.3.0...v5.4.0) (2019-03-07)
 
 
