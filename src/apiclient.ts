@@ -135,8 +135,8 @@ export class APIClient {
         this.ua = (
             `${str} ` +
             `(${process.platform}; ${process.arch}; rv:${rv}) ` +
-            `node-sdk${this.getVersion()} ` +
-            `node${process.version}`
+            `node-sdk/${this.getVersion()} ` +
+            `node/${process.version}`
         );
     }
 
@@ -146,7 +146,10 @@ export class APIClient {
      */
     public getUserAgent(): string {
         if (!this.ua.length) {
-            this.ua = `NODE-SDK (${process.platform}; ${process.arch}; rv:${this.getVersion()}) node${process.version}`;
+            this.ua = (
+                `NODE-SDK (${process.platform}; ${process.arch}; rv:${this.getVersion()}) ` +
+                `node/${process.version}`
+            );
         }
         return this.ua;
     }
