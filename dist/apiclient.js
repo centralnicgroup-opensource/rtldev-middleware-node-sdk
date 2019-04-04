@@ -74,6 +74,7 @@ class APIClient {
             `(${process.platform}; ${process.arch}; rv:${rv}) ` +
             `node-sdk/${this.getVersion()} ` +
             `node/${process.version}`);
+        return this;
     }
     getUserAgent() {
         if (!this.ua.length) {

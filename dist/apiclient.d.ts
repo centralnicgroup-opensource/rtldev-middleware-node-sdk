@@ -14,7 +14,7 @@ export declare class APIClient {
     getPOSTData(cmd: any): string;
     getSession(): string | null;
     getURL(): string;
-    setUserAgent(str: string, rv: string): void;
+    setUserAgent(str: string, rv: string): APIClient;
     getUserAgent(): string;
     getVersion(): string;
     saveSession(session: any): APIClient;

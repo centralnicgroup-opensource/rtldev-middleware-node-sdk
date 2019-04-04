@@ -130,14 +130,16 @@ export class APIClient {
      * Possibility to customize default user agent to fit your needs
      * @param str user agent label
      * @param rv revision of user agent
+     * @returns Current APIClient instance for method chaining
      */
-    public setUserAgent(str: string, rv: string) {
+    public setUserAgent(str: string, rv: string): APIClient {
         this.ua = (
             `${str} ` +
             `(${process.platform}; ${process.arch}; rv:${rv}) ` +
             `node-sdk/${this.getVersion()} ` +
             `node/${process.version}`
         );
+        return this;
     }
 
     /**

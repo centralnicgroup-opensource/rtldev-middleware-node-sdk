@@ -127,8 +127,9 @@ describe('APIClient class', function () {
 
   describe('#.setUserAgent', function () {
     it('validate response', function () {
-      cl.setUserAgent('WHMCS', '7.7.0')
+      const cls = cl.setUserAgent('WHMCS', '7.7.0')
       const ua = cl.getUserAgent()
+      expect(cls).to.be.instanceOf(apiclient.APIClient)
       expect(ua).to.equal(`WHMCS (${process.platform}; ${process.arch}; rv:7.7.0) node-sdk/${cl.getVersion()} node/${process.version}`)
     })
   })
