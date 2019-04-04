@@ -220,14 +220,16 @@
      * Possibility to customize default user agent to fit your needs
      * @param str user agent label
      * @param rv revision of user agent
+     * @returns Current APIClient instance for method chaining
      */</span>
-    <span class="hljs-keyword">public</span> setUserAgent(str: <span class="hljs-built_in">string</span>, rv: <span class="hljs-built_in">string</span>) {
+    <span class="hljs-keyword">public</span> setUserAgent(str: <span class="hljs-built_in">string</span>, rv: <span class="hljs-built_in">string</span>): APIClient {
         <span class="hljs-keyword">this</span>.ua = (
             <span class="hljs-string">`<span class="hljs-subst">${str}</span> `</span> +
             <span class="hljs-string">`(<span class="hljs-subst">${process.platform}</span>; <span class="hljs-subst">${process.arch}</span>; rv:<span class="hljs-subst">${rv}</span>) `</span> +
             <span class="hljs-string">`node-sdk/<span class="hljs-subst">${this.getVersion()}</span> `</span> +
             <span class="hljs-string">`node/<span class="hljs-subst">${process.version}</span>`</span>
         );
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
     }
 
     <span class="hljs-comment">/**
