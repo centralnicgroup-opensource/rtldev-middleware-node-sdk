@@ -87,7 +87,7 @@
     "travis-deploy-once": "5.0.11",
     "tslint": "5.15.0",
     "typedoc": "0.14.2",
-    "typescript": "3.4.1"
+    "typescript": "3.4.2"
   },
   "dependencies": {
     "request": "2.88.0"
