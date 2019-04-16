@@ -11,4 +11,5 @@ export declare class ResponseTemplate {
     isError(): boolean;
     isSuccess(): boolean;
     isTmpError(): boolean;
+    isPending(): boolean;
 }

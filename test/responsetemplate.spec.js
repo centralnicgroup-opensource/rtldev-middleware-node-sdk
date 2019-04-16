@@ -48,4 +48,16 @@ describe('ResponseTemplate class', function () {
       expect(tpl.getRuntime()).to.equal(0.12)
     })
   })
+
+  describe('#.isPending', function () {
+    it('check return value [n/a in API response]', function () {
+      const tpl = new ResponseTemplate('')
+      expect(tpl.isPending()).to.be.false()
+    })
+
+    it('check return value [in API response]', function () {
+      const tpl = new ResponseTemplate('[RESPONSE]\r\ncode=200\r\ndescription=Command completed successfully\r\npending=1\r\nEOF\r\n')
+      expect(tpl.isPending()).to.be.true()
+    })
+  })
 })

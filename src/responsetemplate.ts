@@ -106,4 +106,12 @@ export class ResponseTemplate {
     public isTmpError(): boolean {
         return this.hash.CODE.charAt(0) === "4";
     }
+
+    /**
+     * Check if current operation is returned as pending
+     * @returns boolean result
+     */
+    public isPending(): boolean {
+        return (this.hash.hasOwnProperty("PENDING")) ? this.hash.PENDING === "1" : false;
+    }
 }

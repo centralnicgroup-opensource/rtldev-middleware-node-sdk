@@ -43,6 +43,9 @@ class ResponseTemplate {
     isTmpError() {
         return this.hash.CODE.charAt(0) === "4";
     }
+    isPending() {
+        return (this.hash.hasOwnProperty("PENDING")) ? this.hash.PENDING === "1" : false;
+    }
 }
 exports.ResponseTemplate = ResponseTemplate;
 //# sourceMappingURL=responsetemplate.js.map
