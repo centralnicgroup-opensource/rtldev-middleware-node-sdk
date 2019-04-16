@@ -1,3 +1,10 @@
+# [5.5.0](https://github.com/hexonet/node-sdk/compare/v5.4.2...v5.5.0) (2019-04-16)
+
+
+### Features
+
+* **responsetemplate:** add isPending method ([3307204](https://github.com/hexonet/node-sdk/commit/3307204))
+
 ## [5.4.2](https://github.com/hexonet/node-sdk/compare/v5.4.1...v5.4.2) (2019-04-04)
 
 
