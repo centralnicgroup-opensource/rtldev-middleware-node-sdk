@@ -81,7 +81,7 @@
     "jsdoc-oblivion": "0.0.9",
     "mocha": "^6.1.3",
     "nock": "10.0.6",
-    "nyc": "13.3.0",
+    "nyc": "14.0.0",
     "semantic-release": "15.13.3",
     "supertest": "4.0.2",
     "tslint": "5.15.0",
