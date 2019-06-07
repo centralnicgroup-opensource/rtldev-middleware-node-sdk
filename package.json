@@ -61,7 +61,7 @@
     "@semantic-release/git": "7.0.8",
     "@semantic-release/github": "5.2.10",
     "@semantic-release/npm": "^5.1.7",
-    "@types/lodash": "4.14.133",
+    "@types/lodash": "4.14.134",
     "@types/request": "2.48.1",
     "chai": "4.2.0",
     "chai-as-promised": "7.1.1",
