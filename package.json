@@ -59,7 +59,7 @@
   "devDependencies": {
     "@semantic-release/changelog": "3.0.2",
     "@semantic-release/git": "7.0.12",
-    "@semantic-release/github": "5.2.10",
+    "@semantic-release/github": "5.4.0",
     "@semantic-release/npm": "^5.1.7",
     "@types/lodash": "4.14.134",
     "@types/request": "2.48.1",
