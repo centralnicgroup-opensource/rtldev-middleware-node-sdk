@@ -8,7 +8,7 @@ const ResponseTemplateManager = require('../dist/responsetemplatemanager').Respo
 const ResponseParser = require('../dist/responseparser').ResponseParser
 chai.use(dirtyChai)
 
-let rtm = ResponseTemplateManager.getInstance()
+const rtm = ResponseTemplateManager.getInstance()
 
 before(function () {
   rtm.addTemplate('listP0', '[RESPONSE]\r\nPROPERTY[TOTAL][0]=2701\r\nPROPERTY[FIRST][0]=0\r\nPROPERTY[DOMAIN][0]=0-60motorcycletimes.com\r\nPROPERTY[DOMAIN][1]=0-be-s01-0.com\r\nPROPERTY[COUNT][0]=2\r\nPROPERTY[LAST][0]=1\r\nPROPERTY[LIMIT][0]=2\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.023\r\nEOF\r\n')
@@ -37,7 +37,7 @@ describe('Response class', function () {
     })
 
     it('check return value [w/o FIRST in response, rows]', function () {
-      let h = rtm.getTemplate('OK').getHash()
+      const h = rtm.getTemplate('OK').getHash()
       h.PROPERTY = {
         DOMAIN: ['mydomain1.com', 'mydomain2.com']
       }
@@ -172,7 +172,7 @@ describe('Response class', function () {
     })
 
     it('check return value [w/o LAST in response, rows]', function () {
-      let h = rtm.getTemplate('OK').getHash()
+      const h = rtm.getTemplate('OK').getHash()
       h.PROPERTY = {
         DOMAIN: ['mydomain1.com', 'mydomain2.com']
       }

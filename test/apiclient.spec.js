@@ -51,7 +51,7 @@ describe('APIClient class', function () {
   describe('#.getPOSTData', function () {
     it('test object input with special chars', function () {
       const validate = 's_entity=54cd&s_command=COMMAND%3DModifyDomain%0AAUTH%3Dgwrgwqg%25%26%5C44t3%2A'
-      let enc = cl.getPOSTData({
+      const enc = cl.getPOSTData({
         COMMAND: 'ModifyDomain',
         AUTH: 'gwrgwqg%&\\44t3*'
       })
@@ -65,7 +65,7 @@ describe('APIClient class', function () {
 
     it('test object input with null value in parameter', function () {
       const validate = 's_entity=54cd&s_command=COMMAND%3DModifyDomain'
-      let enc = cl.getPOSTData({
+      const enc = cl.getPOSTData({
         COMMAND: 'ModifyDomain',
         AUTH: null
       })
@@ -74,7 +74,7 @@ describe('APIClient class', function () {
 
     it('test object input with undefined value in parameter', function () {
       const validate = 's_entity=54cd&s_command=COMMAND%3DModifyDomain'
-      let enc = cl.getPOSTData({
+      const enc = cl.getPOSTData({
         COMMAND: 'ModifyDomain',
         AUTH: undefined
       })
@@ -195,7 +195,7 @@ describe('APIClient class', function () {
     })
 
     it('validate correct settings', function () {
-      let sessionobj = {}
+      const sessionobj = {}
       cl.setSession('12345678')
         .saveSession(sessionobj)
       const cl2 = new apiclient.APIClient()
