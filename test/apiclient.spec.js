@@ -114,7 +114,7 @@ describe('APIClient class', function () {
   describe('#.getURL', function () {
     it('validate default socket url', function () {
       const url = cl.getURL()
-      expect(url).to.equal('https://coreapi.1api.net/api/call.cgi')
+      expect(url).to.equal('https://api.ispapi.net/api/call.cgi')
     })
   })
 
@@ -136,9 +136,9 @@ describe('APIClient class', function () {
 
   describe('#.setURL', function () {
     it('validate http socket url', function () {
-      const url = cl.setURL('http://coreapi.1api.net/api/call.cgi').getURL()
-      expect(url).to.equal('http://coreapi.1api.net/api/call.cgi')
-      cl.setURL('https://coreapi.1api.net/api/call.cgi')
+      const url = cl.setURL('http://api.ispapi.net/api/call.cgi').getURL()
+      expect(url).to.equal('http://api.ispapi.net/api/call.cgi')
+      cl.setURL('https://api.ispapi.net/api/call.cgi')
     })
   })
 
@@ -264,7 +264,7 @@ describe('APIClient class', function () {
   describe('#.login', function () {
     it('validate against mocked API response [login succeeded; no role used]', async function () {
       const tpl = new response.Response(rtm.getTemplate('login200').getPlain())
-      nock('https://coreapi.1api.net')
+      nock('https://api.ispapi.net')
         .post('/api/call.cgi')
         .reply(200, tpl.getPlain())
       cl.useOTESystem()
@@ -279,7 +279,7 @@ describe('APIClient class', function () {
 
     it('validate against mocked API response [login succeeded; role used]', async function () {
       const tpl = new response.Response(rtm.getTemplate('login200').getPlain())
-      nock('https://coreapi.1api.net')
+      nock('https://api.ispapi.net')
         .post('/api/call.cgi')
         .reply(200, tpl.getPlain())
       cl.useOTESystem()
@@ -293,7 +293,7 @@ describe('APIClient class', function () {
     })
 
     it('validate against mocked API response [login failed; wrong credentials]', async function () {
-      nock('https://coreapi.1api.net')
+      nock('https://api.ispapi.net')
         .post('/api/call.cgi')
         .reply(200, rtm.getTemplate('login500').getPlain())
       cl.setCredentials('test.user', 'WRONGPASSWORD')
@@ -305,7 +305,7 @@ describe('APIClient class', function () {
     it('validate against mocked API response [login failed; http timeout]', async function () {
       // nock.cleanAll()
       const tpl = rtm.getTemplate('httperror')
-      nock('https://coreapi.1api.net')
+      nock('https://api.ispapi.net')
         .post('/api/call.cgi')
         .socketDelay(apiclient.APIClient.socketTimeout)
         .reply(200, tpl.getPlain())
@@ -320,7 +320,7 @@ describe('APIClient class', function () {
       // this case cannot really happen as the api always returns SESSION property.
       // this case is just to increase coverage
       const tpl = new response.Response(rtm.getTemplate('OK').getPlain())
-      nock('https://coreapi.1api.net')
+      nock('https://api.ispapi.net')
         .post('/api/call.cgi')
         .reply(200, tpl.getPlain())
       cl.useOTESystem()
@@ -336,7 +336,7 @@ describe('APIClient class', function () {
   describe('#.loginExtended', function () {
     it('validate against mocked API response [login succeeded; no role used] ', async function () {
       const tpl = new response.Response(rtm.getTemplate('login200').getPlain())
-      nock('https://coreapi.1api.net')
+      nock('https://api.ispapi.net')
         .post('/api/call.cgi')
         .reply(200, tpl.getPlain())
       cl.useOTESystem()
@@ -354,7 +354,7 @@ describe('APIClient class', function () {
 
   describe('#.logout', function () {
     it('validate against mocked API response [logout succeeded]', async function () {
-      nock('https://coreapi.1api.net')
+      nock('https://api.ispapi.net')
         .post('/api/call.cgi')
         .reply(200, rtm.getTemplate('OK').getPlain())
       const r = await cl.logout()
@@ -364,7 +364,7 @@ describe('APIClient class', function () {
 
     it('validate against mocked API response [logout failed; session no longer exists]', async function () {
       const tpl = new response.Response(rtm.getTemplate('login200').getPlain())
-      nock('https://coreapi.1api.net')
+      nock('https://api.ispapi.net')
         .post('/api/call.cgi')
         .reply(200, rtm.getTemplate('login500').getPlain())
       cl.enableDebugMode()
@@ -379,7 +379,7 @@ describe('APIClient class', function () {
     // TODO additional test for statusMessage - currently not supported through nock [https://github.com/nock/nock/issues/558]
     it('validate against mocked API response [200 < r.statusCode > 299]', async function () {
       const tpl2 = new response.Response(rtm.getTemplate('httperror').getPlain())
-      nock('https://coreapi.1api.net')
+      nock('https://api.ispapi.net')
         .post('/api/call.cgi')
         .reply(404, rtm.getTemplate('404').getPlain())
       cl.enableDebugMode()
@@ -394,7 +394,7 @@ describe('APIClient class', function () {
 
     it('validate against mocked API response [200 < r.statusCode > 299, no debug]', async function () {
       const tpl2 = new response.Response(rtm.getTemplate('httperror').getPlain())
-      nock('https://coreapi.1api.net')
+      nock('https://api.ispapi.net')
         .post('/api/call.cgi')
         .reply(404, rtm.getTemplate('404').getPlain())
       cl.disableDebugMode()
@@ -408,7 +408,7 @@ describe('APIClient class', function () {
 
   describe('#.requestNextResponsePage', function () {
     it('validate against mocked API response [no LAST set]', async function () {
-      nock('https://coreapi.1api.net')
+      nock('https://api.ispapi.net')
         .post('/api/call.cgi')
         .reply(200, rtm.getTemplate('listP1').getPlain())
       const r = new response.Response(
@@ -437,7 +437,7 @@ describe('APIClient class', function () {
     })
 
     it('validate against mocked API response [no FIRST set]', async function () {
-      nock('https://coreapi.1api.net')
+      nock('https://api.ispapi.net')
         .post('/api/call.cgi')
         .reply(200, rtm.getTemplate('listP1').getPlain())
       cl.disableDebugMode()
@@ -461,7 +461,7 @@ describe('APIClient class', function () {
 
   describe('#.requestAllResponsePages', function () {
     it('validate against mocked API response [success case]', async function () {
-      const scope = nock('https://coreapi.1api.net')
+      const scope = nock('https://api.ispapi.net')
         .persist()
         .post('/api/call.cgi')
         .reply(function (uri, requestBody) {
@@ -481,7 +481,7 @@ describe('APIClient class', function () {
 
   describe('#.setUserView', function () {
     it('validate against mocked API response', async function () {
-      nock('https://coreapi.1api.net')
+      nock('https://api.ispapi.net')
         .post('/api/call.cgi')
         .reply(200, rtm.getTemplate('OK').getPlain())
       cl.setUserView('hexotestman.com')
@@ -493,7 +493,7 @@ describe('APIClient class', function () {
 
   describe('#.resetUserView', function () {
     it('validate against mocked API response', async function () {
-      nock('https://coreapi.1api.net')
+      nock('https://api.ispapi.net')
         .post('/api/call.cgi')
         .reply(200, rtm.getTemplate('OK').getPlain())
       cl.resetUserView()
