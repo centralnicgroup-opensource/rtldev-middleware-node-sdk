@@ -1,3 +1,10 @@
+## [5.5.1](https://github.com/hexonet/node-sdk/compare/v5.5.0...v5.5.1) (2019-08-16)
+
+
+### Bug Fixes
+
+* **APIClient:** change default SDK url ([3378ee9](https://github.com/hexonet/node-sdk/commit/3378ee9))
+
 # [5.5.0](https://github.com/hexonet/node-sdk/compare/v5.4.2...v5.5.0) (2019-04-16)
 
 
