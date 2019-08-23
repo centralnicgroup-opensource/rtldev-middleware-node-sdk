@@ -60,7 +60,7 @@
     "@semantic-release/changelog": "3.0.4",
     "@semantic-release/git": "7.0.16",
     "@semantic-release/github": "5.4.3",
-    "@semantic-release/npm": "5.1.13",
+    "@semantic-release/npm": "5.1.15",
     "@types/request": "2.48.2",
     "chai": "4.2.0",
     "chai-as-promised": "7.1.1",
