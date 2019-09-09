@@ -461,14 +461,16 @@ describe('APIClient class', function () {
 
   describe('#.requestAllResponsePages', function () {
     it('validate against mocked API response [success case]', async function () {
+      let reqcount = 0
       const scope = nock('https://api.ispapi.net')
         .persist()
         .post('/api/call.cgi')
-        .reply(function (uri, requestBody) {
-          if (requestBody === 's_entity=1234&s_login=test.user&s_pw=test.passw0rd&s_command=COMMAND%3DQueryDomainList%0ALIMIT%3D2%0AFIRST%3D0') {
+        .reply(200, function (uri, requestBody) {
+          reqcount++
+          if (reqcount === 1) {
             return rtm.getTemplate('listFP0').getPlain()
           }
-          if (requestBody === 's_entity=1234&s_login=test.user&s_pw=test.passw0rd&s_command=COMMAND%3DQueryDomainList%0ALIMIT%3D2%0AFIRST%3D1') {
+          if (reqcount === 2) {
             return rtm.getTemplate('listFP1').getPlain()
           }
           return rtm.getTemplate('listFP2').getPlain()
