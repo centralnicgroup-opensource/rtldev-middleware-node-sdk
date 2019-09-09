@@ -85,7 +85,7 @@
     "supertest": "4.0.2",
     "tslint": "5.19.0",
     "typedoc": "0.14.2",
-    "typescript": "3.5.3"
+    "typescript": "3.6.2"
   },
   "dependencies": {
     "request": "2.88.0"
