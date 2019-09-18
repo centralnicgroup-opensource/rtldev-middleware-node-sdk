@@ -3,18 +3,9 @@ dist: xenial
 notifications:
   email:
     recipients:
-    - kschwarz@hexonet.net
+    - middleware@hexonet.net
     on_success: never
     on_failure: always
-  slack:
-    rooms:
-      secure: S8cFuwL1mEKPWG238p4iIac6yZYw6hgNMOH878cZSEqb//GnNVriiR82B4uWj6QQ5K/l93KAK7LdB33Y8zk6OC4huutQwCMzU9g1BGbZC8LrMeXGnpXY+xmfldo8apr7JyL7u0mSam08YUDqyvHI+988iQTQjuXoW7o8fMrJ5ij0Rjdm2IqSqcJwX/6QxOVue1oURAUdDzllB88Ugzv/zNdqZ1NaVYCk4lVayCyDVJnuPtKM24g3DEyduKlwqfXOO2F6Fd0L4JpW6SOrHQhvwNwSwan6gp9dnevmnPgWOr0W32C7KFFQZSS1OyCX0HFxCGZyTjpFaHjqEow/abK7KxKlKVPJfr8Zqi1bG8YyM1Dgc3NJWchaXsKOcWxp4BvSqBYVpZx/ZAoqmFfazRmexhLTJKz9A1jH8SuxPEYadDjxBURDFjZe7woyxNGpQvOkvEJnUgowfiUeHDcAuU7IbSu0XDZPuks5drjJ0Pxzf1W+jP2nxrKeFqLisQa4qB/4fvPEgGYE9mGaKNiRFFRYWVwsLhOvOLwHH+1w+r3/nc4yAzMUnemwO0nONm0fr/72VGn1hFhaWBhrP6jTx9gShZ6iXer1qU+SuL9kzh79w/52NQDa9Q/6L7J9L7B9vGhaA4YQwKbK0xT5thw+XdNKjXtZLiuvHbnI0Vyv3BjaOaQ=
-    on_success: always
-    on_failure: always 
-cache:
-  directories:
-    - ~/.npm
-    - node_modules
 node_js:
   - '11'
   - '10'

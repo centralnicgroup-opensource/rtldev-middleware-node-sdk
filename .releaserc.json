@@ -1,0 +1,25 @@
+{
+    "plugins": [
+        "@semantic-release/commit-analyzer",
+        "@semantic-release/release-notes-generator",
+        [
+            "@semantic-release/changelog",
+            {
+                "changelogFile": "HISTORY.md"
+            }
+        ],
+        "@semantic-release/npm",
+        [
+            "@semantic-release/git",
+            {
+                "assets": [
+                    "HISTORY.md",
+                    "package.json",
+                    "docs",
+                    "dist"
+                ]
+            }
+        ],
+        "@semantic-release/github"
+    ]
+}
