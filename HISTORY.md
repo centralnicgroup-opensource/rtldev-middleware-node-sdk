@@ -1,3 +1,10 @@
+## [5.5.2](https://github.com/hexonet/node-sdk/compare/v5.5.1...v5.5.2) (2019-09-18)
+
+
+### Bug Fixes
+
+* **release process:** review configuration file ([630d497](https://github.com/hexonet/node-sdk/commit/630d497))
+
 ## [5.5.1](https://github.com/hexonet/node-sdk/compare/v5.5.0...v5.5.1) (2019-08-16)
 
 
