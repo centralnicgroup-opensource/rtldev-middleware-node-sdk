@@ -1,3 +1,10 @@
+## [5.5.3](https://github.com/hexonet/node-sdk/compare/v5.5.2...v5.5.3) (2019-10-04)
+
+
+### Bug Fixes
+
+* **responsetemplate/mgr:** improve description of `423 Empty API response` ([f2d31fc](https://github.com/hexonet/node-sdk/commit/f2d31fc))
+
 ## [5.5.2](https://github.com/hexonet/node-sdk/compare/v5.5.1...v5.5.2) (2019-09-18)
 
 
