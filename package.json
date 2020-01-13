@@ -78,7 +78,7 @@
     "istanbul": "^0.4.5",
     "jsdoc": "^3.6.3",
     "jsdoc-oblivion": "^0.0.9",
-    "mocha": "^6.1.4",
+    "mocha": "^7.0.0",
     "nock": "^11.3.3",
     "nyc": "^15.0.0",
     "semantic-release": "^15.13.24",
