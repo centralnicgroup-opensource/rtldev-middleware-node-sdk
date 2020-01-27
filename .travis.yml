@@ -3,14 +3,13 @@ dist: xenial
 notifications:
   email:
     recipients:
-    - middleware@hexonet.net
+      - middleware@hexonet.net
     on_success: never
     on_failure: always
 node_js:
-  - '11'
-  - '10'
-  - '9'
-  - '8'
+  - "11"
+  - "10"
+  - "9"
 # Trigger a push build on master and dependabot branches + PRs build on every branches
 # Avoid double build on PRs (See https://github.com/travis-ci/travis-ci/issues/1147)
 branches:
@@ -18,14 +17,14 @@ branches:
     - master
     - /^dependabot.*$/
 before_install:
-- npm prune
+  - npm prune
 install:
-- travis_retry npm i
+  - travis_retry npm i
 before_script:
-- npm run build
-- npm run lint
+  - npm run build
+  - npm run lint
 script:
-- npm run test
+  - npm run test
 jobs:
   include:
     - stage: release

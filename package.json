@@ -10,7 +10,7 @@
   "main": "dist/index.js",
   "license": "MIT",
   "engines": {
-    "node": ">=8.3.0"
+    "node": ">=9.0.0"
   },
   "homepage": "https://github.com/hexonet/node-sdk",
   "repository": "github:hexonet/node-sdk",

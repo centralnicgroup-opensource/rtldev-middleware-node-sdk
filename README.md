@@ -33,6 +33,7 @@ We have also a demo app available showing how to integrate and use our SDK. See 
 | 4.x and below | >= 4.x |
 | 5.0.0 - 5.0.1 | >= 7.6.0 |
 | >= 5.0.2 | >= 8.3.0 |
+| > 5.5.3 | >= 9.x |
 
 ### Installation / Update
 
