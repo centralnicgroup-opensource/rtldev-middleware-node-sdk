@@ -215,7 +215,7 @@ cl.request({
 })
 ```
 
-### Use of nested command arrays (SINCE v5.6.0)
+### Use of nested arrays in API command (SINCE v5.6.0)
 
 Improve your code by using the below
 
