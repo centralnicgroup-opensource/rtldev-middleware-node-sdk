@@ -80,6 +80,18 @@ describe('APIClient class', function () {
       })
       expect(enc).to.equal(validate)
     })
+
+    it('support bulk parameters also as nested array', async function () {
+      const validate = 's_entity=54cd&s_command=COMMAND%3DQueryDomainOptions%0ADOMAIN0%3Dexample1.com%0ADOMAIN1%3Dexample2.com'
+      const enc = cl.getPOSTData({
+        COMMAND: 'QueryDomainOptions',
+        DOMAIN: [
+          'example1.com',
+          'example2.com'
+        ]
+      })
+      expect(enc).to.equal(validate)
+    })
   })
 
   describe('#.enableDebugMode', function () {

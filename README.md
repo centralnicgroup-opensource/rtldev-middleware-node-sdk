@@ -215,6 +215,49 @@ cl.request({
 })
 ```
 
+### Use of nested command arrays (SINCE v5.6.0)
+
+Improve your code by using the below
+
+```js
+const apiconnector = require('@hexonet/ispapi-apiconnector')
+const cl = new apiconnector.APIClient()
+cl.useOTESystem()
+  .setCredentials('test.user', 'test.passw0rd')
+  .setRemoteIPAddress('1.2.3.4:80')
+// .setUserView('hexotestman.com');
+// .setOTP('12345678');
+
+cl.request({
+  COMMAND: 'QueryDomainOptions',
+  DOMAIN: ['example1.com', 'example2.com']
+}).then((r) => {
+  console.log(r.getPlain())
+})
+```
+
+instead of
+
+```js
+const apiconnector = require('@hexonet/ispapi-apiconnector')
+const cl = new apiconnector.APIClient()
+cl.useOTESystem()
+  .setCredentials('test.user', 'test.passw0rd')
+  .setRemoteIPAddress('1.2.3.4:80')
+// .setUserView('hexotestman.com');
+// .setOTP('12345678');
+
+cl.request({
+  COMMAND: 'QueryDomainOptions',
+  DOMAIN0: 'example1.com',
+  DOMAIN1: 'example2.com'
+}).then((r) => {
+  console.log(r.getPlain())
+})
+```
+
+The SDK itself will flatten the nested array correctly into expected plain text format before sending it to our API.
+
 ## Contributing
 
 Please read [our development guide](https://github.com/hexonet/node-sdk/wiki/Development-Guide) for details on our code of conduct, and the process for submitting pull requests to us.

@@ -3,12 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const responseparser_1 = require("./responseparser");
 const responsetemplate_1 = require("./responsetemplate");
 class ResponseTemplateManager {
-    static getInstance() {
-        if (!ResponseTemplateManager.instance) {
-            ResponseTemplateManager.instance = new ResponseTemplateManager();
-        }
-        return ResponseTemplateManager.instance;
-    }
     constructor() {
         this.templates = {
             404: this.generateTemplate("421", "Page not found"),
@@ -19,6 +13,12 @@ class ResponseTemplateManager {
             httperror: this.generateTemplate("421", "Command failed due to HTTP communication error"),
             unauthorized: this.generateTemplate("530", "Unauthorized"),
         };
+    }
+    static getInstance() {
+        if (!ResponseTemplateManager.instance) {
+            ResponseTemplateManager.instance = new ResponseTemplateManager();
+        }
+        return ResponseTemplateManager.instance;
     }
     generateTemplate(code, description) {
         return `[RESPONSE]\r\nCODE=${code}\r\nDESCRIPTION=${description}\r\nEOF\r\n`;

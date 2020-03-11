@@ -1,9 +1,10 @@
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
         function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
@@ -54,7 +55,16 @@ class APIClient {
         if (!(typeof cmd === "string" || cmd instanceof String)) {
             Object.keys(cmd).forEach((key) => {
                 if (cmd[key] !== null && cmd[key] !== undefined) {
-                    tmp += `${key}=${cmd[key].toString().replace(/\r|\n/g, "")}\n`;
+                    if (Array.isArray(cmd[key])) {
+                        let index = 0;
+                        for (const row of cmd[key]) {
+                            tmp += `${key}${index}=${row.toString().replace(/\r|\n/g, "")}\n`;
+                            index++;
+                        }
+                    }
+                    else {
+                        tmp += `${key}=${cmd[key].toString().replace(/\r|\n/g, "")}\n`;
+                    }
                 }
             });
         }
@@ -248,6 +258,6 @@ class APIClient {
         return newcmd;
     }
 }
-APIClient.socketTimeout = 300000;
 exports.APIClient = APIClient;
+APIClient.socketTimeout = 300000;
 //# sourceMappingURL=apiclient.js.map

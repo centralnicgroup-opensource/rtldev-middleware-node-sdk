@@ -100,7 +100,15 @@ export class APIClient {
         if (!(typeof cmd === "string" || cmd instanceof String)) {
             Object.keys(cmd).forEach((key: string) => {
                 if (cmd[key] !== null && cmd[key] !== undefined) {
-                    tmp += `${key}=${cmd[key].toString().replace(/\r|\n/g, "")}\n`;
+                    if (Array.isArray(cmd[key])) {
+                        let index = 0;
+                        for (const row of cmd[key]) {
+                            tmp += `${key}${index}=${row.toString().replace(/\r|\n/g, "")}\n`;
+                            index++;
+                        }
+                    } else {
+                        tmp += `${key}=${cmd[key].toString().replace(/\r|\n/g, "")}\n`;
+                    }
                 }
             });
         }
