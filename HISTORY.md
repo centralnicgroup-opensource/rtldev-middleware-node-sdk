@@ -1,3 +1,10 @@
+# [5.6.0](https://github.com/hexonet/node-sdk/compare/v5.5.3...v5.6.0) (2020-03-11)
+
+
+### Features
+
+* **apiclient:** support bulk parameters as nested array ([b0415fa](https://github.com/hexonet/node-sdk/commit/b0415fa36c9f9586e98598dc0d0e11164f5cea96))
+
 ## [5.5.3](https://github.com/hexonet/node-sdk/compare/v5.5.2...v5.5.3) (2019-10-04)
 
 
