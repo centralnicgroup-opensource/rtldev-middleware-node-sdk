@@ -55,16 +55,7 @@ class APIClient {
         if (!(typeof cmd === "string" || cmd instanceof String)) {
             Object.keys(cmd).forEach((key) => {
                 if (cmd[key] !== null && cmd[key] !== undefined) {
-                    if (Array.isArray(cmd[key])) {
-                        let index = 0;
-                        for (const row of cmd[key]) {
-                            tmp += `${key}${index}=${row.toString().replace(/\r|\n/g, "")}\n`;
-                            index++;
-                        }
-                    }
-                    else {
-                        tmp += `${key}=${cmd[key].toString().replace(/\r|\n/g, "")}\n`;
-                    }
+                    tmp += `${key}=${cmd[key].toString().replace(/\r|\n/g, "")}\n`;
                 }
             });
         }
@@ -169,38 +160,42 @@ class APIClient {
         });
     }
     request(cmd) {
-        return new Promise((resolve) => {
-            const data = this.getPOSTData(cmd);
-            request({
-                encoding: "utf8",
-                form: data,
-                gzip: true,
-                headers: {
-                    "User-Agent": this.getUserAgent(),
-                },
-                method: "POST",
-                timeout: APIClient.socketTimeout,
-                url: this.socketURL,
-            }, (error, r, body) => {
-                if ((!error) &&
-                    (r.statusCode !== undefined) &&
-                    (r.statusCode < 200 || r.statusCode > 299)) {
-                    error = new Error(r.statusCode + (r.statusMessage ? " " + r.statusMessage : ""));
-                }
-                if (error) {
-                    body = rtm.getTemplate("httperror").getPlain();
-                }
-                const rr = new response_1.Response(body, cmd);
-                if (this.debugMode) {
-                    this.logger(data, rr, error);
-                }
-                resolve(rr);
+        return __awaiter(this, void 0, void 0, function* () {
+            let mycmd = this.flattenCommand(cmd);
+            mycmd = yield this.autoIDNConvert(mycmd);
+            return new Promise((resolve) => {
+                const data = this.getPOSTData(mycmd);
+                request({
+                    encoding: "utf8",
+                    form: data,
+                    gzip: true,
+                    headers: {
+                        "User-Agent": this.getUserAgent(),
+                    },
+                    method: "POST",
+                    timeout: APIClient.socketTimeout,
+                    url: this.socketURL,
+                }, (error, r, body) => {
+                    if ((!error) &&
+                        (r.statusCode !== undefined) &&
+                        (r.statusCode < 200 || r.statusCode > 299)) {
+                        error = new Error(r.statusCode + (r.statusMessage ? " " + r.statusMessage : ""));
+                    }
+                    if (error) {
+                        body = rtm.getTemplate("httperror").getPlain();
+                    }
+                    const rr = new response_1.Response(body, mycmd);
+                    if (this.debugMode) {
+                        this.logger(data, rr, error);
+                    }
+                    resolve(rr);
+                });
             });
         });
     }
     requestNextResponsePage(rr) {
         return __awaiter(this, void 0, void 0, function* () {
-            const mycmd = this.toUpperCaseKeys(rr.getCommand());
+            const mycmd = rr.getCommand();
             if (mycmd.hasOwnProperty("LAST")) {
                 throw new Error("Parameter LAST in use. Please remove it to avoid issues in requestNextPage.");
             }
@@ -256,6 +251,69 @@ class APIClient {
             newcmd[k.toUpperCase()] = cmd[k];
         });
         return newcmd;
+    }
+    flattenCommand(cmd) {
+        const mycmd = this.toUpperCaseKeys(cmd);
+        const newcmd = {};
+        Object.keys(mycmd).forEach((key) => {
+            const val = mycmd[key];
+            if (val !== null && val !== undefined) {
+                if (Array.isArray(val)) {
+                    let index = 0;
+                    for (const row of val) {
+                        newcmd[`${key}${index}`] = (row + "").replace(/\r|\n/g, "");
+                        index++;
+                    }
+                }
+                else {
+                    if (typeof val === "string" || val instanceof String) {
+                        newcmd[key] = val.replace(/\r|\n/g, "");
+                    }
+                    else {
+                        newcmd[key] = val;
+                    }
+                }
+            }
+        });
+        return newcmd;
+    }
+    autoIDNConvert(cmd) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (typeof cmd === "string" || cmd instanceof String || /^CONVERTIDN$/i.test(cmd.COMMAND)) {
+                return cmd;
+            }
+            const keys = Object.keys(cmd).filter((key) => {
+                return /^(DOMAIN|NAMESERVER|DNSZONE)([0-9]*)$/i.test(key);
+            });
+            if (!keys.length) {
+                return cmd;
+            }
+            const toconvert = [];
+            const idxs = [];
+            keys.forEach((key) => {
+                if (cmd[key] !== null && cmd[key] !== undefined && /[^a-z0-9\.\- ]/i.test(cmd[key])) {
+                    toconvert.push(cmd[key]);
+                    idxs.push(key);
+                }
+            });
+            if (!toconvert.length) {
+                return cmd;
+            }
+            const r = yield this.request({
+                COMMAND: "ConvertIDN",
+                DOMAIN: toconvert,
+            });
+            console.dir(r.getPlain());
+            if (r.isSuccess()) {
+                const col = r.getColumn("ACE");
+                if (col) {
+                    col.getData().forEach((pc, idx) => {
+                        cmd[idxs[idx]] = pc;
+                    });
+                }
+            }
+            return cmd;
+        });
     }
 }
 exports.APIClient = APIClient;

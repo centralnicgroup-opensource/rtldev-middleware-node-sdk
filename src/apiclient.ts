@@ -100,15 +100,7 @@ export class APIClient {
         if (!(typeof cmd === "string" || cmd instanceof String)) {
             Object.keys(cmd).forEach((key: string) => {
                 if (cmd[key] !== null && cmd[key] !== undefined) {
-                    if (Array.isArray(cmd[key])) {
-                        let index = 0;
-                        for (const row of cmd[key]) {
-                            tmp += `${key}${index}=${row.toString().replace(/\r|\n/g, "")}\n`;
-                            index++;
-                        }
-                    } else {
-                        tmp += `${key}=${cmd[key].toString().replace(/\r|\n/g, "")}\n`;
-                    }
+                    tmp += `${key}=${cmd[key].toString().replace(/\r|\n/g, "")}\n`;
                 }
             });
         }
@@ -315,9 +307,15 @@ export class APIClient {
      * @param cmd API command to request
      * @returns Promise resolving with API Response
      */
-    public request(cmd: any): Promise<Response> {
+    public async request(cmd: any): Promise<Response> {
+        // flatten nested api command bulk parameters
+        let mycmd = this.flattenCommand(cmd);
+
+        // auto convert umlaut names to punycode
+        mycmd = await this.autoIDNConvert(mycmd);
+
         return new Promise((resolve) => {
-            const data = this.getPOSTData(cmd);
+            const data = this.getPOSTData(mycmd);
             // TODO: 300s (to be sure to get an API response)
             request({
                 encoding: "utf8",
@@ -340,7 +338,7 @@ export class APIClient {
                 if (error) {
                     body = rtm.getTemplate("httperror").getPlain();
                 }
-                const rr = new Response(body, cmd);
+                const rr = new Response(body, mycmd);
                 if (this.debugMode) {
                     this.logger(data, rr, error);
                 }
@@ -356,7 +354,7 @@ export class APIClient {
      * @returns Promise resolving with API Response or null in case there are no further list entries
      */
     public async requestNextResponsePage(rr: Response): Promise<Response | null> {
-        const mycmd = this.toUpperCaseKeys(rr.getCommand());
+        const mycmd = rr.getCommand();
         if (mycmd.hasOwnProperty("LAST")) {
             throw new Error("Parameter LAST in use. Please remove it to avoid issues in requestNextPage.");
         }
@@ -441,5 +439,79 @@ export class APIClient {
             newcmd[k.toUpperCase()] = cmd[k];
         });
         return newcmd;
+    }
+
+    /**
+     * Flatten nested arrays in command
+     * @param cmd api command
+     * @returns api command with flattended parameters
+     */
+    private flattenCommand(cmd: any): any {
+        const mycmd = this.toUpperCaseKeys(cmd);
+        const newcmd: any = {};
+        Object.keys(mycmd).forEach((key: string) => {
+            const val = mycmd[key];
+            if (val !== null && val !== undefined) {
+                if (Array.isArray(val)) {
+                    let index = 0;
+                    for (const row of val) {
+                        newcmd[`${key}${index}`] = (row + "").replace(/\r|\n/g, "");
+                        index++;
+                    }
+                } else {
+                    if (typeof val === "string" || val instanceof String) {
+                        newcmd[key] = val.replace(/\r|\n/g, "");
+                    } else {
+                        newcmd[key] = val;
+                    }
+                }
+            }
+        });
+        return newcmd;
+    }
+
+    /**
+     * Auto convert API command parameters to punycode, if necessary.
+     * @param cmd api command
+     * @returns Promise resolving with api command with IDN values replaced to punycode
+     */
+    private async autoIDNConvert(cmd: any): Promise<any> {
+        // don't convert for convertidn command to avoid endless loop
+        // and ignore commands in string format (even deprecated)
+        if (typeof cmd === "string" || cmd instanceof String || /^CONVERTIDN$/i.test(cmd.COMMAND)) {
+            return cmd;
+        }
+        const keys = Object.keys(cmd).filter((key) => {
+            return /^(DOMAIN|NAMESERVER|DNSZONE)([0-9]*)$/i.test(key);
+        });
+        if (!keys.length) {
+            return cmd;
+        }
+        const toconvert: any = [];
+        const idxs: string[] = [];
+        keys.forEach((key: string) => {
+            if (cmd[key] !== null && cmd[key] !== undefined && /[^a-z0-9\.\- ]/i.test(cmd[key])) {
+                toconvert.push(cmd[key]);
+                idxs.push(key);
+            }
+        });
+
+        if (!toconvert.length) {
+            return cmd;
+        }
+        const r = await this.request({
+            COMMAND: "ConvertIDN",
+            DOMAIN: toconvert,
+        });
+        console.dir(r.getPlain());
+        if (r.isSuccess()) {
+            const col = r.getColumn("ACE");
+            if (col) {
+                col.getData().forEach((pc: string, idx: any) => {
+                    cmd[idxs[idx]] = pc;
+                });
+            }
+        }
+        return cmd;
     }
 }

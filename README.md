@@ -18,6 +18,17 @@ This module is a connector library for the insanely fast HEXONET Backend API. Fo
 * [Release Notes](https://github.com/hexonet/node-sdk/releases)
 * [Development Guide](https://github.com/hexonet/node-sdk/wiki/Development-Guide)
 
+## Features
+
+* Automatic IDN Domain name conversion to punycode (our API accepts only punycode format in commands)
+* Allow nested associative arrays in API commands to improve for bulk parameters
+* Connecting and communication with our API
+* Several ways to access and deal with response data
+* Getting the command again returned together with the response
+* sessionless communication
+* session-based communication
+* possibility to save API session identifier in PHP session
+
 ## How to use this module in your project
 
 We have also a demo app available showing how to integrate and use our SDK. See [here](https://github.com/hexonet/node-sdk-demo).

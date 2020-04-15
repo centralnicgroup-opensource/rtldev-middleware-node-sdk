@@ -21,6 +21,7 @@ before(() => {
   rtm.addTemplate('login200', '[RESPONSE]\r\nPROPERTY[SESSION][0]=h8JLZZHdF2WgWWXlwbKWzEG3XrzoW4yshhvtqyg0LCYiX55QnhgYX9cB0W4mlpbx\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.169\r\nEOF\r\n')
     .addTemplate('login500', rtm.generateTemplate('530', 'Authentication failed'))
     .addTemplate('OK', rtm.generateTemplate('200', 'Command completed successfully'))
+    .addTemplate('CHECKS', '[RESPONSE]\r\nPROPERTY[TOTAL][0]=2701\r\nPROPERTY[FIRST][0]=0\r\nPROPERTY[DOMAIN][0]=0-60motorcycletimes.com\r\nPROPERTY[DOMAIN][1]=0-be-s01-0.com\r\nPROPERTY[COUNT][0]=2\r\nPROPERTY[LAST][0]=1\r\nPROPERTY[LIMIT][0]=2\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.023\r\nEOF\r\n')
     .addTemplate('listP0', '[RESPONSE]\r\nPROPERTY[TOTAL][0]=2701\r\nPROPERTY[FIRST][0]=0\r\nPROPERTY[DOMAIN][0]=0-60motorcycletimes.com\r\nPROPERTY[DOMAIN][1]=0-be-s01-0.com\r\nPROPERTY[COUNT][0]=2\r\nPROPERTY[LAST][0]=1\r\nPROPERTY[LIMIT][0]=2\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.023\r\nEOF\r\n')
     .addTemplate('listP1', '[RESPONSE]\r\nPROPERTY[TOTAL][0]=2701\r\nPROPERTY[FIRST][0]=2\r\nPROPERTY[DOMAIN][0]=0-qas-ao17-0.org\r\nPROPERTY[DOMAIN][1]=0-sunnyda222y.com\r\nPROPERTY[COUNT][0]=2\r\nPROPERTY[LAST][0]=3\r\nPROPERTY[LIMIT][0]=2\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.032\r\nEOF\r\n')
     .addTemplate('listFP0', '[RESPONSE]\r\nPROPERTY[TOTAL][0]=3\r\nPROPERTY[FIRST][0]=0\r\nPROPERTY[DOMAIN][0]=0-60motorcycletimes.com\r\nPROPERTY[COUNT][0]=1\r\nPROPERTY[LAST][0]=1\r\nPROPERTY[LIMIT][0]=1\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.023\r\nEOF\r\n')
@@ -77,18 +78,6 @@ describe('APIClient class', function () {
       const enc = cl.getPOSTData({
         COMMAND: 'ModifyDomain',
         AUTH: undefined
-      })
-      expect(enc).to.equal(validate)
-    })
-
-    it('support bulk parameters also as nested array', async function () {
-      const validate = 's_entity=54cd&s_command=COMMAND%3DQueryDomainOptions%0ADOMAIN0%3Dexample1.com%0ADOMAIN1%3Dexample2.com'
-      const enc = cl.getPOSTData({
-        COMMAND: 'QueryDomainOptions',
-        DOMAIN: [
-          'example1.com',
-          'example2.com'
-        ]
       })
       expect(enc).to.equal(validate)
     })
@@ -415,6 +404,42 @@ describe('APIClient class', function () {
       expect(r.isTmpError()).to.be.true()
       expect(r.getCode()).to.equal(tpl2.getCode())
       expect(r.getDescription()).to.equal(tpl2.getDescription())
+    })
+
+    it('test if flattening of nested array / bulk parameters works', async function () {
+      nock('https://api.ispapi.net')
+        .post('/api/call.cgi')
+        .reply(200, rtm.getTemplate('OK').getPlain())
+      const r = await cl.request({
+        COMMAND: 'CheckDomains',
+        DOMAIN: ['example.com', 'example.net']
+      })
+      expect(r).to.be.instanceOf(response.Response)
+      const cmd = r.getCommand()
+      const keys = Object.keys(cmd)
+      expect(keys.includes('DOMAIN')).to.be.false()
+      expect(keys.includes('DOMAIN0')).to.be.true()
+      expect(keys.includes('DOMAIN1')).to.be.true()
+      expect(cmd.DOMAIN0).to.equal('example.com')
+      expect(cmd.DOMAIN1).to.equal('example.net')
+    })
+
+    it('test if auto-idn convert works', async function () {
+      nock.cleanAll()
+      const r = await cl.request({
+        COMMAND: 'CheckDomains',
+        DOMAIN: ['example.com', 'dömäin.example', 'example.net']
+      })
+      expect(r).to.be.instanceOf(response.Response)
+      const cmd = r.getCommand()
+      const keys = Object.keys(cmd)
+      expect(keys.includes('DOMAIN')).to.be.false()
+      expect(keys.includes('DOMAIN0')).to.be.true()
+      expect(keys.includes('DOMAIN1')).to.be.true()
+      expect(keys.includes('DOMAIN2')).to.be.true()
+      expect(cmd.DOMAIN0).to.equal('example.com')
+      expect(cmd.DOMAIN1).to.equal('xn--dmin-moa0i.example')
+      expect(cmd.DOMAIN2).to.equal('example.net')
     })
   })
 
