@@ -36,4 +36,6 @@ export declare class APIClient {
     useOTESystem(): APIClient;
     useLIVESystem(): APIClient;
     private toUpperCaseKeys;
+    private flattenCommand;
+    private autoIDNConvert;
 }
