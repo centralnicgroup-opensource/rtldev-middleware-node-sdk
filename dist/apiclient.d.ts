@@ -1,10 +1,13 @@
 import { Response } from "./response";
+export declare const ISPAPI_CONNECTION_URL_PROXY = "http://127.0.0.1/api/call.cgi";
+export declare const ISPAPI_CONNECTION_URL = "https://api.ispapi.net/api/call.cgi";
 export declare class APIClient {
     private static readonly socketTimeout;
     private ua;
     private socketURL;
     private socketConfig;
     private debugMode;
+    private curlopts;
     private logger;
     constructor();
     setCustomLogger(customLogger: (post: string, r: Response, error?: Error) => any): APIClient;
@@ -16,6 +19,10 @@ export declare class APIClient {
     getURL(): string;
     setUserAgent(str: string, rv: string): APIClient;
     getUserAgent(): string;
+    setProxy(proxy: string): APIClient;
+    getProxy(): string | null;
+    setReferer(referer: string): APIClient;
+    getReferer(): string | null;
     getVersion(): string;
     saveSession(session: any): APIClient;
     reuseSession(session: any): APIClient;
@@ -33,6 +40,8 @@ export declare class APIClient {
     requestAllResponsePages(cmd: any): Promise<Response[]>;
     setUserView(uid: string): APIClient;
     resetUserView(): APIClient;
+    useHighPerformanceConnectionSetup(): APIClient;
+    useDefaultConnectionSetup(): APIClient;
     useOTESystem(): APIClient;
     useLIVESystem(): APIClient;
     private toUpperCaseKeys;

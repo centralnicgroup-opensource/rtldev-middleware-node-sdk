@@ -115,7 +115,7 @@ describe('APIClient class', function () {
   describe('#.getURL', function () {
     it('validate default socket url', function () {
       const url = cl.getURL()
-      expect(url).to.equal('https://api.ispapi.net/api/call.cgi')
+      expect(url).to.equal(apiclient.ISPAPI_CONNECTION_URL)
     })
   })
 
@@ -137,9 +137,9 @@ describe('APIClient class', function () {
 
   describe('#.setURL', function () {
     it('validate http socket url', function () {
-      const url = cl.setURL('http://api.ispapi.net/api/call.cgi').getURL()
-      expect(url).to.equal('http://api.ispapi.net/api/call.cgi')
-      cl.setURL('https://api.ispapi.net/api/call.cgi')
+      const url = cl.setURL(apiclient.ISPAPI_CONNECTION_URL_PROXY).getURL()
+      expect(url).to.equal(apiclient.ISPAPI_CONNECTION_URL_PROXY)
+      cl.setURL(apiclient.ISPAPI_CONNECTION_URL)
     })
   })
 
@@ -539,6 +539,36 @@ describe('APIClient class', function () {
       const r = await cl.request({ COMMAND: 'GetUserIndex' })
       expect(r).to.be.instanceOf(response.Response)
       expect(r.isSuccess()).to.be.true()
+    })
+  })
+
+  describe('#.setProxy', function () {
+    it('test setting proxy works', function () {
+      cl.setProxy('127.0.0.1')
+      expect(cl.getProxy()).to.equal('127.0.0.1')
+      cl.setProxy('')
+    })
+  })
+
+  describe('#.setReferer', function () {
+    it('test setting referer works', function () {
+      cl.setReferer('https://www.hexonet.net')
+      expect(cl.getReferer()).to.equal('https://www.hexonet.net')
+      cl.setReferer('')
+    })
+  })
+
+  describe('#.useHighPerformanceConnectionSetup', function () {
+    it('test setting high performance connection setup works', function () {
+      cl.useHighPerformanceConnectionSetup()
+      expect(cl.getURL()).to.equal(apiclient.ISPAPI_CONNECTION_URL_PROXY)
+    })
+  })
+
+  describe('#.useDefaultConnectionSetup', function () {
+    it('test setting default connection setup works', function () {
+      cl.useDefaultConnectionSetup()
+      expect(cl.getURL()).to.equal(apiclient.ISPAPI_CONNECTION_URL)
     })
   })
 })
