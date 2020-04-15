@@ -14,6 +14,8 @@ const request = require("request");
 const response_1 = require("./response");
 const responsetemplatemanager_1 = require("./responsetemplatemanager");
 const socketconfig_1 = require("./socketconfig");
+exports.ISPAPI_CONNECTION_URL_PROXY = "http://127.0.0.1/api/call.cgi";
+exports.ISPAPI_CONNECTION_URL = "https://api.ispapi.net/api/call.cgi";
 const rtm = responsetemplatemanager_1.ResponseTemplateManager.getInstance();
 const defaultLogger = (post, r, error) => {
     console.dir(r.getCommand());
@@ -28,10 +30,11 @@ class APIClient {
         this.ua = "";
         this.socketURL = "";
         this.debugMode = false;
-        this.setURL("https://api.ispapi.net/api/call.cgi");
+        this.setURL(exports.ISPAPI_CONNECTION_URL);
         this.socketConfig = new socketconfig_1.SocketConfig();
         this.useLIVESystem();
         this.logger = defaultLogger;
+        this.curlopts = {};
     }
     setCustomLogger(customLogger) {
         this.logger = customLogger;
@@ -83,6 +86,26 @@ class APIClient {
                 `node/${process.version}`);
         }
         return this.ua;
+    }
+    setProxy(proxy) {
+        this.curlopts.proxy = proxy;
+        return this;
+    }
+    getProxy() {
+        if (Object.prototype.hasOwnProperty.call(this.curlopts, "proxy")) {
+            return this.curlopts.proxy;
+        }
+        return null;
+    }
+    setReferer(referer) {
+        this.curlopts.referer = referer;
+        return this;
+    }
+    getReferer() {
+        if (Object.prototype.hasOwnProperty.call(this.curlopts, "referer")) {
+            return this.curlopts.referer;
+        }
+        return null;
     }
     getVersion() {
         const packageInfo = require(path.join(__dirname, "/../package.json"));
@@ -165,7 +188,7 @@ class APIClient {
             mycmd = yield this.autoIDNConvert(mycmd);
             return new Promise((resolve) => {
                 const data = this.getPOSTData(mycmd);
-                request({
+                const reqCfg = {
                     encoding: "utf8",
                     form: data,
                     gzip: true,
@@ -175,7 +198,16 @@ class APIClient {
                     method: "POST",
                     timeout: APIClient.socketTimeout,
                     url: this.socketURL,
-                }, (error, r, body) => {
+                };
+                const proxy = this.getProxy();
+                if (proxy) {
+                    reqCfg.proxy = proxy;
+                }
+                const referer = this.getReferer();
+                if (referer) {
+                    reqCfg.headers.Referer = referer;
+                }
+                request(reqCfg, (error, r, body) => {
                     if ((!error) &&
                         (r.statusCode !== undefined) &&
                         (r.statusCode < 200 || r.statusCode > 299)) {
@@ -235,6 +267,14 @@ class APIClient {
     }
     resetUserView() {
         this.socketConfig.setUser("");
+        return this;
+    }
+    useHighPerformanceConnectionSetup() {
+        this.setURL(exports.ISPAPI_CONNECTION_URL_PROXY);
+        return this;
+    }
+    useDefaultConnectionSetup() {
+        this.setURL(exports.ISPAPI_CONNECTION_URL);
         return this;
     }
     useOTESystem() {

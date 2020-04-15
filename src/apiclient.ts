@@ -4,6 +4,9 @@ import { Response } from "./response";
 import { ResponseTemplateManager } from "./responsetemplatemanager";
 import { fixedURLEnc, SocketConfig } from "./socketconfig";
 
+export const ISPAPI_CONNECTION_URL_PROXY = "http://127.0.0.1/api/call.cgi";
+export const ISPAPI_CONNECTION_URL = "https://api.ispapi.net/api/call.cgi";
+
 const rtm = ResponseTemplateManager.getInstance();
 
 const defaultLogger = (post: string, r: Response, error?: Error) => {
@@ -40,6 +43,10 @@ export class APIClient {
      */
     private debugMode: boolean;
     /**
+     * additional connection settings
+     */
+    private curlopts: any;
+    /**
      * logger function for debug mode
      */
     private logger: (post: string, r: Response, error?: Error) => any;
@@ -48,10 +55,11 @@ export class APIClient {
         this.ua = "";
         this.socketURL = "";
         this.debugMode = false;
-        this.setURL("https://api.ispapi.net/api/call.cgi");
+        this.setURL(ISPAPI_CONNECTION_URL);
         this.socketConfig = new SocketConfig();
         this.useLIVESystem();
         this.logger = defaultLogger;
+        this.curlopts = {};
     }
 
     /**
@@ -154,6 +162,48 @@ export class APIClient {
             );
         }
         return this.ua;
+    }
+
+    /**
+     * Set the proxy server to use for API communication
+     * @param proxy proxy server to use for communicatio
+     * @returns Current APIClient instance for method chaining
+     */
+    public setProxy(proxy: string): APIClient {
+        this.curlopts.proxy = proxy;
+        return this;
+    }
+
+    /**
+     * Get the proxy server configuration
+     * @returns proxy server configuration value or null if not set
+     */
+    public getProxy(): string | null {
+        if (Object.prototype.hasOwnProperty.call(this.curlopts, "proxy")) {
+            return this.curlopts.proxy;
+        }
+        return null;
+    }
+
+    /**
+     * Set the referer to use for API communication
+     * @param referer Referer
+     * @returns Current APIClient instance for method chaining
+     */
+    public setReferer(referer: string): APIClient {
+        this.curlopts.referer = referer;
+        return this;
+    }
+
+    /**
+     * Get the referer configuration
+     * @returns referer configuration value or null if not set
+     */
+    public getReferer(): string | null {
+        if (Object.prototype.hasOwnProperty.call(this.curlopts, "referer")) {
+            return this.curlopts.referer;
+        }
+        return null;
     }
 
     /**
@@ -317,7 +367,7 @@ export class APIClient {
         return new Promise((resolve) => {
             const data = this.getPOSTData(mycmd);
             // TODO: 300s (to be sure to get an API response)
-            request({
+            const reqCfg: any = {
                 encoding: "utf8",
                 form: data,
                 gzip: true,
@@ -327,7 +377,16 @@ export class APIClient {
                 method: "POST",
                 timeout: APIClient.socketTimeout,
                 url: this.socketURL,
-            }, (error, r, body) => {
+            };
+            const proxy = this.getProxy();
+            if (proxy) {
+                reqCfg.proxy = proxy;
+            }
+            const referer = this.getReferer();
+            if (referer) {
+                reqCfg.headers.Referer = referer;
+            }
+            request(reqCfg, (error: any, r: any, body: string) => {
                 if (
                     (!error) &&
                     (r.statusCode !== undefined) &&
@@ -407,6 +466,25 @@ export class APIClient {
      */
     public resetUserView(): APIClient {
         this.socketConfig.setUser("");
+        return this;
+    }
+
+    /**
+     * Activate High Performance Connection Setup
+     * @see https://github.com/hexonet/node-sdk/blob/master/README.md
+     * @returns Current APIClient instance for method chaining
+     */
+    public useHighPerformanceConnectionSetup(): APIClient {
+        this.setURL(ISPAPI_CONNECTION_URL_PROXY);
+        return this;
+    }
+
+    /**
+     * Activate Default Connection Setup (the default)
+     * @returns Current APIClient instance for method chaining
+     */
+    public useDefaultConnectionSetup(): APIClient {
+        this.setURL(ISPAPI_CONNECTION_URL);
         return this;
     }
 
