@@ -1,5 +1,6 @@
 import * as path from "path";
 import * as request from "request";
+import { Logger } from "./logger";
 import { Response } from "./response";
 import { ResponseTemplateManager } from "./responsetemplatemanager";
 import { fixedURLEnc, SocketConfig } from "./socketconfig";
@@ -8,15 +9,6 @@ export const ISPAPI_CONNECTION_URL_PROXY = "http://127.0.0.1/api/call.cgi";
 export const ISPAPI_CONNECTION_URL = "https://api.ispapi.net/api/call.cgi";
 
 const rtm = ResponseTemplateManager.getInstance();
-
-const defaultLogger = (post: string, r: Response, error?: Error) => {
-    console.dir(r.getCommand());
-    console.log(post);
-    if (error) {
-        console.error("HTTP communication failed:", error);
-    }
-    console.log(r.getPlain());
-};
 
 /**
  * APIClient class
@@ -49,7 +41,7 @@ export class APIClient {
     /**
      * logger function for debug mode
      */
-    private logger: (post: string, r: Response, error?: Error) => any;
+    private logger: Logger | null;
 
     public constructor() {
         this.ua = "";
@@ -58,8 +50,9 @@ export class APIClient {
         this.setURL(ISPAPI_CONNECTION_URL);
         this.socketConfig = new SocketConfig();
         this.useLIVESystem();
-        this.logger = defaultLogger;
         this.curlopts = {};
+        this.logger = null;
+        this.setDefaultLogger();
     }
 
     /**
@@ -67,7 +60,7 @@ export class APIClient {
      * @param customLogger
      * @returns Current APIClient instance for method chaining
      */
-    public setCustomLogger(customLogger: (post: string, r: Response, error?: Error) => any): APIClient {
+    public setCustomLogger(customLogger: Logger): APIClient {
         this.logger = customLogger;
         return this;
     }
@@ -76,7 +69,7 @@ export class APIClient {
      * @returns Current APIClient instance for method chaining
      */
     public setDefaultLogger(): APIClient {
-        this.logger = defaultLogger;
+        this.logger = new Logger();
         return this;
     }
     /**
@@ -402,8 +395,8 @@ export class APIClient {
                     body = rtm.getTemplate("httperror").getPlain();
                 }
                 const rr = new Response(body, mycmd, cfg);
-                if (this.debugMode) {
-                    this.logger(data, rr, error);
+                if (this.debugMode && this.logger) {
+                    this.logger.log(data, rr, error);
                 }
                 resolve(rr);
             });

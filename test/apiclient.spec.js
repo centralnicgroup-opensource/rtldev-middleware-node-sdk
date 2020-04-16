@@ -33,22 +33,6 @@ describe('APIClient class', function () {
   this.timeout(apiclient.APIClient.socketTimeout)
   this.slow(1000)
 
-  describe('#.setCustomLogger', function () {
-    after(function () {
-      cl.setDefaultLogger()
-      cl.disableDebugMode()
-    })
-    it('test if working', async function () {
-      cl.enableDebugMode()
-      let myflag = false
-      cl.setCustomLogger(() => {
-        myflag = true
-      })
-      await cl.request({ COMMAND: 'GetUserIndex' })
-      expect(myflag).to.be.true()
-    })
-  })
-
   describe('#.getPOSTData', function () {
     it('test object input with special chars', function () {
       const validate = 's_entity=54cd&s_command=COMMAND%3DModifyDomain%0AAUTH%3Dgwrgwqg%25%26%5C44t3%2A'

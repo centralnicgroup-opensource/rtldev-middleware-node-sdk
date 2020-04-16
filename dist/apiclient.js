@@ -38,20 +38,13 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var path = require("path");
 var request = require("request");
+var logger_1 = require("./logger");
 var response_1 = require("./response");
 var responsetemplatemanager_1 = require("./responsetemplatemanager");
 var socketconfig_1 = require("./socketconfig");
 exports.ISPAPI_CONNECTION_URL_PROXY = "http://127.0.0.1/api/call.cgi";
 exports.ISPAPI_CONNECTION_URL = "https://api.ispapi.net/api/call.cgi";
 var rtm = responsetemplatemanager_1.ResponseTemplateManager.getInstance();
-var defaultLogger = function (post, r, error) {
-    console.dir(r.getCommand());
-    console.log(post);
-    if (error) {
-        console.error("HTTP communication failed:", error);
-    }
-    console.log(r.getPlain());
-};
 var APIClient = (function () {
     function APIClient() {
         this.ua = "";
@@ -60,15 +53,16 @@ var APIClient = (function () {
         this.setURL(exports.ISPAPI_CONNECTION_URL);
         this.socketConfig = new socketconfig_1.SocketConfig();
         this.useLIVESystem();
-        this.logger = defaultLogger;
         this.curlopts = {};
+        this.logger = null;
+        this.setDefaultLogger();
     }
     APIClient.prototype.setCustomLogger = function (customLogger) {
         this.logger = customLogger;
         return this;
     };
     APIClient.prototype.setDefaultLogger = function () {
-        this.logger = defaultLogger;
+        this.logger = new logger_1.Logger();
         return this;
     };
     APIClient.prototype.enableDebugMode = function () {
@@ -279,8 +273,8 @@ var APIClient = (function () {
                                         body = rtm.getTemplate("httperror").getPlain();
                                     }
                                     var rr = new response_1.Response(body, mycmd, cfg);
-                                    if (_this.debugMode) {
-                                        _this.logger(data, rr, error);
+                                    if (_this.debugMode && _this.logger) {
+                                        _this.logger.log(data, rr, error);
                                     }
                                     resolve(rr);
                                 });
