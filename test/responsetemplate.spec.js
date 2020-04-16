@@ -13,7 +13,7 @@ describe('ResponseTemplate class', function () {
     it('check instance [raw empty string]', function () {
       const tpl = new ResponseTemplate('')
       expect(tpl.getCode()).to.equal(423)
-      expect(tpl.getDescription()).to.equal('Empty API response. Probably unreachable API end point')
+      expect(tpl.getDescription()).to.equal('Empty API response. Probably unreachable API end point {CONNECTION_URL}')
     })
   })
 
@@ -21,7 +21,7 @@ describe('ResponseTemplate class', function () {
     it('check return value', function () {
       const h = new ResponseTemplate('').getHash()
       expect(h.CODE).to.equal('423')
-      expect(h.DESCRIPTION).to.equal('Empty API response. Probably unreachable API end point')
+      expect(h.DESCRIPTION).to.equal('Empty API response. Probably unreachable API end point {CONNECTION_URL}')
     })
   })
 

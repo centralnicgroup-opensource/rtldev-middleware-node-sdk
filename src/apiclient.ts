@@ -364,7 +364,11 @@ export class APIClient {
         // auto convert umlaut names to punycode
         mycmd = await this.autoIDNConvert(mycmd);
 
+        // request command to API
         return new Promise((resolve) => {
+            const cfg: any = {
+                CONNECTION_URL: this.socketURL,
+            };
             const data = this.getPOSTData(mycmd);
             // TODO: 300s (to be sure to get an API response)
             const reqCfg: any = {
@@ -376,7 +380,7 @@ export class APIClient {
                 },
                 method: "POST",
                 timeout: APIClient.socketTimeout,
-                url: this.socketURL,
+                url: cfg.CONNECTION_URL,
             };
             const proxy = this.getProxy();
             if (proxy) {
@@ -397,7 +401,7 @@ export class APIClient {
                 if (error) {
                     body = rtm.getTemplate("httperror").getPlain();
                 }
-                const rr = new Response(body, mycmd);
+                const rr = new Response(body, mycmd, cfg);
                 if (this.debugMode) {
                     this.logger(data, rr, error);
                 }

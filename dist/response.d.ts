@@ -7,7 +7,7 @@ export declare class Response extends ResponseTemplate {
     private columns;
     private recordIndex;
     private records;
-    constructor(raw: string, cmd: any);
+    constructor(raw: string, cmd: any, ph?: any);
     addColumn(key: string, data: string[]): this;
     addRecord(h: any): Response;
     getColumn(key: string): Column | null;

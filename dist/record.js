@@ -1,21 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-class Record {
-    constructor(data) {
+var Record = (function () {
+    function Record(data) {
         this.data = data;
     }
-    getData() {
+    Record.prototype.getData = function () {
         return this.data;
-    }
-    getDataByKey(key) {
+    };
+    Record.prototype.getDataByKey = function (key) {
         if (this.hasData(key)) {
             return this.data[key];
         }
         return null;
-    }
-    hasData(key) {
+    };
+    Record.prototype.hasData = function (key) {
         return this.data.hasOwnProperty(key);
-    }
-}
+    };
+    return Record;
+}());
 exports.Record = Record;
 //# sourceMappingURL=record.js.map
