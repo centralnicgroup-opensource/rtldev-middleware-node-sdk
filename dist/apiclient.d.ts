@@ -1,3 +1,4 @@
+import { Logger } from "./logger";
 import { Response } from "./response";
 export declare const ISPAPI_CONNECTION_URL_PROXY = "http://127.0.0.1/api/call.cgi";
 export declare const ISPAPI_CONNECTION_URL = "https://api.ispapi.net/api/call.cgi";
@@ -10,7 +11,7 @@ export declare class APIClient {
     private curlopts;
     private logger;
     constructor();
-    setCustomLogger(customLogger: (post: string, r: Response, error?: Error) => any): APIClient;
+    setCustomLogger(customLogger: Logger): APIClient;
     setDefaultLogger(): APIClient;
     enableDebugMode(): APIClient;
     disableDebugMode(): APIClient;
