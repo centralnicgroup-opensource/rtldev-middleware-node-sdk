@@ -34,16 +34,27 @@ export class Response extends ResponseTemplate {
      * Constructor
      * @param raw API plain response
      * @param cmd API command used within this request
+     * @param $ph placeholder array to get vars in response description dynamically replaced
      */
-    public constructor(raw: string, cmd: any) {
+    public constructor(raw: string, cmd: any, ph: any = {}) {
+        /* tslint:disable:no-duplicate-super */
         super(raw);
+
+        const keys = Object.keys(ph);
+        keys.forEach((varName: string) => {
+            this.raw = this.raw.replace(new RegExp(`\{${varName}\}`, "g"), ph[varName]);
+        });
+        this.raw = this.raw.replace(/\{[A-Z_]+\}/g, "");
+        super(this.raw);
+        /* tslint:enable:no-duplicate-super */
+
         this.command = cmd;
         this.columnkeys = [];
         this.columns = [];
         this.recordIndex = 0;
         this.records = [];
 
-        if (this.hash.hasOwnProperty("PROPERTY")) {
+        if (Object.prototype.hasOwnProperty.call(this.hash, "PROPERTY")) {
             const colKeys = Object.keys(this.hash.PROPERTY);
             let count = 0;
             colKeys.forEach((c: string) => {
@@ -165,7 +176,7 @@ export class Response extends ResponseTemplate {
         const col = this.getColumn("FIRST");
         if (col) {
             const f = col.getDataByIndex(0);
-            if (f !== null ) {
+            if (f !== null) {
                 return parseInt(f, 10);
             }
         }
@@ -200,7 +211,7 @@ export class Response extends ResponseTemplate {
      */
     public getListHash(): any {
         const lh: any[] = [];
-        this.getRecords().forEach( (rec) => {
+        this.getRecords().forEach((rec) => {
             lh.push(rec.getData());
         });
         return {
@@ -297,7 +308,7 @@ export class Response extends ResponseTemplate {
      * @returns Record or null if index does not exist
      */
     public getRecord(idx: number): Record | null {
-        if ( idx >= 0 && this.records.length > idx) {
+        if (idx >= 0 && this.records.length > idx) {
             return this.records[idx];
         }
         return null;

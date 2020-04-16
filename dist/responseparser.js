@@ -2,17 +2,17 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var ResponseParser;
 (function (ResponseParser) {
-    ResponseParser.parse = (raw) => {
-        const hash = {};
-        const regexp = /^([^\=]*[^\t\= ])[\t ]*=[\t ]*(.*)$/;
-        const r = raw.replace(/\r\n/g, "\n").split("\n");
+    ResponseParser.parse = function (raw) {
+        var hash = {};
+        var regexp = /^([^\=]*[^\t\= ])[\t ]*=[\t ]*(.*)$/;
+        var r = raw.replace(/\r\n/g, "\n").split("\n");
         while (r.length) {
-            const row = r.shift();
-            let m;
+            var row = r.shift();
+            var m = void 0;
             if (row) {
                 m = row.match(regexp);
                 if (m) {
-                    const mm = m[1].match(/^property\[([^\]]*)\]/i);
+                    var mm = m[1].match(/^property\[([^\]]*)\]/i);
                     if (mm) {
                         if (!hash.hasOwnProperty("PROPERTY")) {
                             hash.PROPERTY = {};
@@ -34,26 +34,26 @@ var ResponseParser;
         }
         return hash;
     };
-    ResponseParser.serialize = (r) => {
-        let plain = "[RESPONSE]";
+    ResponseParser.serialize = function (r) {
+        var plain = "[RESPONSE]";
         if (r.hasOwnProperty("PROPERTY")) {
-            Object.keys(r.PROPERTY).forEach((key) => {
-                r.PROPERTY[key].forEach((val, index) => {
-                    plain += `\r\nPROPERTY[${key}][${index}]=${val}`;
+            Object.keys(r.PROPERTY).forEach(function (key) {
+                r.PROPERTY[key].forEach(function (val, index) {
+                    plain += "\r\nPROPERTY[" + key + "][" + index + "]=" + val;
                 });
             });
         }
         if (r.hasOwnProperty("CODE")) {
-            plain += `\r\nCODE=${r.CODE}`;
+            plain += "\r\nCODE=" + r.CODE;
         }
         if (r.hasOwnProperty("DESCRIPTION")) {
-            plain += `\r\nDESCRIPTION=${r.DESCRIPTION}`;
+            plain += "\r\nDESCRIPTION=" + r.DESCRIPTION;
         }
         if (r.hasOwnProperty("QUEUETIME")) {
-            plain += `\r\nQUEUETIME=${r.QUEUETIME}`;
+            plain += "\r\nQUEUETIME=" + r.QUEUETIME;
         }
         if (r.hasOwnProperty("RUNTIME")) {
-            plain += `\r\nRUNTIME=${r.RUNTIME}`;
+            plain += "\r\nRUNTIME=" + r.RUNTIME;
         }
         plain += "\r\nEOF\r\n";
         return plain;

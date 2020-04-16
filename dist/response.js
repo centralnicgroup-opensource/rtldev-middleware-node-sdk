@@ -1,82 +1,108 @@
 "use strict";
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 Object.defineProperty(exports, "__esModule", { value: true });
-const column_1 = require("./column");
-const record_1 = require("./record");
-const responsetemplate_1 = require("./responsetemplate");
-class Response extends responsetemplate_1.ResponseTemplate {
-    constructor(raw, cmd) {
-        super(raw);
-        this.command = cmd;
-        this.columnkeys = [];
-        this.columns = [];
-        this.recordIndex = 0;
-        this.records = [];
-        if (this.hash.hasOwnProperty("PROPERTY")) {
-            const colKeys = Object.keys(this.hash.PROPERTY);
-            let count = 0;
-            colKeys.forEach((c) => {
-                const d = this.hash.PROPERTY[c];
-                this.addColumn(c, d);
-                if (d.length > count) {
-                    count = d.length;
+var column_1 = require("./column");
+var record_1 = require("./record");
+var responsetemplate_1 = require("./responsetemplate");
+var Response = (function (_super) {
+    __extends(Response, _super);
+    function Response(raw, cmd, ph) {
+        if (ph === void 0) { ph = {}; }
+        var _this = _super.call(this, raw) || this;
+        var keys = Object.keys(ph);
+        keys.forEach(function (varName) {
+            _this.raw = _this.raw.replace(new RegExp("{" + varName + "}", "g"), ph[varName]);
+        });
+        _this.raw = _this.raw.replace(/\{[A-Z_]+\}/g, "");
+        _this = _super.call(this, _this.raw) || this;
+        _this.command = cmd;
+        _this.columnkeys = [];
+        _this.columns = [];
+        _this.recordIndex = 0;
+        _this.records = [];
+        if (Object.prototype.hasOwnProperty.call(_this.hash, "PROPERTY")) {
+            var colKeys = Object.keys(_this.hash.PROPERTY);
+            var count_1 = 0;
+            colKeys.forEach(function (c) {
+                var d = _this.hash.PROPERTY[c];
+                _this.addColumn(c, d);
+                if (d.length > count_1) {
+                    count_1 = d.length;
                 }
             });
-            for (let i = 0; i < count; i++) {
-                const d = {};
-                colKeys.forEach((k) => {
-                    const col = this.getColumn(k);
+            var _loop_1 = function (i) {
+                var d = {};
+                colKeys.forEach(function (k) {
+                    var col = _this.getColumn(k);
                     if (col) {
-                        const v = col.getDataByIndex(i);
+                        var v = col.getDataByIndex(i);
                         if (v !== null) {
                             d[k] = v;
                         }
                     }
                 });
-                this.addRecord(d);
+                this_1.addRecord(d);
+            };
+            var this_1 = this;
+            for (var i = 0; i < count_1; i++) {
+                _loop_1(i);
             }
         }
+        return _this;
     }
-    addColumn(key, data) {
-        const col = new column_1.Column(key, data);
+    Response.prototype.addColumn = function (key, data) {
+        var col = new column_1.Column(key, data);
         this.columns.push(col);
         this.columnkeys.push(key);
         return this;
-    }
-    addRecord(h) {
+    };
+    Response.prototype.addRecord = function (h) {
         this.records.push(new record_1.Record(h));
         return this;
-    }
-    getColumn(key) {
+    };
+    Response.prototype.getColumn = function (key) {
         return (this.hasColumn(key) ? this.columns[this.columnkeys.indexOf(key)] : null);
-    }
-    getColumnIndex(colkey, index) {
-        const col = this.getColumn(colkey);
+    };
+    Response.prototype.getColumnIndex = function (colkey, index) {
+        var col = this.getColumn(colkey);
         return col ? col.getDataByIndex(index) : null;
-    }
-    getColumnKeys() {
+    };
+    Response.prototype.getColumnKeys = function () {
         return this.columnkeys;
-    }
-    getColumns() {
+    };
+    Response.prototype.getColumns = function () {
         return this.columns;
-    }
-    getCommand() {
+    };
+    Response.prototype.getCommand = function () {
         return this.command;
-    }
-    getCurrentPageNumber() {
-        const first = this.getFirstRecordIndex();
-        const limit = this.getRecordsLimitation();
+    };
+    Response.prototype.getCurrentPageNumber = function () {
+        var first = this.getFirstRecordIndex();
+        var limit = this.getRecordsLimitation();
         if (first !== null && limit) {
             return Math.floor(first / limit) + 1;
         }
         return null;
-    }
-    getCurrentRecord() {
+    };
+    Response.prototype.getCurrentRecord = function () {
         return this.hasCurrentRecord() ? this.records[this.recordIndex] : null;
-    }
-    getFirstRecordIndex() {
-        const col = this.getColumn("FIRST");
+    };
+    Response.prototype.getFirstRecordIndex = function () {
+        var col = this.getColumn("FIRST");
         if (col) {
-            const f = col.getDataByIndex(0);
+            var f = col.getDataByIndex(0);
             if (f !== null) {
                 return parseInt(f, 10);
             }
@@ -85,24 +111,24 @@ class Response extends responsetemplate_1.ResponseTemplate {
             return 0;
         }
         return null;
-    }
-    getLastRecordIndex() {
-        const col = this.getColumn("LAST");
+    };
+    Response.prototype.getLastRecordIndex = function () {
+        var col = this.getColumn("LAST");
         if (col) {
-            const l = col.getDataByIndex(0);
+            var l = col.getDataByIndex(0);
             if (l !== null) {
                 return parseInt(l, 10);
             }
         }
-        const len = this.getRecordsCount();
+        var len = this.getRecordsCount();
         if (len) {
             return (len - 1);
         }
         return null;
-    }
-    getListHash() {
-        const lh = [];
-        this.getRecords().forEach((rec) => {
+    };
+    Response.prototype.getListHash = function () {
+        var lh = [];
+        this.getRecords().forEach(function (rec) {
             lh.push(rec.getData());
         });
         return {
@@ -112,31 +138,31 @@ class Response extends responsetemplate_1.ResponseTemplate {
                 pg: this.getPagination(),
             },
         };
-    }
-    getNextRecord() {
+    };
+    Response.prototype.getNextRecord = function () {
         if (this.hasNextRecord()) {
             return this.records[++this.recordIndex];
         }
         return null;
-    }
-    getNextPageNumber() {
-        const cp = this.getCurrentPageNumber();
+    };
+    Response.prototype.getNextPageNumber = function () {
+        var cp = this.getCurrentPageNumber();
         if (cp === null) {
             return null;
         }
-        const page = cp + 1;
-        const pages = this.getNumberOfPages();
+        var page = cp + 1;
+        var pages = this.getNumberOfPages();
         return (page <= pages ? page : pages);
-    }
-    getNumberOfPages() {
-        const t = this.getRecordsTotalCount();
-        const limit = this.getRecordsLimitation();
+    };
+    Response.prototype.getNumberOfPages = function () {
+        var t = this.getRecordsTotalCount();
+        var limit = this.getRecordsLimitation();
         if (t && limit) {
             return Math.ceil(t / this.getRecordsLimitation());
         }
         return 0;
-    }
-    getPagination() {
+    };
+    Response.prototype.getPagination = function () {
         return {
             COUNT: this.getRecordsCount(),
             CURRENTPAGE: this.getCurrentPageNumber(),
@@ -148,86 +174,87 @@ class Response extends responsetemplate_1.ResponseTemplate {
             PREVIOUSPAGE: this.getPreviousPageNumber(),
             TOTAL: this.getRecordsTotalCount(),
         };
-    }
-    getPreviousPageNumber() {
-        const cp = this.getCurrentPageNumber();
+    };
+    Response.prototype.getPreviousPageNumber = function () {
+        var cp = this.getCurrentPageNumber();
         if (cp === null) {
             return null;
         }
         return (cp - 1) || null;
-    }
-    getPreviousRecord() {
+    };
+    Response.prototype.getPreviousRecord = function () {
         if (this.hasPreviousRecord()) {
             return this.records[--this.recordIndex];
         }
         return null;
-    }
-    getRecord(idx) {
+    };
+    Response.prototype.getRecord = function (idx) {
         if (idx >= 0 && this.records.length > idx) {
             return this.records[idx];
         }
         return null;
-    }
-    getRecords() {
+    };
+    Response.prototype.getRecords = function () {
         return this.records;
-    }
-    getRecordsCount() {
+    };
+    Response.prototype.getRecordsCount = function () {
         return this.records.length;
-    }
-    getRecordsTotalCount() {
-        const col = this.getColumn("TOTAL");
+    };
+    Response.prototype.getRecordsTotalCount = function () {
+        var col = this.getColumn("TOTAL");
         if (col) {
-            const t = col.getDataByIndex(0);
+            var t = col.getDataByIndex(0);
             if (t !== null) {
                 return parseInt(t, 10);
             }
         }
         return this.getRecordsCount();
-    }
-    getRecordsLimitation() {
-        const col = this.getColumn("LIMIT");
+    };
+    Response.prototype.getRecordsLimitation = function () {
+        var col = this.getColumn("LIMIT");
         if (col) {
-            const l = col.getDataByIndex(0);
+            var l = col.getDataByIndex(0);
             if (l !== null) {
                 return parseInt(l, 10);
             }
         }
         return this.getRecordsCount();
-    }
-    hasNextPage() {
-        const cp = this.getCurrentPageNumber();
+    };
+    Response.prototype.hasNextPage = function () {
+        var cp = this.getCurrentPageNumber();
         if (cp === null) {
             return false;
         }
         return (cp + 1 <= this.getNumberOfPages());
-    }
-    hasPreviousPage() {
-        const cp = this.getCurrentPageNumber();
+    };
+    Response.prototype.hasPreviousPage = function () {
+        var cp = this.getCurrentPageNumber();
         if (cp === null) {
             return false;
         }
         return ((cp - 1) > 0);
-    }
-    rewindRecordList() {
+    };
+    Response.prototype.rewindRecordList = function () {
         this.recordIndex = 0;
         return this;
-    }
-    hasColumn(key) {
+    };
+    Response.prototype.hasColumn = function (key) {
         return (this.columnkeys.indexOf(key) !== -1);
-    }
-    hasCurrentRecord() {
-        const len = this.records.length;
+    };
+    Response.prototype.hasCurrentRecord = function () {
+        var len = this.records.length;
         return (len > 0 &&
             this.recordIndex >= 0 &&
             this.recordIndex < len);
-    }
-    hasNextRecord() {
-        const next = this.recordIndex + 1;
+    };
+    Response.prototype.hasNextRecord = function () {
+        var next = this.recordIndex + 1;
         return (this.hasCurrentRecord() && (next < this.records.length));
-    }
-    hasPreviousRecord() {
+    };
+    Response.prototype.hasPreviousRecord = function () {
         return (this.recordIndex > 0 && this.hasCurrentRecord());
-    }
-}
+    };
+    return Response;
+}(responsetemplate_1.ResponseTemplate));
 exports.Response = Response;
 //# sourceMappingURL=response.js.map

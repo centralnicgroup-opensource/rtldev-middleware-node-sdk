@@ -13,11 +13,15 @@
         "removeComments": true,
         "sourceMap": true,
         "strict": true,
-        "target": "es2016",
-        "typeRoots": ["./node_modules/@types/", "./typings/"]
+        "target": "ES5",
+        "typeRoots": [
+            "./node_modules/@types/",
+            "./typings/"
+        ]
     },
     "include": [
-        "src/**/*.ts", "test/**/*.spec.js"
+        "src/**/*.ts",
+        "test/**/*.spec.js"
     ],
     "exclude": [
         "node_modules",

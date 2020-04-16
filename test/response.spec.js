@@ -18,6 +18,18 @@ before(function () {
 describe('Response class', function () {
   this.slow(1000)
 
+  describe('constructor', function () {
+    it('check place holder vars replacment', function () {
+      // ensure no vars are returned in response, just in case no place holder replacements are provided
+      let r = new Response('')
+      expect(/\{[A-Z_]+\}/.test(r.getDescription())).to.be.false()
+
+      // ensure variable replacements are correctly handled in case place holder replacements are provided
+      r = new Response('', { COMMAND: 'StatusAccount' }, { CONNECTION_URL: '123HXPHFOUND123' })
+      expect(/123HXPHFOUND123/.test(r.getDescription())).to.be.true()
+    })
+  })
+
   describe('#.getCurrentPageNumber', function () {
     it('check return value [w/ entries in response]', function () {
       const r = new Response(rtm.getTemplate('listP0').getPlain())

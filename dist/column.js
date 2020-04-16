@@ -1,23 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-class Column {
-    constructor(key, data) {
+var Column = (function () {
+    function Column(key, data) {
         this.key = key;
         this.data = data;
         this.length = data.length;
     }
-    getKey() {
+    Column.prototype.getKey = function () {
         return this.key;
-    }
-    getData() {
+    };
+    Column.prototype.getData = function () {
         return this.data;
-    }
-    getDataByIndex(idx) {
+    };
+    Column.prototype.getDataByIndex = function (idx) {
         return this.hasDataIndex(idx) ? this.data[idx] : null;
-    }
-    hasDataIndex(idx) {
+    };
+    Column.prototype.hasDataIndex = function (idx) {
         return (idx >= 0 && idx < this.length);
-    }
-}
+    };
+    return Column;
+}());
 exports.Column = Column;
 //# sourceMappingURL=column.js.map
