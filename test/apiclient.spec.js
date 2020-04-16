@@ -129,6 +129,13 @@ describe('APIClient class', function () {
       expect(cls).to.be.instanceOf(apiclient.APIClient)
       expect(ua).to.equal(`WHMCS (${process.platform}; ${process.arch}; rv:7.7.0) node-sdk/${cl.getVersion()} node/${process.version}`)
     })
+
+    it('validate agent string including modules', function () {
+      const cls = cl.setUserAgent('WHMCS', '7.7.0', ['reg/2.6.2', 'ssl/7.2.2', 'dc/8.2.2'])
+      const ua = cl.getUserAgent()
+      expect(cls).to.be.instanceOf(apiclient.APIClient)
+      expect(ua).to.equal(`WHMCS (${process.platform}; ${process.arch}; rv:7.7.0) reg/2.6.2 ssl/7.2.2 dc/8.2.2 node-sdk/${cl.getVersion()} node/${process.version}`)
+    })
   })
 
   describe('#.setURL', function () {

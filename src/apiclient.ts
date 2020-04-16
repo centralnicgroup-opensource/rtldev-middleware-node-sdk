@@ -111,13 +111,16 @@ export class APIClient {
      * Possibility to customize default user agent to fit your needs
      * @param str user agent label
      * @param rv revision of user agent
+     * @param modules further modules to add to user agent string, format: ["<mod1>/<rev>", "<mod2>/<rev>", ... ]
      * @returns Current APIClient instance for method chaining
      */
-    public setUserAgent(str: string, rv: string): APIClient {
+    public setUserAgent(str: string, rv: string, modules: any = []): APIClient {
+        const mods = modules.length ? " " + modules.join(" ") : "";
         this.ua = (
             `${str} ` +
-            `(${process.platform}; ${process.arch}; rv:${rv}) ` +
-            `node-sdk/${this.getVersion()} ` +
+            `(${process.platform}; ${process.arch}; rv:${rv})` +
+            mods +
+            ` node-sdk/${this.getVersion()} ` +
             `node/${process.version}`
         );
         return this;

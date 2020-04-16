@@ -80,10 +80,13 @@ var APIClient = (function () {
     APIClient.prototype.getURL = function () {
         return this.socketURL;
     };
-    APIClient.prototype.setUserAgent = function (str, rv) {
+    APIClient.prototype.setUserAgent = function (str, rv, modules) {
+        if (modules === void 0) { modules = []; }
+        var mods = modules.length ? " " + modules.join(" ") : "";
         this.ua = (str + " " +
-            ("(" + process.platform + "; " + process.arch + "; rv:" + rv + ") ") +
-            ("node-sdk/" + this.getVersion() + " ") +
+            ("(" + process.platform + "; " + process.arch + "; rv:" + rv + ")") +
+            mods +
+            (" node-sdk/" + this.getVersion() + " ") +
             ("node/" + process.version));
         return this;
     };

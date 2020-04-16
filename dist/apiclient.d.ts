@@ -17,7 +17,7 @@ export declare class APIClient {
     disableDebugMode(): APIClient;
     getSession(): string | null;
     getURL(): string;
-    setUserAgent(str: string, rv: string): APIClient;
+    setUserAgent(str: string, rv: string, modules?: any): APIClient;
     getUserAgent(): string;
     setProxy(proxy: string): APIClient;
     getProxy(): string | null;
