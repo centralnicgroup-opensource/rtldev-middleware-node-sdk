@@ -30,6 +30,14 @@ describe('Response class', function () {
     })
   })
 
+  describe('#.getCommandPlain', function () {
+    it('check flattening of command works', function () {
+      const r = new Response('', { COMMAND: 'QueryDomainOptions', DOMAIN0: 'example.com', DOMAIN1: 'example.net' })
+      const expected = 'COMMAND = QueryDomainOptions\nDOMAIN0 = example.com\nDOMAIN1 = example.net\n'
+      expect(r.getCommandPlain()).to.equal(expected)
+    })
+  })
+
   describe('#.getCurrentPageNumber', function () {
     it('check return value [w/ entries in response]', function () {
       const r = new Response(rtm.getTemplate('listP0').getPlain())

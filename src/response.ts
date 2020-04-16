@@ -148,6 +148,18 @@ export class Response extends ResponseTemplate {
     }
 
     /**
+     * Get Command used in this request in plain text format
+     * @return command as plain text
+     */
+    public getCommandPlain(): string {
+        let tmp: string = "";
+        Object.keys(this.command).forEach((key: string) => {
+            tmp += `${key} = ${this.command[key]}\n`;
+        });
+        return tmp;
+    }
+
+    /**
      * Get Page Number of current List Query
      * @returns page number or null in case of a non-list response
      */

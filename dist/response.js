@@ -88,6 +88,14 @@ var Response = (function (_super) {
     Response.prototype.getCommand = function () {
         return this.command;
     };
+    Response.prototype.getCommandPlain = function () {
+        var _this = this;
+        var tmp = "";
+        Object.keys(this.command).forEach(function (key) {
+            tmp += key + " = " + _this.command[key] + "\n";
+        });
+        return tmp;
+    };
     Response.prototype.getCurrentPageNumber = function () {
         var first = this.getFirstRecordIndex();
         var limit = this.getRecordsLimitation();

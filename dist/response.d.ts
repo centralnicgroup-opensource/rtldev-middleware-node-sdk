@@ -15,6 +15,7 @@ export declare class Response extends ResponseTemplate {
     getColumnKeys(): string[];
     getColumns(): Column[];
     getCommand(): any;
+    getCommandPlain(): string;
     getCurrentPageNumber(): number | null;
     getCurrentRecord(): Record | null;
     getFirstRecordIndex(): number | null;
