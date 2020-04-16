@@ -95,15 +95,24 @@ export class APIClient {
      * @param cmd API command to encode
      * @returns encoded POST data string
      */
-    public getPOSTData(cmd: any): string {
+    public getPOSTData(cmd: any, secured: boolean = false): string {
         let data = this.socketConfig.getPOSTData();
-        let tmp = "";
+        if (secured) {
+            data = data.replace(/s_pw\=[^&]+/, "s_pw=***");
+        }
+
+        let tmp: string = "";
         if (!(typeof cmd === "string" || cmd instanceof String)) {
             Object.keys(cmd).forEach((key: string) => {
                 if (cmd[key] !== null && cmd[key] !== undefined) {
                     tmp += `${key}=${cmd[key].toString().replace(/\r|\n/g, "")}\n`;
                 }
             });
+        } else {
+            tmp = "" + cmd;
+        }
+        if (secured) {
+            tmp = tmp.replace(/PASSWORD\=[^\n]+/, "PASSWORD=***");
         }
         tmp = tmp.replace(/\n$/, "");
         data += `${fixedURLEnc("s_command")}=${fixedURLEnc(tmp)}`;
@@ -396,7 +405,8 @@ export class APIClient {
                 }
                 const rr = new Response(body, mycmd, cfg);
                 if (this.debugMode && this.logger) {
-                    this.logger.log(data, rr, error);
+                    const secured = this.getPOSTData(mycmd, true);
+                    this.logger.log(secured, rr, error);
                 }
                 resolve(rr);
             });

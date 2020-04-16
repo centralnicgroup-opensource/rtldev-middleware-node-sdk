@@ -49,6 +49,12 @@ export class Response extends ResponseTemplate {
         /* tslint:enable:no-duplicate-super */
 
         this.command = cmd;
+        if (
+            this.command &&
+            Object.prototype.hasOwnProperty.call(this.command, "PASSWORD")
+        ) { // make password no longer accessible
+            this.command.PASSWORD = "***";
+        }
         this.columnkeys = [];
         this.columns = [];
         this.recordIndex = 0;

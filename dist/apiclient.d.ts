@@ -15,7 +15,7 @@ export declare class APIClient {
     setDefaultLogger(): APIClient;
     enableDebugMode(): APIClient;
     disableDebugMode(): APIClient;
-    getPOSTData(cmd: any): string;
+    getPOSTData(cmd: any, secured?: boolean): string;
     getSession(): string | null;
     getURL(): string;
     setUserAgent(str: string, rv: string): APIClient;
