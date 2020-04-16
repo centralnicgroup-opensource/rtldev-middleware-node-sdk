@@ -16,13 +16,6 @@ before(function () {
 describe('ResponseParser namespace', function () {
   this.slow(1000)
 
-  describe('#.parse', function () {
-    it('check return value [w/o DESCRIPTION]', function () {
-      const plain = rtm.generateTemplate('421', '').replace(/\r\nDESCRIPTION=/, '')
-      expect(ResponseParser.parse(plain).DESCRIPTION).to.be.empty()
-    })
-  })
-
   describe('#.serialize', function () {
     it('check return value [w/ PROPERTY]', function () {
       const r = rtm.getTemplate('OK').getHash()

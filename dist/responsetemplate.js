@@ -9,6 +9,11 @@ var ResponseTemplate = (function () {
         }
         this.raw = raw;
         this.hash = responseparser_1.ResponseParser.parse(raw);
+        if (!Object.prototype.hasOwnProperty.call(this.hash, "CODE") ||
+            !Object.prototype.hasOwnProperty.call(this.hash, "DESCRIPTION")) {
+            this.raw = responsetemplatemanager_1.ResponseTemplateManager.getInstance().getTemplate("invalid").getPlain();
+            this.hash = responseparser_1.ResponseParser.parse(this.raw);
+        }
     }
     ResponseTemplate.prototype.getCode = function () {
         return parseInt(this.hash.CODE, 10);

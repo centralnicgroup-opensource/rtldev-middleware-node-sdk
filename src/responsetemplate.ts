@@ -24,6 +24,13 @@ export class ResponseTemplate {
         }
         this.raw = raw;
         this.hash = ResponseParser.parse(raw);
+        if (
+            !Object.prototype.hasOwnProperty.call(this.hash, "CODE") ||
+            !Object.prototype.hasOwnProperty.call(this.hash, "DESCRIPTION")
+        ) {
+            this.raw = ResponseTemplateManager.getInstance().getTemplate("invalid").getPlain();
+            this.hash = ResponseParser.parse(this.raw);
+        }
     }
 
     /**

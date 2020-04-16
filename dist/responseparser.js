@@ -29,9 +29,6 @@ var ResponseParser;
                 }
             }
         }
-        if (!hash.hasOwnProperty("DESCRIPTION")) {
-            hash.DESCRIPTION = "";
-        }
         return hash;
     };
     ResponseParser.serialize = function (r) {
