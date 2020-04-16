@@ -28,6 +28,10 @@ var Response = (function (_super) {
         _this.raw = _this.raw.replace(/\{[A-Z_]+\}/g, "");
         _this = _super.call(this, _this.raw) || this;
         _this.command = cmd;
+        if (_this.command &&
+            Object.prototype.hasOwnProperty.call(_this.command, "PASSWORD")) {
+            _this.command.PASSWORD = "***";
+        }
         _this.columnkeys = [];
         _this.columns = [];
         _this.recordIndex = 0;

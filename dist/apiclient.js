@@ -73,8 +73,12 @@ var APIClient = (function () {
         this.debugMode = false;
         return this;
     };
-    APIClient.prototype.getPOSTData = function (cmd) {
+    APIClient.prototype.getPOSTData = function (cmd, secured) {
+        if (secured === void 0) { secured = false; }
         var data = this.socketConfig.getPOSTData();
+        if (secured) {
+            data = data.replace(/s_pw\=[^&]+/, "s_pw=***");
+        }
         var tmp = "";
         if (!(typeof cmd === "string" || cmd instanceof String)) {
             Object.keys(cmd).forEach(function (key) {
@@ -82,6 +86,12 @@ var APIClient = (function () {
                     tmp += key + "=" + cmd[key].toString().replace(/\r|\n/g, "") + "\n";
                 }
             });
+        }
+        else {
+            tmp = "" + cmd;
+        }
+        if (secured) {
+            tmp = tmp.replace(/PASSWORD\=[^\n]+/, "PASSWORD=***");
         }
         tmp = tmp.replace(/\n$/, "");
         data += socketconfig_1.fixedURLEnc("s_command") + "=" + socketconfig_1.fixedURLEnc(tmp);
@@ -274,7 +284,8 @@ var APIClient = (function () {
                                     }
                                     var rr = new response_1.Response(body, mycmd, cfg);
                                     if (_this.debugMode && _this.logger) {
-                                        _this.logger.log(data, rr, error);
+                                        var secured = _this.getPOSTData(mycmd, true);
+                                        _this.logger.log(secured, rr, error);
                                     }
                                     resolve(rr);
                                 });

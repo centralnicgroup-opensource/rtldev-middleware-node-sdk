@@ -36,6 +36,12 @@ describe('Response class', function () {
       const expected = 'COMMAND = QueryDomainOptions\nDOMAIN0 = example.com\nDOMAIN1 = example.net\n'
       expect(r.getCommandPlain()).to.equal(expected)
     })
+
+    it('check data being returned secure', function () {
+      const r = new Response('', { COMMAND: 'CheckAuthentication', SUBUSER: 'test.user', PASSWORD: 'test.passw0rd' })
+      const expected = 'COMMAND = CheckAuthentication\nSUBUSER = test.user\nPASSWORD = ***\n'
+      expect(r.getCommandPlain()).to.equal(expected)
+    })
   })
 
   describe('#.getCurrentPageNumber', function () {

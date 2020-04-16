@@ -45,7 +45,7 @@ describe('APIClient class', function () {
 
     it('test string input', function () {
       const enc = cl.getPOSTData('gregergege')
-      expect(enc).to.equal('s_entity=54cd&s_command=')
+      expect(enc).to.equal('s_entity=54cd&s_command=gregergege')
     })
 
     it('test object input with null value in parameter', function () {
@@ -63,6 +63,18 @@ describe('APIClient class', function () {
         COMMAND: 'ModifyDomain',
         AUTH: undefined
       })
+      expect(enc).to.equal(validate)
+    })
+
+    it('test data getting secured correctly', function () {
+      const validate = 's_entity=54cd&s_login=test.user&s_pw=***&s_command=COMMAND%3DCheckAuthentication%0ASUBUSER%3Dtest.user%0APASSWORD%3D%2A%2A%2A'
+      cl.setCredentials('test.user', 'test.passw0rd')
+      const enc = cl.getPOSTData({
+        COMMAND: 'CheckAuthentication',
+        SUBUSER: 'test.user',
+        PASSWORD: 'test.passw0rd'
+      }, true)
+      cl.setCredentials('', '')
       expect(enc).to.equal(validate)
     })
   })
