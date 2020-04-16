@@ -91,35 +91,6 @@ export class APIClient {
     }
 
     /**
-     * Serialize given command for POST request including connection configuration data
-     * @param cmd API command to encode
-     * @returns encoded POST data string
-     */
-    public getPOSTData(cmd: any, secured: boolean = false): string {
-        let data = this.socketConfig.getPOSTData();
-        if (secured) {
-            data = data.replace(/s_pw\=[^&]+/, "s_pw=***");
-        }
-
-        let tmp: string = "";
-        if (!(typeof cmd === "string" || cmd instanceof String)) {
-            Object.keys(cmd).forEach((key: string) => {
-                if (cmd[key] !== null && cmd[key] !== undefined) {
-                    tmp += `${key}=${cmd[key].toString().replace(/\r|\n/g, "")}\n`;
-                }
-            });
-        } else {
-            tmp = "" + cmd;
-        }
-        if (secured) {
-            tmp = tmp.replace(/PASSWORD\=[^\n]+/, "PASSWORD=***");
-        }
-        tmp = tmp.replace(/\n$/, "");
-        data += `${fixedURLEnc("s_command")}=${fixedURLEnc(tmp)}`;
-        return data;
-    }
-
-    /**
      * Get the API Session that is currently set
      * @returns API Session or null
      */
@@ -511,6 +482,35 @@ export class APIClient {
     public useLIVESystem(): APIClient {
         this.socketConfig.setSystemEntity("54cd");
         return this;
+    }
+
+    /**
+     * Serialize given command for POST request including connection configuration data
+     * @param cmd API command to encode
+     * @returns encoded POST data string
+     */
+    private getPOSTData(cmd: any, secured: boolean = false): string {
+        let data = this.socketConfig.getPOSTData();
+        if (secured) {
+            data = data.replace(/s_pw\=[^&]+/, "s_pw=***");
+        }
+
+        let tmp: string = "";
+        if (!(typeof cmd === "string" || cmd instanceof String)) {
+            Object.keys(cmd).forEach((key: string) => {
+                if (cmd[key] !== null && cmd[key] !== undefined) {
+                    tmp += `${key}=${cmd[key].toString().replace(/\r|\n/g, "")}\n`;
+                }
+            });
+        } else {
+            tmp = "" + cmd;
+        }
+        if (secured) {
+            tmp = tmp.replace(/PASSWORD\=[^\n]+/, "PASSWORD=***");
+        }
+        tmp = tmp.replace(/\n$/, "");
+        data += `${fixedURLEnc("s_command")}=${fixedURLEnc(tmp)}`;
+        return data;
     }
 
     /**

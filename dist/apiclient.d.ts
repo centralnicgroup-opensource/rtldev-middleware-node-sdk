@@ -15,7 +15,6 @@ export declare class APIClient {
     setDefaultLogger(): APIClient;
     enableDebugMode(): APIClient;
     disableDebugMode(): APIClient;
-    getPOSTData(cmd: any, secured?: boolean): string;
     getSession(): string | null;
     getURL(): string;
     setUserAgent(str: string, rv: string): APIClient;
@@ -45,6 +44,7 @@ export declare class APIClient {
     useDefaultConnectionSetup(): APIClient;
     useOTESystem(): APIClient;
     useLIVESystem(): APIClient;
+    private getPOSTData;
     private toUpperCaseKeys;
     private flattenCommand;
     private autoIDNConvert;

@@ -73,30 +73,6 @@ var APIClient = (function () {
         this.debugMode = false;
         return this;
     };
-    APIClient.prototype.getPOSTData = function (cmd, secured) {
-        if (secured === void 0) { secured = false; }
-        var data = this.socketConfig.getPOSTData();
-        if (secured) {
-            data = data.replace(/s_pw\=[^&]+/, "s_pw=***");
-        }
-        var tmp = "";
-        if (!(typeof cmd === "string" || cmd instanceof String)) {
-            Object.keys(cmd).forEach(function (key) {
-                if (cmd[key] !== null && cmd[key] !== undefined) {
-                    tmp += key + "=" + cmd[key].toString().replace(/\r|\n/g, "") + "\n";
-                }
-            });
-        }
-        else {
-            tmp = "" + cmd;
-        }
-        if (secured) {
-            tmp = tmp.replace(/PASSWORD\=[^\n]+/, "PASSWORD=***");
-        }
-        tmp = tmp.replace(/\n$/, "");
-        data += socketconfig_1.fixedURLEnc("s_command") + "=" + socketconfig_1.fixedURLEnc(tmp);
-        return data;
-    };
     APIClient.prototype.getSession = function () {
         var sessid = this.socketConfig.getSession();
         return (sessid === "") ? null : sessid;
@@ -371,6 +347,30 @@ var APIClient = (function () {
     APIClient.prototype.useLIVESystem = function () {
         this.socketConfig.setSystemEntity("54cd");
         return this;
+    };
+    APIClient.prototype.getPOSTData = function (cmd, secured) {
+        if (secured === void 0) { secured = false; }
+        var data = this.socketConfig.getPOSTData();
+        if (secured) {
+            data = data.replace(/s_pw\=[^&]+/, "s_pw=***");
+        }
+        var tmp = "";
+        if (!(typeof cmd === "string" || cmd instanceof String)) {
+            Object.keys(cmd).forEach(function (key) {
+                if (cmd[key] !== null && cmd[key] !== undefined) {
+                    tmp += key + "=" + cmd[key].toString().replace(/\r|\n/g, "") + "\n";
+                }
+            });
+        }
+        else {
+            tmp = "" + cmd;
+        }
+        if (secured) {
+            tmp = tmp.replace(/PASSWORD\=[^\n]+/, "PASSWORD=***");
+        }
+        tmp = tmp.replace(/\n$/, "");
+        data += socketconfig_1.fixedURLEnc("s_command") + "=" + socketconfig_1.fixedURLEnc(tmp);
+        return data;
     };
     APIClient.prototype.toUpperCaseKeys = function (cmd) {
         var newcmd = {};
