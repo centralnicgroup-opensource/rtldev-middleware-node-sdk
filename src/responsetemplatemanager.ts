@@ -32,6 +32,7 @@ export class ResponseTemplateManager {
             error: this.generateTemplate("421", "Command failed due to server error. Client should try again"),
             expired: this.generateTemplate("530", "SESSION NOT FOUND"),
             httperror: this.generateTemplate("421", "Command failed due to HTTP communication error"),
+            invalid: this.generateTemplate("423", "Invalid API response. Contact Support"),
             unauthorized: this.generateTemplate("530", "Unauthorized"),
         };
     }

@@ -15,6 +15,12 @@ describe('ResponseTemplate class', function () {
       expect(tpl.getCode()).to.equal(423)
       expect(tpl.getDescription()).to.equal('Empty API response. Probably unreachable API end point {CONNECTION_URL}')
     })
+
+    it('check template `invalid` being returned', function () {
+      const tpl = new ResponseTemplate('[RESPONSE]\r\ncode=200\r\nqueuetime=0\r\nEOF\r\n')
+      expect(tpl.getCode()).to.equal(423)
+      expect(tpl.getDescription()).to.equal('Invalid API response. Contact Support')
+    })
   })
 
   describe('#.getHash', function () {

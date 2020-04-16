@@ -34,9 +34,6 @@ export namespace ResponseParser {
                 }
             }
         }
-        if (!hash.hasOwnProperty("DESCRIPTION")) {
-            hash.DESCRIPTION = "";
-        }
         return hash;
     };
 
