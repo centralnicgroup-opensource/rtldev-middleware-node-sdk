@@ -3,6 +3,7 @@
     "rules": {
         "no-console": false,
         "no-namespace": false,
+        "space-before-function-paren": false,
         "variable-name": [
             true,
             "ban-keywords",

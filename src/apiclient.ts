@@ -17,7 +17,7 @@ export class APIClient {
     /**
      * API connection timeout setting
      */
-    private static readonly socketTimeout: number = 300000;
+    public static readonly socketTimeout: number = 300000;
     /**
      * User Agent string
      */
@@ -492,7 +492,7 @@ export class APIClient {
      * @param cmd API command to encode
      * @returns encoded POST data string
      */
-    private getPOSTData(cmd: any, secured: boolean = false): string {
+    public getPOSTData(cmd: any, secured: boolean = false): string {
         let data = this.socketConfig.getPOSTData();
         if (secured) {
             data = data.replace(/s_pw\=[^&]+/, "s_pw=***");

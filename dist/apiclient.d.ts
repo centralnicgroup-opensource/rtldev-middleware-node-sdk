@@ -3,7 +3,7 @@ import { Response } from "./response";
 export declare const ISPAPI_CONNECTION_URL_PROXY = "http://127.0.0.1/api/call.cgi";
 export declare const ISPAPI_CONNECTION_URL = "https://api.ispapi.net/api/call.cgi";
 export declare class APIClient {
-    private static readonly socketTimeout;
+    static readonly socketTimeout: number;
     private ua;
     private socketURL;
     private socketConfig;
@@ -44,7 +44,7 @@ export declare class APIClient {
     useDefaultConnectionSetup(): APIClient;
     useOTESystem(): APIClient;
     useLIVESystem(): APIClient;
-    private getPOSTData;
+    getPOSTData(cmd: any, secured?: boolean): string;
     private toUpperCaseKeys;
     private flattenCommand;
     private autoIDNConvert;

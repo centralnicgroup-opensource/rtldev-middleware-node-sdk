@@ -20,12 +20,10 @@
         ]
     },
     "include": [
-        "src/**/*.ts",
-        "test/**/*.spec.js"
+        "src/**/*.ts"
     ],
     "exclude": [
         "node_modules",
-        "**/*.spec.ts",
         "coverage",
         ".nyc_output",
         "docs"
