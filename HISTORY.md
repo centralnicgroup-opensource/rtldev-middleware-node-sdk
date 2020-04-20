@@ -1,3 +1,29 @@
+# [6.0.0](https://github.com/hexonet/node-sdk/compare/v5.6.0...v6.0.0) (2020-04-20)
+
+
+### Bug Fixes
+
+* **apiclient:** make getPOSTData again public; migrate tests to typescript ([0f6ff13](https://github.com/hexonet/node-sdk/commit/0f6ff135fb0721d51801e8808c56c6b22ff3ca9c))
+* **messaging:** return a specific error template in case code or description are missing ([77af837](https://github.com/hexonet/node-sdk/commit/77af8375f86a159e113fde21b0d4e877aca2ea98))
+* **security:** make getPOSTData private to not make it accessible from outside ([639c67f](https://github.com/hexonet/node-sdk/commit/639c67ff4f8db9a58b61d2efb6f1e5f489b3114c))
+* **security:** replace passwords whereever they could be used for output ([1d53637](https://github.com/hexonet/node-sdk/commit/1d5363777dda7f9be07dbbf9f5a4e3b44a830304))
+
+
+### Features
+
+* **apiclient:** allow to specify additional libraries via setUserAgent ([5e94ab5](https://github.com/hexonet/node-sdk/commit/5e94ab57fdaf9ee90c58fb97b2c2fd69c173e372))
+* **apiclient:** automaitc IDN conversion of API command parameters to punycode ([38018e3](https://github.com/hexonet/node-sdk/commit/38018e358c273edcbfd1c622881a1106ae1690a3))
+* **apiclient:** set Proxy, Referer Header; High Performance Connection Setup (see README.md) ([3abc0cc](https://github.com/hexonet/node-sdk/commit/3abc0ccf23c831639cdb3536ac986a03c3e675c0))
+* **logger:** possibility to override debug mode's default logging mechanism. See README.md ([e639b6a](https://github.com/hexonet/node-sdk/commit/e639b6a3e8622f6ebd6378173c7184960378f8ef))
+* **response:** added getCommandPlain (getting used command in plain text) ([4b9d659](https://github.com/hexonet/node-sdk/commit/4b9d659aa7b20b119c5670085f5005a6ce769dba))
+* **response:** possibility of place holder vars in standard responses to improve error details ([aa479bb](https://github.com/hexonet/node-sdk/commit/aa479bb3149870c3872736c8c5191c6b2f3e4d66))
+
+
+### BREAKING CHANGES
+
+* **logger:** existing logging mechanism (function based) got replaced to be based on an class
+based solution
+
 # [5.6.0](https://github.com/hexonet/node-sdk/compare/v5.5.3...v5.6.0) (2020-03-11)
 
 
