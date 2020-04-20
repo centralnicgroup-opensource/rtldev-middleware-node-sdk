@@ -1,12 +1,13 @@
 "use strict";
 
+/* tslint:disable:no-unused-expression */
+// https://github.com/palantir/tslint/issues/2614
+
 import chai = require("chai");
-import dirtyChai = require("dirty-chai");
 import "mocha";
 import { Response } from "../src/response";
 import { ResponseParser } from "../src/responseparser";
 import { ResponseTemplateManager } from "../src/responsetemplatemanager";
-chai.use(dirtyChai);
 
 const expect = chai.expect;
 const rtm = ResponseTemplateManager.getInstance();
@@ -24,11 +25,11 @@ describe("Response class", function () {
     it("check place holder vars replacment", () => {
       // ensure no vars are returned in response, just in case no place holder replacements are provided
       let r = new Response("", cmd);
-      expect(/\{[A-Z_]+\}/.test(r.getDescription())).to.be.false();
+      expect(/\{[A-Z_]+\}/.test(r.getDescription())).to.be.false;
 
       // ensure variable replacements are correctly handled in case place holder replacements are provided
       r = new Response("", { COMMAND: "StatusAccount" }, { CONNECTION_URL: "123HXPHFOUND123" });
-      expect(/123HXPHFOUND123/.test(r.getDescription())).to.be.true();
+      expect(/123HXPHFOUND123/.test(r.getDescription())).to.be.true;
     });
   });
 
@@ -92,7 +93,7 @@ describe("Response class", function () {
     it("check return value [colum does not exist]", () => {
       const r = new Response(rtm.getTemplate("listP0").getPlain(), cmd);
       const data = r.getColumnIndex("COLUMN_NOT_EXISTS", 0);
-      expect(data).to.be.null();
+      expect(data).to.be.null;
     });
   });
 
@@ -109,7 +110,7 @@ describe("Response class", function () {
     it("check return value", () => {
       const r = new Response(rtm.getTemplate("listP0").getPlain(), cmd);
       const rec = r.getCurrentRecord();
-      expect(rec).not.to.be.null();
+      expect(rec).not.to.be.null;
       if (rec) {
         expect(rec.getData()).to.eql({
           COUNT: "2",
@@ -124,7 +125,7 @@ describe("Response class", function () {
 
     it("check return value [no records available]", () => {
       const r = new Response(rtm.getTemplate("OK").getPlain(), cmd);
-      expect(r.getCurrentRecord()).to.be.null();
+      expect(r.getCurrentRecord()).to.be.null;
     });
   });
 
@@ -142,12 +143,12 @@ describe("Response class", function () {
     it("check return value", () => {
       const r = new Response(rtm.getTemplate("listP0").getPlain(), cmd);
       let rec = r.getNextRecord();
-      expect(rec).not.to.be.null();
+      expect(rec).not.to.be.null;
       if (rec) {
         expect(rec.getData()).to.eql({ DOMAIN: "0-be-s01-0.com" });
       }
       rec = r.getNextRecord();
-      expect(rec).to.be.null();
+      expect(rec).to.be.null;
     });
   });
 
@@ -164,7 +165,7 @@ describe("Response class", function () {
       const r = new Response(rtm.getTemplate("listP0").getPlain(), cmd);
       r.getNextRecord();
       const rec = r.getPreviousRecord();
-      expect(rec).not.to.be.null();
+      expect(rec).not.to.be.null;
       if (rec) {
         expect(rec.getData()).to.eql({
           COUNT: "2",
@@ -174,7 +175,7 @@ describe("Response class", function () {
           LIMIT: "2",
           TOTAL: "2701",
         });
-        expect(r.getPreviousRecord()).to.be.null();
+        expect(r.getPreviousRecord()).to.be.null;
       }
     });
   });
@@ -182,31 +183,31 @@ describe("Response class", function () {
   describe("#.hasNextPage", () => {
     it("check return value [no rows]", () => {
       const r = new Response(rtm.getTemplate("OK").getPlain(), cmd);
-      expect(r.hasNextPage()).to.be.false();
+      expect(r.hasNextPage()).to.be.false;
     });
 
     it("check return value [rows]", () => {
       const r = new Response(rtm.getTemplate("listP0").getPlain(), cmd);
-      expect(r.hasNextPage()).to.be.true();
+      expect(r.hasNextPage()).to.be.true;
     });
   });
 
   describe("#.hasPreviousPage", () => {
     it("check return value [no rows]", () => {
       const r = new Response(rtm.getTemplate("OK").getPlain(), cmd);
-      expect(r.hasPreviousPage()).to.be.false();
+      expect(r.hasPreviousPage()).to.be.false;
     });
 
     it("check return value [rows]", () => {
       const r = new Response(rtm.getTemplate("listP0").getPlain(), cmd);
-      expect(r.hasPreviousPage()).to.be.false();
+      expect(r.hasPreviousPage()).to.be.false;
     });
   });
 
   describe("#.getLastRecordIndex", () => {
     it("check return value [no rows]", () => {
       const r = new Response(rtm.getTemplate("OK").getPlain(), cmd);
-      expect(r.getLastRecordIndex()).to.be.null();
+      expect(r.getLastRecordIndex()).to.be.null;
     });
 
     it("check return value [w/o LAST in response, rows]", () => {
@@ -222,7 +223,7 @@ describe("Response class", function () {
   describe("#.getNextPageNumber", () => {
     it("check return value [no rows]", () => {
       const r = new Response(rtm.getTemplate("OK").getPlain(), cmd);
-      expect(r.getNextPageNumber()).to.be.null();
+      expect(r.getNextPageNumber()).to.be.null;
     });
 
     it("check return value [rows]", () => {
@@ -241,22 +242,22 @@ describe("Response class", function () {
   describe("#.getPreviousPageNumber", () => {
     it("check return value [no rows]", () => {
       const r = new Response(rtm.getTemplate("OK").getPlain(), cmd);
-      expect(r.getPreviousPageNumber()).to.be.null();
+      expect(r.getPreviousPageNumber()).to.be.null;
     });
 
     it("check return value [rows]", () => {
       const r = new Response(rtm.getTemplate("listP0").getPlain(), cmd);
-      expect(r.getPreviousPageNumber()).to.be.null();
+      expect(r.getPreviousPageNumber()).to.be.null;
     });
   });
 
   describe("#.rewindRecordList", () => {
     it("check return value", () => {
       const r = new Response(rtm.getTemplate("listP0").getPlain(), cmd);
-      expect(r.getPreviousRecord()).to.be.null();
-      expect(r.getNextRecord()).not.to.be.null();
-      expect(r.getNextRecord()).to.be.null();
-      expect(r.rewindRecordList().getPreviousRecord()).to.be.null();
+      expect(r.getPreviousRecord()).to.be.null;
+      expect(r.getNextRecord()).not.to.be.null;
+      expect(r.getNextRecord()).to.be.null;
+      expect(r.rewindRecordList().getPreviousRecord()).to.be.null;
     });
   });
 });

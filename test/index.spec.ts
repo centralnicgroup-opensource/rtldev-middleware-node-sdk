@@ -1,10 +1,11 @@
 "use strict";
 
+/* tslint:disable:no-unused-expression */
+// https://github.com/palantir/tslint/issues/2614
+
 import chai = require("chai");
-import dirtyChai = require("dirty-chai");
 import "mocha";
 import { APIClient, Response, ResponseTemplateManager } from "../src/index";
-chai.use(dirtyChai);
 const expect = chai.expect;
 
 describe("index file", function () {

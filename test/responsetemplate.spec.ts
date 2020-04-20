@@ -1,10 +1,11 @@
 "use strict";
 
+/* tslint:disable:no-unused-expression */
+// https://github.com/palantir/tslint/issues/2614
+
 import chai = require("chai");
-import dirtyChai = require("dirty-chai");
 import "mocha";
 import { ResponseTemplate } from "../src/responsetemplate";
-chai.use(dirtyChai);
 
 const expect = chai.expect;
 
@@ -60,12 +61,12 @@ describe("ResponseTemplate class", function () {
   describe("#.isPending", () => {
     it("check return value [n/a in API response]", () => {
       const tpl = new ResponseTemplate("");
-      expect(tpl.isPending()).to.be.false();
+      expect(tpl.isPending()).to.be.false;
     });
 
     it("check return value [in API response]", () => {
       const tpl = new ResponseTemplate("[RESPONSE]\r\ncode=200\r\ndescription=Command completed successfully\r\npending=1\r\nEOF\r\n");
-      expect(tpl.isPending()).to.be.true();
+      expect(tpl.isPending()).to.be.true;
     });
   });
 });

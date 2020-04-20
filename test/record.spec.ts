@@ -1,10 +1,11 @@
 "use strict";
 
+/* tslint:disable:no-unused-expression */
+// https://github.com/palantir/tslint/issues/2614
+
 import chai = require("chai");
-import dirtyChai = require("dirty-chai");
 import "mocha";
 import { Record } from "../src/record";
-chai.use(dirtyChai);
 const expect = chai.expect;
 
 let rec: Record;
@@ -30,7 +31,7 @@ describe("Record class", function () {
 
   describe("#.getDataByKey", () => {
     it("check return value [column key not found]", () => {
-      expect(rec.getDataByKey("KEYNOTEXISTING")).to.be.null();
+      expect(rec.getDataByKey("KEYNOTEXISTING")).to.be.null;
     });
   });
 });

@@ -1,11 +1,12 @@
 "use strict";
 
+/* tslint:disable:no-unused-expression */
+// https://github.com/palantir/tslint/issues/2614
+
 import chai = require("chai");
-import dirtyChai = require("dirty-chai");
 import "mocha";
 import { ResponseTemplate } from "../src/responsetemplate";
 import { ResponseTemplateManager } from "../src/responsetemplatemanager";
-chai.use(dirtyChai);
 
 const expect = chai.expect;
 let rtm: ResponseTemplateManager;
@@ -35,14 +36,14 @@ describe("ResponseTemplateManager class", function () {
   describe("#.isTemplateMatchHash", () => {
     it("check return value [matched]", () => {
       const tpl = new ResponseTemplate("");
-      expect(rtm.isTemplateMatchHash(tpl.getHash(), "empty")).to.be.true();
+      expect(rtm.isTemplateMatchHash(tpl.getHash(), "empty")).to.be.true;
     });
   });
 
   describe("#.isTemplateMatchPlain", () => {
     it("check return value [matched]", () => {
       const tpl = new ResponseTemplate("");
-      expect(rtm.isTemplateMatchPlain(tpl.getPlain(), "empty")).to.be.true();
+      expect(rtm.isTemplateMatchPlain(tpl.getPlain(), "empty")).to.be.true;
     });
   });
 });

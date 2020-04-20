@@ -1,10 +1,11 @@
 "use strict";
 
+/* tslint:disable:no-unused-expression */
+// https://github.com/palantir/tslint/issues/2614
+
 import chai = require("chai");
-import dirtyChai = require("dirty-chai");
 import "mocha";
 import { Column } from "../src/column";
-chai.use(dirtyChai);
 const expect = chai.expect;
 
 let col: Column;

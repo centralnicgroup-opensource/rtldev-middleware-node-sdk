@@ -1,14 +1,15 @@
 "use strict";
 
+/* tslint:disable:no-unused-expression */
+// https://github.com/palantir/tslint/issues/2614
+
 import chai = require("chai");
 import chaiPromised = require("chai-as-promised");
-import dirtyChai = require("dirty-chai");
 import "mocha";
 import nock = require("nock");
 import { APIClient, ISPAPI_CONNECTION_URL, ISPAPI_CONNECTION_URL_PROXY } from "../src/apiclient";
 import { Response } from "../src/response";
 import { ResponseTemplateManager } from "../src/responsetemplatemanager";
-chai.use(dirtyChai);
 chai.use(chaiPromised);
 
 const expect = chai.expect;
@@ -98,7 +99,7 @@ describe("APIClient class", function () {
   describe("#.getSession", () => {
     it("validate response", () => {
       const session = cl.getSession();
-      expect(session).to.be.null();
+      expect(session).to.be.null;
     });
   });
 
@@ -279,12 +280,12 @@ describe("APIClient class", function () {
         .setCredentials("test.user", "test.passw0rd");
       const r = await cl.login();
       expect(r).to.be.instanceOf(Response);
-      expect(r.isSuccess()).to.be.true();
+      expect(r.isSuccess()).to.be.true;
       const rec = r.getRecord(0);
-      expect(rec).not.to.be.null();
+      expect(rec).not.to.be.null;
       if (rec) {
         const rec2 = tpl.getRecord(0);
-        expect(rec2).not.to.be.null();
+        expect(rec2).not.to.be.null;
         if (rec2) {
           expect(rec.getDataByKey("SESSION")).to.equal(rec2.getDataByKey("SESSION"));
         }
@@ -300,12 +301,12 @@ describe("APIClient class", function () {
         .setRoleCredentials("test.user", "testrole", "test.passw0rd");
       const r = await cl.login();
       expect(r).to.be.instanceOf(Response);
-      expect(r.isSuccess()).to.be.true();
+      expect(r.isSuccess()).to.be.true;
       const rec = r.getRecord(0);
-      expect(rec).not.to.be.null();
+      expect(rec).not.to.be.null;
       if (rec) {
         const rec2 = tpl.getRecord(0);
-        expect(rec2).not.to.be.null();
+        expect(rec2).not.to.be.null;
         if (rec2) {
           expect(rec.getDataByKey("SESSION")).to.equal(rec2.getDataByKey("SESSION"));
         }
@@ -319,7 +320,7 @@ describe("APIClient class", function () {
       cl.setCredentials("test.user", "WRONGPASSWORD");
       const r = await cl.login();
       expect(r).to.be.instanceOf(Response);
-      expect(r.isError()).to.be.true();
+      expect(r.isError()).to.be.true;
     });
 
     it("validate against mocked API response [login failed; http timeout]", async () => {
@@ -332,7 +333,7 @@ describe("APIClient class", function () {
       cl.setCredentials("test.user", "WRONGPASSWORD");
       const r = await cl.login();
       expect(r).to.be.instanceOf(Response);
-      expect(r.isTmpError()).to.be.true();
+      expect(r.isTmpError()).to.be.true;
       expect(r.getDescription()).to.equal(tpl.getDescription());
     });
 
@@ -347,9 +348,9 @@ describe("APIClient class", function () {
         .setCredentials("test.user", "test.passw0rd");
       const r = await cl.login();
       expect(r).to.be.instanceOf(Response);
-      expect(r.isSuccess()).to.be.true();
+      expect(r.isSuccess()).to.be.true;
       const rec = r.getRecord(0);
-      expect(rec).to.be.null();
+      expect(rec).to.be.null;
     });
   });
 
@@ -365,12 +366,12 @@ describe("APIClient class", function () {
         TIMEOUT: 60,
       });
       expect(r).to.be.instanceOf(Response);
-      expect(r.isSuccess()).to.be.true();
+      expect(r.isSuccess()).to.be.true;
       const rec = r.getRecord(0);
-      expect(rec).not.to.be.null();
+      expect(rec).not.to.be.null;
       if (rec) {
         const rec2 = tpl.getRecord(0);
-        expect(rec2).not.to.be.null();
+        expect(rec2).not.to.be.null;
         if (rec2) {
           expect(rec.getDataByKey("SESSION")).to.equal(rec2.getDataByKey("SESSION"));
         }
@@ -385,7 +386,7 @@ describe("APIClient class", function () {
         .reply(200, rtm.getTemplate("OK").getPlain());
       const r = await cl.logout();
       expect(r).to.be.instanceOf(Response);
-      expect(r.isSuccess()).to.be.true();
+      expect(r.isSuccess()).to.be.true;
     });
 
     it("validate against mocked API response [logout failed; session no longer exists]", async () => {
@@ -395,16 +396,16 @@ describe("APIClient class", function () {
         .reply(200, rtm.getTemplate("login500").getPlain());
 
       const rec2 = tpl.getRecord(0);
-      expect(rec2).not.to.be.null();
+      expect(rec2).not.to.be.null;
       if (rec2) {
         const sessid = rec2.getDataByKey("SESSION");
-        expect(sessid).not.to.be.null();
+        expect(sessid).not.to.be.null;
         if (sessid) {
           cl.enableDebugMode()
             .setSession(sessid);
           const r = await cl.logout();
           expect(r).to.be.instanceOf(Response);
-          expect(r.isError()).to.be.true();
+          expect(r.isError()).to.be.true;
         }
       }
     });
@@ -422,7 +423,7 @@ describe("APIClient class", function () {
         .useOTESystem();
       const r = await cl.request(cmd);
       expect(r).to.be.instanceOf(Response);
-      expect(r.isTmpError()).to.be.true();
+      expect(r.isTmpError()).to.be.true;
       expect(r.getCode()).to.equal(tpl2.getCode());
       expect(r.getDescription()).to.equal(tpl2.getDescription());
     });
@@ -435,7 +436,7 @@ describe("APIClient class", function () {
       cl.disableDebugMode();
       const r = await cl.request(cmd);
       expect(r).to.be.instanceOf(Response);
-      expect(r.isTmpError()).to.be.true();
+      expect(r.isTmpError()).to.be.true;
       expect(r.getCode()).to.equal(tpl2.getCode());
       expect(r.getDescription()).to.equal(tpl2.getDescription());
     });
@@ -451,9 +452,9 @@ describe("APIClient class", function () {
       expect(r).to.be.instanceOf(Response);
       const mycmd = r.getCommand();
       const keys = Object.keys(mycmd);
-      expect(keys.includes("DOMAIN")).to.be.false();
-      expect(keys.includes("DOMAIN0")).to.be.true();
-      expect(keys.includes("DOMAIN1")).to.be.true();
+      expect(keys.includes("DOMAIN")).to.be.false;
+      expect(keys.includes("DOMAIN0")).to.be.true;
+      expect(keys.includes("DOMAIN1")).to.be.true;
       expect(mycmd.DOMAIN0).to.equal("example.com");
       expect(mycmd.DOMAIN1).to.equal("example.net");
     });
@@ -467,10 +468,10 @@ describe("APIClient class", function () {
       expect(r).to.be.instanceOf(Response);
       const mycmd = r.getCommand();
       const keys = Object.keys(mycmd);
-      expect(keys.includes("DOMAIN")).to.be.false();
-      expect(keys.includes("DOMAIN0")).to.be.true();
-      expect(keys.includes("DOMAIN1")).to.be.true();
-      expect(keys.includes("DOMAIN2")).to.be.true();
+      expect(keys.includes("DOMAIN")).to.be.false;
+      expect(keys.includes("DOMAIN0")).to.be.true;
+      expect(keys.includes("DOMAIN1")).to.be.true;
+      expect(keys.includes("DOMAIN2")).to.be.true;
       expect(mycmd.DOMAIN0).to.equal("example.com");
       expect(mycmd.DOMAIN1).to.equal("xn--dmin-moa0i.example");
       expect(mycmd.DOMAIN2).to.equal("example.net");
@@ -487,14 +488,14 @@ describe("APIClient class", function () {
         { COMMAND: "QueryDomainList", LIMIT: 2, FIRST: 0 },
       );
       const nr = await cl.requestNextResponsePage(r);
-      expect(r.isSuccess()).to.be.true();
+      expect(r.isSuccess()).to.be.true;
       expect(r.getRecordsLimitation()).to.equal(2);
       expect(r.getRecordsCount()).to.equal(2);
       expect(r.getFirstRecordIndex()).to.equal(0);
       expect(r.getLastRecordIndex()).to.equal(1);
-      expect(nr).not.to.be.null();
+      expect(nr).not.to.be.null;
       if (nr) {
-        expect(nr.isSuccess()).to.be.true();
+        expect(nr.isSuccess()).to.be.true;
         expect(nr.getRecordsLimitation()).to.equal(2);
         expect(nr.getRecordsCount()).to.equal(2);
         expect(nr.getFirstRecordIndex()).to.equal(2);
@@ -520,14 +521,14 @@ describe("APIClient class", function () {
         { COMMAND: "QueryDomainList", LIMIT: 2 },
       );
       const nr = await cl.requestNextResponsePage(r);
-      expect(r.isSuccess()).to.be.true();
+      expect(r.isSuccess()).to.be.true;
       expect(r.getRecordsLimitation()).to.equal(2);
       expect(r.getRecordsCount()).to.equal(2);
       expect(r.getFirstRecordIndex()).to.equal(0);
       expect(r.getLastRecordIndex()).to.equal(1);
-      expect(nr).not.to.be.null();
+      expect(nr).not.to.be.null;
       if (nr) {
-        expect(nr.isSuccess()).to.be.true();
+        expect(nr.isSuccess()).to.be.true;
         expect(nr.getRecordsLimitation()).to.equal(2);
         expect(nr.getRecordsCount()).to.equal(2);
         expect(nr.getFirstRecordIndex()).to.equal(2);
@@ -566,7 +567,7 @@ describe("APIClient class", function () {
       cl.setUserView("hexotestman.com");
       const r = await cl.request({ COMMAND: "GetUserIndex" });
       expect(r).to.be.instanceOf(Response);
-      expect(r.isSuccess()).to.be.true();
+      expect(r.isSuccess()).to.be.true;
     });
   });
 
@@ -578,7 +579,7 @@ describe("APIClient class", function () {
       cl.resetUserView();
       const r = await cl.request({ COMMAND: "GetUserIndex" });
       expect(r).to.be.instanceOf(Response);
-      expect(r.isSuccess()).to.be.true();
+      expect(r.isSuccess()).to.be.true;
     });
   });
 

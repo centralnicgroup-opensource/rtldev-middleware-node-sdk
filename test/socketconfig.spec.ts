@@ -1,10 +1,11 @@
 "use strict";
 
+/* tslint:disable:no-unused-expression */
+// https://github.com/palantir/tslint/issues/2614
+
 import chai = require("chai");
-import dirtyChai = require("dirty-chai");
 import "mocha";
 import { SocketConfig } from "../src/socketconfig";
-chai.use(dirtyChai);
 const expect = chai.expect;
 
 describe("SocketConfig class", function () {
@@ -13,7 +14,7 @@ describe("SocketConfig class", function () {
   describe("#.getPOSTData", () => {
     it("check return value [no settings made]", () => {
       const d = new SocketConfig().getPOSTData();
-      expect(d).to.be.empty();
+      expect(d).to.be.empty;
     });
   });
 });

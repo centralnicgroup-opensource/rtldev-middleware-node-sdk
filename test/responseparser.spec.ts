@@ -1,11 +1,12 @@
 "use strict";
 
+/* tslint:disable:no-unused-expression */
+// https://github.com/palantir/tslint/issues/2614
+
 import chai = require("chai");
-import dirtyChai = require("dirty-chai");
 import "mocha";
 import { ResponseParser } from "../src/responseparser";
 import { ResponseTemplateManager } from "../src/responsetemplatemanager";
-chai.use(dirtyChai);
 
 const expect = chai.expect;
 const rtm = ResponseTemplateManager.getInstance();
