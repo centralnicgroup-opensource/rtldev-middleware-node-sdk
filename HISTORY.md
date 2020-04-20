@@ -1,3 +1,10 @@
+## [6.0.1](https://github.com/hexonet/node-sdk/compare/v6.0.0...v6.0.1) (2020-04-20)
+
+
+### Bug Fixes
+
+* **dep-bump:** remove dirty-chai (no ts support);deactivate tslint rule no-unused-expression in test ([150ae57](https://github.com/hexonet/node-sdk/commit/150ae57b5c2c477c062970eee40bbfea479a1594))
+
 # [6.0.0](https://github.com/hexonet/node-sdk/compare/v5.6.0...v6.0.0) (2020-04-20)
 
 
