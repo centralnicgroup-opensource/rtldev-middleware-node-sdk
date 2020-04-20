@@ -1,3 +1,10 @@
+## [6.0.2](https://github.com/hexonet/node-sdk/compare/v6.0.1...v6.0.2) (2020-04-20)
+
+
+### Bug Fixes
+
+* **dep-bump:** replace `request` (deprecated) with `node-fetch`;reviewed linting errors ([427c329](https://github.com/hexonet/node-sdk/commit/427c3292232adad086b2726770d9c5434489f81c)), closes [#190](https://github.com/hexonet/node-sdk/issues/190)
+
 ## [6.0.1](https://github.com/hexonet/node-sdk/compare/v6.0.0...v6.0.1) (2020-04-20)
 
 
