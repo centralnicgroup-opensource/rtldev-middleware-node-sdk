@@ -33,7 +33,7 @@ export class Column {
      * Get column data
      * @returns column data
      */
-    public getData() {
+    public getData(): string[] {
         return this.data;
     }
 

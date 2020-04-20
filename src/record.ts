@@ -41,6 +41,6 @@ export class Record {
      * @returns boolean result
      */
     private hasData(key: string): boolean {
-        return this.data.hasOwnProperty(key);
+        return Object.prototype.hasOwnProperty.call(this.data, key);
     }
 }

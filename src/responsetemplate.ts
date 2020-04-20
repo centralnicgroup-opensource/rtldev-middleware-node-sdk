@@ -62,7 +62,7 @@ export class ResponseTemplate {
      * @returns Queuetime of API response
      */
     public getQueuetime(): number {
-        if (this.hash.hasOwnProperty("QUEUETIME")) {
+        if (Object.prototype.hasOwnProperty.call(this.hash, "QUEUETIME")) {
             return parseFloat(this.hash.QUEUETIME);
         }
         return 0.00;
@@ -81,7 +81,7 @@ export class ResponseTemplate {
      * @returns Runtime of API response
      */
     public getRuntime(): number {
-        if (this.hash.hasOwnProperty("RUNTIME")) {
+        if (Object.prototype.hasOwnProperty.call(this.hash, "RUNTIME")) {
             return parseFloat(this.hash.RUNTIME);
         }
         return 0.00;
@@ -119,6 +119,6 @@ export class ResponseTemplate {
      * @returns boolean result
      */
     public isPending(): boolean {
-        return (this.hash.hasOwnProperty("PENDING")) ? this.hash.PENDING === "1" : false;
+        return (Object.prototype.hasOwnProperty.call(this.hash, "PENDING") ? this.hash.PENDING === "1" : false);
     }
 }

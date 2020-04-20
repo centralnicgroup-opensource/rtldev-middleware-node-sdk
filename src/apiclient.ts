@@ -1,5 +1,5 @@
-import * as path from "path";
-import * as request from "request";
+import packageInfo from "../package.json";
+import fetch from "node-fetch";
 import { Logger } from "./logger";
 import { Response } from "./response";
 import { ResponseTemplateManager } from "./responsetemplatemanager";
@@ -187,7 +187,6 @@ export class APIClient {
      * @returns module version
      */
     public getVersion(): string {
-        const packageInfo = require(path.join(__dirname, "/../package.json"));
         return packageInfo.version;
     }
 
@@ -285,7 +284,7 @@ export class APIClient {
      * @param otp optional one time password
      * @returns Promise resolving with API Response
      */
-    public async login(otp: string = ""): Promise<Response> {
+    public async login(otp = ""): Promise<Response> {
         this.setOTP(otp || "");
         const rr = await this.request({ COMMAND: "StartSession" });
         if (rr.isSuccess()) {
@@ -302,7 +301,7 @@ export class APIClient {
      * @param otp optional one time password
      * @returns Promise resolving with API Response
      */
-    public async loginExtended(params: any, otp: string = ""): Promise<Response> {
+    public async loginExtended(params: any, otp = ""): Promise<Response> {
         this.setOTP(otp);
         const rr = await this.request(Object.assign({
             COMMAND: "StartSession",
@@ -341,49 +340,43 @@ export class APIClient {
         mycmd = await this.autoIDNConvert(mycmd);
 
         // request command to API
-        return new Promise((resolve) => {
-            const cfg: any = {
-                CONNECTION_URL: this.socketURL,
-            };
-            const data = this.getPOSTData(mycmd);
-            // TODO: 300s (to be sure to get an API response)
-            const reqCfg: any = {
-                encoding: "utf8",
-                form: data,
-                gzip: true,
-                headers: {
-                    "User-Agent": this.getUserAgent(),
-                },
-                method: "POST",
-                timeout: APIClient.socketTimeout,
-                url: cfg.CONNECTION_URL,
-            };
-            const proxy = this.getProxy();
-            if (proxy) {
-                reqCfg.proxy = proxy;
+        const cfg: any = {
+            CONNECTION_URL: this.socketURL,
+        };
+        // TODO: 300s (to be sure to get an API response)
+        const reqCfg: any = {
+            //encoding: "utf8", //default for type string
+            //gzip: true,
+            body: this.getPOSTData(mycmd),
+            headers: {
+                "User-Agent": this.getUserAgent(),
+            },
+            method: "POST",
+            timeout: APIClient.socketTimeout,
+            url: cfg.CONNECTION_URL,
+        };
+        const proxy = this.getProxy();
+        if (proxy) {
+            reqCfg.proxy = proxy;
+        }
+        const referer = this.getReferer();
+        if (referer) {
+            reqCfg.headers.Referer = referer;
+        }
+        return fetch(cfg.CONNECTION_URL, reqCfg).then(async (res: any) => {
+            let error = null;
+            let body;
+            if (res.ok) { // res.status >= 200 && res.status < 300
+                body = await res.text();
+            } else {
+                error = new Error(res.status + (res.statusText ? " " + res.statusText : ""));
+                body = rtm.getTemplate("httperror").getPlain();
             }
-            const referer = this.getReferer();
-            if (referer) {
-                reqCfg.headers.Referer = referer;
+            const rr = new Response(body, mycmd, cfg);
+            if (this.debugMode && this.logger) {
+                this.logger.log(this.getPOSTData(mycmd, true), rr, error);
             }
-            request(reqCfg, (error: any, r: any, body: string) => {
-                if (
-                    (!error) &&
-                    (r.statusCode !== undefined) &&
-                    (r.statusCode < 200 || r.statusCode > 299)
-                ) {
-                    error = new Error(r.statusCode + (r.statusMessage ? " " + r.statusMessage : ""));
-                }
-                if (error) {
-                    body = rtm.getTemplate("httperror").getPlain();
-                }
-                const rr = new Response(body, mycmd, cfg);
-                if (this.debugMode && this.logger) {
-                    const secured = this.getPOSTData(mycmd, true);
-                    this.logger.log(secured, rr, error);
-                }
-                resolve(rr);
-            });
+            return rr;
         });
     }
 
@@ -395,11 +388,11 @@ export class APIClient {
      */
     public async requestNextResponsePage(rr: Response): Promise<Response | null> {
         const mycmd = rr.getCommand();
-        if (mycmd.hasOwnProperty("LAST")) {
+        if (Object.prototype.hasOwnProperty.call(mycmd, "LAST")) {
             throw new Error("Parameter LAST in use. Please remove it to avoid issues in requestNextPage.");
         }
         let first = 0;
-        if (mycmd.hasOwnProperty("FIRST")) {
+        if (Object.prototype.hasOwnProperty.call(mycmd, "FIRST")) {
             first = mycmd.FIRST;
         }
         const total = rr.getRecordsTotalCount();
@@ -492,13 +485,13 @@ export class APIClient {
      * @param cmd API command to encode
      * @returns encoded POST data string
      */
-    public getPOSTData(cmd: any, secured: boolean = false): string {
+    public getPOSTData(cmd: any, secured = false): string {
         let data = this.socketConfig.getPOSTData();
         if (secured) {
-            data = data.replace(/s_pw\=[^&]+/, "s_pw=***");
+            data = data.replace(/s_pw=[^&]+/, "s_pw=***");
         }
 
-        let tmp: string = "";
+        let tmp = "";
         if (!(typeof cmd === "string" || cmd instanceof String)) {
             Object.keys(cmd).forEach((key: string) => {
                 if (cmd[key] !== null && cmd[key] !== undefined) {
@@ -509,7 +502,7 @@ export class APIClient {
             tmp = "" + cmd;
         }
         if (secured) {
-            tmp = tmp.replace(/PASSWORD\=[^\n]+/, "PASSWORD=***");
+            tmp = tmp.replace(/PASSWORD=[^\n]+/, "PASSWORD=***");
         }
         tmp = tmp.replace(/\n$/, "");
         data += `${fixedURLEnc("s_command")}=${fixedURLEnc(tmp)}`;
@@ -578,7 +571,7 @@ export class APIClient {
         const toconvert: any = [];
         const idxs: string[] = [];
         keys.forEach((key: string) => {
-            if (cmd[key] !== null && cmd[key] !== undefined && /[^a-z0-9\.\- ]/i.test(cmd[key])) {
+            if (cmd[key] !== null && cmd[key] !== undefined && /[^a-z0-9.\- ]/i.test(cmd[key])) {
                 toconvert.push(cmd[key]);
                 idxs.push(key);
             }

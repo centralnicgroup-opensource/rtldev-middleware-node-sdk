@@ -90,7 +90,7 @@ export class ResponseTemplateManager {
      * @returns boolean result
      */
     public hasTemplate(id: string): boolean {
-        return this.templates.hasOwnProperty(id);
+        return Object.prototype.hasOwnProperty.call(this.templates, id);
     }
 
     /**

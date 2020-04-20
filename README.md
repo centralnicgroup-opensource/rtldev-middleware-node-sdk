@@ -97,6 +97,8 @@ After saving your configuration changes please restart the Apache webserver.
 #### Step 3: Using this setup
 
 ```js
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+/* eslint-disable @typescript-eslint/no-var-requires */
 async function main () {
   const apiconnector = require('@hexonet/ispapi-apiconnector')
   const cl = new apiconnector.APIClient()
@@ -125,6 +127,8 @@ When having the debug mode activated \HEXONET\Logger will be used for doing outp
 Of course it could be of interest for integrators to look for a way of getting this replaced by a custom mechanism like forwarding things to a 3rd-party software, logging into file or whatever.
 
 ```js
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+/* eslint-disable @typescript-eslint/no-var-requires */
 async function main () {
   const logger = require('mycustomlogger') // has to extend our logger
   const apiconnector = require('@hexonet/ispapi-apiconnector')
@@ -185,6 +189,8 @@ The logout can be done at any time separetely triggered. After logout no further
 Note: you have to first finish your requests before doing logout. Running queued requests may fail after logout.
 
 ```js
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+/* eslint-disable @typescript-eslint/no-var-requires */
 async function main () {
   const apiconnector = require('@hexonet/ispapi-apiconnector')
   const cl = new apiconnector.APIClient()
@@ -248,6 +254,8 @@ But in that case you always have to provide user and password accordingly.
 If you want to build your frontend based on this library, we suggest to base it on the above example.
 
 ```js
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+/* eslint-disable @typescript-eslint/no-var-requires */
 async function main () {
   const apiconnector = require('@hexonet/ispapi-apiconnector')
   const cl = new apiconnector.APIClient()
@@ -275,6 +283,8 @@ main()
 No need to play with async / await.
 
 ```js
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+/* eslint-disable @typescript-eslint/no-var-requires */
 const apiconnector = require('@hexonet/ispapi-apiconnector')
 const cl = new apiconnector.APIClient()
 // Use OT&E system, omitting this points by default to the LIVE system
@@ -300,6 +310,8 @@ cl.request({
 Shorten your code by using method chaining
 
 ```js
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+/* eslint-disable @typescript-eslint/no-var-requires */
 const apiconnector = require('@hexonet/ispapi-apiconnector')
 const cl = new apiconnector.APIClient()
 cl.useOTESystem()
@@ -320,6 +332,8 @@ cl.request({
 Improve your code by using the below
 
 ```js
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+/* eslint-disable @typescript-eslint/no-var-requires */
 const apiconnector = require('@hexonet/ispapi-apiconnector')
 const cl = new apiconnector.APIClient()
 cl.useOTESystem()
@@ -339,6 +353,8 @@ cl.request({
 instead of
 
 ```js
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+/* eslint-disable @typescript-eslint/no-var-requires */
 const apiconnector = require('@hexonet/ispapi-apiconnector')
 const cl = new apiconnector.APIClient()
 cl.useOTESystem()

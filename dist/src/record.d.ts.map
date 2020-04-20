@@ -1,0 +1,1 @@
+{"version":3,"file":"record.d.ts","sourceRoot":"","sources":["../../src/record.ts"],"names":[],"mappings":"AAGA,qBAAa,MAAM;IAIf,OAAO,CAAC,IAAI,CAAM;gBAMC,IAAI,EAAE,GAAG;IAQrB,OAAO,IAAI,GAAG;IASd,YAAY,CAAC,GAAG,EAAE,MAAM,GAAG,MAAM,GAAG,IAAI;IAY/C,OAAO,CAAC,OAAO;CAGlB"}

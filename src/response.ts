@@ -37,16 +37,17 @@ export class Response extends ResponseTemplate {
      * @param $ph placeholder array to get vars in response description dynamically replaced
      */
     public constructor(raw: string, cmd: any, ph: any = {}) {
-        /* tslint:disable:no-duplicate-super */
+
         super(raw);
 
         const keys = Object.keys(ph);
         keys.forEach((varName: string) => {
-            this.raw = this.raw.replace(new RegExp(`\{${varName}\}`, "g"), ph[varName]);
+            this.raw = this.raw.replace(new RegExp(`{${varName}}`, "g"), ph[varName]);
         });
         this.raw = this.raw.replace(/\{[A-Z_]+\}/g, "");
+        /* eslint-disable constructor-super */
         super(this.raw);
-        /* tslint:enable:no-duplicate-super */
+        /* eslint-enable constructor-super */
 
         this.command = cmd;
         if (
@@ -92,7 +93,7 @@ export class Response extends ResponseTemplate {
      * @param data array of column data
      * @returns Current Response Instance for method chaining
      */
-    public addColumn(key: string, data: string[]) {
+    public addColumn(key: string, data: string[]): Response {
         const col = new Column(key, data);
         this.columns.push(col);
         this.columnkeys.push(key);
@@ -158,7 +159,7 @@ export class Response extends ResponseTemplate {
      * @return command as plain text
      */
     public getCommandPlain(): string {
-        let tmp: string = "";
+        let tmp = "";
         Object.keys(this.command).forEach((key: string) => {
             tmp += `${key} = ${this.command[key]}\n`;
         });

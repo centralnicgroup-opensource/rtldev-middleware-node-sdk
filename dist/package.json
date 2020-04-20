@@ -1,0 +1,97 @@
+{
+    "name": "@hexonet/ispapi-apiconnector",
+    "description": "Node.js SDK for the insanely fast HEXONET API",
+    "version": "6.0.1",
+    "private": false,
+    "author": {
+        "name": "Kai Schwarz",
+        "email": "kschwarz@hexonet.net"
+    },
+    "main": "dist/index.js",
+    "license": "MIT",
+    "engines": {
+        "node": ">=10.18.0"
+    },
+    "homepage": "https://github.com/hexonet/node-sdk",
+    "repository": "github:hexonet/node-sdk",
+    "bugs": "https://github.com/hexonet/node-sdk/issues",
+    "maintainers": [
+        {
+            "name": "Kai Schwarz",
+            "email": "kschwarz@hexonet.net"
+        }
+    ],
+    "keywords": [
+        "hexonet",
+        "domain",
+        "api",
+        "connector",
+        "isp",
+        "ispapi",
+        "ssl",
+        "cert",
+        "dns",
+        "backorder",
+        "premium",
+        "preregistration",
+        "registration",
+        "application"
+    ],
+    "nyc": {
+        "reporter": [
+            "html",
+            "text"
+        ],
+        "exclude": [
+            "**/*.spec.ts",
+            "**/*.specnew.ts"
+        ]
+    },
+    "scripts": {
+        "build": "tsc --version && tsc",
+        "documentation": "npm run documentation_docco --silent && npm run documentation_typedoc --silent",
+        "documentation_docco": "docco -l parallel -o docs/docco src/*.ts",
+        "documentation_typedoc": "typedoc --out docs/typedoc --name @hexonet/ispapi-apiconnector --readme ./README.md --mode file --includeDeclarations --excludeExternals src/*.ts",
+        "lint": "eslint --fix --ext .ts,.json,.md . src test",
+        "test": "cross-env NODE_ENV=development nyc ./node_modules/.bin/_mocha -r ts-node/register test/*.spec.ts"
+    },
+    "devDependencies": {
+        "@semantic-release/changelog": "^5.0.0",
+        "@semantic-release/git": "^9.0.0",
+        "@semantic-release/npm": "^7.0.3",
+        "@types/chai": "^4.2.11",
+        "@types/chai-as-promised": "^7.1.2",
+        "@types/mocha": "^7.0.2",
+        "@types/node-fetch": "^2.5.6",
+        "@typescript-eslint/eslint-plugin": "^2.28.0",
+        "@typescript-eslint/eslint-plugin-tslint": "^2.28.0",
+        "@typescript-eslint/parser": "^2.28.0",
+        "chai": "^4.2.0",
+        "chai-as-promised": "^7.1.1",
+        "cross-env": "^7.0.0",
+        "docco": "^0.8.0",
+        "eslint": "^6.8.0",
+        "eslint-plugin-import": "^2.18.2",
+        "eslint-plugin-json": "^2.1.1",
+        "eslint-plugin-markdown": "^1.0.0",
+        "eslint-plugin-node": "^11.0.0",
+        "eslint-plugin-promise": "^4.2.1",
+        "istanbul": "^0.4.5",
+        "jsdoc": "^3.6.3",
+        "jsdoc-oblivion": "^0.0.9",
+        "mocha": "^7.1.1",
+        "nock": "^12.0.0",
+        "node-fetch": "^2.6.0",
+        "npm": ">=6.13.4",
+        "nyc": "^15.0.0",
+        "semantic-release": "^17.0.4",
+        "supertest": "^4.0.2",
+        "ts-node": "^8.8.2",
+        "tslint": "^6.1.1",
+        "typedoc": "^0.17.0",
+        "typescript": "^3.5.3"
+    },
+    "dependencies": {
+        "npm": ">=6.13.4"
+    }
+}

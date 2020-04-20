@@ -1,16 +1,13 @@
-/**
- * ResponseParser Module
- */
-export namespace ResponseParser {
 
+export const ResponseParser: any = {
     /**
-     * Method to parse plain API response into js object
-     * @param raw API plain response
-     * @returns API response as JS Object (hash)
-     */
-    export const parse = (raw: string): any => {
+    * Method to parse plain API response into js object
+    * @param raw API plain response
+    * @returns API response as JS Object (hash)
+    */
+    parse: (raw: string): any => {
         const hash: any = {};
-        const regexp = /^([^\=]*[^\t\= ])[\t ]*=[\t ]*(.*)$/;
+        const regexp = /^([^=]*[^\t= ])[\t ]*=[\t ]*(.*)$/;
         const r = raw.replace(/\r\n/g, "\n").split("\n");
         while (r.length) {
             const row = r.shift();
@@ -20,11 +17,11 @@ export namespace ResponseParser {
                 if (m) {
                     const mm = m[1].match(/^property\[([^\]]*)\]/i);
                     if (mm) {
-                        if (!hash.hasOwnProperty("PROPERTY")) {
+                        if (!Object.prototype.hasOwnProperty.call(hash, "PROPERTY")) {
                             hash.PROPERTY = {};
                         }
                         mm[1] = mm[1].toUpperCase().replace(/\s/g, "");
-                        if (!hash.PROPERTY.hasOwnProperty(mm[1])) {
+                        if (!Object.prototype.hasOwnProperty.call(hash.PROPERTY, mm[1])) {
                             hash.PROPERTY[mm[1]] = [];
                         }
                         hash.PROPERTY[mm[1]].push(m[2].replace(/[\t ]*$/, ""));
@@ -35,35 +32,34 @@ export namespace ResponseParser {
             }
         }
         return hash;
-    };
-
+    },
     /**
-     * Serialize given parsed response hash back to plain text
-     * @param r API response as JS Object (hash)
-     * @returns plain API response
-     */
-    export const serialize = (r: any): string => {
+    * Serialize given parsed response hash back to plain text
+    * @param r API response as JS Object (hash)
+    * @returns plain API response
+    */
+    serialize: (r: any): string => {
         let plain = "[RESPONSE]";
-        if (r.hasOwnProperty("PROPERTY")) {
+        if (Object.prototype.hasOwnProperty.call(r, "PROPERTY")) {
             Object.keys(r.PROPERTY).forEach((key) => {
                 r.PROPERTY[key].forEach((val: string, index: number) => {
                     plain += `\r\nPROPERTY[${key}][${index}]=${val}`;
                 });
             });
         }
-        if (r.hasOwnProperty("CODE")) {
+        if (Object.prototype.hasOwnProperty.call(r, "CODE")) {
             plain += `\r\nCODE=${r.CODE}`;
         }
-        if (r.hasOwnProperty("DESCRIPTION")) {
+        if (Object.prototype.hasOwnProperty.call(r, "DESCRIPTION")) {
             plain += `\r\nDESCRIPTION=${r.DESCRIPTION}`;
         }
-        if (r.hasOwnProperty("QUEUETIME")) {
+        if (Object.prototype.hasOwnProperty.call(r, "QUEUETIME")) {
             plain += `\r\nQUEUETIME=${r.QUEUETIME}`;
         }
-        if (r.hasOwnProperty("RUNTIME")) {
+        if (Object.prototype.hasOwnProperty.call(r, "RUNTIME")) {
             plain += `\r\nRUNTIME=${r.RUNTIME}`;
         }
         plain += "\r\nEOF\r\n";
         return plain;
-    };
-}
+    }
+};
