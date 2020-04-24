@@ -12,12 +12,12 @@ export class CustomLogger extends Logger {
      * @param error error message or null
      * @return current Logger instance for method chaining
      */
-    public log(post: string, r: Response, error: Error | null = null): CustomLogger {
+    public log(post: string, r: Response, error: string | null = null): CustomLogger {
         // apply here whatever you need e.g.
         console.log(post);
         console.dir(r.getCommand());
         if (error) {
-            console.error(error.message);
+            console.error(error);
         }
         console.log(r.getPlain());
         return this;

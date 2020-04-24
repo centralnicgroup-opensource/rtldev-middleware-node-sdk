@@ -11,11 +11,11 @@ export class Logger {
      * @param error error message or null
      * @return current Logger instance for method chaining
      */
-    public log(post: string, r: Response, error: Error | null = null): Logger {
+    public log(post: string, r: Response, error: string | null = null): Logger {
         console.dir(r.getCommand());
         console.log(post);
         if (error) {
-            console.error(`HTTP communication failed: ${error.message}`);
+            console.error(`HTTP communication failed: ${error}`);
         }
         console.log(r.getPlain());
         return this;

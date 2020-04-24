@@ -369,7 +369,7 @@ export class APIClient {
             if (res.ok) { // res.status >= 200 && res.status < 300
                 body = await res.text();
             } else {
-                error = new Error(res.status + (res.statusText ? " " + res.statusText : ""));
+                error = res.status + (res.statusText ? " " + res.statusText : "");
                 body = rtm.getTemplate("httperror").getPlain();
             }
             const rr = new Response(body, mycmd, cfg);
@@ -377,6 +377,13 @@ export class APIClient {
                 this.logger.log(this.getPOSTData(mycmd, true), rr, error);
             }
             return rr;
+        }).catch(err => {
+            const body = rtm.getTemplate("httperror").getPlain();
+            const rr = new Response(body, mycmd, cfg);
+            if (this.debugMode && this.logger) {
+                this.logger.log(this.getPOSTData(mycmd, true), rr, err.message);
+            }
+            return err
         });
     }
 
