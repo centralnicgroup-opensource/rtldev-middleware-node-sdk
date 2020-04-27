@@ -1,3 +1,10 @@
+## [7.0.3](https://github.com/hexonet/node-sdk/compare/v7.0.2...v7.0.3) (2020-04-27)
+
+
+### Bug Fixes
+
+* **apiclient:** remove deprecated private function toUpperCaseKeys ([f529619](https://github.com/hexonet/node-sdk/commit/f5296199b60d376f152a352aac4db7ead2634a96))
+
 ## [7.0.2](https://github.com/hexonet/node-sdk/compare/v7.0.1...v7.0.2) (2020-04-27)
 
 
