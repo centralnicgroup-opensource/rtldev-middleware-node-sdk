@@ -1,3 +1,10 @@
+## [7.0.1](https://github.com/hexonet/node-sdk/compare/v7.0.0...v7.0.1) (2020-04-27)
+
+
+### Bug Fixes
+
+* **npm:** fixed main property path in package.json ([8a24bd5](https://github.com/hexonet/node-sdk/commit/8a24bd57575719f7f8a45fcf28e88c7813e733bd))
+
 # [7.0.0](https://github.com/hexonet/node-sdk/compare/v6.0.2...v7.0.0) (2020-04-24)
 
 

@@ -1,13 +1,13 @@
 {
     "name": "@hexonet/ispapi-apiconnector",
     "description": "Node.js SDK for the insanely fast HEXONET API",
-    "version": "6.0.2",
+    "version": "7.0.0",
     "private": false,
     "author": {
         "name": "Kai Schwarz",
         "email": "kschwarz@hexonet.net"
     },
-    "main": "dist/index.js",
+    "main": "dist/src/index.js",
     "license": "MIT",
     "engines": {
         "node": ">=10.18.0",
