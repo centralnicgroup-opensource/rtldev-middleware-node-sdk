@@ -45,7 +45,6 @@ export declare class APIClient {
     useOTESystem(): APIClient;
     useLIVESystem(): APIClient;
     getPOSTData(cmd: any, secured?: boolean): string;
-    private toUpperCaseKeys;
     private flattenCommand;
     private autoIDNConvert;
 }

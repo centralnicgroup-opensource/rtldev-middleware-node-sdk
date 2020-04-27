@@ -517,40 +517,27 @@ export class APIClient {
     }
 
     /**
-     * Translate all command parameter names to uppercase
-     * @param cmd api command
-     * @returns api command with uppercase parameter names
-     */
-    private toUpperCaseKeys(cmd: any): any {
-        const newcmd: any = {};
-        Object.keys(cmd).forEach((k: string) => {
-            newcmd[k.toUpperCase()] = cmd[k];
-        });
-        return newcmd;
-    }
-
-    /**
      * Flatten nested arrays in command
      * @param cmd api command
      * @returns api command with flattended parameters
      */
     private flattenCommand(cmd: any): any {
-        const mycmd = this.toUpperCaseKeys(cmd);
         const newcmd: any = {};
-        Object.keys(mycmd).forEach((key: string) => {
-            const val = mycmd[key];
+        Object.keys(cmd).forEach((key: string) => {
+            const val = cmd[key];
+            const newKey = key.toUpperCase();
             if (val !== null && val !== undefined) {
                 if (Array.isArray(val)) {
                     let index = 0;
                     for (const row of val) {
-                        newcmd[`${key}${index}`] = (row + "").replace(/\r|\n/g, "");
+                        newcmd[`${newKey}${index}`] = (row + "").replace(/\r|\n/g, "");
                         index++;
                     }
                 } else {
                     if (typeof val === "string" || val instanceof String) {
-                        newcmd[key] = val.replace(/\r|\n/g, "");
+                        newcmd[newKey] = val.replace(/\r|\n/g, "");
                     } else {
-                        newcmd[key] = val;
+                        newcmd[newKey] = val;
                     }
                 }
             }
