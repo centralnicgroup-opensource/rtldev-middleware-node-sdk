@@ -1,3 +1,10 @@
+## [7.0.2](https://github.com/hexonet/node-sdk/compare/v7.0.1...v7.0.2) (2020-04-27)
+
+
+### Bug Fixes
+
+* **npm:** move node-fetch from devDependencies to dependencies ([1c7186b](https://github.com/hexonet/node-sdk/commit/1c7186b50b8fc64d0eff0d9da951eb284e3856b1))
+
 ## [7.0.1](https://github.com/hexonet/node-sdk/compare/v7.0.0...v7.0.1) (2020-04-27)
 
 
