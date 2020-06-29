@@ -328,7 +328,7 @@ describe("APIClient class", function () {
       const tpl = rtm.getTemplate("httperror");
       nock("https://api.ispapi.net")
         .post("/api/call.cgi")
-        .socketDelay(APIClient.socketTimeout)
+        .delayConnection(APIClient.socketTimeout)
         .reply(200, tpl.getPlain());
       cl.setCredentials("test.user", "WRONGPASSWORD");
       const r = await cl.login();
