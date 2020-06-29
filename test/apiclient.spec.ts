@@ -292,7 +292,8 @@ describe("APIClient class", function () {
       }
     });
 
-    it("validate against mocked API response [login succeeded; role used]", async () => {
+    // skipping test using public accessible role user; we need to review here
+    it.skip("validate against mocked API response [login succeeded; role used]", async () => {
       const tpl = new Response(rtm.getTemplate("login200").getPlain(), cmd);
       nock("https://api.ispapi.net")
         .post("/api/call.cgi")
