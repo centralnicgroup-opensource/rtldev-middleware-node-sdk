@@ -82,7 +82,7 @@
     "jsdoc": "^3.6.3",
     "jsdoc-oblivion": "^0.0.9",
     "mocha": "^8.0.1",
-    "nock": "^12.0.0",
+    "nock": "^13.0.0",
     "nyc": "^15.0.0",
     "semantic-release": "^17.0.4",
     "supertest": "^4.0.2",
