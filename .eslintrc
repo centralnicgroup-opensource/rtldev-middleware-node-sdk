@@ -11,8 +11,7 @@
         "promise"
     ],
     "extends": [
-        "eslint:recommended",
-        "plugin:@typescript-eslint/eslint-recommended",
+        "recommended",
         "plugin:@typescript-eslint/recommended",
         "plugin:json/recommended"
     ],
