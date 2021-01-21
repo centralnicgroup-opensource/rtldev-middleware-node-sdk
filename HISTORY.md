@@ -1,3 +1,10 @@
+## [7.0.4](https://github.com/hexonet/node-sdk/compare/v7.0.3...v7.0.4) (2021-01-21)
+
+
+### Bug Fixes
+
+* **ci:** migration from Travis CI to github actions ([b3244be](https://github.com/hexonet/node-sdk/commit/b3244becfe9fc3c3e78054180e8e643e4ed7647a))
+
 ## [7.0.3](https://github.com/hexonet/node-sdk/compare/v7.0.2...v7.0.3) (2020-04-27)
 
 

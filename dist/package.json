@@ -52,7 +52,7 @@
         "build": "tsc --version && tsc",
         "documentation": "npm run documentation_docco --silent && npm run documentation_typedoc --silent",
         "documentation_docco": "docco -l parallel -o docs/docco src/*.ts",
-        "documentation_typedoc": "typedoc --out docs/typedoc --name @hexonet/ispapi-apiconnector --readme ./README.md --mode file --includeDeclarations --excludeExternals src/*.ts",
+        "documentation_typedoc": "typedoc --out docs/typedoc --name @hexonet/ispapi-apiconnector --readme ./README.md --excludeExternals src/*.ts",
         "lint": "eslint --fix --ext .ts,.json,.md . src test",
         "test": "cross-env NODE_ENV=development nyc ./node_modules/.bin/_mocha -r ts-node/register test/*.spec.ts"
     },
