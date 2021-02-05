@@ -3,7 +3,7 @@ on: [push, pull_request]
 
 jobs:
   test:
-    name: Test @ NodeJS ${{ matrix.node-version }} - x86 - ubuntu-latest
+    name: Test @ NodeJS - x86 - ubuntu-latest
     # Support [skip ci] out of box with github actions Workaround
     # Only works for push https://github.com/actions/runner/issues/774
     if: github.event_name == 'pull_request' || (github.event_name == 'push' && contains(toJson(github.event.commits), '[skip ci]') == false)
