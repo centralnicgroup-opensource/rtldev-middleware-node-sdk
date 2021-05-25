@@ -28,7 +28,16 @@ describe("ResponseTemplateManager class", function () {
 
   describe("#.getTemplates", () => {
     it("check return value", () => {
-      const defaultones = ["404", "500", "error", "httperror", "invalid", "empty", "unauthorized", "expired"];
+      const defaultones = [
+        "404",
+        "500",
+        "error",
+        "httperror",
+        "invalid",
+        "empty",
+        "unauthorized",
+        "expired",
+      ];
       expect(rtm.getTemplates()).to.include.all.keys(defaultones);
     });
   });

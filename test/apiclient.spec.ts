@@ -7,7 +7,11 @@ import chai = require("chai");
 import chaiPromised = require("chai-as-promised");
 import "mocha";
 import nock = require("nock");
-import { APIClient, ISPAPI_CONNECTION_URL, ISPAPI_CONNECTION_URL_PROXY } from "../src/apiclient";
+import {
+  APIClient,
+  ISPAPI_CONNECTION_URL,
+  ISPAPI_CONNECTION_URL_PROXY,
+} from "../src/apiclient";
 import { Response } from "../src/response";
 import { ResponseTemplateManager } from "../src/responsetemplatemanager";
 chai.use(chaiPromised);
@@ -23,15 +27,43 @@ after(() => {
 
 before(() => {
   cl = new APIClient();
-  rtm.addTemplate("login200", "[RESPONSE]\r\nPROPERTY[SESSION][0]=h8JLZZHdF2WgWWXlwbKWzEG3XrzoW4yshhvtqyg0LCYiX55QnhgYX9cB0W4mlpbx\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.169\r\nEOF\r\n")
-    .addTemplate("login500", rtm.generateTemplate("530", "Authentication failed"))
-    .addTemplate("OK", rtm.generateTemplate("200", "Command completed successfully"))
-    .addTemplate("CHECKS", "[RESPONSE]\r\nPROPERTY[TOTAL][0]=2701\r\nPROPERTY[FIRST][0]=0\r\nPROPERTY[DOMAIN][0]=0-60motorcycletimes.com\r\nPROPERTY[DOMAIN][1]=0-be-s01-0.com\r\nPROPERTY[COUNT][0]=2\r\nPROPERTY[LAST][0]=1\r\nPROPERTY[LIMIT][0]=2\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.023\r\nEOF\r\n")
-    .addTemplate("listP0", "[RESPONSE]\r\nPROPERTY[TOTAL][0]=2701\r\nPROPERTY[FIRST][0]=0\r\nPROPERTY[DOMAIN][0]=0-60motorcycletimes.com\r\nPROPERTY[DOMAIN][1]=0-be-s01-0.com\r\nPROPERTY[COUNT][0]=2\r\nPROPERTY[LAST][0]=1\r\nPROPERTY[LIMIT][0]=2\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.023\r\nEOF\r\n")
-    .addTemplate("listP1", "[RESPONSE]\r\nPROPERTY[TOTAL][0]=2701\r\nPROPERTY[FIRST][0]=2\r\nPROPERTY[DOMAIN][0]=0-qas-ao17-0.org\r\nPROPERTY[DOMAIN][1]=0-sunnyda222y.com\r\nPROPERTY[COUNT][0]=2\r\nPROPERTY[LAST][0]=3\r\nPROPERTY[LIMIT][0]=2\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.032\r\nEOF\r\n")
-    .addTemplate("listFP0", "[RESPONSE]\r\nPROPERTY[TOTAL][0]=3\r\nPROPERTY[FIRST][0]=0\r\nPROPERTY[DOMAIN][0]=0-60motorcycletimes.com\r\nPROPERTY[COUNT][0]=1\r\nPROPERTY[LAST][0]=1\r\nPROPERTY[LIMIT][0]=1\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.023\r\nEOF\r\n")
-    .addTemplate("listFP1", "[RESPONSE]\r\nPROPERTY[TOTAL][0]=3\r\nPROPERTY[FIRST][0]=1\r\nPROPERTY[DOMAIN][0]=0-be-s01-0.com\r\nPROPERTY[COUNT][0]=1\r\nPROPERTY[LAST][0]=2\r\nPROPERTY[LIMIT][0]=1\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.032\r\nEOF\r\n")
-    .addTemplate("listFP2", "[RESPONSE]\r\nPROPERTY[TOTAL][0]=3\r\nPROPERTY[FIRST][0]=2\r\nPROPERTY[DOMAIN][0]=0-qas-ao17-0.org\r\nPROPERTY[COUNT][0]=2\r\nPROPERTY[LAST][0]=3\r\nPROPERTY[LIMIT][0]=1\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.032\r\nEOF\r\n");
+  rtm
+    .addTemplate(
+      "login200",
+      "[RESPONSE]\r\nPROPERTY[SESSION][0]=h8JLZZHdF2WgWWXlwbKWzEG3XrzoW4yshhvtqyg0LCYiX55QnhgYX9cB0W4mlpbx\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.169\r\nEOF\r\n"
+    )
+    .addTemplate(
+      "login500",
+      rtm.generateTemplate("530", "Authentication failed")
+    )
+    .addTemplate(
+      "OK",
+      rtm.generateTemplate("200", "Command completed successfully")
+    )
+    .addTemplate(
+      "CHECKS",
+      "[RESPONSE]\r\nPROPERTY[TOTAL][0]=2701\r\nPROPERTY[FIRST][0]=0\r\nPROPERTY[DOMAIN][0]=0-60motorcycletimes.com\r\nPROPERTY[DOMAIN][1]=0-be-s01-0.com\r\nPROPERTY[COUNT][0]=2\r\nPROPERTY[LAST][0]=1\r\nPROPERTY[LIMIT][0]=2\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.023\r\nEOF\r\n"
+    )
+    .addTemplate(
+      "listP0",
+      "[RESPONSE]\r\nPROPERTY[TOTAL][0]=2701\r\nPROPERTY[FIRST][0]=0\r\nPROPERTY[DOMAIN][0]=0-60motorcycletimes.com\r\nPROPERTY[DOMAIN][1]=0-be-s01-0.com\r\nPROPERTY[COUNT][0]=2\r\nPROPERTY[LAST][0]=1\r\nPROPERTY[LIMIT][0]=2\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.023\r\nEOF\r\n"
+    )
+    .addTemplate(
+      "listP1",
+      "[RESPONSE]\r\nPROPERTY[TOTAL][0]=2701\r\nPROPERTY[FIRST][0]=2\r\nPROPERTY[DOMAIN][0]=0-qas-ao17-0.org\r\nPROPERTY[DOMAIN][1]=0-sunnyda222y.com\r\nPROPERTY[COUNT][0]=2\r\nPROPERTY[LAST][0]=3\r\nPROPERTY[LIMIT][0]=2\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.032\r\nEOF\r\n"
+    )
+    .addTemplate(
+      "listFP0",
+      "[RESPONSE]\r\nPROPERTY[TOTAL][0]=3\r\nPROPERTY[FIRST][0]=0\r\nPROPERTY[DOMAIN][0]=0-60motorcycletimes.com\r\nPROPERTY[COUNT][0]=1\r\nPROPERTY[LAST][0]=1\r\nPROPERTY[LIMIT][0]=1\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.023\r\nEOF\r\n"
+    )
+    .addTemplate(
+      "listFP1",
+      "[RESPONSE]\r\nPROPERTY[TOTAL][0]=3\r\nPROPERTY[FIRST][0]=1\r\nPROPERTY[DOMAIN][0]=0-be-s01-0.com\r\nPROPERTY[COUNT][0]=1\r\nPROPERTY[LAST][0]=2\r\nPROPERTY[LIMIT][0]=1\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.032\r\nEOF\r\n"
+    )
+    .addTemplate(
+      "listFP2",
+      "[RESPONSE]\r\nPROPERTY[TOTAL][0]=3\r\nPROPERTY[FIRST][0]=2\r\nPROPERTY[DOMAIN][0]=0-qas-ao17-0.org\r\nPROPERTY[COUNT][0]=2\r\nPROPERTY[LAST][0]=3\r\nPROPERTY[LIMIT][0]=1\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.032\r\nEOF\r\n"
+    );
 });
 
 describe("APIClient class", function () {
@@ -40,7 +72,8 @@ describe("APIClient class", function () {
 
   describe("#.getPOSTData", () => {
     it("test object input with special chars", () => {
-      const validate = "s_entity=54cd&s_command=AUTH%3Dgwrgwqg%25%26%5C44t3%2A%0ACOMMAND%3DModifyDomain";
+      const validate =
+        "s_entity=54cd&s_command=AUTH%3Dgwrgwqg%25%26%5C44t3%2A%0ACOMMAND%3DModifyDomain";
       const enc = cl.getPOSTData({
         AUTH: "gwrgwqg%&\\44t3*",
         COMMAND: "ModifyDomain",
@@ -72,13 +105,17 @@ describe("APIClient class", function () {
     });
 
     it("test data getting secured correctly", () => {
-      const validate = "s_entity=54cd&s_login=test.user&s_pw=***&s_command=COMMAND%3DCheckAuthentication%0APASSWORD%3D%2A%2A%2A%0ASUBUSER%3Dtest.user";
+      const validate =
+        "s_entity=54cd&s_login=test.user&s_pw=***&s_command=COMMAND%3DCheckAuthentication%0APASSWORD%3D%2A%2A%2A%0ASUBUSER%3Dtest.user";
       cl.setCredentials("test.user", "test.passw0rd");
-      const enc = cl.getPOSTData({
-        COMMAND: "CheckAuthentication",
-        PASSWORD: "test.passw0rd",
-        SUBUSER: "test.user",
-      }, true);
+      const enc = cl.getPOSTData(
+        {
+          COMMAND: "CheckAuthentication",
+          PASSWORD: "test.passw0rd",
+          SUBUSER: "test.user",
+        },
+        true
+      );
       cl.setCredentials("", "");
       expect(enc).to.equal(validate);
     });
@@ -123,7 +160,11 @@ describe("APIClient class", function () {
   describe("#.getUserAgent", () => {
     it("validate response", () => {
       const ua = cl.getUserAgent();
-      expect(ua).to.equal(`NODE-SDK (${process.platform}; ${process.arch}; rv:${cl.getVersion()}) node/${process.version}`);
+      expect(ua).to.equal(
+        `NODE-SDK (${process.platform}; ${
+          process.arch
+        }; rv:${cl.getVersion()}) node/${process.version}`
+      );
     });
   });
 
@@ -132,14 +173,28 @@ describe("APIClient class", function () {
       const cls = cl.setUserAgent("WHMCS", "7.7.0");
       const ua = cl.getUserAgent();
       expect(cls).to.be.instanceOf(APIClient);
-      expect(ua).to.equal(`WHMCS (${process.platform}; ${process.arch}; rv:7.7.0) node-sdk/${cl.getVersion()} node/${process.version}`);
+      expect(ua).to.equal(
+        `WHMCS (${process.platform}; ${
+          process.arch
+        }; rv:7.7.0) node-sdk/${cl.getVersion()} node/${process.version}`
+      );
     });
 
     it("validate agent string including modules", () => {
-      const cls = cl.setUserAgent("WHMCS", "7.7.0", ["reg/2.6.2", "ssl/7.2.2", "dc/8.2.2"]);
+      const cls = cl.setUserAgent("WHMCS", "7.7.0", [
+        "reg/2.6.2",
+        "ssl/7.2.2",
+        "dc/8.2.2",
+      ]);
       const ua = cl.getUserAgent();
       expect(cls).to.be.instanceOf(APIClient);
-      expect(ua).to.equal(`WHMCS (${process.platform}; ${process.arch}; rv:7.7.0) reg/2.6.2 ssl/7.2.2 dc/8.2.2 node-sdk/${cl.getVersion()} node/${process.version}`);
+      expect(ua).to.equal(
+        `WHMCS (${process.platform}; ${
+          process.arch
+        }; rv:7.7.0) reg/2.6.2 ssl/7.2.2 dc/8.2.2 node-sdk/${cl.getVersion()} node/${
+          process.version
+        }`
+      );
     });
   });
 
@@ -157,7 +212,9 @@ describe("APIClient class", function () {
       const tmp = cl.getPOSTData({
         COMMAND: "StatusAccount",
       });
-      expect(tmp).to.equal("s_entity=54cd&s_otp=12345678&s_command=COMMAND%3DStatusAccount");
+      expect(tmp).to.equal(
+        "s_entity=54cd&s_otp=12345678&s_command=COMMAND%3DStatusAccount"
+      );
     });
 
     it("validate getPOSTData response [otp reset]", () => {
@@ -175,7 +232,9 @@ describe("APIClient class", function () {
       const tmp = cl.getPOSTData({
         COMMAND: "StatusAccount",
       });
-      expect(tmp).to.equal("s_entity=54cd&s_session=12345678&s_command=COMMAND%3DStatusAccount");
+      expect(tmp).to.equal(
+        "s_entity=54cd&s_session=12345678&s_command=COMMAND%3DStatusAccount"
+      );
     });
 
     it("validate getPOSTData response [credentials and session set] ", () => {
@@ -186,7 +245,9 @@ describe("APIClient class", function () {
       const tmp = cl.getPOSTData({
         COMMAND: "StatusAccount",
       });
-      expect(tmp).to.equal("s_entity=54cd&s_session=12345678&s_command=COMMAND%3DStatusAccount");
+      expect(tmp).to.equal(
+        "s_entity=54cd&s_session=12345678&s_command=COMMAND%3DStatusAccount"
+      );
     });
 
     it("validate getPOSTData response [session reset]", () => {
@@ -205,14 +266,15 @@ describe("APIClient class", function () {
 
     it("validate correct settings", () => {
       const sessionobj = {};
-      cl.setSession("12345678")
-        .saveSession(sessionobj);
+      cl.setSession("12345678").saveSession(sessionobj);
       const cl2 = new APIClient();
       cl2.reuseSession(sessionobj);
       const tmp = cl2.getPOSTData({
         COMMAND: "StatusAccount",
       });
-      expect(tmp).to.equal("s_entity=54cd&s_session=12345678&s_command=COMMAND%3DStatusAccount");
+      expect(tmp).to.equal(
+        "s_entity=54cd&s_session=12345678&s_command=COMMAND%3DStatusAccount"
+      );
     });
   });
 
@@ -222,7 +284,9 @@ describe("APIClient class", function () {
       const tmp = cl.getPOSTData({
         COMMAND: "StatusAccount",
       });
-      expect(tmp).to.equal("s_entity=54cd&s_remoteaddr=10.10.10.10&s_command=COMMAND%3DStatusAccount");
+      expect(tmp).to.equal(
+        "s_entity=54cd&s_remoteaddr=10.10.10.10&s_command=COMMAND%3DStatusAccount"
+      );
     });
 
     it("validate getPOSTData response [ip reset]", () => {
@@ -240,7 +304,9 @@ describe("APIClient class", function () {
       const tmp = cl.getPOSTData({
         COMMAND: "StatusAccount",
       });
-      expect(tmp).to.equal("s_entity=54cd&s_login=myaccountid&s_pw=mypassword&s_command=COMMAND%3DStatusAccount");
+      expect(tmp).to.equal(
+        "s_entity=54cd&s_login=myaccountid&s_pw=mypassword&s_command=COMMAND%3DStatusAccount"
+      );
     });
 
     it("validate getPOSTData response [session reset]", () => {
@@ -258,7 +324,9 @@ describe("APIClient class", function () {
       const tmp = cl.getPOSTData({
         COMMAND: "StatusAccount",
       });
-      expect(tmp).to.equal("s_entity=54cd&s_login=myaccountid%21myroleid&s_pw=mypassword&s_command=COMMAND%3DStatusAccount");
+      expect(tmp).to.equal(
+        "s_entity=54cd&s_login=myaccountid%21myroleid&s_pw=mypassword&s_command=COMMAND%3DStatusAccount"
+      );
     });
 
     it("validate getPOSTData response [role credentials reset]", () => {
@@ -276,8 +344,7 @@ describe("APIClient class", function () {
       nock("https://api.ispapi.net")
         .post("/api/call.cgi")
         .reply(200, tpl.getPlain());
-      cl.useOTESystem()
-        .setCredentials("test.user", "test.passw0rd");
+      cl.useOTESystem().setCredentials("test.user", "test.passw0rd");
       const r = await cl.login();
       expect(r).to.be.instanceOf(Response);
       expect(r.isSuccess()).to.be.true;
@@ -287,7 +354,9 @@ describe("APIClient class", function () {
         const rec2 = tpl.getRecord(0);
         expect(rec2).not.to.be.null;
         if (rec2) {
-          expect(rec.getDataByKey("SESSION")).to.equal(rec2.getDataByKey("SESSION"));
+          expect(rec.getDataByKey("SESSION")).to.equal(
+            rec2.getDataByKey("SESSION")
+          );
         }
       }
     });
@@ -298,8 +367,11 @@ describe("APIClient class", function () {
       nock("https://api.ispapi.net")
         .post("/api/call.cgi")
         .reply(200, tpl.getPlain());
-      cl.useOTESystem()
-        .setRoleCredentials("test.user", "testrole", "test.passw0rd");
+      cl.useOTESystem().setRoleCredentials(
+        "test.user",
+        "testrole",
+        "test.passw0rd"
+      );
       const r = await cl.login();
       expect(r).to.be.instanceOf(Response);
       expect(r.isSuccess()).to.be.true;
@@ -309,7 +381,9 @@ describe("APIClient class", function () {
         const rec2 = tpl.getRecord(0);
         expect(rec2).not.to.be.null;
         if (rec2) {
-          expect(rec.getDataByKey("SESSION")).to.equal(rec2.getDataByKey("SESSION"));
+          expect(rec.getDataByKey("SESSION")).to.equal(
+            rec2.getDataByKey("SESSION")
+          );
         }
       }
     });
@@ -326,7 +400,7 @@ describe("APIClient class", function () {
 
     // deactivated as delayConnection is not working together with node-fetch
     it.skip("validate against mocked API response [login failed; http timeout]", async () => {
-      nock.cleanAll()
+      nock.cleanAll();
       const tpl = rtm.getTemplate("httperror");
       nock("https://api.ispapi.net")
         .post("/api/call.cgi")
@@ -346,8 +420,7 @@ describe("APIClient class", function () {
       nock("https://api.ispapi.net")
         .post("/api/call.cgi")
         .reply(200, tpl.getPlain());
-      cl.useOTESystem()
-        .setCredentials("test.user", "test.passw0rd");
+      cl.useOTESystem().setCredentials("test.user", "test.passw0rd");
       const r = await cl.login();
       expect(r).to.be.instanceOf(Response);
       expect(r.isSuccess()).to.be.true;
@@ -362,8 +435,7 @@ describe("APIClient class", function () {
       nock("https://api.ispapi.net")
         .post("/api/call.cgi")
         .reply(200, tpl.getPlain());
-      cl.useOTESystem()
-        .setCredentials("test.user", "test.passw0rd");
+      cl.useOTESystem().setCredentials("test.user", "test.passw0rd");
       const r = await cl.loginExtended({
         TIMEOUT: 60,
       });
@@ -375,7 +447,9 @@ describe("APIClient class", function () {
         const rec2 = tpl.getRecord(0);
         expect(rec2).not.to.be.null;
         if (rec2) {
-          expect(rec.getDataByKey("SESSION")).to.equal(rec2.getDataByKey("SESSION"));
+          expect(rec.getDataByKey("SESSION")).to.equal(
+            rec2.getDataByKey("SESSION")
+          );
         }
       }
     });
@@ -403,8 +477,7 @@ describe("APIClient class", function () {
         const sessid = rec2.getDataByKey("SESSION");
         expect(sessid).not.to.be.null;
         if (sessid) {
-          cl.enableDebugMode()
-            .setSession(sessid);
+          cl.enableDebugMode().setSession(sessid);
           const r = await cl.logout();
           expect(r).to.be.instanceOf(Response);
           expect(r.isError()).to.be.true;
@@ -485,10 +558,11 @@ describe("APIClient class", function () {
       nock("https://api.ispapi.net")
         .post("/api/call.cgi")
         .reply(200, rtm.getTemplate("listP1").getPlain());
-      const r = new Response(
-        rtm.getTemplate("listP0").getPlain(),
-        { COMMAND: "QueryDomainList", LIMIT: 2, FIRST: 0 },
-      );
+      const r = new Response(rtm.getTemplate("listP0").getPlain(), {
+        COMMAND: "QueryDomainList",
+        LIMIT: 2,
+        FIRST: 0,
+      });
       const nr = await cl.requestNextResponsePage(r);
       expect(r.isSuccess()).to.be.true;
       expect(r.getRecordsLimitation()).to.equal(2);
@@ -506,11 +580,16 @@ describe("APIClient class", function () {
     });
 
     it("validate against mocked API response [LAST set]", () => {
-      const r = new Response(
-        rtm.getTemplate("listP0").getPlain(),
-        { COMMAND: "QueryDomainList", LIMIT: 2, FIRST: 0, LAST: 1 },
+      const r = new Response(rtm.getTemplate("listP0").getPlain(), {
+        COMMAND: "QueryDomainList",
+        LIMIT: 2,
+        FIRST: 0,
+        LAST: 1,
+      });
+      return expect(cl.requestNextResponsePage(r)).to.be.rejectedWith(
+        Error,
+        "Parameter LAST in use. Please remove it to avoid issues in requestNextPage."
       );
-      return expect(cl.requestNextResponsePage(r)).to.be.rejectedWith(Error, "Parameter LAST in use. Please remove it to avoid issues in requestNextPage.");
     });
 
     it("validate against mocked API response [no FIRST set]", async () => {
@@ -518,10 +597,10 @@ describe("APIClient class", function () {
         .post("/api/call.cgi")
         .reply(200, rtm.getTemplate("listP1").getPlain());
       cl.disableDebugMode();
-      const r = new Response(
-        rtm.getTemplate("listP0").getPlain(),
-        { COMMAND: "QueryDomainList", LIMIT: 2 },
-      );
+      const r = new Response(rtm.getTemplate("listP0").getPlain(), {
+        COMMAND: "QueryDomainList",
+        LIMIT: 2,
+      });
       const nr = await cl.requestNextResponsePage(r);
       expect(r.isSuccess()).to.be.true;
       expect(r.getRecordsLimitation()).to.equal(2);
@@ -555,7 +634,11 @@ describe("APIClient class", function () {
           }
           return rtm.getTemplate("listFP2").getPlain();
         });
-      const nr = await cl.requestAllResponsePages({ COMMAND: "QueryDomainList", FIRST: 0, LIMIT: 1 });
+      const nr = await cl.requestAllResponsePages({
+        COMMAND: "QueryDomainList",
+        FIRST: 0,
+        LIMIT: 1,
+      });
       expect(nr.length).to.equal(3);
       scope.persist(false);
     });

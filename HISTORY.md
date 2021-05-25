@@ -1,166 +1,143 @@
 ## [7.0.4](https://github.com/hexonet/node-sdk/compare/v7.0.3...v7.0.4) (2021-01-21)
 
-
 ### Bug Fixes
 
-* **ci:** migration from Travis CI to github actions ([b3244be](https://github.com/hexonet/node-sdk/commit/b3244becfe9fc3c3e78054180e8e643e4ed7647a))
+- **ci:** migration from Travis CI to github actions ([b3244be](https://github.com/hexonet/node-sdk/commit/b3244becfe9fc3c3e78054180e8e643e4ed7647a))
 
 ## [7.0.3](https://github.com/hexonet/node-sdk/compare/v7.0.2...v7.0.3) (2020-04-27)
 
-
 ### Bug Fixes
 
-* **apiclient:** remove deprecated private function toUpperCaseKeys ([f529619](https://github.com/hexonet/node-sdk/commit/f5296199b60d376f152a352aac4db7ead2634a96))
+- **apiclient:** remove deprecated private function toUpperCaseKeys ([f529619](https://github.com/hexonet/node-sdk/commit/f5296199b60d376f152a352aac4db7ead2634a96))
 
 ## [7.0.2](https://github.com/hexonet/node-sdk/compare/v7.0.1...v7.0.2) (2020-04-27)
 
-
 ### Bug Fixes
 
-* **npm:** move node-fetch from devDependencies to dependencies ([1c7186b](https://github.com/hexonet/node-sdk/commit/1c7186b50b8fc64d0eff0d9da951eb284e3856b1))
+- **npm:** move node-fetch from devDependencies to dependencies ([1c7186b](https://github.com/hexonet/node-sdk/commit/1c7186b50b8fc64d0eff0d9da951eb284e3856b1))
 
 ## [7.0.1](https://github.com/hexonet/node-sdk/compare/v7.0.0...v7.0.1) (2020-04-27)
 
-
 ### Bug Fixes
 
-* **npm:** fixed main property path in package.json ([8a24bd5](https://github.com/hexonet/node-sdk/commit/8a24bd57575719f7f8a45fcf28e88c7813e733bd))
+- **npm:** fixed main property path in package.json ([8a24bd5](https://github.com/hexonet/node-sdk/commit/8a24bd57575719f7f8a45fcf28e88c7813e733bd))
 
 # [7.0.0](https://github.com/hexonet/node-sdk/compare/v6.0.2...v7.0.0) (2020-04-24)
 
-
 ### Bug Fixes
 
-* **logger:** align error parameter of logger to be string ([ab1ee02](https://github.com/hexonet/node-sdk/commit/ab1ee02dc67bbbbe550e344db40ef290c5659d06))
-
+- **logger:** align error parameter of logger to be string ([ab1ee02](https://github.com/hexonet/node-sdk/commit/ab1ee02dc67bbbbe550e344db40ef290c5659d06))
 
 ### BREAKING CHANGES
 
-* **logger:** log method in Logger class change type of 3rd parameter
+- **logger:** log method in Logger class change type of 3rd parameter
 
 ## [6.0.2](https://github.com/hexonet/node-sdk/compare/v6.0.1...v6.0.2) (2020-04-20)
 
-
 ### Bug Fixes
 
-* **dep-bump:** replace `request` (deprecated) with `node-fetch`;reviewed linting errors ([427c329](https://github.com/hexonet/node-sdk/commit/427c3292232adad086b2726770d9c5434489f81c)), closes [#190](https://github.com/hexonet/node-sdk/issues/190)
+- **dep-bump:** replace `request` (deprecated) with `node-fetch`;reviewed linting errors ([427c329](https://github.com/hexonet/node-sdk/commit/427c3292232adad086b2726770d9c5434489f81c)), closes [#190](https://github.com/hexonet/node-sdk/issues/190)
 
 ## [6.0.1](https://github.com/hexonet/node-sdk/compare/v6.0.0...v6.0.1) (2020-04-20)
 
-
 ### Bug Fixes
 
-* **dep-bump:** remove dirty-chai (no ts support);deactivate tslint rule no-unused-expression in test ([150ae57](https://github.com/hexonet/node-sdk/commit/150ae57b5c2c477c062970eee40bbfea479a1594))
+- **dep-bump:** remove dirty-chai (no ts support);deactivate tslint rule no-unused-expression in test ([150ae57](https://github.com/hexonet/node-sdk/commit/150ae57b5c2c477c062970eee40bbfea479a1594))
 
 # [6.0.0](https://github.com/hexonet/node-sdk/compare/v5.6.0...v6.0.0) (2020-04-20)
 
-
 ### Bug Fixes
 
-* **apiclient:** make getPOSTData again public; migrate tests to typescript ([0f6ff13](https://github.com/hexonet/node-sdk/commit/0f6ff135fb0721d51801e8808c56c6b22ff3ca9c))
-* **messaging:** return a specific error template in case code or description are missing ([77af837](https://github.com/hexonet/node-sdk/commit/77af8375f86a159e113fde21b0d4e877aca2ea98))
-* **security:** make getPOSTData private to not make it accessible from outside ([639c67f](https://github.com/hexonet/node-sdk/commit/639c67ff4f8db9a58b61d2efb6f1e5f489b3114c))
-* **security:** replace passwords whereever they could be used for output ([1d53637](https://github.com/hexonet/node-sdk/commit/1d5363777dda7f9be07dbbf9f5a4e3b44a830304))
-
+- **apiclient:** make getPOSTData again public; migrate tests to typescript ([0f6ff13](https://github.com/hexonet/node-sdk/commit/0f6ff135fb0721d51801e8808c56c6b22ff3ca9c))
+- **messaging:** return a specific error template in case code or description are missing ([77af837](https://github.com/hexonet/node-sdk/commit/77af8375f86a159e113fde21b0d4e877aca2ea98))
+- **security:** make getPOSTData private to not make it accessible from outside ([639c67f](https://github.com/hexonet/node-sdk/commit/639c67ff4f8db9a58b61d2efb6f1e5f489b3114c))
+- **security:** replace passwords whereever they could be used for output ([1d53637](https://github.com/hexonet/node-sdk/commit/1d5363777dda7f9be07dbbf9f5a4e3b44a830304))
 
 ### Features
 
-* **apiclient:** allow to specify additional libraries via setUserAgent ([5e94ab5](https://github.com/hexonet/node-sdk/commit/5e94ab57fdaf9ee90c58fb97b2c2fd69c173e372))
-* **apiclient:** automaitc IDN conversion of API command parameters to punycode ([38018e3](https://github.com/hexonet/node-sdk/commit/38018e358c273edcbfd1c622881a1106ae1690a3))
-* **apiclient:** set Proxy, Referer Header; High Performance Connection Setup (see README.md) ([3abc0cc](https://github.com/hexonet/node-sdk/commit/3abc0ccf23c831639cdb3536ac986a03c3e675c0))
-* **logger:** possibility to override debug mode's default logging mechanism. See README.md ([e639b6a](https://github.com/hexonet/node-sdk/commit/e639b6a3e8622f6ebd6378173c7184960378f8ef))
-* **response:** added getCommandPlain (getting used command in plain text) ([4b9d659](https://github.com/hexonet/node-sdk/commit/4b9d659aa7b20b119c5670085f5005a6ce769dba))
-* **response:** possibility of place holder vars in standard responses to improve error details ([aa479bb](https://github.com/hexonet/node-sdk/commit/aa479bb3149870c3872736c8c5191c6b2f3e4d66))
-
+- **apiclient:** allow to specify additional libraries via setUserAgent ([5e94ab5](https://github.com/hexonet/node-sdk/commit/5e94ab57fdaf9ee90c58fb97b2c2fd69c173e372))
+- **apiclient:** automaitc IDN conversion of API command parameters to punycode ([38018e3](https://github.com/hexonet/node-sdk/commit/38018e358c273edcbfd1c622881a1106ae1690a3))
+- **apiclient:** set Proxy, Referer Header; High Performance Connection Setup (see README.md) ([3abc0cc](https://github.com/hexonet/node-sdk/commit/3abc0ccf23c831639cdb3536ac986a03c3e675c0))
+- **logger:** possibility to override debug mode's default logging mechanism. See README.md ([e639b6a](https://github.com/hexonet/node-sdk/commit/e639b6a3e8622f6ebd6378173c7184960378f8ef))
+- **response:** added getCommandPlain (getting used command in plain text) ([4b9d659](https://github.com/hexonet/node-sdk/commit/4b9d659aa7b20b119c5670085f5005a6ce769dba))
+- **response:** possibility of place holder vars in standard responses to improve error details ([aa479bb](https://github.com/hexonet/node-sdk/commit/aa479bb3149870c3872736c8c5191c6b2f3e4d66))
 
 ### BREAKING CHANGES
 
-* **logger:** existing logging mechanism (function based) got replaced to be based on an class
-based solution
+- **logger:** existing logging mechanism (function based) got replaced to be based on an class
+  based solution
 
 # [5.6.0](https://github.com/hexonet/node-sdk/compare/v5.5.3...v5.6.0) (2020-03-11)
 
-
 ### Features
 
-* **apiclient:** support bulk parameters as nested array ([b0415fa](https://github.com/hexonet/node-sdk/commit/b0415fa36c9f9586e98598dc0d0e11164f5cea96))
+- **apiclient:** support bulk parameters as nested array ([b0415fa](https://github.com/hexonet/node-sdk/commit/b0415fa36c9f9586e98598dc0d0e11164f5cea96))
 
 ## [5.5.3](https://github.com/hexonet/node-sdk/compare/v5.5.2...v5.5.3) (2019-10-04)
 
-
 ### Bug Fixes
 
-* **responsetemplate/mgr:** improve description of `423 Empty API response` ([f2d31fc](https://github.com/hexonet/node-sdk/commit/f2d31fc))
+- **responsetemplate/mgr:** improve description of `423 Empty API response` ([f2d31fc](https://github.com/hexonet/node-sdk/commit/f2d31fc))
 
 ## [5.5.2](https://github.com/hexonet/node-sdk/compare/v5.5.1...v5.5.2) (2019-09-18)
 
-
 ### Bug Fixes
 
-* **release process:** review configuration file ([630d497](https://github.com/hexonet/node-sdk/commit/630d497))
+- **release process:** review configuration file ([630d497](https://github.com/hexonet/node-sdk/commit/630d497))
 
 ## [5.5.1](https://github.com/hexonet/node-sdk/compare/v5.5.0...v5.5.1) (2019-08-16)
 
-
 ### Bug Fixes
 
-* **APIClient:** change default SDK url ([3378ee9](https://github.com/hexonet/node-sdk/commit/3378ee9))
+- **APIClient:** change default SDK url ([3378ee9](https://github.com/hexonet/node-sdk/commit/3378ee9))
 
 # [5.5.0](https://github.com/hexonet/node-sdk/compare/v5.4.2...v5.5.0) (2019-04-16)
 
-
 ### Features
 
-* **responsetemplate:** add isPending method ([3307204](https://github.com/hexonet/node-sdk/commit/3307204))
+- **responsetemplate:** add isPending method ([3307204](https://github.com/hexonet/node-sdk/commit/3307204))
 
 ## [5.4.2](https://github.com/hexonet/node-sdk/compare/v5.4.1...v5.4.2) (2019-04-04)
 
-
 ### Bug Fixes
 
-* **APIClient:** setUserAgent returns APIClient instance now ([c93a21b](https://github.com/hexonet/node-sdk/commit/c93a21b))
+- **APIClient:** setUserAgent returns APIClient instance now ([c93a21b](https://github.com/hexonet/node-sdk/commit/c93a21b))
 
 ## [5.4.1](https://github.com/hexonet/node-sdk/compare/v5.4.0...v5.4.1) (2019-03-29)
 
-
 ### Bug Fixes
 
-* **apiclient:** useragent string missing slashes; security bump; ([2704c7e](https://github.com/hexonet/node-sdk/commit/2704c7e))
+- **apiclient:** useragent string missing slashes; security bump; ([2704c7e](https://github.com/hexonet/node-sdk/commit/2704c7e))
 
 # [5.4.0](https://github.com/hexonet/node-sdk/compare/v5.3.0...v5.4.0) (2019-03-07)
 
-
 ### Features
 
-* **user-agent:** added functionality to customize default value ([4406c4e](https://github.com/hexonet/node-sdk/commit/4406c4e))
+- **user-agent:** added functionality to customize default value ([4406c4e](https://github.com/hexonet/node-sdk/commit/4406c4e))
 
 # [5.3.0](https://github.com/hexonet/node-sdk/compare/v5.2.0...v5.3.0) (2019-03-07)
 
-
 ### Features
 
-* **user-agent:** review user-agent header value ([e182cd4](https://github.com/hexonet/node-sdk/commit/e182cd4))
+- **user-agent:** review user-agent header value ([e182cd4](https://github.com/hexonet/node-sdk/commit/e182cd4))
 
 # [5.2.0](https://github.com/hexonet/node-sdk/compare/v5.1.0...v5.2.0) (2018-11-02)
 
-
 ### Features
 
-* **logger:** possibility to set a customer logger ([4231369](https://github.com/hexonet/node-sdk/commit/4231369))
+- **logger:** possibility to set a customer logger ([4231369](https://github.com/hexonet/node-sdk/commit/4231369))
 
 # [5.1.0](https://github.com/hexonet/node-sdk/compare/v5.0.4...v5.1.0) (2018-10-15)
 
-
 ### Features
 
-* **client:** add getSession method ([c22884c](https://github.com/hexonet/node-sdk/commit/c22884c))
+- **client:** add getSession method ([c22884c](https://github.com/hexonet/node-sdk/commit/c22884c))
 
 ## [5.0.4](https://github.com/hexonet/node-sdk/compare/v5.0.3...v5.0.4) (2018-10-04)
 
-
 ### Bug Fixes
 
-* **CLIENT:** use of fixed version of urlencode ([e067ded](https://github.com/hexonet/node-sdk/commit/e067ded))
+- **CLIENT:** use of fixed version of urlencode ([e067ded](https://github.com/hexonet/node-sdk/commit/e067ded))
 
 ./src/templates/template.hbs
 
@@ -168,10 +145,9 @@ Changelog
 
 ## [5.0.2](https://github.com/hexonet/node-sdk/compare/v5.0.1...v5.0.2) (2018-09-25)
 
-
 ### Bug Fixes
 
-* **pkg:** update nodejs engine version requirements ([200715f](https://github.com/hexonet/node-sdk/commit/200715f))
+- **pkg:** update nodejs engine version requirements ([200715f](https://github.com/hexonet/node-sdk/commit/200715f))
 
 ### Changelog
 
@@ -235,7 +211,7 @@ All notable changes to this project will be documented in this file. Dates are d
 
 #### [v4.3.0](https://github.com/hexonet/node-sdk/compare/v4.2.0...v4.3.0) (27 June 2018)
 
-- security dep  bump [`923dec6`](https://github.com/hexonet/node-sdk/commit/923dec661ebfcd207f4efb9471a5a4ae2aa52afe)
+- security dep bump [`923dec6`](https://github.com/hexonet/node-sdk/commit/923dec661ebfcd207f4efb9471a5a4ae2aa52afe)
 
 #### [v4.2.0](https://github.com/hexonet/node-sdk/compare/v4.1.3...v4.2.0) (27 June 2018)
 

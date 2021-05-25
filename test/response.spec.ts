@@ -14,8 +14,15 @@ const rtm = ResponseTemplateManager.getInstance();
 const cmd = { COMMAND: "StatusContact" };
 
 before(() => {
-  rtm.addTemplate("listP0", "[RESPONSE]\r\nPROPERTY[TOTAL][0]=2701\r\nPROPERTY[FIRST][0]=0\r\nPROPERTY[DOMAIN][0]=0-60motorcycletimes.com\r\nPROPERTY[DOMAIN][1]=0-be-s01-0.com\r\nPROPERTY[COUNT][0]=2\r\nPROPERTY[LAST][0]=1\r\nPROPERTY[LIMIT][0]=2\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.023\r\nEOF\r\n")
-    .addTemplate("OK", rtm.generateTemplate("200", "Command completed successfully"));
+  rtm
+    .addTemplate(
+      "listP0",
+      "[RESPONSE]\r\nPROPERTY[TOTAL][0]=2701\r\nPROPERTY[FIRST][0]=0\r\nPROPERTY[DOMAIN][0]=0-60motorcycletimes.com\r\nPROPERTY[DOMAIN][1]=0-be-s01-0.com\r\nPROPERTY[COUNT][0]=2\r\nPROPERTY[LAST][0]=1\r\nPROPERTY[LIMIT][0]=2\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.023\r\nEOF\r\n"
+    )
+    .addTemplate(
+      "OK",
+      rtm.generateTemplate("200", "Command completed successfully")
+    );
 });
 
 describe("Response class", function () {
@@ -28,21 +35,35 @@ describe("Response class", function () {
       expect(/\{[A-Z_]+\}/.test(r.getDescription())).to.be.false;
 
       // ensure variable replacements are correctly handled in case place holder replacements are provided
-      r = new Response("", { COMMAND: "StatusAccount" }, { CONNECTION_URL: "123HXPHFOUND123" });
+      r = new Response(
+        "",
+        { COMMAND: "StatusAccount" },
+        { CONNECTION_URL: "123HXPHFOUND123" }
+      );
       expect(/123HXPHFOUND123/.test(r.getDescription())).to.be.true;
     });
   });
 
   describe("#.getCommandPlain", () => {
     it("check flattening of command works", () => {
-      const r = new Response("", { COMMAND: "QueryDomainOptions", DOMAIN0: "example.com", DOMAIN1: "example.net" });
-      const expected = "COMMAND = QueryDomainOptions\nDOMAIN0 = example.com\nDOMAIN1 = example.net\n";
+      const r = new Response("", {
+        COMMAND: "QueryDomainOptions",
+        DOMAIN0: "example.com",
+        DOMAIN1: "example.net",
+      });
+      const expected =
+        "COMMAND = QueryDomainOptions\nDOMAIN0 = example.com\nDOMAIN1 = example.net\n";
       expect(r.getCommandPlain()).to.equal(expected);
     });
 
     it("check data being returned secure", () => {
-      const r = new Response("", { COMMAND: "CheckAuthentication", SUBUSER: "test.user", PASSWORD: "test.passw0rd" });
-      const expected = "COMMAND = CheckAuthentication\nSUBUSER = test.user\nPASSWORD = ***\n";
+      const r = new Response("", {
+        COMMAND: "CheckAuthentication",
+        SUBUSER: "test.user",
+        PASSWORD: "test.passw0rd",
+      });
+      const expected =
+        "COMMAND = CheckAuthentication\nSUBUSER = test.user\nPASSWORD = ***\n";
       expect(r.getCommandPlain()).to.equal(expected);
     });
   });
@@ -102,7 +123,14 @@ describe("Response class", function () {
       const r = new Response(rtm.getTemplate("listP0").getPlain(), cmd);
       const colkeys = r.getColumnKeys();
       expect(colkeys.length).to.equal(6);
-      expect(colkeys).to.include.members(["COUNT", "DOMAIN", "FIRST", "LAST", "LIMIT", "TOTAL"]);
+      expect(colkeys).to.include.members([
+        "COUNT",
+        "DOMAIN",
+        "FIRST",
+        "LAST",
+        "LIMIT",
+        "TOTAL",
+      ]);
     });
   });
 
@@ -156,7 +184,17 @@ describe("Response class", function () {
     it("check return value [next record]", () => {
       const r = new Response(rtm.getTemplate("listP0").getPlain(), cmd);
       const pager = r.getPagination();
-      expect(pager).to.have.all.keys(["COUNT", "CURRENTPAGE", "FIRST", "LAST", "LIMIT", "NEXTPAGE", "PAGES", "PREVIOUSPAGE", "TOTAL"]);
+      expect(pager).to.have.all.keys([
+        "COUNT",
+        "CURRENTPAGE",
+        "FIRST",
+        "LAST",
+        "LIMIT",
+        "NEXTPAGE",
+        "PAGES",
+        "PREVIOUSPAGE",
+        "TOTAL",
+      ]);
     });
   });
 

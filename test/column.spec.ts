@@ -11,7 +11,11 @@ const expect = chai.expect;
 let col: Column;
 
 before(() => {
-  col = new Column("DOMAIN", ["mydomain1.com", "mydomain2.com", "mydomain3.com"]);
+  col = new Column("DOMAIN", [
+    "mydomain1.com",
+    "mydomain2.com",
+    "mydomain3.com",
+  ]);
 });
 
 describe("Column class", function () {
