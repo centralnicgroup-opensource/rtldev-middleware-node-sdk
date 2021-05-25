@@ -30,8 +30,18 @@
                 </a>
               
                 
+                <a class="source" href="customlogger.html">
+                  src/customlogger.ts
+                </a>
+              
+                
                 <a class="source" href="index.html">
                   src/index.ts
+                </a>
+              
+                
+                <a class="source" href="logger.html">
+                  src/logger.ts
                 </a>
               
                 
@@ -82,183 +92,183 @@
         <li id="section-1">
             <div class="annotation">
               
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-1">&#182;</a>
+              <div class="sswrap ">
+                <a class="ss" href="#section-1">&#x00a7;</a>
               </div>
               
             </div>
             
             <div class="content"><div class='highlight'><pre><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> fixedURLEnc = (str: <span class="hljs-built_in">string</span>): <span class="hljs-function"><span class="hljs-params">string</span> =&gt;</span> {
-    <span class="hljs-keyword">return</span> <span class="hljs-built_in">encodeURIComponent</span>(str).replace(<span class="hljs-regexp">/[!'()*]/g</span>, <span class="hljs-function">(<span class="hljs-params">c</span>) =&gt;</span> {
-        <span class="hljs-keyword">return</span> <span class="hljs-string">`%<span class="hljs-subst">${c.charCodeAt(0).toString(16).toUpperCase()}</span>`</span>;
-    });
+  <span class="hljs-keyword">return</span> <span class="hljs-built_in">encodeURIComponent</span>(str).replace(<span class="hljs-regexp">/[!&#x27;()*]/g</span>, <span class="hljs-function">(<span class="hljs-params">c</span>) =&gt;</span> {
+    <span class="hljs-keyword">return</span> <span class="hljs-string">`%<span class="hljs-subst">${c.charCodeAt(<span class="hljs-number">0</span>).toString(<span class="hljs-number">16</span>).toUpperCase()}</span>`</span>;
+  });
 };
 
 <span class="hljs-comment">/**
  * SocketConfig Class
  */</span>
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> SocketConfig {
-    <span class="hljs-comment">/**
-     * API system entity. "54cd" for LIVE system; "1234" for OT&amp;E system
-     */</span>
-    <span class="hljs-keyword">private</span> entity: <span class="hljs-built_in">string</span>;
-    <span class="hljs-comment">/**
-     * account name
-     */</span>
-    <span class="hljs-keyword">private</span> login: <span class="hljs-built_in">string</span>;
-    <span class="hljs-comment">/**
-     * one time password (2FA)
-     */</span>
-    <span class="hljs-keyword">private</span> otp: <span class="hljs-built_in">string</span>;
-    <span class="hljs-comment">/**
-     * account password
-     */</span>
-    <span class="hljs-keyword">private</span> pw: <span class="hljs-built_in">string</span>;
-    <span class="hljs-comment">/**
-     * remote ip address (ip filter)
-     */</span>
-    <span class="hljs-keyword">private</span> remoteaddr: <span class="hljs-built_in">string</span>;
-    <span class="hljs-comment">/**
-     * API session id
-     */</span>
-    <span class="hljs-keyword">private</span> session: <span class="hljs-built_in">string</span>;
-    <span class="hljs-comment">/**
-     * subuser account name (subuser specific data view)
-     */</span>
-    <span class="hljs-keyword">private</span> user: <span class="hljs-built_in">string</span>;
+<span class="hljs-keyword">export</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SocketConfig</span> </span>{
+  <span class="hljs-comment">/**
+   * API system entity. &quot;54cd&quot; for LIVE system; &quot;1234&quot; for OT&amp;E system
+   */</span>
+  <span class="hljs-keyword">private</span> entity: <span class="hljs-built_in">string</span>;
+  <span class="hljs-comment">/**
+   * account name
+   */</span>
+  <span class="hljs-keyword">private</span> login: <span class="hljs-built_in">string</span>;
+  <span class="hljs-comment">/**
+   * one time password (2FA)
+   */</span>
+  <span class="hljs-keyword">private</span> otp: <span class="hljs-built_in">string</span>;
+  <span class="hljs-comment">/**
+   * account password
+   */</span>
+  <span class="hljs-keyword">private</span> pw: <span class="hljs-built_in">string</span>;
+  <span class="hljs-comment">/**
+   * remote ip address (ip filter)
+   */</span>
+  <span class="hljs-keyword">private</span> remoteaddr: <span class="hljs-built_in">string</span>;
+  <span class="hljs-comment">/**
+   * API session id
+   */</span>
+  <span class="hljs-keyword">private</span> session: <span class="hljs-built_in">string</span>;
+  <span class="hljs-comment">/**
+   * subuser account name (subuser specific data view)
+   */</span>
+  <span class="hljs-keyword">private</span> user: <span class="hljs-built_in">string</span>;
 
-    <span class="hljs-keyword">public</span> <span class="hljs-keyword">constructor</span>(<span class="hljs-params"></span>) {
-        <span class="hljs-keyword">this</span>.entity = <span class="hljs-string">""</span>;
-        <span class="hljs-keyword">this</span>.login = <span class="hljs-string">""</span>;
-        <span class="hljs-keyword">this</span>.otp = <span class="hljs-string">""</span>;
-        <span class="hljs-keyword">this</span>.pw = <span class="hljs-string">""</span>;
-        <span class="hljs-keyword">this</span>.remoteaddr = <span class="hljs-string">""</span>;
-        <span class="hljs-keyword">this</span>.session = <span class="hljs-string">""</span>;
-        <span class="hljs-keyword">this</span>.user = <span class="hljs-string">""</span>;
-    }
+  <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-title">constructor</span>(<span class="hljs-params"></span>)</span> {
+    <span class="hljs-built_in">this</span>.entity = <span class="hljs-string">&quot;&quot;</span>;
+    <span class="hljs-built_in">this</span>.login = <span class="hljs-string">&quot;&quot;</span>;
+    <span class="hljs-built_in">this</span>.otp = <span class="hljs-string">&quot;&quot;</span>;
+    <span class="hljs-built_in">this</span>.pw = <span class="hljs-string">&quot;&quot;</span>;
+    <span class="hljs-built_in">this</span>.remoteaddr = <span class="hljs-string">&quot;&quot;</span>;
+    <span class="hljs-built_in">this</span>.session = <span class="hljs-string">&quot;&quot;</span>;
+    <span class="hljs-built_in">this</span>.user = <span class="hljs-string">&quot;&quot;</span>;
+  }
 
-    <span class="hljs-comment">/**
-     * Create POST data string out of connection data
-     * @returns POST data string
-     */</span>
-    <span class="hljs-keyword">public</span> getPOSTData(): <span class="hljs-built_in">string</span> {
-        <span class="hljs-keyword">let</span> data = <span class="hljs-string">""</span>;
-        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.entity !== <span class="hljs-string">""</span>) {
-            data += <span class="hljs-string">`<span class="hljs-subst">${fixedURLEnc("s_entity")}</span>=<span class="hljs-subst">${fixedURLEnc(this.entity)}</span>&amp;`</span>;
-        }
-        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.login !== <span class="hljs-string">""</span>) {
-            data += <span class="hljs-string">`<span class="hljs-subst">${fixedURLEnc("s_login")}</span>=<span class="hljs-subst">${fixedURLEnc(this.login)}</span>&amp;`</span>;
-        }
-        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.otp !== <span class="hljs-string">""</span>) {
-            data += <span class="hljs-string">`<span class="hljs-subst">${fixedURLEnc("s_otp")}</span>=<span class="hljs-subst">${fixedURLEnc(this.otp)}</span>&amp;`</span>;
-        }
-        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.pw !== <span class="hljs-string">""</span>) {
-            data += <span class="hljs-string">`<span class="hljs-subst">${fixedURLEnc("s_pw")}</span>=<span class="hljs-subst">${fixedURLEnc(this.pw)}</span>&amp;`</span>;
-        }
-        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.remoteaddr !== <span class="hljs-string">""</span>) {
-            data += <span class="hljs-string">`<span class="hljs-subst">${fixedURLEnc("s_remoteaddr")}</span>=<span class="hljs-subst">${fixedURLEnc(this.remoteaddr)}</span>&amp;`</span>;
-        }
-        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.session !== <span class="hljs-string">""</span>) {
-            data += <span class="hljs-string">`<span class="hljs-subst">${fixedURLEnc("s_session")}</span>=<span class="hljs-subst">${fixedURLEnc(this.session)}</span>&amp;`</span>;
-        }
-        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.user !== <span class="hljs-string">""</span>) {
-            data += <span class="hljs-string">`<span class="hljs-subst">${fixedURLEnc("s_user")}</span>=<span class="hljs-subst">${fixedURLEnc(this.user)}</span>&amp;`</span>;
-        }
-        <span class="hljs-keyword">return</span> data;
+  <span class="hljs-comment">/**
+   * Create POST data string out of connection data
+   * <span class="hljs-doctag">@returns </span>POST data string
+   */</span>
+  <span class="hljs-keyword">public</span> getPOSTData(): <span class="hljs-built_in">string</span> {
+    <span class="hljs-keyword">let</span> data = <span class="hljs-string">&quot;&quot;</span>;
+    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">this</span>.entity !== <span class="hljs-string">&quot;&quot;</span>) {
+      data += <span class="hljs-string">`<span class="hljs-subst">${fixedURLEnc(<span class="hljs-string">&quot;s_entity&quot;</span>)}</span>=<span class="hljs-subst">${fixedURLEnc(<span class="hljs-built_in">this</span>.entity)}</span>&amp;`</span>;
     }
+    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">this</span>.login !== <span class="hljs-string">&quot;&quot;</span>) {
+      data += <span class="hljs-string">`<span class="hljs-subst">${fixedURLEnc(<span class="hljs-string">&quot;s_login&quot;</span>)}</span>=<span class="hljs-subst">${fixedURLEnc(<span class="hljs-built_in">this</span>.login)}</span>&amp;`</span>;
+    }
+    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">this</span>.otp !== <span class="hljs-string">&quot;&quot;</span>) {
+      data += <span class="hljs-string">`<span class="hljs-subst">${fixedURLEnc(<span class="hljs-string">&quot;s_otp&quot;</span>)}</span>=<span class="hljs-subst">${fixedURLEnc(<span class="hljs-built_in">this</span>.otp)}</span>&amp;`</span>;
+    }
+    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">this</span>.pw !== <span class="hljs-string">&quot;&quot;</span>) {
+      data += <span class="hljs-string">`<span class="hljs-subst">${fixedURLEnc(<span class="hljs-string">&quot;s_pw&quot;</span>)}</span>=<span class="hljs-subst">${fixedURLEnc(<span class="hljs-built_in">this</span>.pw)}</span>&amp;`</span>;
+    }
+    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">this</span>.remoteaddr !== <span class="hljs-string">&quot;&quot;</span>) {
+      data += <span class="hljs-string">`<span class="hljs-subst">${fixedURLEnc(<span class="hljs-string">&quot;s_remoteaddr&quot;</span>)}</span>=<span class="hljs-subst">${fixedURLEnc(<span class="hljs-built_in">this</span>.remoteaddr)}</span>&amp;`</span>;
+    }
+    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">this</span>.session !== <span class="hljs-string">&quot;&quot;</span>) {
+      data += <span class="hljs-string">`<span class="hljs-subst">${fixedURLEnc(<span class="hljs-string">&quot;s_session&quot;</span>)}</span>=<span class="hljs-subst">${fixedURLEnc(<span class="hljs-built_in">this</span>.session)}</span>&amp;`</span>;
+    }
+    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">this</span>.user !== <span class="hljs-string">&quot;&quot;</span>) {
+      data += <span class="hljs-string">`<span class="hljs-subst">${fixedURLEnc(<span class="hljs-string">&quot;s_user&quot;</span>)}</span>=<span class="hljs-subst">${fixedURLEnc(<span class="hljs-built_in">this</span>.user)}</span>&amp;`</span>;
+    }
+    <span class="hljs-keyword">return</span> data;
+  }
 
-    <span class="hljs-comment">/**
-     * Get API Session ID in use
-     * @returns API Session ID
-     */</span>
-    <span class="hljs-keyword">public</span> getSession(): <span class="hljs-built_in">string</span> {
-        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.session;
-    }
+  <span class="hljs-comment">/**
+   * Get API Session ID in use
+   * <span class="hljs-doctag">@returns </span>API Session ID
+   */</span>
+  <span class="hljs-keyword">public</span> getSession(): <span class="hljs-built_in">string</span> {
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.session;
+  }
 
-    <span class="hljs-comment">/**
-     * Get API System Entity in use
-     * @returns API System Entity
-     */</span>
-    <span class="hljs-keyword">public</span> getSystemEntity(): <span class="hljs-built_in">string</span> {
-        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.entity;
-    }
+  <span class="hljs-comment">/**
+   * Get API System Entity in use
+   * <span class="hljs-doctag">@returns </span>API System Entity
+   */</span>
+  <span class="hljs-keyword">public</span> getSystemEntity(): <span class="hljs-built_in">string</span> {
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.entity;
+  }
 
-    <span class="hljs-comment">/**
-     * Set account name to use
-     * @param value account name
-     * @returns Current SocketConfig instance for method chaining
-     */</span>
-    <span class="hljs-keyword">public</span> setLogin(value: <span class="hljs-built_in">string</span>): SocketConfig {
-        <span class="hljs-keyword">this</span>.session = <span class="hljs-string">""</span>;
-        <span class="hljs-keyword">this</span>.login = value;
-        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
-    }
+  <span class="hljs-comment">/**
+   * Set account name to use
+   * <span class="hljs-doctag">@param </span>value account name
+   * <span class="hljs-doctag">@returns </span>Current SocketConfig instance for method chaining
+   */</span>
+  <span class="hljs-keyword">public</span> setLogin(value: <span class="hljs-built_in">string</span>): SocketConfig {
+    <span class="hljs-built_in">this</span>.session = <span class="hljs-string">&quot;&quot;</span>;
+    <span class="hljs-built_in">this</span>.login = value;
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>;
+  }
 
-    <span class="hljs-comment">/**
-     * Set one time password to use
-     * @param value one time password
-     * @returns Current SocketConfig instance for method chaining
-     */</span>
-    <span class="hljs-keyword">public</span> setOTP(value: <span class="hljs-built_in">string</span>): SocketConfig {
-        <span class="hljs-keyword">this</span>.session = <span class="hljs-string">""</span>;
-        <span class="hljs-keyword">this</span>.otp = value;
-        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
-    }
+  <span class="hljs-comment">/**
+   * Set one time password to use
+   * <span class="hljs-doctag">@param </span>value one time password
+   * <span class="hljs-doctag">@returns </span>Current SocketConfig instance for method chaining
+   */</span>
+  <span class="hljs-keyword">public</span> setOTP(value: <span class="hljs-built_in">string</span>): SocketConfig {
+    <span class="hljs-built_in">this</span>.session = <span class="hljs-string">&quot;&quot;</span>;
+    <span class="hljs-built_in">this</span>.otp = value;
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>;
+  }
 
-    <span class="hljs-comment">/**
-     * Set account password to use
-     * @param value account password
-     * @returns Current SocketConfig instance for method chaining
-     */</span>
-    <span class="hljs-keyword">public</span> setPassword(value: <span class="hljs-built_in">string</span>): SocketConfig {
-        <span class="hljs-keyword">this</span>.session = <span class="hljs-string">""</span>;
-        <span class="hljs-keyword">this</span>.pw = value;
-        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
-    }
+  <span class="hljs-comment">/**
+   * Set account password to use
+   * <span class="hljs-doctag">@param </span>value account password
+   * <span class="hljs-doctag">@returns </span>Current SocketConfig instance for method chaining
+   */</span>
+  <span class="hljs-keyword">public</span> setPassword(value: <span class="hljs-built_in">string</span>): SocketConfig {
+    <span class="hljs-built_in">this</span>.session = <span class="hljs-string">&quot;&quot;</span>;
+    <span class="hljs-built_in">this</span>.pw = value;
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>;
+  }
 
-    <span class="hljs-comment">/**
-     * Set Remote IP Address to use
-     * @param value remote ip address
-     * @returns Current SocketConfig instance for method chaining
-     */</span>
-    <span class="hljs-keyword">public</span> setRemoteAddress(value: <span class="hljs-built_in">string</span>): SocketConfig {
-        <span class="hljs-keyword">this</span>.remoteaddr = value;
-        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
-    }
+  <span class="hljs-comment">/**
+   * Set Remote IP Address to use
+   * <span class="hljs-doctag">@param </span>value remote ip address
+   * <span class="hljs-doctag">@returns </span>Current SocketConfig instance for method chaining
+   */</span>
+  <span class="hljs-keyword">public</span> setRemoteAddress(value: <span class="hljs-built_in">string</span>): SocketConfig {
+    <span class="hljs-built_in">this</span>.remoteaddr = value;
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>;
+  }
 
-    <span class="hljs-comment">/**
-     * Set API Session ID to use
-     * @param value API Session ID
-     * @returns Current SocketConfig instance for method chaining
-     */</span>
-    <span class="hljs-keyword">public</span> setSession(value: <span class="hljs-built_in">string</span>): SocketConfig {
-        <span class="hljs-keyword">this</span>.session = value;
-        <span class="hljs-keyword">this</span>.login = <span class="hljs-string">""</span>;
-        <span class="hljs-keyword">this</span>.pw = <span class="hljs-string">""</span>;
-        <span class="hljs-keyword">this</span>.otp = <span class="hljs-string">""</span>;
-        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
-    }
+  <span class="hljs-comment">/**
+   * Set API Session ID to use
+   * <span class="hljs-doctag">@param </span>value API Session ID
+   * <span class="hljs-doctag">@returns </span>Current SocketConfig instance for method chaining
+   */</span>
+  <span class="hljs-keyword">public</span> setSession(value: <span class="hljs-built_in">string</span>): SocketConfig {
+    <span class="hljs-built_in">this</span>.session = value;
+    <span class="hljs-built_in">this</span>.login = <span class="hljs-string">&quot;&quot;</span>;
+    <span class="hljs-built_in">this</span>.pw = <span class="hljs-string">&quot;&quot;</span>;
+    <span class="hljs-built_in">this</span>.otp = <span class="hljs-string">&quot;&quot;</span>;
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>;
+  }
 
-    <span class="hljs-comment">/**
-     * Set API System Entity to use
-     * This is set to 54cd / LIVE System by default
-     * @param value API System Entity
-     * @returns Current SocketConfig instance for method chaining
-     */</span>
-    <span class="hljs-keyword">public</span> setSystemEntity(value: <span class="hljs-built_in">string</span>): SocketConfig {
-        <span class="hljs-keyword">this</span>.entity = value;
-        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
-    }
+  <span class="hljs-comment">/**
+   * Set API System Entity to use
+   * This is set to 54cd / LIVE System by default
+   * <span class="hljs-doctag">@param </span>value API System Entity
+   * <span class="hljs-doctag">@returns </span>Current SocketConfig instance for method chaining
+   */</span>
+  <span class="hljs-keyword">public</span> setSystemEntity(value: <span class="hljs-built_in">string</span>): SocketConfig {
+    <span class="hljs-built_in">this</span>.entity = value;
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>;
+  }
 
-    <span class="hljs-comment">/**
-     * Set subuser account name (for subuser data view)
-     * @param value subuser account name
-     * @returns Current SocketConfig instance for method chaining
-     */</span>
-    <span class="hljs-keyword">public</span> setUser(value: <span class="hljs-built_in">string</span>): SocketConfig {
-        <span class="hljs-keyword">this</span>.user = value;
-        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
-    }
+  <span class="hljs-comment">/**
+   * Set subuser account name (for subuser data view)
+   * <span class="hljs-doctag">@param </span>value subuser account name
+   * <span class="hljs-doctag">@returns </span>Current SocketConfig instance for method chaining
+   */</span>
+  <span class="hljs-keyword">public</span> setUser(value: <span class="hljs-built_in">string</span>): SocketConfig {
+    <span class="hljs-built_in">this</span>.user = value;
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>;
+  }
 }</pre></div></div>
             
         </li>

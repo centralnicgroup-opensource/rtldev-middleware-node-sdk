@@ -30,8 +30,18 @@
                 </a>
               
                 
+                <a class="source" href="customlogger.html">
+                  src/customlogger.ts
+                </a>
+              
+                
                 <a class="source" href="index.html">
                   src/index.ts
+                </a>
+              
+                
+                <a class="source" href="logger.html">
+                  src/logger.ts
                 </a>
               
                 
@@ -82,120 +92,141 @@
         <li id="section-1">
             <div class="annotation">
               
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-1">&#182;</a>
+              <div class="sswrap ">
+                <a class="ss" href="#section-1">&#x00a7;</a>
               </div>
               
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">import</span> { ResponseParser } <span class="hljs-keyword">from</span> <span class="hljs-string">"./responseparser"</span>;
-<span class="hljs-keyword">import</span> { ResponseTemplateManager } <span class="hljs-keyword">from</span> <span class="hljs-string">"./responsetemplatemanager"</span>;
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">import</span> { ResponseParser } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./responseparser&quot;</span>;
+<span class="hljs-keyword">import</span> { ResponseTemplateManager } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./responsetemplatemanager&quot;</span>;
 
 <span class="hljs-comment">/**
  * ResponseTemplate class
  */</span>
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> ResponseTemplate {
-    <span class="hljs-comment">/**
-     * plain API response
-     */</span>
-    <span class="hljs-keyword">protected</span> raw: <span class="hljs-built_in">string</span>;
-    <span class="hljs-comment">/**
-     * hash representation of plain API response
-     */</span>
-    <span class="hljs-keyword">protected</span> hash: <span class="hljs-built_in">any</span>;
+<span class="hljs-keyword">export</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ResponseTemplate</span> </span>{
+  <span class="hljs-comment">/**
+   * plain API response
+   */</span>
+  <span class="hljs-keyword">protected</span> raw: <span class="hljs-built_in">string</span>;
+  <span class="hljs-comment">/**
+   * hash representation of plain API response
+   */</span>
+  <span class="hljs-keyword">protected</span> hash: <span class="hljs-built_in">any</span>;
 
-    <span class="hljs-comment">/**
-     * Constructor
-     * @param raw plain API response
-     */</span>
-    <span class="hljs-keyword">public</span> <span class="hljs-keyword">constructor</span>(<span class="hljs-params">raw: <span class="hljs-built_in">string</span></span>) {
-        <span class="hljs-keyword">if</span> (!raw) {
-            raw = ResponseTemplateManager.getInstance().getTemplate(<span class="hljs-string">"empty"</span>).getPlain();
-        }
-        <span class="hljs-keyword">this</span>.raw = raw;
-        <span class="hljs-keyword">this</span>.hash = ResponseParser.parse(raw);
+  <span class="hljs-comment">/**
+   * Constructor
+   * <span class="hljs-doctag">@param </span>raw plain API response
+   */</span>
+  <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-title">constructor</span>(<span class="hljs-params">raw: <span class="hljs-built_in">string</span></span>)</span> {
+    <span class="hljs-keyword">if</span> (!raw) {
+      raw = ResponseTemplateManager.getInstance()
+        .getTemplate(<span class="hljs-string">&quot;empty&quot;</span>)
+        .getPlain();
     }
+    <span class="hljs-built_in">this</span>.raw = raw;
+    <span class="hljs-built_in">this</span>.hash = ResponseParser.parse(raw);
+    <span class="hljs-keyword">if</span> (
+      !<span class="hljs-built_in">Object</span>.prototype.hasOwnProperty.call(<span class="hljs-built_in">this</span>.hash, <span class="hljs-string">&quot;CODE&quot;</span>) ||
+      !<span class="hljs-built_in">Object</span>.prototype.hasOwnProperty.call(<span class="hljs-built_in">this</span>.hash, <span class="hljs-string">&quot;DESCRIPTION&quot;</span>)
+    ) {
+      <span class="hljs-built_in">this</span>.raw = ResponseTemplateManager.getInstance()
+        .getTemplate(<span class="hljs-string">&quot;invalid&quot;</span>)
+        .getPlain();
+      <span class="hljs-built_in">this</span>.hash = ResponseParser.parse(<span class="hljs-built_in">this</span>.raw);
+    }
+  }
 
-    <span class="hljs-comment">/**
-     * Get API response code
-     * @returns API response code
-     */</span>
-    <span class="hljs-keyword">public</span> getCode(): <span class="hljs-built_in">number</span> {
-        <span class="hljs-keyword">return</span> <span class="hljs-built_in">parseInt</span>(<span class="hljs-keyword">this</span>.hash.CODE, <span class="hljs-number">10</span>);
-    }
+  <span class="hljs-comment">/**
+   * Get API response code
+   * <span class="hljs-doctag">@returns </span>API response code
+   */</span>
+  <span class="hljs-keyword">public</span> getCode(): <span class="hljs-built_in">number</span> {
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">parseInt</span>(<span class="hljs-built_in">this</span>.hash.CODE, <span class="hljs-number">10</span>);
+  }
 
-    <span class="hljs-comment">/**
-     * Get API response description
-     * @returns API response description
-     */</span>
-    <span class="hljs-keyword">public</span> getDescription(): <span class="hljs-built_in">string</span> {
-        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.hash.DESCRIPTION;
-    }
+  <span class="hljs-comment">/**
+   * Get API response description
+   * <span class="hljs-doctag">@returns </span>API response description
+   */</span>
+  <span class="hljs-keyword">public</span> getDescription(): <span class="hljs-built_in">string</span> {
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.hash.DESCRIPTION;
+  }
 
-    <span class="hljs-comment">/**
-     * Get Plain API response
-     * @returns Plain API response
-     */</span>
-    <span class="hljs-keyword">public</span> getPlain(): <span class="hljs-built_in">string</span> {
-        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.raw;
-    }
+  <span class="hljs-comment">/**
+   * Get Plain API response
+   * <span class="hljs-doctag">@returns </span>Plain API response
+   */</span>
+  <span class="hljs-keyword">public</span> getPlain(): <span class="hljs-built_in">string</span> {
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.raw;
+  }
 
-    <span class="hljs-comment">/**
-     * Get Queuetime of API response
-     * @returns Queuetime of API response
-     */</span>
-    <span class="hljs-keyword">public</span> getQueuetime(): <span class="hljs-built_in">number</span> {
-        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.hash.hasOwnProperty(<span class="hljs-string">"QUEUETIME"</span>)) {
-            <span class="hljs-keyword">return</span> <span class="hljs-built_in">parseFloat</span>(<span class="hljs-keyword">this</span>.hash.QUEUETIME);
-        }
-        <span class="hljs-keyword">return</span> <span class="hljs-number">0.00</span>;
+  <span class="hljs-comment">/**
+   * Get Queuetime of API response
+   * <span class="hljs-doctag">@returns </span>Queuetime of API response
+   */</span>
+  <span class="hljs-keyword">public</span> getQueuetime(): <span class="hljs-built_in">number</span> {
+    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">Object</span>.prototype.hasOwnProperty.call(<span class="hljs-built_in">this</span>.hash, <span class="hljs-string">&quot;QUEUETIME&quot;</span>)) {
+      <span class="hljs-keyword">return</span> <span class="hljs-built_in">parseFloat</span>(<span class="hljs-built_in">this</span>.hash.QUEUETIME);
     }
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0.0</span>;
+  }
 
-    <span class="hljs-comment">/**
-     * Get API response as Hash
-     * @returns API response hash
-     */</span>
-    <span class="hljs-keyword">public</span> getHash(): <span class="hljs-built_in">any</span> {
-        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.hash;
-    }
+  <span class="hljs-comment">/**
+   * Get API response as Hash
+   * <span class="hljs-doctag">@returns </span>API response hash
+   */</span>
+  <span class="hljs-keyword">public</span> getHash(): <span class="hljs-built_in">any</span> {
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.hash;
+  }
 
-    <span class="hljs-comment">/**
-     * Get Runtime of API response
-     * @returns Runtime of API response
-     */</span>
-    <span class="hljs-keyword">public</span> getRuntime(): <span class="hljs-built_in">number</span> {
-        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.hash.hasOwnProperty(<span class="hljs-string">"RUNTIME"</span>)) {
-            <span class="hljs-keyword">return</span> <span class="hljs-built_in">parseFloat</span>(<span class="hljs-keyword">this</span>.hash.RUNTIME);
-        }
-        <span class="hljs-keyword">return</span> <span class="hljs-number">0.00</span>;
+  <span class="hljs-comment">/**
+   * Get Runtime of API response
+   * <span class="hljs-doctag">@returns </span>Runtime of API response
+   */</span>
+  <span class="hljs-keyword">public</span> getRuntime(): <span class="hljs-built_in">number</span> {
+    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">Object</span>.prototype.hasOwnProperty.call(<span class="hljs-built_in">this</span>.hash, <span class="hljs-string">&quot;RUNTIME&quot;</span>)) {
+      <span class="hljs-keyword">return</span> <span class="hljs-built_in">parseFloat</span>(<span class="hljs-built_in">this</span>.hash.RUNTIME);
     }
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0.0</span>;
+  }
 
-    <span class="hljs-comment">/**
-     * Check if current API response represents an error case
-     * API response code is an 5xx code
-     * @returns boolean result
-     */</span>
-    <span class="hljs-keyword">public</span> isError(): <span class="hljs-built_in">boolean</span> {
-        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.hash.CODE.charAt(<span class="hljs-number">0</span>) === <span class="hljs-string">"5"</span>;
-    }
+  <span class="hljs-comment">/**
+   * Check if current API response represents an error case
+   * API response code is an 5xx code
+   * <span class="hljs-doctag">@returns </span>boolean result
+   */</span>
+  <span class="hljs-keyword">public</span> isError(): <span class="hljs-built_in">boolean</span> {
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.hash.CODE.charAt(<span class="hljs-number">0</span>) === <span class="hljs-string">&quot;5&quot;</span>;
+  }
 
-    <span class="hljs-comment">/**
-     * Check if current API response represents a success case
-     * API response code is an 2xx code
-     * @returns boolean result
-     */</span>
-    <span class="hljs-keyword">public</span> isSuccess(): <span class="hljs-built_in">boolean</span> {
-        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.hash.CODE.charAt(<span class="hljs-number">0</span>) === <span class="hljs-string">"2"</span>;
-    }
+  <span class="hljs-comment">/**
+   * Check if current API response represents a success case
+   * API response code is an 2xx code
+   * <span class="hljs-doctag">@returns </span>boolean result
+   */</span>
+  <span class="hljs-keyword">public</span> isSuccess(): <span class="hljs-built_in">boolean</span> {
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.hash.CODE.charAt(<span class="hljs-number">0</span>) === <span class="hljs-string">&quot;2&quot;</span>;
+  }
 
-    <span class="hljs-comment">/**
-     * Check if current API response represents a temporary error case
-     * API response code is an 4xx code
-     * @returns boolean result
-     */</span>
-    <span class="hljs-keyword">public</span> isTmpError(): <span class="hljs-built_in">boolean</span> {
-        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.hash.CODE.charAt(<span class="hljs-number">0</span>) === <span class="hljs-string">"4"</span>;
-    }
+  <span class="hljs-comment">/**
+   * Check if current API response represents a temporary error case
+   * API response code is an 4xx code
+   * <span class="hljs-doctag">@returns </span>boolean result
+   */</span>
+  <span class="hljs-keyword">public</span> isTmpError(): <span class="hljs-built_in">boolean</span> {
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.hash.CODE.charAt(<span class="hljs-number">0</span>) === <span class="hljs-string">&quot;4&quot;</span>;
+  }
+
+  <span class="hljs-comment">/**
+   * Check if current operation is returned as pending
+   * <span class="hljs-doctag">@returns </span>boolean result
+   */</span>
+  <span class="hljs-keyword">public</span> isPending(): <span class="hljs-built_in">boolean</span> {
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">Object</span>.prototype.hasOwnProperty.call(<span class="hljs-built_in">this</span>.hash, <span class="hljs-string">&quot;PENDING&quot;</span>)
+      ? <span class="hljs-built_in">this</span>.hash.PENDING === <span class="hljs-string">&quot;1&quot;</span>
+      : <span class="hljs-literal">false</span>;
+  }
 }</pre></div></div>
             
         </li>

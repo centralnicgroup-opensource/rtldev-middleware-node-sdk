@@ -30,8 +30,18 @@
                 </a>
               
                 
+                <a class="source" href="customlogger.html">
+                  src/customlogger.ts
+                </a>
+              
+                
                 <a class="source" href="index.html">
                   src/index.ts
+                </a>
+              
+                
+                <a class="source" href="logger.html">
+                  src/logger.ts
                 </a>
               
                 
@@ -82,84 +92,76 @@
         <li id="section-1">
             <div class="annotation">
               
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-1">&#182;</a>
+              <div class="sswrap ">
+                <a class="ss" href="#section-1">&#x00a7;</a>
               </div>
               
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-comment">/**
- * ResponseParser Module
- */</span>
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">namespace</span> ResponseParser {
-
-    <span class="hljs-comment">/**
-     * Method to parse plain API response into js object
-     * @param raw API plain response
-     * @returns API response as JS Object (hash)
-     */</span>
-    <span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> parse = (raw: <span class="hljs-built_in">string</span>): <span class="hljs-function"><span class="hljs-params">any</span> =&gt;</span> {
-        <span class="hljs-keyword">const</span> hash: <span class="hljs-built_in">any</span> = {};
-        <span class="hljs-keyword">const</span> regexp = <span class="hljs-regexp">/^([^\=]*[^\t\= ])[\t ]*=[\t ]*(.*)$/</span>;
-        <span class="hljs-keyword">const</span> r = raw.replace(<span class="hljs-regexp">/\r\n/g</span>, <span class="hljs-string">"\n"</span>).split(<span class="hljs-string">"\n"</span>);
-        <span class="hljs-keyword">while</span> (r.length) {
-            <span class="hljs-keyword">const</span> row = r.shift();
-            <span class="hljs-keyword">let</span> m;
-            <span class="hljs-keyword">if</span> (row) {
-                m = row.match(regexp);
-                <span class="hljs-keyword">if</span> (m) {
-                    <span class="hljs-keyword">const</span> mm = m[<span class="hljs-number">1</span>].match(<span class="hljs-regexp">/^property\[([^\]]*)\]/i</span>);
-                    <span class="hljs-keyword">if</span> (mm) {
-                        <span class="hljs-keyword">if</span> (!hash.hasOwnProperty(<span class="hljs-string">"PROPERTY"</span>)) {
-                            hash.PROPERTY = {};
-                        }
-                        mm[<span class="hljs-number">1</span>] = mm[<span class="hljs-number">1</span>].toUpperCase().replace(<span class="hljs-regexp">/\s/g</span>, <span class="hljs-string">""</span>);
-                        <span class="hljs-keyword">if</span> (!hash.PROPERTY.hasOwnProperty(mm[<span class="hljs-number">1</span>])) {
-                            hash.PROPERTY[mm[<span class="hljs-number">1</span>]] = [];
-                        }
-                        hash.PROPERTY[mm[<span class="hljs-number">1</span>]].push(m[<span class="hljs-number">2</span>].replace(<span class="hljs-regexp">/[\t ]*$/</span>, <span class="hljs-string">""</span>));
-                    } <span class="hljs-keyword">else</span> {
-                        hash[m[<span class="hljs-number">1</span>].toUpperCase()] = m[<span class="hljs-number">2</span>].replace(<span class="hljs-regexp">/[\t ]*$/</span>, <span class="hljs-string">""</span>);
-                    }
-                }
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> ResponseParser: <span class="hljs-built_in">any</span> = {
+  <span class="hljs-comment">/**
+   * Method to parse plain API response into js object
+   * <span class="hljs-doctag">@param </span>raw API plain response
+   * <span class="hljs-doctag">@returns </span>API response as JS Object (hash)
+   */</span>
+  <span class="hljs-attr">parse</span>: (raw: <span class="hljs-built_in">string</span>): <span class="hljs-function"><span class="hljs-params">any</span> =&gt;</span> {
+    <span class="hljs-keyword">const</span> hash: <span class="hljs-built_in">any</span> = {};
+    <span class="hljs-keyword">const</span> regexp = <span class="hljs-regexp">/^([^=]*[^\t= ])[\t ]*=[\t ]*(.*)$/</span>;
+    <span class="hljs-keyword">const</span> r = raw.replace(<span class="hljs-regexp">/\r\n/g</span>, <span class="hljs-string">&quot;\n&quot;</span>).split(<span class="hljs-string">&quot;\n&quot;</span>);
+    <span class="hljs-keyword">while</span> (r.length) {
+      <span class="hljs-keyword">const</span> row = r.shift();
+      <span class="hljs-keyword">let</span> m;
+      <span class="hljs-keyword">if</span> (row) {
+        m = row.match(regexp);
+        <span class="hljs-keyword">if</span> (m) {
+          <span class="hljs-keyword">const</span> mm = m[<span class="hljs-number">1</span>].match(<span class="hljs-regexp">/^property\[([^\]]*)\]/i</span>);
+          <span class="hljs-keyword">if</span> (mm) {
+            <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">Object</span>.prototype.hasOwnProperty.call(hash, <span class="hljs-string">&quot;PROPERTY&quot;</span>)) {
+              hash.PROPERTY = {};
             }
+            mm[<span class="hljs-number">1</span>] = mm[<span class="hljs-number">1</span>].toUpperCase().replace(<span class="hljs-regexp">/\s/g</span>, <span class="hljs-string">&quot;&quot;</span>);
+            <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">Object</span>.prototype.hasOwnProperty.call(hash.PROPERTY, mm[<span class="hljs-number">1</span>])) {
+              hash.PROPERTY[mm[<span class="hljs-number">1</span>]] = [];
+            }
+            hash.PROPERTY[mm[<span class="hljs-number">1</span>]].push(m[<span class="hljs-number">2</span>].replace(<span class="hljs-regexp">/[\t ]*$/</span>, <span class="hljs-string">&quot;&quot;</span>));
+          } <span class="hljs-keyword">else</span> {
+            hash[m[<span class="hljs-number">1</span>].toUpperCase()] = m[<span class="hljs-number">2</span>].replace(<span class="hljs-regexp">/[\t ]*$/</span>, <span class="hljs-string">&quot;&quot;</span>);
+          }
         }
-        <span class="hljs-keyword">if</span> (!hash.hasOwnProperty(<span class="hljs-string">"DESCRIPTION"</span>)) {
-            hash.DESCRIPTION = <span class="hljs-string">""</span>;
-        }
-        <span class="hljs-keyword">return</span> hash;
-    };
-
-    <span class="hljs-comment">/**
-     * Serialize given parsed response hash back to plain text
-     * @param r API response as JS Object (hash)
-     * @returns plain API response
-     */</span>
-    <span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> serialize = (r: <span class="hljs-built_in">any</span>): <span class="hljs-function"><span class="hljs-params">string</span> =&gt;</span> {
-        <span class="hljs-keyword">let</span> plain = <span class="hljs-string">"[RESPONSE]"</span>;
-        <span class="hljs-keyword">if</span> (r.hasOwnProperty(<span class="hljs-string">"PROPERTY"</span>)) {
-            <span class="hljs-built_in">Object</span>.keys(r.PROPERTY).forEach(<span class="hljs-function">(<span class="hljs-params">key</span>) =&gt;</span> {
-                r.PROPERTY[key].forEach(<span class="hljs-function">(<span class="hljs-params">val: <span class="hljs-built_in">string</span>, index: <span class="hljs-built_in">number</span></span>) =&gt;</span> {
-                    plain += <span class="hljs-string">`\r\nPROPERTY[<span class="hljs-subst">${key}</span>][<span class="hljs-subst">${index}</span>]=<span class="hljs-subst">${val}</span>`</span>;
-                });
-            });
-        }
-        <span class="hljs-keyword">if</span> (r.hasOwnProperty(<span class="hljs-string">"CODE"</span>)) {
-            plain += <span class="hljs-string">`\r\nCODE=<span class="hljs-subst">${r.CODE}</span>`</span>;
-        }
-        <span class="hljs-keyword">if</span> (r.hasOwnProperty(<span class="hljs-string">"DESCRIPTION"</span>)) {
-            plain += <span class="hljs-string">`\r\nDESCRIPTION=<span class="hljs-subst">${r.DESCRIPTION}</span>`</span>;
-        }
-        <span class="hljs-keyword">if</span> (r.hasOwnProperty(<span class="hljs-string">"QUEUETIME"</span>)) {
-            plain += <span class="hljs-string">`\r\nQUEUETIME=<span class="hljs-subst">${r.QUEUETIME}</span>`</span>;
-        }
-        <span class="hljs-keyword">if</span> (r.hasOwnProperty(<span class="hljs-string">"RUNTIME"</span>)) {
-            plain += <span class="hljs-string">`\r\nRUNTIME=<span class="hljs-subst">${r.RUNTIME}</span>`</span>;
-        }
-        plain += <span class="hljs-string">"\r\nEOF\r\n"</span>;
-        <span class="hljs-keyword">return</span> plain;
-    };
-}</pre></div></div>
+      }
+    }
+    <span class="hljs-keyword">return</span> hash;
+  },
+  <span class="hljs-comment">/**
+   * Serialize given parsed response hash back to plain text
+   * <span class="hljs-doctag">@param </span>r API response as JS Object (hash)
+   * <span class="hljs-doctag">@returns </span>plain API response
+   */</span>
+  <span class="hljs-attr">serialize</span>: (r: <span class="hljs-built_in">any</span>): <span class="hljs-function"><span class="hljs-params">string</span> =&gt;</span> {
+    <span class="hljs-keyword">let</span> plain = <span class="hljs-string">&quot;[RESPONSE]&quot;</span>;
+    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">Object</span>.prototype.hasOwnProperty.call(r, <span class="hljs-string">&quot;PROPERTY&quot;</span>)) {
+      <span class="hljs-built_in">Object</span>.keys(r.PROPERTY).forEach(<span class="hljs-function">(<span class="hljs-params">key</span>) =&gt;</span> {
+        r.PROPERTY[key].forEach(<span class="hljs-function">(<span class="hljs-params">val: <span class="hljs-built_in">string</span>, index: <span class="hljs-built_in">number</span></span>) =&gt;</span> {
+          plain += <span class="hljs-string">`\r\nPROPERTY[<span class="hljs-subst">${key}</span>][<span class="hljs-subst">${index}</span>]=<span class="hljs-subst">${val}</span>`</span>;
+        });
+      });
+    }
+    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">Object</span>.prototype.hasOwnProperty.call(r, <span class="hljs-string">&quot;CODE&quot;</span>)) {
+      plain += <span class="hljs-string">`\r\nCODE=<span class="hljs-subst">${r.CODE}</span>`</span>;
+    }
+    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">Object</span>.prototype.hasOwnProperty.call(r, <span class="hljs-string">&quot;DESCRIPTION&quot;</span>)) {
+      plain += <span class="hljs-string">`\r\nDESCRIPTION=<span class="hljs-subst">${r.DESCRIPTION}</span>`</span>;
+    }
+    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">Object</span>.prototype.hasOwnProperty.call(r, <span class="hljs-string">&quot;QUEUETIME&quot;</span>)) {
+      plain += <span class="hljs-string">`\r\nQUEUETIME=<span class="hljs-subst">${r.QUEUETIME}</span>`</span>;
+    }
+    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">Object</span>.prototype.hasOwnProperty.call(r, <span class="hljs-string">&quot;RUNTIME&quot;</span>)) {
+      plain += <span class="hljs-string">`\r\nRUNTIME=<span class="hljs-subst">${r.RUNTIME}</span>`</span>;
+    }
+    plain += <span class="hljs-string">&quot;\r\nEOF\r\n&quot;</span>;
+    <span class="hljs-keyword">return</span> plain;
+  },
+};</pre></div></div>
             
         </li>
         

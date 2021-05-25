@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>record.ts</title>
+  <title>logger.ts</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="../docco.css" />
@@ -83,7 +83,7 @@
         
           <li id="title">
               <div class="annotation">
-                  <h1>record.ts</h1>
+                  <h1>logger.ts</h1>
               </div>
           </li>
         
@@ -98,50 +98,27 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-comment">/**
- * Record class
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">import</span> { Response } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./response&quot;</span>;
+
+<span class="hljs-comment">/**
+ * Logger class
  */</span>
-<span class="hljs-keyword">export</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Record</span> </span>{
+<span class="hljs-keyword">export</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Logger</span> </span>{
   <span class="hljs-comment">/**
-   * row data container
+   * output/log given data
+   * <span class="hljs-doctag">@param </span>post request string used
+   * <span class="hljs-doctag">@param </span>r Response object
+   * <span class="hljs-doctag">@param </span>error error message or null
+   * <span class="hljs-doctag">@return </span>current Logger instance for method chaining
    */</span>
-  <span class="hljs-keyword">private</span> data: <span class="hljs-built_in">any</span>;
-
-  <span class="hljs-comment">/**
-   * Constructor
-   * <span class="hljs-doctag">@param </span>data data object (use column names as object keys)
-   */</span>
-  <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-title">constructor</span>(<span class="hljs-params">data: <span class="hljs-built_in">any</span></span>)</span> {
-    <span class="hljs-built_in">this</span>.data = data;
-  }
-
-  <span class="hljs-comment">/**
-   * get row data
-   * <span class="hljs-doctag">@returns </span>row data
-   */</span>
-  <span class="hljs-keyword">public</span> getData(): <span class="hljs-built_in">any</span> {
-    <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.data;
-  }
-
-  <span class="hljs-comment">/**
-   * get row data for given column
-   * <span class="hljs-doctag">@param </span>key column name
-   * <span class="hljs-doctag">@returns </span>row data for given column or null if column does not exist
-   */</span>
-  <span class="hljs-keyword">public</span> getDataByKey(key: <span class="hljs-built_in">string</span>): <span class="hljs-built_in">string</span> | <span class="hljs-literal">null</span> {
-    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">this</span>.hasData(key)) {
-      <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.data[key];
+  <span class="hljs-keyword">public</span> log(post: <span class="hljs-built_in">string</span>, <span class="hljs-attr">r</span>: Response, <span class="hljs-attr">error</span>: <span class="hljs-built_in">string</span> | <span class="hljs-literal">null</span> = <span class="hljs-literal">null</span>): Logger {
+    <span class="hljs-built_in">console</span>.dir(r.getCommand());
+    <span class="hljs-built_in">console</span>.log(post);
+    <span class="hljs-keyword">if</span> (error) {
+      <span class="hljs-built_in">console</span>.error(<span class="hljs-string">`HTTP communication failed: <span class="hljs-subst">${error}</span>`</span>);
     }
-    <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;
-  }
-
-  <span class="hljs-comment">/**
-   * check if record has data for given column
-   * <span class="hljs-doctag">@param </span>key column name
-   * <span class="hljs-doctag">@returns </span>boolean result
-   */</span>
-  <span class="hljs-keyword">private</span> hasData(key: <span class="hljs-built_in">string</span>): <span class="hljs-built_in">boolean</span> {
-    <span class="hljs-keyword">return</span> <span class="hljs-built_in">Object</span>.prototype.hasOwnProperty.call(<span class="hljs-built_in">this</span>.data, key);
+    <span class="hljs-built_in">console</span>.log(r.getPlain());
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>;
   }
 }</pre></div></div>
             

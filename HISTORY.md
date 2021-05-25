@@ -1,3 +1,10 @@
+## [7.0.5](https://github.com/hexonet/node-sdk/compare/v7.0.4...v7.0.5) (2021-05-25)
+
+
+### Bug Fixes
+
+* **dep-bump:** upgrade dependencies ([e541f80](https://github.com/hexonet/node-sdk/commit/e541f80732a91f69479a677a0236bc6f29244975))
+
 ## [7.0.4](https://github.com/hexonet/node-sdk/compare/v7.0.3...v7.0.4) (2021-01-21)
 
 ### Bug Fixes
