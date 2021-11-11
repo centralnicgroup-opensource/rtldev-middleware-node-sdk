@@ -16,8 +16,8 @@
     "declarationMap": true,
     "inlineSourceMap": true,
     "inlineSources": true,
-    "module": "commonjs",
-    "moduleResolution": "Node",
+    "module": "esnext",
+    "moduleResolution": "node",
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
     "noUnusedLocals": true,
@@ -26,9 +26,12 @@
     "removeComments": true,
     "strict": true,
     "target": "es5",
-    "typeRoots": ["./node_modules/@types/", "./typings/"],
+    "typeRoots": ["node_modules/@types", "typings"],
     "resolveJsonModule": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "noEmitOnError": true,
+    "stripInternal": true,
+    "isolatedModules": true
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules", "coverage", ".nyc_output", "docs"]

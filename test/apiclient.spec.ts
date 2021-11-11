@@ -3,10 +3,10 @@
 /* tslint:disable:no-unused-expression */
 // https://github.com/palantir/tslint/issues/2614
 
-import chai = require("chai");
-import chaiPromised = require("chai-as-promised");
+import chai from "chai";
+import chaiPromised from "chai-as-promised";
 import "mocha";
-import nock = require("nock");
+import nock from "nock";
 import {
   APIClient,
   ISPAPI_CONNECTION_URL,

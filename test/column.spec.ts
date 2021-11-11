@@ -3,7 +3,7 @@
 /* tslint:disable:no-unused-expression */
 // https://github.com/palantir/tslint/issues/2614
 
-import chai = require("chai");
+import chai from "chai";
 import "mocha";
 import { Column } from "../src/column";
 const expect = chai.expect;
