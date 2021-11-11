@@ -3,7 +3,7 @@
 /* tslint:disable:no-unused-expression */
 // https://github.com/palantir/tslint/issues/2614
 
-import chai = require("chai");
+import chai from "chai";
 import "mocha";
 import { SocketConfig } from "../src/socketconfig";
 const expect = chai.expect;

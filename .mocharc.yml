@@ -3,6 +3,10 @@ bail: true
 inline-diffs: true
 reporter: spec
 check-leaks: true
-require: ts-node/register 
+extension:
+  - ts
 spec:
   - test/**/*.spec.ts
+node-option:
+  - experimental-specifier-resolution=node
+  - loader=ts-node/esm
