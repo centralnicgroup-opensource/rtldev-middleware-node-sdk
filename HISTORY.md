@@ -1,3 +1,10 @@
+## [7.0.6](https://github.com/hexonet/node-sdk/compare/v7.0.5...v7.0.6) (2021-11-11)
+
+
+### Bug Fixes
+
+* **node-fetch:** upgraded to v3 / ESM revamp ([1c312dc](https://github.com/hexonet/node-sdk/commit/1c312dc78c59f4f4a43d7163ed48327ec31bb8bd))
+
 ## [7.0.5](https://github.com/hexonet/node-sdk/compare/v7.0.4...v7.0.5) (2021-05-25)
 
 ### Bug Fixes
