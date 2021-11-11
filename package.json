@@ -50,9 +50,7 @@
   },
   "scripts": {
     "build": "tsc --version && tsc",
-    "documentation": "npm run documentation_docco --silent && npm run documentation_typedoc --silent",
-    "documentation_docco": "docco -l parallel -o docs/docco src/*.ts",
-    "documentation_typedoc": "typedoc --out docs/typedoc --name @hexonet/ispapi-apiconnector --readme ./README.md --excludeExternals src/*.ts",
+    "documentation": "typedoc --out docs --name @hexonet/ispapi-apiconnector --readme ./README.md --excludeExternals src/*.ts",
     "lint": "prettier --write .",
     "test": "cross-env NODE_ENV=development nyc ./node_modules/.bin/_mocha -r ts-node/register test/*.spec.ts"
   },
@@ -70,7 +68,6 @@
     "chai": "^4.3.4",
     "chai-as-promised": "^7.1.1",
     "cross-env": "^7.0.3",
-    "docco": "^0.8.1",
     "jsdoc": "^3.6.7",
     "jsdoc-oblivion": "^0.0.9",
     "mocha": "^9.1.3",
