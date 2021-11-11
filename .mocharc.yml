@@ -3,3 +3,6 @@ bail: true
 inline-diffs: true
 reporter: spec
 check-leaks: true
+require: ts-node/register 
+spec:
+  - test/**/*.spec.ts

@@ -44,15 +44,14 @@
       "text"
     ],
     "exclude": [
-      "**/*.spec.ts",
-      "**/*.specnew.ts"
+      "**/*.spec.ts"
     ]
   },
   "scripts": {
     "build": "tsc --version && tsc",
     "documentation": "typedoc --out docs --name @hexonet/ispapi-apiconnector --readme ./README.md --excludeExternals src/*.ts",
     "lint": "prettier --write .",
-    "test": "cross-env NODE_ENV=development nyc ./node_modules/.bin/_mocha -r ts-node/register test/*.spec.ts"
+    "test": "cross-env NODE_ENV=development nyc ./node_modules/.bin/_mocha"
   },
   "dependencies": {
     "node-fetch": "^2.6.1"
