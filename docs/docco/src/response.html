@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>response.ts</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="../docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="apiclient.html">
+                  src/apiclient.ts
+                </a>
+              
+                
+                <a class="source" href="column.html">
+                  src/column.ts
+                </a>
+              
+                
+                <a class="source" href="customlogger.html">
+                  src/customlogger.ts
+                </a>
+              
+                
+                <a class="source" href="index.html">
+                  src/index.ts
+                </a>
+              
+                
+                <a class="source" href="logger.html">
+                  src/logger.ts
+                </a>
+              
+                
+                <a class="source" href="record.html">
+                  src/record.ts
+                </a>
+              
+                
+                <a class="source" href="response.html">
+                  src/response.ts
+                </a>
+              
+                
+                <a class="source" href="responseparser.html">
+                  src/responseparser.ts
+                </a>
+              
+                
+                <a class="source" href="responsetemplate.html">
+                  src/responsetemplate.ts
+                </a>
+              
+                
+                <a class="source" href="responsetemplatemanager.html">
+                  src/responsetemplatemanager.ts
+                </a>
+              
+                
+                <a class="source" href="socketconfig.html">
+                  src/socketconfig.ts
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>response.ts</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="sswrap ">
+                <a class="ss" href="#section-1">&#x00a7;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">import</span> { <span class="hljs-title class_">Column</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./column&quot;</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">Record</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./record&quot;</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">ResponseTemplate</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./responsetemplate&quot;</span>;
+
+<span class="hljs-comment">/**
+ * Response Class inheriting from ResponseTemplate Class
+ */</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Response</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">ResponseTemplate</span> {
+  <span class="hljs-comment">/**
+   * The API Command used within this request
+   */</span>
+  <span class="hljs-keyword">private</span> <span class="hljs-attr">command</span>: <span class="hljs-built_in">any</span>;
+  <span class="hljs-comment">/**
+   * Column names available in this responsse
+   * <span class="hljs-doctag">NOTE:</span> this includes also FIRST, LAST, LIMIT, COUNT, TOTAL
+   * and maybe further specific columns in case of a list query
+   */</span>
+  <span class="hljs-keyword">private</span> <span class="hljs-attr">columnkeys</span>: <span class="hljs-built_in">string</span>[];
+  <span class="hljs-comment">/**
+   * Container of Column Instances
+   */</span>
+  <span class="hljs-keyword">private</span> <span class="hljs-attr">columns</span>: <span class="hljs-title class_">Column</span>[];
+  <span class="hljs-comment">/**
+   * Record Index we currently point to in record list
+   */</span>
+  <span class="hljs-keyword">private</span> <span class="hljs-attr">recordIndex</span>: <span class="hljs-built_in">number</span>;
+  <span class="hljs-comment">/**
+   * Record List (List of rows)
+   */</span>
+  <span class="hljs-keyword">private</span> <span class="hljs-attr">records</span>: <span class="hljs-title class_">Record</span>[];
+
+  <span class="hljs-comment">/**
+   * Constructor
+   * <span class="hljs-doctag">@param</span> raw API plain response
+   * <span class="hljs-doctag">@param</span> cmd API command used within this request
+   * <span class="hljs-doctag">@param</span> $ph placeholder array to get vars in response description dynamically replaced
+   */</span>
+  <span class="hljs-keyword">public</span> <span class="hljs-title function_">constructor</span>(<span class="hljs-params">raw: <span class="hljs-built_in">string</span>, cmd: <span class="hljs-built_in">any</span>, ph: <span class="hljs-built_in">any</span> = {}</span>) {
+    <span class="hljs-variable language_">super</span>(raw);
+
+    <span class="hljs-keyword">const</span> keys = <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">keys</span>(ph);
+    keys.<span class="hljs-title function_">forEach</span>(<span class="hljs-function">(<span class="hljs-params">varName: <span class="hljs-built_in">string</span></span>) =&gt;</span> {
+      <span class="hljs-variable language_">this</span>.<span class="hljs-property">raw</span> = <span class="hljs-variable language_">this</span>.<span class="hljs-property">raw</span>.<span class="hljs-title function_">replace</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">RegExp</span>(<span class="hljs-string">`{<span class="hljs-subst">${varName}</span>}`</span>, <span class="hljs-string">&quot;g&quot;</span>), ph[varName]);
+    });
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">raw</span> = <span class="hljs-variable language_">this</span>.<span class="hljs-property">raw</span>.<span class="hljs-title function_">replace</span>(<span class="hljs-regexp">/\{[A-Z_]+\}/g</span>, <span class="hljs-string">&quot;&quot;</span>);
+    <span class="hljs-comment">/* eslint-disable constructor-super */</span>
+    <span class="hljs-variable language_">super</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">raw</span>);
+    <span class="hljs-comment">/* eslint-enable constructor-super */</span>
+
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">command</span> = cmd;
+    <span class="hljs-keyword">if</span> (
+      <span class="hljs-variable language_">this</span>.<span class="hljs-property">command</span> &amp;&amp;
+      <span class="hljs-title class_">Object</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">hasOwnProperty</span>.<span class="hljs-title function_">call</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">command</span>, <span class="hljs-string">&quot;PASSWORD&quot;</span>)
+    ) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="sswrap ">
+                <a class="ss" href="#section-2">&#x00a7;</a>
+              </div>
+              <p>make password no longer accessible</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">command</span>.<span class="hljs-property">PASSWORD</span> = <span class="hljs-string">&quot;***&quot;</span>;
+    }
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">columnkeys</span> = [];
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">columns</span> = [];
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">recordIndex</span> = <span class="hljs-number">0</span>;
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">records</span> = [];
+
+    <span class="hljs-keyword">if</span> (<span class="hljs-title class_">Object</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">hasOwnProperty</span>.<span class="hljs-title function_">call</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">hash</span>, <span class="hljs-string">&quot;PROPERTY&quot;</span>)) {
+      <span class="hljs-keyword">const</span> colKeys = <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">keys</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">hash</span>.<span class="hljs-property">PROPERTY</span>);
+      <span class="hljs-keyword">let</span> count = <span class="hljs-number">0</span>;
+      colKeys.<span class="hljs-title function_">forEach</span>(<span class="hljs-function">(<span class="hljs-params">c: <span class="hljs-built_in">string</span></span>) =&gt;</span> {
+        <span class="hljs-keyword">const</span> d = <span class="hljs-variable language_">this</span>.<span class="hljs-property">hash</span>.<span class="hljs-property">PROPERTY</span>[c];
+        <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">addColumn</span>(c, d);
+        <span class="hljs-keyword">if</span> (d.<span class="hljs-property">length</span> &gt; count) {
+          count = d.<span class="hljs-property">length</span>;
+        }
+      });
+      <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; count; i++) {
+        <span class="hljs-keyword">const</span> <span class="hljs-attr">d</span>: <span class="hljs-built_in">any</span> = {};
+        colKeys.<span class="hljs-title function_">forEach</span>(<span class="hljs-function">(<span class="hljs-params">k: <span class="hljs-built_in">string</span></span>) =&gt;</span> {
+          <span class="hljs-keyword">const</span> col = <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getColumn</span>(k);
+          <span class="hljs-keyword">if</span> (col) {
+            <span class="hljs-keyword">const</span> v = col.<span class="hljs-title function_">getDataByIndex</span>(i);
+            <span class="hljs-keyword">if</span> (v !== <span class="hljs-literal">null</span>) {
+              d[k] = v;
+            }
+          }
+        });
+        <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">addRecord</span>(d);
+      }
+    }
+  }
+
+  <span class="hljs-comment">/**
+   * Add a column to the column list
+   * <span class="hljs-doctag">@param</span> key column name
+   * <span class="hljs-doctag">@param</span> data array of column data
+   * <span class="hljs-doctag">@returns</span> Current Response Instance for method chaining
+   */</span>
+  <span class="hljs-keyword">public</span> <span class="hljs-title function_">addColumn</span>(<span class="hljs-attr">key</span>: <span class="hljs-built_in">string</span>, <span class="hljs-attr">data</span>: <span class="hljs-built_in">string</span>[]): <span class="hljs-title class_">Response</span> {
+    <span class="hljs-keyword">const</span> col = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Column</span>(key, data);
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">columns</span>.<span class="hljs-title function_">push</span>(col);
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">columnkeys</span>.<span class="hljs-title function_">push</span>(key);
+    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>;
+  }
+
+  <span class="hljs-comment">/**
+   * Add a record to the record list
+   * <span class="hljs-doctag">@param</span> h row hash data
+   * <span class="hljs-doctag">@returns</span> Current Response Instance for method chaining
+   */</span>
+  <span class="hljs-keyword">public</span> <span class="hljs-title function_">addRecord</span>(<span class="hljs-attr">h</span>: <span class="hljs-built_in">any</span>): <span class="hljs-title class_">Response</span> {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">records</span>.<span class="hljs-title function_">push</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Record</span>(h));
+    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>;
+  }
+
+  <span class="hljs-comment">/**
+   * Get column by column name
+   * <span class="hljs-doctag">@param</span> key column name
+   * <span class="hljs-doctag">@returns</span> column instance or null if column does not exist
+   */</span>
+  <span class="hljs-keyword">public</span> <span class="hljs-title function_">getColumn</span>(<span class="hljs-attr">key</span>: <span class="hljs-built_in">string</span>): <span class="hljs-title class_">Column</span> | <span class="hljs-literal">null</span> {
+    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">hasColumn</span>(key)
+      ? <span class="hljs-variable language_">this</span>.<span class="hljs-property">columns</span>[<span class="hljs-variable language_">this</span>.<span class="hljs-property">columnkeys</span>.<span class="hljs-title function_">indexOf</span>(key)]
+      : <span class="hljs-literal">null</span>;
+  }
+
+  <span class="hljs-comment">/**
+   * Get Data by Column Name and Index
+   * <span class="hljs-doctag">@param</span> colkey column name
+   * <span class="hljs-doctag">@param</span> index column data index
+   * <span class="hljs-doctag">@returns</span> column data at index or null if not found
+   */</span>
+  <span class="hljs-keyword">public</span> <span class="hljs-title function_">getColumnIndex</span>(<span class="hljs-attr">colkey</span>: <span class="hljs-built_in">string</span>, <span class="hljs-attr">index</span>: <span class="hljs-built_in">number</span>): <span class="hljs-built_in">string</span> | <span class="hljs-literal">null</span> {
+    <span class="hljs-keyword">const</span> col = <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getColumn</span>(colkey);
+    <span class="hljs-keyword">return</span> col ? col.<span class="hljs-title function_">getDataByIndex</span>(index) : <span class="hljs-literal">null</span>;
+  }
+
+  <span class="hljs-comment">/**
+   * Get Column Names
+   * <span class="hljs-doctag">@returns</span> Array of Column Names
+   */</span>
+  <span class="hljs-keyword">public</span> <span class="hljs-title function_">getColumnKeys</span>(): <span class="hljs-built_in">string</span>[] {
+    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">columnkeys</span>;
+  }
+
+  <span class="hljs-comment">/**
+   * Get List of Columns
+   * <span class="hljs-doctag">@returns</span> Array of Columns
+   */</span>
+  <span class="hljs-keyword">public</span> <span class="hljs-title function_">getColumns</span>(): <span class="hljs-title class_">Column</span>[] {
+    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">columns</span>;
+  }
+
+  <span class="hljs-comment">/**
+   * Get Command used in this request
+   * <span class="hljs-doctag">@returns</span> <span class="hljs-variable">command</span>
+   */</span>
+  <span class="hljs-keyword">public</span> <span class="hljs-title function_">getCommand</span>(): <span class="hljs-built_in">any</span> {
+    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">command</span>;
+  }
+
+  <span class="hljs-comment">/**
+   * Get Command used in this request in plain text format
+   * <span class="hljs-doctag">@return</span> command as plain text
+   */</span>
+  <span class="hljs-keyword">public</span> <span class="hljs-title function_">getCommandPlain</span>(): <span class="hljs-built_in">string</span> {
+    <span class="hljs-keyword">let</span> tmp = <span class="hljs-string">&quot;&quot;</span>;
+    <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">keys</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">command</span>).<span class="hljs-title function_">forEach</span>(<span class="hljs-function">(<span class="hljs-params">key: <span class="hljs-built_in">string</span></span>) =&gt;</span> {
+      tmp += <span class="hljs-string">`<span class="hljs-subst">${key}</span> = <span class="hljs-subst">${<span class="hljs-variable language_">this</span>.command[key]}</span>\n`</span>;
+    });
+    <span class="hljs-keyword">return</span> tmp;
+  }
+
+  <span class="hljs-comment">/**
+   * Get Page Number of current List Query
+   * <span class="hljs-doctag">@returns</span> page number or null in case of a non-list response
+   */</span>
+  <span class="hljs-keyword">public</span> <span class="hljs-title function_">getCurrentPageNumber</span>(): <span class="hljs-built_in">number</span> | <span class="hljs-literal">null</span> {
+    <span class="hljs-keyword">const</span> first = <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getFirstRecordIndex</span>();
+    <span class="hljs-keyword">const</span> limit = <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getRecordsLimitation</span>();
+    <span class="hljs-keyword">if</span> (first !== <span class="hljs-literal">null</span> &amp;&amp; limit) {
+      <span class="hljs-keyword">return</span> <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">floor</span>(first / limit) + <span class="hljs-number">1</span>;
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;
+  }
+
+  <span class="hljs-comment">/**
+   * Get Record of current record index
+   * <span class="hljs-doctag">@returns</span> Record or null in case of a non-list response
+   */</span>
+  <span class="hljs-keyword">public</span> <span class="hljs-title function_">getCurrentRecord</span>(): <span class="hljs-title class_">Record</span> | <span class="hljs-literal">null</span> {
+    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">hasCurrentRecord</span>() ? <span class="hljs-variable language_">this</span>.<span class="hljs-property">records</span>[<span class="hljs-variable language_">this</span>.<span class="hljs-property">recordIndex</span>] : <span class="hljs-literal">null</span>;
+  }
+
+  <span class="hljs-comment">/**
+   * Get Index of first row in this response
+   * <span class="hljs-doctag">@returns</span> first row index
+   */</span>
+  <span class="hljs-keyword">public</span> <span class="hljs-title function_">getFirstRecordIndex</span>(): <span class="hljs-built_in">number</span> | <span class="hljs-literal">null</span> {
+    <span class="hljs-keyword">const</span> col = <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getColumn</span>(<span class="hljs-string">&quot;FIRST&quot;</span>);
+    <span class="hljs-keyword">if</span> (col) {
+      <span class="hljs-keyword">const</span> f = col.<span class="hljs-title function_">getDataByIndex</span>(<span class="hljs-number">0</span>);
+      <span class="hljs-keyword">if</span> (f !== <span class="hljs-literal">null</span>) {
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">parseInt</span>(f, <span class="hljs-number">10</span>);
+      }
+    }
+    <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">records</span>.<span class="hljs-property">length</span>) {
+      <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;
+  }
+
+  <span class="hljs-comment">/**
+   * Get last record index of the current list query
+   * <span class="hljs-doctag">@returns</span> record index or null for a non-list response
+   */</span>
+  <span class="hljs-keyword">public</span> <span class="hljs-title function_">getLastRecordIndex</span>(): <span class="hljs-built_in">number</span> | <span class="hljs-literal">null</span> {
+    <span class="hljs-keyword">const</span> col = <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getColumn</span>(<span class="hljs-string">&quot;LAST&quot;</span>);
+    <span class="hljs-keyword">if</span> (col) {
+      <span class="hljs-keyword">const</span> l = col.<span class="hljs-title function_">getDataByIndex</span>(<span class="hljs-number">0</span>);
+      <span class="hljs-keyword">if</span> (l !== <span class="hljs-literal">null</span>) {
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">parseInt</span>(l, <span class="hljs-number">10</span>);
+      }
+    }
+    <span class="hljs-keyword">const</span> len = <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getRecordsCount</span>();
+    <span class="hljs-keyword">if</span> (len) {
+      <span class="hljs-keyword">return</span> len - <span class="hljs-number">1</span>;
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;
+  }
+
+  <span class="hljs-comment">/**
+   * Get Response as List Hash including useful meta data for tables
+   * <span class="hljs-doctag">@returns</span> hash including list meta data and array of rows in hash notation
+   */</span>
+  <span class="hljs-keyword">public</span> <span class="hljs-title function_">getListHash</span>(): <span class="hljs-built_in">any</span> {
+    <span class="hljs-keyword">const</span> <span class="hljs-attr">lh</span>: <span class="hljs-built_in">any</span>[] = [];
+    <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getRecords</span>().<span class="hljs-title function_">forEach</span>(<span class="hljs-function">(<span class="hljs-params">rec</span>) =&gt;</span> {
+      lh.<span class="hljs-title function_">push</span>(rec.<span class="hljs-title function_">getData</span>());
+    });
+    <span class="hljs-keyword">return</span> {
+      <span class="hljs-attr">LIST</span>: lh,
+      <span class="hljs-attr">meta</span>: {
+        <span class="hljs-attr">columns</span>: <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getColumnKeys</span>(),
+        <span class="hljs-attr">pg</span>: <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getPagination</span>(),
+      },
+    };
+  }
+
+  <span class="hljs-comment">/**
+   * Get next record in record list
+   * <span class="hljs-doctag">@returns</span> Record or null in case there&#x27;s no further record
+   */</span>
+  <span class="hljs-keyword">public</span> <span class="hljs-title function_">getNextRecord</span>(): <span class="hljs-title class_">Record</span> | <span class="hljs-literal">null</span> {
+    <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-title function_">hasNextRecord</span>()) {
+      <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">records</span>[++<span class="hljs-variable language_">this</span>.<span class="hljs-property">recordIndex</span>];
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;
+  }
+
+  <span class="hljs-comment">/**
+   * Get Page Number of next list query
+   * <span class="hljs-doctag">@returns</span> page number or null if there&#x27;s no next page
+   */</span>
+  <span class="hljs-keyword">public</span> <span class="hljs-title function_">getNextPageNumber</span>(): <span class="hljs-built_in">number</span> | <span class="hljs-literal">null</span> {
+    <span class="hljs-keyword">const</span> cp = <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getCurrentPageNumber</span>();
+    <span class="hljs-keyword">if</span> (cp === <span class="hljs-literal">null</span>) {
+      <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;
+    }
+    <span class="hljs-keyword">const</span> page = cp + <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">const</span> pages = <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getNumberOfPages</span>();
+    <span class="hljs-keyword">return</span> page &lt;= pages ? page : pages;
+  }
+
+  <span class="hljs-comment">/**
+   * Get the number of pages available for this list query
+   * <span class="hljs-doctag">@returns</span> number of pages
+   */</span>
+  <span class="hljs-keyword">public</span> <span class="hljs-title function_">getNumberOfPages</span>(): <span class="hljs-built_in">number</span> {
+    <span class="hljs-keyword">const</span> t = <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getRecordsTotalCount</span>();
+    <span class="hljs-keyword">const</span> limit = <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getRecordsLimitation</span>();
+    <span class="hljs-keyword">if</span> (t &amp;&amp; limit) {
+      <span class="hljs-keyword">return</span> <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">ceil</span>(t / <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getRecordsLimitation</span>());
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+  }
+
+  <span class="hljs-comment">/**
+   * Get object containing all paging data
+   * <span class="hljs-doctag">@returns</span> paginator data
+   */</span>
+  <span class="hljs-keyword">public</span> <span class="hljs-title function_">getPagination</span>(): <span class="hljs-built_in">any</span> {
+    <span class="hljs-keyword">return</span> {
+      <span class="hljs-attr">COUNT</span>: <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getRecordsCount</span>(),
+      <span class="hljs-attr">CURRENTPAGE</span>: <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getCurrentPageNumber</span>(),
+      <span class="hljs-attr">FIRST</span>: <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getFirstRecordIndex</span>(),
+      <span class="hljs-attr">LAST</span>: <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getLastRecordIndex</span>(),
+      <span class="hljs-attr">LIMIT</span>: <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getRecordsLimitation</span>(),
+      <span class="hljs-attr">NEXTPAGE</span>: <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getNextPageNumber</span>(),
+      <span class="hljs-attr">PAGES</span>: <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getNumberOfPages</span>(),
+      <span class="hljs-attr">PREVIOUSPAGE</span>: <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getPreviousPageNumber</span>(),
+      <span class="hljs-attr">TOTAL</span>: <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getRecordsTotalCount</span>(),
+    };
+  }
+
+  <span class="hljs-comment">/**
+   * Get Page Number of previous list query
+   * <span class="hljs-doctag">@returns</span> page number or null if there&#x27;s no previous page
+   */</span>
+  <span class="hljs-keyword">public</span> <span class="hljs-title function_">getPreviousPageNumber</span>(): <span class="hljs-built_in">number</span> | <span class="hljs-literal">null</span> {
+    <span class="hljs-keyword">const</span> cp = <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getCurrentPageNumber</span>();
+    <span class="hljs-keyword">if</span> (cp === <span class="hljs-literal">null</span>) {
+      <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;
+    }
+    <span class="hljs-keyword">return</span> cp - <span class="hljs-number">1</span> || <span class="hljs-literal">null</span>;
+  }
+
+  <span class="hljs-comment">/**
+   * Get previous record in record list
+   * <span class="hljs-doctag">@returns</span> Record or null if there&#x27;s no previous record
+   */</span>
+  <span class="hljs-keyword">public</span> <span class="hljs-title function_">getPreviousRecord</span>(): <span class="hljs-title class_">Record</span> | <span class="hljs-literal">null</span> {
+    <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-title function_">hasPreviousRecord</span>()) {
+      <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">records</span>[--<span class="hljs-variable language_">this</span>.<span class="hljs-property">recordIndex</span>];
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;
+  }
+
+  <span class="hljs-comment">/**
+   * Get Record at given index
+   * <span class="hljs-doctag">@param</span> idx record index
+   * <span class="hljs-doctag">@returns</span> Record or null if index does not exist
+   */</span>
+  <span class="hljs-keyword">public</span> <span class="hljs-title function_">getRecord</span>(<span class="hljs-attr">idx</span>: <span class="hljs-built_in">number</span>): <span class="hljs-title class_">Record</span> | <span class="hljs-literal">null</span> {
+    <span class="hljs-keyword">if</span> (idx &gt;= <span class="hljs-number">0</span> &amp;&amp; <span class="hljs-variable language_">this</span>.<span class="hljs-property">records</span>.<span class="hljs-property">length</span> &gt; idx) {
+      <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">records</span>[idx];
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;
+  }
+
+  <span class="hljs-comment">/**
+   * Get all Records
+   * <span class="hljs-doctag">@returns</span> array of records
+   */</span>
+  <span class="hljs-keyword">public</span> <span class="hljs-title function_">getRecords</span>(): <span class="hljs-title class_">Record</span>[] {
+    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">records</span>;
+  }
+
+  <span class="hljs-comment">/**
+   * Get count of rows in this response
+   * <span class="hljs-doctag">@returns</span> count of rows
+   */</span>
+  <span class="hljs-keyword">public</span> <span class="hljs-title function_">getRecordsCount</span>(): <span class="hljs-built_in">number</span> {
+    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">records</span>.<span class="hljs-property">length</span>;
+  }
+
+  <span class="hljs-comment">/**
+   * Get total count of records available for the list query
+   * <span class="hljs-doctag">@returns</span> total count of records or count of records for a non-list response
+   */</span>
+  <span class="hljs-keyword">public</span> <span class="hljs-title function_">getRecordsTotalCount</span>(): <span class="hljs-built_in">number</span> {
+    <span class="hljs-keyword">const</span> col = <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getColumn</span>(<span class="hljs-string">&quot;TOTAL&quot;</span>);
+    <span class="hljs-keyword">if</span> (col) {
+      <span class="hljs-keyword">const</span> t = col.<span class="hljs-title function_">getDataByIndex</span>(<span class="hljs-number">0</span>);
+      <span class="hljs-keyword">if</span> (t !== <span class="hljs-literal">null</span>) {
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">parseInt</span>(t, <span class="hljs-number">10</span>);
+      }
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getRecordsCount</span>();
+  }
+
+  <span class="hljs-comment">/**
+   * Get limit(ation) setting of the current list query
+   * This is the count of requested rows
+   * <span class="hljs-doctag">@returns</span> limit setting or count requested rows
+   */</span>
+  <span class="hljs-keyword">public</span> <span class="hljs-title function_">getRecordsLimitation</span>(): <span class="hljs-built_in">number</span> {
+    <span class="hljs-keyword">const</span> col = <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getColumn</span>(<span class="hljs-string">&quot;LIMIT&quot;</span>);
+    <span class="hljs-keyword">if</span> (col) {
+      <span class="hljs-keyword">const</span> l = col.<span class="hljs-title function_">getDataByIndex</span>(<span class="hljs-number">0</span>);
+      <span class="hljs-keyword">if</span> (l !== <span class="hljs-literal">null</span>) {
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">parseInt</span>(l, <span class="hljs-number">10</span>);
+      }
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getRecordsCount</span>();
+  }
+
+  <span class="hljs-comment">/**
+   * Check if this list query has a next page
+   * <span class="hljs-doctag">@returns</span> boolean result
+   */</span>
+  <span class="hljs-keyword">public</span> <span class="hljs-title function_">hasNextPage</span>(): <span class="hljs-built_in">boolean</span> {
+    <span class="hljs-keyword">const</span> cp = <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getCurrentPageNumber</span>();
+    <span class="hljs-keyword">if</span> (cp === <span class="hljs-literal">null</span>) {
+      <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+    }
+    <span class="hljs-keyword">return</span> cp + <span class="hljs-number">1</span> &lt;= <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getNumberOfPages</span>();
+  }
+
+  <span class="hljs-comment">/**
+   * Check if this list query has a previous page
+   * <span class="hljs-doctag">@returns</span> boolean result
+   */</span>
+  <span class="hljs-keyword">public</span> <span class="hljs-title function_">hasPreviousPage</span>(): <span class="hljs-built_in">boolean</span> {
+    <span class="hljs-keyword">const</span> cp = <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getCurrentPageNumber</span>();
+    <span class="hljs-keyword">if</span> (cp === <span class="hljs-literal">null</span>) {
+      <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+    }
+    <span class="hljs-keyword">return</span> cp - <span class="hljs-number">1</span> &gt; <span class="hljs-number">0</span>;
+  }
+
+  <span class="hljs-comment">/**
+   * Reset index in record list back to zero
+   * <span class="hljs-doctag">@returns</span> Current Response Instance for method chaining
+   */</span>
+  <span class="hljs-keyword">public</span> <span class="hljs-title function_">rewindRecordList</span>(): <span class="hljs-title class_">Response</span> {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">recordIndex</span> = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>;
+  }
+
+  <span class="hljs-comment">/**
+   * Check if column exists in response
+   * <span class="hljs-doctag">@param</span> key column name
+   * <span class="hljs-doctag">@returns</span> boolean result
+   */</span>
+  <span class="hljs-keyword">private</span> <span class="hljs-title function_">hasColumn</span>(<span class="hljs-attr">key</span>: <span class="hljs-built_in">string</span>): <span class="hljs-built_in">boolean</span> {
+    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">columnkeys</span>.<span class="hljs-title function_">indexOf</span>(key) !== -<span class="hljs-number">1</span>;
+  }
+
+  <span class="hljs-comment">/**
+   * Check if the record list contains a record for the
+   * current record index in use
+   * <span class="hljs-doctag">@returns</span> boolean result
+   */</span>
+  <span class="hljs-keyword">private</span> <span class="hljs-title function_">hasCurrentRecord</span>(): <span class="hljs-built_in">boolean</span> {
+    <span class="hljs-keyword">const</span> len = <span class="hljs-variable language_">this</span>.<span class="hljs-property">records</span>.<span class="hljs-property">length</span>;
+    <span class="hljs-keyword">return</span> len &gt; <span class="hljs-number">0</span> &amp;&amp; <span class="hljs-variable language_">this</span>.<span class="hljs-property">recordIndex</span> &gt;= <span class="hljs-number">0</span> &amp;&amp; <span class="hljs-variable language_">this</span>.<span class="hljs-property">recordIndex</span> &lt; len;
+  }
+
+  <span class="hljs-comment">/**
+   * Check if the record list contains a next record for the
+   * current record index in use
+   * <span class="hljs-doctag">@returns</span> boolean result
+   */</span>
+  <span class="hljs-keyword">private</span> <span class="hljs-title function_">hasNextRecord</span>(): <span class="hljs-built_in">boolean</span> {
+    <span class="hljs-keyword">const</span> next = <span class="hljs-variable language_">this</span>.<span class="hljs-property">recordIndex</span> + <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">hasCurrentRecord</span>() &amp;&amp; next &lt; <span class="hljs-variable language_">this</span>.<span class="hljs-property">records</span>.<span class="hljs-property">length</span>;
+  }
+
+  <span class="hljs-comment">/**
+   * Check if the record list contains a previous record for the
+   * current record index in use
+   * <span class="hljs-doctag">@returns</span> boolean result
+   */</span>
+  <span class="hljs-keyword">private</span> <span class="hljs-title function_">hasPreviousRecord</span>(): <span class="hljs-built_in">boolean</span> {
+    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">recordIndex</span> &gt; <span class="hljs-number">0</span> &amp;&amp; <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">hasCurrentRecord</span>();
+  }
+}</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>
