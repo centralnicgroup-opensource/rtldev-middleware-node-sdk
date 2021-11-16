@@ -1,3 +1,10 @@
+## [7.0.7](https://github.com/hexonet/node-sdk/compare/v7.0.6...v7.0.7) (2021-11-16)
+
+
+### Bug Fixes
+
+* **docco:** re-introduced docco docs (dependency got fixed) ([47d1a09](https://github.com/hexonet/node-sdk/commit/47d1a09ea034f42ec09b24b093a39f219d43bad3))
+
 ## [7.0.6](https://github.com/hexonet/node-sdk/compare/v7.0.5...v7.0.6) (2021-11-11)
 
 
