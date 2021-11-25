@@ -24,6 +24,7 @@
     "noUnusedParameters": true,
     "outDir": "./dist",
     "removeComments": true,
+    "sourceMap": true,
     "strict": true,
     "target": "es5",
     "typeRoots": ["node_modules/@types", "typings"],
