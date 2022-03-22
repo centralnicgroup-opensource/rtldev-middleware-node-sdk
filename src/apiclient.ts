@@ -6,7 +6,8 @@ import { ResponseTemplateManager } from "./responsetemplatemanager";
 import { fixedURLEnc, SocketConfig } from "./socketconfig";
 
 export const ISPAPI_CONNECTION_URL_PROXY = "http://127.0.0.1/api/call.cgi";
-export const ISPAPI_CONNECTION_URL = "https://api.ispapi.net/api/call.cgi";
+export const ISPAPI_CONNECTION_URL_LIVE = "https://api.ispapi.net/api/call.cgi";
+export const ISPAPI_CONNECTION_URL_OTE = "https://api-ote.ispapi.net/api/call.cgi";
 
 const rtm = ResponseTemplateManager.getInstance();
 
@@ -47,7 +48,7 @@ export class APIClient {
     this.ua = "";
     this.socketURL = "";
     this.debugMode = false;
-    this.setURL(ISPAPI_CONNECTION_URL);
+    this.setURL(ISPAPI_CONNECTION_URL_LIVE);
     this.socketConfig = new SocketConfig();
     this.useLIVESystem();
     this.curlopts = {};
@@ -476,7 +477,7 @@ export class APIClient {
    * @returns Current APIClient instance for method chaining
    */
   public useDefaultConnectionSetup(): APIClient {
-    this.setURL(ISPAPI_CONNECTION_URL);
+    this.setURL(ISPAPI_CONNECTION_URL_LIVE);
     return this;
   }
 
@@ -485,6 +486,7 @@ export class APIClient {
    * @returns Current APIClient instance for method chaining
    */
   public useOTESystem(): APIClient {
+    this.setURL(ISPAPI_CONNECTION_URL_OTE);
     this.socketConfig.setSystemEntity("1234");
     return this;
   }
@@ -494,6 +496,7 @@ export class APIClient {
    * @returns Current APIClient instance for method chaining
    */
   public useLIVESystem(): APIClient {
+    this.setURL(ISPAPI_CONNECTION_URL_LIVE);
     this.socketConfig.setSystemEntity("54cd");
     return this;
   }
