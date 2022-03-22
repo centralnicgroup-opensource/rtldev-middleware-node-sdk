@@ -1,3 +1,16 @@
+## [7.0.8](https://github.com/hexonet/node-sdk/compare/v7.0.7...v7.0.8) (2022-03-22)
+
+
+### Bug Fixes
+
+* **ot&e:** url updated for OT&E environment ([e9f09dc](https://github.com/hexonet/node-sdk/commit/e9f09dc34ea3c5996b547b11705dfe29ab7f85de))
+* **tests:** refactor to minimize maintenance effort ([717d417](https://github.com/hexonet/node-sdk/commit/717d417e4305bed401515fe3b27eddb0a236be61))
+
+
+### Reverts
+
+* **ts config:** revert latest change as inlineSourceMap is in use ([8ffb346](https://github.com/hexonet/node-sdk/commit/8ffb3463cd0dbbec66a4644cd19e56f3bdf42d30))
+
 ## [7.0.7](https://github.com/hexonet/node-sdk/compare/v7.0.6...v7.0.7) (2021-11-16)
 
 

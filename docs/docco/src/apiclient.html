@@ -106,7 +106,8 @@
 <span class="hljs-keyword">import</span> { fixedURLEnc, <span class="hljs-title class_">SocketConfig</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./socketconfig&quot;</span>;
 
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-variable constant_">ISPAPI_CONNECTION_URL_PROXY</span> = <span class="hljs-string">&quot;http://127.0.0.1/api/call.cgi&quot;</span>;
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-variable constant_">ISPAPI_CONNECTION_URL</span> = <span class="hljs-string">&quot;https://api.ispapi.net/api/call.cgi&quot;</span>;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-variable constant_">ISPAPI_CONNECTION_URL_LIVE</span> = <span class="hljs-string">&quot;https://api.ispapi.net/api/call.cgi&quot;</span>;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-variable constant_">ISPAPI_CONNECTION_URL_OTE</span> = <span class="hljs-string">&quot;https://api-ote.ispapi.net/api/call.cgi&quot;</span>;
 
 <span class="hljs-keyword">const</span> rtm = <span class="hljs-title class_">ResponseTemplateManager</span>.<span class="hljs-title function_">getInstance</span>();
 
@@ -147,7 +148,7 @@
     <span class="hljs-variable language_">this</span>.<span class="hljs-property">ua</span> = <span class="hljs-string">&quot;&quot;</span>;
     <span class="hljs-variable language_">this</span>.<span class="hljs-property">socketURL</span> = <span class="hljs-string">&quot;&quot;</span>;
     <span class="hljs-variable language_">this</span>.<span class="hljs-property">debugMode</span> = <span class="hljs-literal">false</span>;
-    <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">setURL</span>(<span class="hljs-variable constant_">ISPAPI_CONNECTION_URL</span>);
+    <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">setURL</span>(<span class="hljs-variable constant_">ISPAPI_CONNECTION_URL_LIVE</span>);
     <span class="hljs-variable language_">this</span>.<span class="hljs-property">socketConfig</span> = <span class="hljs-keyword">new</span> <span class="hljs-title class_">SocketConfig</span>();
     <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">useLIVESystem</span>();
     <span class="hljs-variable language_">this</span>.<span class="hljs-property">curlopts</span> = {};
@@ -652,7 +653,7 @@ gzip: true,</p>
    * <span class="hljs-doctag">@returns</span> Current APIClient instance for method chaining
    */</span>
   <span class="hljs-keyword">public</span> <span class="hljs-title function_">useDefaultConnectionSetup</span>(): <span class="hljs-title class_">APIClient</span> {
-    <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">setURL</span>(<span class="hljs-variable constant_">ISPAPI_CONNECTION_URL</span>);
+    <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">setURL</span>(<span class="hljs-variable constant_">ISPAPI_CONNECTION_URL_LIVE</span>);
     <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>;
   }
 
@@ -661,6 +662,7 @@ gzip: true,</p>
    * <span class="hljs-doctag">@returns</span> Current APIClient instance for method chaining
    */</span>
   <span class="hljs-keyword">public</span> <span class="hljs-title function_">useOTESystem</span>(): <span class="hljs-title class_">APIClient</span> {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">setURL</span>(<span class="hljs-variable constant_">ISPAPI_CONNECTION_URL_OTE</span>);
     <span class="hljs-variable language_">this</span>.<span class="hljs-property">socketConfig</span>.<span class="hljs-title function_">setSystemEntity</span>(<span class="hljs-string">&quot;1234&quot;</span>);
     <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>;
   }
@@ -670,6 +672,7 @@ gzip: true,</p>
    * <span class="hljs-doctag">@returns</span> Current APIClient instance for method chaining
    */</span>
   <span class="hljs-keyword">public</span> <span class="hljs-title function_">useLIVESystem</span>(): <span class="hljs-title class_">APIClient</span> {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">setURL</span>(<span class="hljs-variable constant_">ISPAPI_CONNECTION_URL_LIVE</span>);
     <span class="hljs-variable language_">this</span>.<span class="hljs-property">socketConfig</span>.<span class="hljs-title function_">setSystemEntity</span>(<span class="hljs-string">&quot;54cd&quot;</span>);
     <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>;
   }
