@@ -1,3 +1,10 @@
+## [8.0.1](https://github.com/hexonet/node-sdk/compare/v8.0.0...v8.0.1) (2022-06-08)
+
+
+### Bug Fixes
+
+* **dep-bump:** for package-lock.json (multiple vuln) ([0450321](https://github.com/hexonet/node-sdk/commit/0450321510c16fc770b20ff24747bf4732d7144b))
+
 # [8.0.0](https://github.com/hexonet/node-sdk/compare/v7.0.8...v8.0.0) (2022-06-08)
 
 
