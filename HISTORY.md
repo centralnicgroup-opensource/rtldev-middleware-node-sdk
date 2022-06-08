@@ -1,3 +1,15 @@
+# [8.0.0](https://github.com/hexonet/node-sdk/compare/v7.0.8...v8.0.0) (2022-06-08)
+
+
+### chore
+
+* **dep bump:** upgrade software dependencies to latest version ([872cff1](https://github.com/hexonet/node-sdk/commit/872cff13d81436d36b1b9bee85abb21ff3623606))
+
+
+### BREAKING CHANGES
+
+* **dep bump:** upgrade to semantic-release v19
+
 ## [7.0.8](https://github.com/hexonet/node-sdk/compare/v7.0.7...v7.0.8) (2022-03-22)
 
 ### Bug Fixes
