@@ -1,4 +1,4 @@
-import packageInfo from "../package.json";
+import packageInfo from "../package.json" assert { type: "json" };
 import fetch from "node-fetch";
 import { Logger } from "./logger";
 import { Response } from "./response";
