@@ -1,3 +1,10 @@
+## [8.0.2](https://github.com/hexonet/node-sdk/compare/v8.0.1...v8.0.2) (2022-06-10)
+
+
+### Bug Fixes
+
+* **apiclient:** add type assertion for json import ([685c940](https://github.com/hexonet/node-sdk/commit/685c940f65153b2eff62adefe88f8b374c67f4ec))
+
 ## [8.0.1](https://github.com/hexonet/node-sdk/compare/v8.0.0...v8.0.1) (2022-06-08)
 
 
