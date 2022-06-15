@@ -1,28 +1,24 @@
 ## [8.0.2](https://github.com/hexonet/node-sdk/compare/v8.0.1...v8.0.2) (2022-06-10)
 
-
 ### Bug Fixes
 
-* **apiclient:** add type assertion for json import ([685c940](https://github.com/hexonet/node-sdk/commit/685c940f65153b2eff62adefe88f8b374c67f4ec))
+- **apiclient:** add type assertion for json import ([685c940](https://github.com/hexonet/node-sdk/commit/685c940f65153b2eff62adefe88f8b374c67f4ec))
 
 ## [8.0.1](https://github.com/hexonet/node-sdk/compare/v8.0.0...v8.0.1) (2022-06-08)
 
-
 ### Bug Fixes
 
-* **dep-bump:** for package-lock.json (multiple vuln) ([0450321](https://github.com/hexonet/node-sdk/commit/0450321510c16fc770b20ff24747bf4732d7144b))
+- **dep-bump:** for package-lock.json (multiple vuln) ([0450321](https://github.com/hexonet/node-sdk/commit/0450321510c16fc770b20ff24747bf4732d7144b))
 
 # [8.0.0](https://github.com/hexonet/node-sdk/compare/v7.0.8...v8.0.0) (2022-06-08)
 
-
 ### chore
 
-* **dep bump:** upgrade software dependencies to latest version ([872cff1](https://github.com/hexonet/node-sdk/commit/872cff13d81436d36b1b9bee85abb21ff3623606))
-
+- **dep bump:** upgrade software dependencies to latest version ([872cff1](https://github.com/hexonet/node-sdk/commit/872cff13d81436d36b1b9bee85abb21ff3623606))
 
 ### BREAKING CHANGES
 
-* **dep bump:** upgrade to semantic-release v19
+- **dep bump:** upgrade to semantic-release v19
 
 ## [7.0.8](https://github.com/hexonet/node-sdk/compare/v7.0.7...v7.0.8) (2022-03-22)
 

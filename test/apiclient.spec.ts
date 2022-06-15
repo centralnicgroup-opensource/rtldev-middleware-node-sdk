@@ -18,7 +18,7 @@ import { ResponseTemplateManager } from "../src/responsetemplatemanager";
 chai.use(chaiPromised);
 
 const apiScript = "/api/call.cgi";
-const oteHost = ISPAPI_CONNECTION_URL_OTE.replace(apiScript, '');
+const oteHost = ISPAPI_CONNECTION_URL_OTE.replace(apiScript, "");
 const expect = chai.expect;
 const rtm = ResponseTemplateManager.getInstance();
 const cmd = { COMMAND: "StatusAccount" };
@@ -344,9 +344,7 @@ describe("APIClient class", function () {
   describe("#.login", () => {
     it("validate against mocked API response [login succeeded; no role used]", async () => {
       const tpl = new Response(rtm.getTemplate("login200").getPlain(), cmd);
-      nock(oteHost)
-        .post(apiScript)
-        .reply(200, tpl.getPlain());
+      nock(oteHost).post(apiScript).reply(200, tpl.getPlain());
       cl.useOTESystem().setCredentials("test.user", "test.passw0rd");
       const r = await cl.login();
       expect(r).to.be.instanceOf(Response);
@@ -367,9 +365,7 @@ describe("APIClient class", function () {
     // skipping test using public accessible role user; we need to review here
     it.skip("validate against mocked API response [login succeeded; role used]", async () => {
       const tpl = new Response(rtm.getTemplate("login200").getPlain(), cmd);
-      nock(oteHost)
-        .post(apiScript)
-        .reply(200, tpl.getPlain());
+      nock(oteHost).post(apiScript).reply(200, tpl.getPlain());
       cl.useOTESystem().setRoleCredentials(
         "test.user",
         "testrole",
@@ -420,9 +416,7 @@ describe("APIClient class", function () {
       // this case cannot really happen as the api always returns SESSION property.
       // this case is just to increase coverage
       const tpl = new Response(rtm.getTemplate("OK").getPlain(), cmd);
-      nock(oteHost)
-        .post(apiScript)
-        .reply(200, tpl.getPlain());
+      nock(oteHost).post(apiScript).reply(200, tpl.getPlain());
       cl.useOTESystem().setCredentials("test.user", "test.passw0rd");
       const r = await cl.login();
       expect(r).to.be.instanceOf(Response);
@@ -435,9 +429,7 @@ describe("APIClient class", function () {
   describe("#.loginExtended", () => {
     it("validate against mocked API response [login succeeded; no role used] ", async () => {
       const tpl = new Response(rtm.getTemplate("login200").getPlain(), cmd);
-      nock(oteHost)
-        .post(apiScript)
-        .reply(200, tpl.getPlain());
+      nock(oteHost).post(apiScript).reply(200, tpl.getPlain());
       cl.useOTESystem().setCredentials("test.user", "test.passw0rd");
       const r = await cl.loginExtended({
         TIMEOUT: 60,

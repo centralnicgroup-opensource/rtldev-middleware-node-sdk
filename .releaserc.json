@@ -12,12 +12,7 @@
     [
       "@semantic-release/git",
       {
-        "assets": [
-          "HISTORY.md",
-          "package?(-lock).json",
-          "docs",
-          "dist"
-        ]
+        "assets": ["HISTORY.md", "package?(-lock).json", "docs", "dist"]
       }
     ],
     "@semantic-release/github"

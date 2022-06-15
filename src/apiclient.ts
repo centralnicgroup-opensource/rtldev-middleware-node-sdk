@@ -7,7 +7,8 @@ import { fixedURLEnc, SocketConfig } from "./socketconfig";
 
 export const ISPAPI_CONNECTION_URL_PROXY = "http://127.0.0.1/api/call.cgi";
 export const ISPAPI_CONNECTION_URL_LIVE = "https://api.ispapi.net/api/call.cgi";
-export const ISPAPI_CONNECTION_URL_OTE = "https://api-ote.ispapi.net/api/call.cgi";
+export const ISPAPI_CONNECTION_URL_OTE =
+  "https://api-ote.ispapi.net/api/call.cgi";
 
 const rtm = ResponseTemplateManager.getInstance();
 
