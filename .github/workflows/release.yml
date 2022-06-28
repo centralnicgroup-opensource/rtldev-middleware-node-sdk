@@ -27,6 +27,15 @@ jobs:
         with:
           node-version: lts/*
           check-latest: true
+      - name: Super Linter Code Base
+        uses: github/super-linter@v4
+        env:
+          FILTER_REGEX_INCLUDE: "/src/*"
+          DEFAULT_BRANCH: master
+          VALIDATE_TYPESCRIPT_ES: true
+          VALIDATE_BASH: true
+          VALIDATE_ALL_CODEBASE: false
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}          
       - name: Build & Validation
         run: |
           npm ci
