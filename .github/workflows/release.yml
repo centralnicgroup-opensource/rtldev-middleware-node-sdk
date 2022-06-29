@@ -27,6 +27,7 @@ jobs:
         with:
           node-version: lts/*
           check-latest: true
+          cache: 'npm'
       - name: Super Linter Code Base
         uses: github/super-linter@v4
         env:
@@ -58,6 +59,7 @@ jobs:
         with:
           node-version: lts/*
           check-latest: true
+          cache: npm          
       - name: Install dependencies
         run: npm ci
       - name: Release
