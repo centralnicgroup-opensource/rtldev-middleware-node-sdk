@@ -33,7 +33,6 @@ jobs:
           FILTER_REGEX_INCLUDE: "/src/*"
           DEFAULT_BRANCH: master
           VALIDATE_TYPESCRIPT_ES: true
-          VALIDATE_BASH: true
           VALIDATE_ALL_CODEBASE: false
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}          
       - name: Build & Validation
