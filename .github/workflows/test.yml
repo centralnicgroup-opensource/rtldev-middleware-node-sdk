@@ -59,6 +59,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: lts/*
+          check-latest: true
           cache: 'npm'
       - name: Super Linter Code Base
         uses: github/super-linter@v4
