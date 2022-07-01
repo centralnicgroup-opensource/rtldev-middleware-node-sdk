@@ -60,15 +60,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'npm'
-      - name: Super Linter Code Base
-        uses: github/super-linter@v4
-        env:
-          FILTER_REGEX_INCLUDE: "/src/*"
-          DEFAULT_BRANCH: master
-          VALIDATE_TYPESCRIPT_ES: true
-          VALIDATE_ALL_CODEBASE: false
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}          
+          cache: 'npm'       
       - name: Build & Validation
         run: |
           npm ci
