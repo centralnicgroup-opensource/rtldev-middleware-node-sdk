@@ -1,15 +1,19 @@
 name: Release
 on: 
-  # will run for every branch, except tags. See RSRMID-206.
   push:
-    # Sequence of patterns matched against refs/heads
     branches:
       - "master"
 
 jobs:
+  build:
+    name: Build
+    uses: ./.github/workflows/test.yml
+
   release:
     name: Release @ NodeJS LTS - x86 - ubuntu-latest
     runs-on: ubuntu-latest
+    needs: build
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
