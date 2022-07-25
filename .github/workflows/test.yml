@@ -1,4 +1,4 @@
-name: Test
+name: Linting
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
     types:
       - opened
       - synchronize
-      
+
   workflow_call:    
 
 jobs:
@@ -22,6 +22,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          persist-credentials: false
       - name: Super Linter Code Base
         uses: github/super-linter@v4
         env:
@@ -45,6 +48,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          persist-credentials: false
       - name: Setup NodeJS
         uses: actions/setup-node@v3
         with:
