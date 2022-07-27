@@ -1,5 +1,6 @@
-import packageInfo from "../package.json" assert { type: "json" };
-import fetch from "node-fetch";
+import { RequestInfo, RequestInit } from "node-fetch";
+
+import packageInfo from "../package.json";
 import { Logger } from "./logger";
 import { Response } from "./response";
 import { ResponseTemplateManager } from "./responsetemplatemanager";
@@ -369,6 +370,17 @@ export class APIClient {
     if (referer) {
       reqCfg.headers.Referer = referer;
     }
+
+    const _importDynamic = new Function(
+      "modulePath",
+      "return import(modulePath)"
+    );
+
+    async function fetch(url: RequestInfo, init?: RequestInit) {
+      const { default: fetch } = await _importDynamic("node-fetch");
+      return fetch(url, init);
+    }
+
     return fetch(cfg.CONNECTION_URL, reqCfg)
       .then(async (res: any) => {
         let error = null;

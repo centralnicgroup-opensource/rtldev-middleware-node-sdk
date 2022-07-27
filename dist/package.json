@@ -1,87 +1,86 @@
 {
-  "name": "@hexonet/ispapi-apiconnector",
-  "description": "Node.js SDK for the insanely fast HEXONET API",
-  "version": "8.0.2",
-  "private": false,
-  "author": {
-    "name": "Kai Schwarz",
-    "email": "kschwarz@hexonet.net"
-  },
-  "type": "module",
-  "sideEffects": false,
-  "main": "dist/src/index.js",
-  "license": "MIT",
-  "engines": {
-    "node": ">=16.13.1",
-    "npm": ">=8.8.0"
-  },
-  "homepage": "https://github.com/hexonet/node-sdk",
-  "repository": "github:hexonet/node-sdk",
-  "bugs": "https://github.com/hexonet/node-sdk/issues",
-  "maintainers": [
-    {
-      "name": "Kai Schwarz",
-      "email": "kschwarz@hexonet.net"
-    }
-  ],
-  "keywords": [
-    "hexonet",
-    "domain",
-    "api",
-    "connector",
-    "isp",
-    "ispapi",
-    "ssl",
-    "cert",
-    "dns",
-    "backorder",
-    "premium",
-    "preregistration",
-    "registration",
-    "application"
-  ],
-  "nyc": {
-    "reporter": [
-      "html",
-      "text"
+    "name": "@hexonet/ispapi-apiconnector",
+    "description": "Node.js SDK for the insanely fast HEXONET API",
+    "version": "8.0.2",
+    "private": false,
+    "author": {
+        "name": "Kai Schwarz",
+        "email": "kschwarz@hexonet.net"
+    },
+    "sideEffects": false,
+    "main": "dist/src/index.js",
+    "license": "MIT",
+    "engines": {
+        "node": ">=16.13.1",
+        "npm": ">=8.8.0"
+    },
+    "homepage": "https://github.com/hexonet/node-sdk",
+    "repository": "github:hexonet/node-sdk",
+    "bugs": "https://github.com/hexonet/node-sdk/issues",
+    "maintainers": [
+        {
+            "name": "Kai Schwarz",
+            "email": "kschwarz@hexonet.net"
+        }
     ],
-    "exclude": [
-      "**/*.spec.ts"
-    ]
-  },
-  "scripts": {
-    "build": "tsc --version && tsc",
-    "documentation": "npm run gendocsDocco --silent && npm run gendocsTypedoc --silent",
-    "gendocsTypedoc": "typedoc --out docs/typedoc --name @hexonet/ispapi-apiconnector --readme ./README.md --excludeExternals src/*.ts",
-    "gendocsDocco": "docco -l parallel -o docs/docco src/*.ts",
-    "lint": "prettier --write .",
-    "test": "cross-env NODE_ENV=development nyc mocha"
-  },
-  "dependencies": {
-    "node-fetch": "^3.2.6"
-  },
-  "devDependencies": {
-    "@semantic-release/changelog": "^6.0.1",
-    "@semantic-release/git": "^10.0.1",
-    "@semantic-release/npm": "^9.0.1",
-    "@types/chai": "^4.3.1",
-    "@types/chai-as-promised": "^7.1.5",
-    "@types/mocha": "^9.1.1",
-    "@types/node": "^17.0.43",
-    "chai": "^4.3.6",
-    "chai-as-promised": "^7.1.1",
-    "cross-env": "^7.0.3",
-    "docco": "^0.9.1",
-    "jsdoc": "^3.6.10",
-    "jsdoc-oblivion": "^0.0.9",
-    "mocha": "^10.0.0",
-    "nock": "^13.2.7",
-    "nyc": "^15.1.0",
-    "prettier": "^2.7.0",
-    "semantic-release": "^19.0.3",
-    "supertest": "^6.2.3",
-    "ts-node": "^10.8.1",
-    "typedoc": "^0.22.17",
-    "typescript": "^4.7.3"
-  }
+    "keywords": [
+        "hexonet",
+        "domain",
+        "api",
+        "connector",
+        "isp",
+        "ispapi",
+        "ssl",
+        "cert",
+        "dns",
+        "backorder",
+        "premium",
+        "preregistration",
+        "registration",
+        "application"
+    ],
+    "nyc": {
+        "reporter": [
+            "html",
+            "text"
+        ],
+        "exclude": [
+            "**/*.spec.ts"
+        ]
+    },
+    "scripts": {
+        "build": "tsc --version && tsc",
+        "documentation": "npm run gendocsDocco --silent && npm run gendocsTypedoc --silent",
+        "gendocsTypedoc": "typedoc --out docs/typedoc --name @hexonet/ispapi-apiconnector --readme ./README.md --excludeExternals src/*.ts",
+        "gendocsDocco": "docco -l parallel -o docs/docco src/*.ts",
+        "lint": "prettier --write .",
+        "test": "cross-env NODE_ENV=development nyc mocha"
+    },
+    "dependencies": {
+        "node-fetch": "^3.2.6"
+    },
+    "devDependencies": {
+        "@semantic-release/changelog": "^6.0.1",
+        "@semantic-release/git": "^10.0.1",
+        "@semantic-release/npm": "^9.0.1",
+        "@types/chai": "^4.3.1",
+        "@types/chai-as-promised": "^7.1.5",
+        "@types/mocha": "^9.1.1",
+        "@types/node": "^17.0.43",
+        "chai": "^4.3.6",
+        "chai-as-promised": "^7.1.1",
+        "cross-env": "^7.0.3",
+        "docco": "^0.9.1",
+        "jsdoc": "^3.6.10",
+        "jsdoc-oblivion": "^0.0.9",
+        "mocha": "^10.0.0",
+        "nock": "^13.2.7",
+        "nyc": "^15.1.0",
+        "prettier": "^2.7.0",
+        "semantic-release": "^19.0.3",
+        "supertest": "^6.2.3",
+        "ts-node": "^10.8.1",
+        "typedoc": "^0.22.17",
+        "typescript": "^4.7.3"
+    }
 }

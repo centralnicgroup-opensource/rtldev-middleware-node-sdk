@@ -7,7 +7,6 @@
     "name": "Kai Schwarz",
     "email": "kschwarz@hexonet.net"
   },
-  "type": "module",
   "sideEffects": false,
   "main": "dist/src/index.js",
   "license": "MIT",

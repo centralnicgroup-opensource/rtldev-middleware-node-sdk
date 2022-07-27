@@ -16,7 +16,7 @@
     "declarationMap": true,
     "inlineSourceMap": true,
     "inlineSources": true,
-    "module": "esnext",
+    "module": "commonJS",
     "moduleResolution": "node",
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
