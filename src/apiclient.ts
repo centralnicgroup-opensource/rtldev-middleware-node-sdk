@@ -1,9 +1,9 @@
 import packageInfo from "../package.json" assert { type: "json" };
 import fetch from "node-fetch";
-import { Logger } from "./logger";
-import { Response } from "./response";
-import { ResponseTemplateManager } from "./responsetemplatemanager";
-import { fixedURLEnc, SocketConfig } from "./socketconfig";
+import { Logger } from "./logger.js";
+import { Response } from "./response.js";
+import { ResponseTemplateManager } from "./responsetemplatemanager.js";
+import { fixedURLEnc, SocketConfig } from "./socketconfig.js";
 
 export const ISPAPI_CONNECTION_URL_PROXY = "http://127.0.0.1/api/call.cgi";
 export const ISPAPI_CONNECTION_URL_LIVE = "https://api.ispapi.net/api/call.cgi";
