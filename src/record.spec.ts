@@ -1,11 +1,6 @@
-"use strict";
-
-/* tslint:disable:no-unused-expression */
-// https://github.com/palantir/tslint/issues/2614
-
 import chai from "chai";
 import "mocha";
-import { Record } from "../src/record";
+import { Record } from "./record.js";
 const expect = chai.expect;
 
 let rec: Record;

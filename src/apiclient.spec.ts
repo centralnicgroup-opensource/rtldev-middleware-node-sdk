@@ -1,8 +1,3 @@
-"use strict";
-
-/* tslint:disable:no-unused-expression */
-// https://github.com/palantir/tslint/issues/2614
-
 import chai from "chai";
 import chaiPromised from "chai-as-promised";
 import "mocha";
@@ -12,9 +7,9 @@ import {
   ISPAPI_CONNECTION_URL_LIVE,
   ISPAPI_CONNECTION_URL_OTE,
   ISPAPI_CONNECTION_URL_PROXY,
-} from "../src/apiclient";
-import { Response } from "../src/response";
-import { ResponseTemplateManager } from "../src/responsetemplatemanager";
+} from "./apiclient.js";
+import { Response } from "./response.js";
+import { ResponseTemplateManager } from "./responsetemplatemanager.js";
 chai.use(chaiPromised);
 
 const apiScript = "/api/call.cgi";

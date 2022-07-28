@@ -190,8 +190,6 @@
 
 - **CLIENT:** use of fixed version of urlencode ([e067ded](https://github.com/hexonet/node-sdk/commit/e067ded))
 
-./src/templates/template.hbs
-
 Changelog
 
 ## [5.0.2](https://github.com/hexonet/node-sdk/compare/v5.0.1...v5.0.2) (2018-09-25)

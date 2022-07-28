@@ -1,9 +1,8 @@
-import packageInfo from "../package.json" assert { type: "json" };
-import fetch from "node-fetch";
-import { Logger } from "./logger";
-import { Response } from "./response";
-import { ResponseTemplateManager } from "./responsetemplatemanager";
-import { fixedURLEnc, SocketConfig } from "./socketconfig";
+import fetch from "cross-fetch";
+import { Logger } from "./logger.js";
+import { Response } from "./response.js";
+import { ResponseTemplateManager } from "./responsetemplatemanager.js";
+import { fixedURLEnc, SocketConfig } from "./socketconfig.js";
 
 export const ISPAPI_CONNECTION_URL_PROXY = "http://127.0.0.1/api/call.cgi";
 export const ISPAPI_CONNECTION_URL_LIVE = "https://api.ispapi.net/api/call.cgi";
@@ -188,7 +187,7 @@ export class APIClient {
    * @returns module version
    */
   public getVersion(): string {
-    return packageInfo.version;
+    return "8.0.2";
   }
 
   /**
@@ -351,8 +350,8 @@ export class APIClient {
     };
     // TODO: 300s (to be sure to get an API response)
     const reqCfg: any = {
-      //encoding: "utf8", //default for type string
-      //gzip: true,
+      // encoding: "utf8", //default for type string
+      // gzip: true,
       body: this.getPOSTData(mycmd),
       headers: {
         "User-Agent": this.getUserAgent(),
@@ -601,7 +600,6 @@ export class APIClient {
       COMMAND: "ConvertIDN",
       DOMAIN: toconvert,
     });
-    console.dir(r.getPlain());
     if (r.isSuccess()) {
       const col = r.getColumn("ACE");
       if (col) {

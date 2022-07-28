@@ -1,38 +1,15 @@
 {
-  "compileOnSave": true,
   "compilerOptions": {
-    "lib": [
-      "es5",
-      "es6",
-      "es7",
-      "es2015",
-      "es2016",
-      "es2017",
-      "es2018",
-      "esnext"
-    ],
-    "experimentalDecorators": true,
-    "declaration": true,
-    "declarationMap": true,
-    "inlineSourceMap": true,
-    "inlineSources": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitReturns": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "outDir": "./dist",
-    "removeComments": true,
-    "strict": true,
-    "target": "es5",
-    "typeRoots": ["node_modules/@types", "typings"],
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "noEmitOnError": true,
-    "stripInternal": true,
-    "isolatedModules": true
+    "module": "NodeNext",
+    "target": "ES5",
+    "outDir": "./dist",
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
+    "strict": true,
+    "noUnusedLocals": true
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["node_modules", "coverage", ".nyc_output", "docs"]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
 }

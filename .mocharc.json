@@ -1,0 +1,9 @@
+{
+  "extension": ["js"],
+  "spec": "dist/**/*.spec.js",
+  "reporter": "spec",
+  "check-leaks": true,
+  "inline-diffs": true,
+  "bail": true,
+  "recursive": true
+}

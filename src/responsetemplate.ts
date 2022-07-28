@@ -1,5 +1,5 @@
-import { ResponseParser } from "./responseparser";
-import { ResponseTemplateManager } from "./responsetemplatemanager";
+import { ResponseParser } from "./responseparser.js";
+import { ResponseTemplateManager } from "./responsetemplatemanager.js";
 
 /**
  * ResponseTemplate class

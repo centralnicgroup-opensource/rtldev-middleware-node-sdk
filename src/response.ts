@@ -1,6 +1,6 @@
-import { Column } from "./column";
-import { Record } from "./record";
-import { ResponseTemplate } from "./responsetemplate";
+import { Column } from "./column.js";
+import { Record } from "./record.js";
+import { ResponseTemplate } from "./responsetemplate.js";
 
 /**
  * Response Class inheriting from ResponseTemplate Class
