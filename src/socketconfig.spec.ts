@@ -1,11 +1,6 @@
-"use strict";
-
-/* tslint:disable:no-unused-expression */
-// https://github.com/palantir/tslint/issues/2614
-
 import chai from "chai";
 import "mocha";
-import { SocketConfig } from "../src/socketconfig";
+import { SocketConfig } from "./socketconfig.js";
 const expect = chai.expect;
 
 describe("SocketConfig class", function () {

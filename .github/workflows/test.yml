@@ -59,6 +59,5 @@ jobs:
       - name: Build & Validation
         run: |
           npm ci
-          npm run build
           npm run lint
           npm run test

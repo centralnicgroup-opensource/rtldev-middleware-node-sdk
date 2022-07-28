@@ -18,6 +18,10 @@ This module is a connector library for the insanely fast HEXONET Backend API. Fo
 
 - **Kai Schwarz** - _lead development_ - [PapaKai](https://github.com/papakai)
 
+## FAQ / Notes
+
+ESM/CJS Support: We followed the [ESM-NODE Guide](https://www.typescriptlang.org/docs/handbook/esm-node.html) of TypeScript.
+
 ## License
 
 MIT

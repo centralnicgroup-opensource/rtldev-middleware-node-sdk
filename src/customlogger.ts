@@ -1,5 +1,5 @@
-import { Logger } from "./logger";
-import { Response } from "./response";
+import { Logger } from "./logger.js";
+import { Response } from "./response.js";
 
 /**
  * Logger class

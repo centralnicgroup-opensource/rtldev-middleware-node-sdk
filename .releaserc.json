@@ -8,11 +8,22 @@
         "changelogFile": "HISTORY.md"
       }
     ],
+    [
+      "@semantic-release/exec",
+      {
+        "prepareCmd": "./updateVersion.sh ${nextRelease.version}"
+      }
+    ],
     "@semantic-release/npm",
     [
       "@semantic-release/git",
       {
-        "assets": ["HISTORY.md", "package?(-lock).json", "docs", "dist"]
+        "assets": [
+          "HISTORY.md",
+          "package?(-lock).json",
+          "docs",
+          "src/apiclients.ts"
+        ]
       }
     ],
     "@semantic-release/github"

@@ -1,11 +1,6 @@
-"use strict";
-
-/* tslint:disable:no-unused-expression */
-// https://github.com/palantir/tslint/issues/2614
-
 import chai from "chai";
 import "mocha";
-import { APIClient, Response, ResponseTemplateManager } from "../src/index";
+import { APIClient, Response, ResponseTemplateManager } from "./index.js";
 const expect = chai.expect;
 
 describe("index file", function () {
