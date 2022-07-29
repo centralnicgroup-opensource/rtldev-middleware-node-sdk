@@ -26,7 +26,7 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
       - name: Super Linter Code Base
-        uses: docker://github/super-linter:latest
+        uses: github/super-linter@v4
         env:
           FILTER_REGEX_INCLUDE: "/src/*"
           DEFAULT_BRANCH: master
