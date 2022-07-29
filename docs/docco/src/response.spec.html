@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>response.spec.ts</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="../docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="apiclient.spec.html">
+                  src/apiclient.spec.ts
+                </a>
+              
+                
+                <a class="source" href="apiclient.html">
+                  src/apiclient.ts
+                </a>
+              
+                
+                <a class="source" href="column.spec.html">
+                  src/column.spec.ts
+                </a>
+              
+                
+                <a class="source" href="column.html">
+                  src/column.ts
+                </a>
+              
+                
+                <a class="source" href="customlogger.html">
+                  src/customlogger.ts
+                </a>
+              
+                
+                <a class="source" href="index.spec.html">
+                  src/index.spec.ts
+                </a>
+              
+                
+                <a class="source" href="index.html">
+                  src/index.ts
+                </a>
+              
+                
+                <a class="source" href="logger.html">
+                  src/logger.ts
+                </a>
+              
+                
+                <a class="source" href="record.spec.html">
+                  src/record.spec.ts
+                </a>
+              
+                
+                <a class="source" href="record.html">
+                  src/record.ts
+                </a>
+              
+                
+                <a class="source" href="response.spec.html">
+                  src/response.spec.ts
+                </a>
+              
+                
+                <a class="source" href="response.html">
+                  src/response.ts
+                </a>
+              
+                
+                <a class="source" href="responseparser.spec.html">
+                  src/responseparser.spec.ts
+                </a>
+              
+                
+                <a class="source" href="responseparser.html">
+                  src/responseparser.ts
+                </a>
+              
+                
+                <a class="source" href="responsetemplate.spec.html">
+                  src/responsetemplate.spec.ts
+                </a>
+              
+                
+                <a class="source" href="responsetemplate.html">
+                  src/responsetemplate.ts
+                </a>
+              
+                
+                <a class="source" href="responsetemplatemanager.spec.html">
+                  src/responsetemplatemanager.spec.ts
+                </a>
+              
+                
+                <a class="source" href="responsetemplatemanager.html">
+                  src/responsetemplatemanager.ts
+                </a>
+              
+                
+                <a class="source" href="socketconfig.spec.html">
+                  src/socketconfig.spec.ts
+                </a>
+              
+                
+                <a class="source" href="socketconfig.html">
+                  src/socketconfig.ts
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>response.spec.ts</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="sswrap ">
+                <a class="ss" href="#section-1">&#x00a7;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">import</span> chai <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;chai&quot;</span>;
+<span class="hljs-keyword">import</span> <span class="hljs-string">&quot;mocha&quot;</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">Response</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./response.js&quot;</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">ResponseParser</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./responseparser.js&quot;</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">ResponseTemplateManager</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./responsetemplatemanager.js&quot;</span>;
+
+<span class="hljs-keyword">const</span> expect = chai.<span class="hljs-property">expect</span>;
+<span class="hljs-keyword">const</span> rtm = <span class="hljs-title class_">ResponseTemplateManager</span>.<span class="hljs-title function_">getInstance</span>();
+<span class="hljs-keyword">const</span> cmd = { <span class="hljs-attr">COMMAND</span>: <span class="hljs-string">&quot;StatusContact&quot;</span> };
+
+<span class="hljs-title function_">before</span>(<span class="hljs-function">() =&gt;</span> {
+  rtm
+    .<span class="hljs-title function_">addTemplate</span>(
+      <span class="hljs-string">&quot;listP0&quot;</span>,
+      <span class="hljs-string">&quot;[RESPONSE]\r\nPROPERTY[TOTAL][0]=2701\r\nPROPERTY[FIRST][0]=0\r\nPROPERTY[DOMAIN][0]=0-60motorcycletimes.com\r\nPROPERTY[DOMAIN][1]=0-be-s01-0.com\r\nPROPERTY[COUNT][0]=2\r\nPROPERTY[LAST][0]=1\r\nPROPERTY[LIMIT][0]=2\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.023\r\nEOF\r\n&quot;</span>
+    )
+    .<span class="hljs-title function_">addTemplate</span>(
+      <span class="hljs-string">&quot;OK&quot;</span>,
+      rtm.<span class="hljs-title function_">generateTemplate</span>(<span class="hljs-string">&quot;200&quot;</span>, <span class="hljs-string">&quot;Command completed successfully&quot;</span>)
+    );
+});
+
+<span class="hljs-title function_">describe</span>(<span class="hljs-string">&quot;Response class&quot;</span>, <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) {
+  <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">slow</span>(<span class="hljs-number">1000</span>);
+
+  <span class="hljs-title function_">describe</span>(<span class="hljs-string">&quot;constructor&quot;</span>, <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-title function_">it</span>(<span class="hljs-string">&quot;check place holder vars replacment&quot;</span>, <span class="hljs-function">() =&gt;</span> {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="sswrap ">
+                <a class="ss" href="#section-2">&#x00a7;</a>
+              </div>
+              <p>ensure no vars are returned in response, just in case no place holder replacements are provided</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">let</span> r = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Response</span>(<span class="hljs-string">&quot;&quot;</span>, cmd);
+      <span class="hljs-title function_">expect</span>(<span class="hljs-regexp">/\{[A-Z_]+\}/</span>.<span class="hljs-title function_">test</span>(r.<span class="hljs-title function_">getDescription</span>())).<span class="hljs-property">to</span>.<span class="hljs-property">be</span>.<span class="hljs-property">false</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="sswrap ">
+                <a class="ss" href="#section-3">&#x00a7;</a>
+              </div>
+              <p>ensure variable replacements are correctly handled in case place holder replacements are provided</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      r = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Response</span>(
+        <span class="hljs-string">&quot;&quot;</span>,
+        { <span class="hljs-attr">COMMAND</span>: <span class="hljs-string">&quot;StatusAccount&quot;</span> },
+        { <span class="hljs-attr">CONNECTION_URL</span>: <span class="hljs-string">&quot;123HXPHFOUND123&quot;</span> }
+      );
+      <span class="hljs-title function_">expect</span>(<span class="hljs-regexp">/123HXPHFOUND123/</span>.<span class="hljs-title function_">test</span>(r.<span class="hljs-title function_">getDescription</span>())).<span class="hljs-property">to</span>.<span class="hljs-property">be</span>.<span class="hljs-property">true</span>;
+    });
+  });
+
+  <span class="hljs-title function_">describe</span>(<span class="hljs-string">&quot;#.getCommandPlain&quot;</span>, <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-title function_">it</span>(<span class="hljs-string">&quot;check flattening of command works&quot;</span>, <span class="hljs-function">() =&gt;</span> {
+      <span class="hljs-keyword">const</span> r = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Response</span>(<span class="hljs-string">&quot;&quot;</span>, {
+        <span class="hljs-attr">COMMAND</span>: <span class="hljs-string">&quot;QueryDomainOptions&quot;</span>,
+        <span class="hljs-title class_">DOMAIN0</span>: <span class="hljs-string">&quot;example.com&quot;</span>,
+        <span class="hljs-title class_">DOMAIN1</span>: <span class="hljs-string">&quot;example.net&quot;</span>,
+      });
+      <span class="hljs-keyword">const</span> expected =
+        <span class="hljs-string">&quot;COMMAND = QueryDomainOptions\nDOMAIN0 = example.com\nDOMAIN1 = example.net\n&quot;</span>;
+      <span class="hljs-title function_">expect</span>(r.<span class="hljs-title function_">getCommandPlain</span>()).<span class="hljs-property">to</span>.<span class="hljs-title function_">equal</span>(expected);
+    });
+
+    <span class="hljs-title function_">it</span>(<span class="hljs-string">&quot;check data being returned secure&quot;</span>, <span class="hljs-function">() =&gt;</span> {
+      <span class="hljs-keyword">const</span> r = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Response</span>(<span class="hljs-string">&quot;&quot;</span>, {
+        <span class="hljs-attr">COMMAND</span>: <span class="hljs-string">&quot;CheckAuthentication&quot;</span>,
+        <span class="hljs-attr">SUBUSER</span>: <span class="hljs-string">&quot;test.user&quot;</span>,
+        <span class="hljs-attr">PASSWORD</span>: <span class="hljs-string">&quot;test.passw0rd&quot;</span>,
+      });
+      <span class="hljs-keyword">const</span> expected =
+        <span class="hljs-string">&quot;COMMAND = CheckAuthentication\nSUBUSER = test.user\nPASSWORD = ***\n&quot;</span>;
+      <span class="hljs-title function_">expect</span>(r.<span class="hljs-title function_">getCommandPlain</span>()).<span class="hljs-property">to</span>.<span class="hljs-title function_">equal</span>(expected);
+    });
+  });
+
+  <span class="hljs-title function_">describe</span>(<span class="hljs-string">&quot;#.getCurrentPageNumber&quot;</span>, <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-title function_">it</span>(<span class="hljs-string">&quot;check return value [w/ entries in response]&quot;</span>, <span class="hljs-function">() =&gt;</span> {
+      <span class="hljs-keyword">const</span> r = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Response</span>(rtm.<span class="hljs-title function_">getTemplate</span>(<span class="hljs-string">&quot;listP0&quot;</span>).<span class="hljs-title function_">getPlain</span>(), cmd);
+      <span class="hljs-title function_">expect</span>(r.<span class="hljs-title function_">getCurrentPageNumber</span>()).<span class="hljs-property">to</span>.<span class="hljs-title function_">equal</span>(<span class="hljs-number">1</span>);
+    });
+
+    <span class="hljs-title function_">it</span>(<span class="hljs-string">&quot;check return value [w/o entries in response]&quot;</span>, <span class="hljs-function">() =&gt;</span> {
+      <span class="hljs-keyword">const</span> r = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Response</span>(rtm.<span class="hljs-title function_">getTemplate</span>(<span class="hljs-string">&quot;OK&quot;</span>).<span class="hljs-title function_">getPlain</span>(), cmd);
+      <span class="hljs-title function_">expect</span>(r.<span class="hljs-title function_">getCurrentPageNumber</span>()).<span class="hljs-property">to</span>.<span class="hljs-title function_">equal</span>(<span class="hljs-literal">null</span>);
+    });
+  });
+
+  <span class="hljs-title function_">describe</span>(<span class="hljs-string">&quot;#.getFirstRecordIndex&quot;</span>, <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-title function_">it</span>(<span class="hljs-string">&quot;check return value [w/o FIRST in response, no rows]&quot;</span>, <span class="hljs-function">() =&gt;</span> {
+      <span class="hljs-keyword">const</span> r = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Response</span>(rtm.<span class="hljs-title function_">getTemplate</span>(<span class="hljs-string">&quot;OK&quot;</span>).<span class="hljs-title function_">getPlain</span>(), cmd);
+      <span class="hljs-title function_">expect</span>(r.<span class="hljs-title function_">getFirstRecordIndex</span>()).<span class="hljs-property">to</span>.<span class="hljs-title function_">equal</span>(<span class="hljs-literal">null</span>);
+    });
+
+    <span class="hljs-title function_">it</span>(<span class="hljs-string">&quot;check return value [w/o FIRST in response, rows]&quot;</span>, <span class="hljs-function">() =&gt;</span> {
+      <span class="hljs-keyword">const</span> h = rtm.<span class="hljs-title function_">getTemplate</span>(<span class="hljs-string">&quot;OK&quot;</span>).<span class="hljs-title function_">getHash</span>();
+      h.<span class="hljs-property">PROPERTY</span> = {
+        <span class="hljs-attr">DOMAIN</span>: [<span class="hljs-string">&quot;mydomain1.com&quot;</span>, <span class="hljs-string">&quot;mydomain2.com&quot;</span>],
+      };
+      <span class="hljs-keyword">const</span> r = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Response</span>(<span class="hljs-title class_">ResponseParser</span>.<span class="hljs-title function_">serialize</span>(h), cmd);
+      <span class="hljs-title function_">expect</span>(r.<span class="hljs-title function_">getFirstRecordIndex</span>()).<span class="hljs-property">to</span>.<span class="hljs-title function_">equal</span>(<span class="hljs-number">0</span>);
+    });
+  });
+
+  <span class="hljs-title function_">describe</span>(<span class="hljs-string">&quot;#.getColumns&quot;</span>, <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-title function_">it</span>(<span class="hljs-string">&quot;check return value&quot;</span>, <span class="hljs-function">() =&gt;</span> {
+      <span class="hljs-keyword">const</span> r = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Response</span>(rtm.<span class="hljs-title function_">getTemplate</span>(<span class="hljs-string">&quot;listP0&quot;</span>).<span class="hljs-title function_">getPlain</span>(), cmd);
+      <span class="hljs-keyword">const</span> cols = r.<span class="hljs-title function_">getColumns</span>();
+      <span class="hljs-title function_">expect</span>(cols.<span class="hljs-property">length</span>).<span class="hljs-property">to</span>.<span class="hljs-title function_">equal</span>(<span class="hljs-number">6</span>);
+    });
+  });
+
+  <span class="hljs-title function_">describe</span>(<span class="hljs-string">&quot;#.getColumnIndex&quot;</span>, <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-title function_">it</span>(<span class="hljs-string">&quot;check return value [colum exists]&quot;</span>, <span class="hljs-function">() =&gt;</span> {
+      <span class="hljs-keyword">const</span> r = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Response</span>(rtm.<span class="hljs-title function_">getTemplate</span>(<span class="hljs-string">&quot;listP0&quot;</span>).<span class="hljs-title function_">getPlain</span>(), cmd);
+      <span class="hljs-keyword">const</span> data = r.<span class="hljs-title function_">getColumnIndex</span>(<span class="hljs-string">&quot;DOMAIN&quot;</span>, <span class="hljs-number">0</span>);
+      <span class="hljs-title function_">expect</span>(data).<span class="hljs-property">to</span>.<span class="hljs-title function_">equal</span>(<span class="hljs-string">&quot;0-60motorcycletimes.com&quot;</span>);
+    });
+
+    <span class="hljs-title function_">it</span>(<span class="hljs-string">&quot;check return value [colum does not exist]&quot;</span>, <span class="hljs-function">() =&gt;</span> {
+      <span class="hljs-keyword">const</span> r = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Response</span>(rtm.<span class="hljs-title function_">getTemplate</span>(<span class="hljs-string">&quot;listP0&quot;</span>).<span class="hljs-title function_">getPlain</span>(), cmd);
+      <span class="hljs-keyword">const</span> data = r.<span class="hljs-title function_">getColumnIndex</span>(<span class="hljs-string">&quot;COLUMN_NOT_EXISTS&quot;</span>, <span class="hljs-number">0</span>);
+      <span class="hljs-title function_">expect</span>(data).<span class="hljs-property">to</span>.<span class="hljs-property">be</span>.<span class="hljs-property">null</span>;
+    });
+  });
+
+  <span class="hljs-title function_">describe</span>(<span class="hljs-string">&quot;#.getColumnKeys&quot;</span>, <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-title function_">it</span>(<span class="hljs-string">&quot;check return value&quot;</span>, <span class="hljs-function">() =&gt;</span> {
+      <span class="hljs-keyword">const</span> r = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Response</span>(rtm.<span class="hljs-title function_">getTemplate</span>(<span class="hljs-string">&quot;listP0&quot;</span>).<span class="hljs-title function_">getPlain</span>(), cmd);
+      <span class="hljs-keyword">const</span> colkeys = r.<span class="hljs-title function_">getColumnKeys</span>();
+      <span class="hljs-title function_">expect</span>(colkeys.<span class="hljs-property">length</span>).<span class="hljs-property">to</span>.<span class="hljs-title function_">equal</span>(<span class="hljs-number">6</span>);
+      <span class="hljs-title function_">expect</span>(colkeys).<span class="hljs-property">to</span>.<span class="hljs-property">include</span>.<span class="hljs-title function_">members</span>([
+        <span class="hljs-string">&quot;COUNT&quot;</span>,
+        <span class="hljs-string">&quot;DOMAIN&quot;</span>,
+        <span class="hljs-string">&quot;FIRST&quot;</span>,
+        <span class="hljs-string">&quot;LAST&quot;</span>,
+        <span class="hljs-string">&quot;LIMIT&quot;</span>,
+        <span class="hljs-string">&quot;TOTAL&quot;</span>,
+      ]);
+    });
+  });
+
+  <span class="hljs-title function_">describe</span>(<span class="hljs-string">&quot;#.getCurrentRecord&quot;</span>, <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-title function_">it</span>(<span class="hljs-string">&quot;check return value&quot;</span>, <span class="hljs-function">() =&gt;</span> {
+      <span class="hljs-keyword">const</span> r = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Response</span>(rtm.<span class="hljs-title function_">getTemplate</span>(<span class="hljs-string">&quot;listP0&quot;</span>).<span class="hljs-title function_">getPlain</span>(), cmd);
+      <span class="hljs-keyword">const</span> rec = r.<span class="hljs-title function_">getCurrentRecord</span>();
+      <span class="hljs-title function_">expect</span>(rec).<span class="hljs-property">not</span>.<span class="hljs-property">to</span>.<span class="hljs-property">be</span>.<span class="hljs-property">null</span>;
+      <span class="hljs-keyword">if</span> (rec) {
+        <span class="hljs-title function_">expect</span>(rec.<span class="hljs-title function_">getData</span>()).<span class="hljs-property">to</span>.<span class="hljs-title function_">eql</span>({
+          <span class="hljs-attr">COUNT</span>: <span class="hljs-string">&quot;2&quot;</span>,
+          <span class="hljs-attr">DOMAIN</span>: <span class="hljs-string">&quot;0-60motorcycletimes.com&quot;</span>,
+          <span class="hljs-attr">FIRST</span>: <span class="hljs-string">&quot;0&quot;</span>,
+          <span class="hljs-attr">LAST</span>: <span class="hljs-string">&quot;1&quot;</span>,
+          <span class="hljs-attr">LIMIT</span>: <span class="hljs-string">&quot;2&quot;</span>,
+          <span class="hljs-attr">TOTAL</span>: <span class="hljs-string">&quot;2701&quot;</span>,
+        });
+      }
+    });
+
+    <span class="hljs-title function_">it</span>(<span class="hljs-string">&quot;check return value [no records available]&quot;</span>, <span class="hljs-function">() =&gt;</span> {
+      <span class="hljs-keyword">const</span> r = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Response</span>(rtm.<span class="hljs-title function_">getTemplate</span>(<span class="hljs-string">&quot;OK&quot;</span>).<span class="hljs-title function_">getPlain</span>(), cmd);
+      <span class="hljs-title function_">expect</span>(r.<span class="hljs-title function_">getCurrentRecord</span>()).<span class="hljs-property">to</span>.<span class="hljs-property">be</span>.<span class="hljs-property">null</span>;
+    });
+  });
+
+  <span class="hljs-title function_">describe</span>(<span class="hljs-string">&quot;#.getListHash&quot;</span>, <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-title function_">it</span>(<span class="hljs-string">&quot;check return value&quot;</span>, <span class="hljs-function">() =&gt;</span> {
+      <span class="hljs-keyword">const</span> r = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Response</span>(rtm.<span class="hljs-title function_">getTemplate</span>(<span class="hljs-string">&quot;listP0&quot;</span>).<span class="hljs-title function_">getPlain</span>(), cmd);
+      <span class="hljs-keyword">const</span> lh = r.<span class="hljs-title function_">getListHash</span>();
+      <span class="hljs-title function_">expect</span>(lh.<span class="hljs-property">LIST</span>.<span class="hljs-property">length</span>).<span class="hljs-property">to</span>.<span class="hljs-title function_">equal</span>(<span class="hljs-number">2</span>);
+      <span class="hljs-title function_">expect</span>(lh.<span class="hljs-property">meta</span>.<span class="hljs-property">columns</span>).<span class="hljs-property">to</span>.<span class="hljs-title function_">eql</span>(r.<span class="hljs-title function_">getColumnKeys</span>());
+      <span class="hljs-title function_">expect</span>(lh.<span class="hljs-property">meta</span>.<span class="hljs-property">pg</span>).<span class="hljs-property">to</span>.<span class="hljs-title function_">eql</span>(r.<span class="hljs-title function_">getPagination</span>());
+    });
+  });
+
+  <span class="hljs-title function_">describe</span>(<span class="hljs-string">&quot;#.getNextRecord&quot;</span>, <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-title function_">it</span>(<span class="hljs-string">&quot;check return value&quot;</span>, <span class="hljs-function">() =&gt;</span> {
+      <span class="hljs-keyword">const</span> r = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Response</span>(rtm.<span class="hljs-title function_">getTemplate</span>(<span class="hljs-string">&quot;listP0&quot;</span>).<span class="hljs-title function_">getPlain</span>(), cmd);
+      <span class="hljs-keyword">let</span> rec = r.<span class="hljs-title function_">getNextRecord</span>();
+      <span class="hljs-title function_">expect</span>(rec).<span class="hljs-property">not</span>.<span class="hljs-property">to</span>.<span class="hljs-property">be</span>.<span class="hljs-property">null</span>;
+      <span class="hljs-keyword">if</span> (rec) {
+        <span class="hljs-title function_">expect</span>(rec.<span class="hljs-title function_">getData</span>()).<span class="hljs-property">to</span>.<span class="hljs-title function_">eql</span>({ <span class="hljs-attr">DOMAIN</span>: <span class="hljs-string">&quot;0-be-s01-0.com&quot;</span> });
+      }
+      rec = r.<span class="hljs-title function_">getNextRecord</span>();
+      <span class="hljs-title function_">expect</span>(rec).<span class="hljs-property">to</span>.<span class="hljs-property">be</span>.<span class="hljs-property">null</span>;
+    });
+  });
+
+  <span class="hljs-title function_">describe</span>(<span class="hljs-string">&quot;#.getPagination&quot;</span>, <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-title function_">it</span>(<span class="hljs-string">&quot;check return value [next record]&quot;</span>, <span class="hljs-function">() =&gt;</span> {
+      <span class="hljs-keyword">const</span> r = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Response</span>(rtm.<span class="hljs-title function_">getTemplate</span>(<span class="hljs-string">&quot;listP0&quot;</span>).<span class="hljs-title function_">getPlain</span>(), cmd);
+      <span class="hljs-keyword">const</span> pager = r.<span class="hljs-title function_">getPagination</span>();
+      <span class="hljs-title function_">expect</span>(pager).<span class="hljs-property">to</span>.<span class="hljs-property">have</span>.<span class="hljs-property">all</span>.<span class="hljs-title function_">keys</span>([
+        <span class="hljs-string">&quot;COUNT&quot;</span>,
+        <span class="hljs-string">&quot;CURRENTPAGE&quot;</span>,
+        <span class="hljs-string">&quot;FIRST&quot;</span>,
+        <span class="hljs-string">&quot;LAST&quot;</span>,
+        <span class="hljs-string">&quot;LIMIT&quot;</span>,
+        <span class="hljs-string">&quot;NEXTPAGE&quot;</span>,
+        <span class="hljs-string">&quot;PAGES&quot;</span>,
+        <span class="hljs-string">&quot;PREVIOUSPAGE&quot;</span>,
+        <span class="hljs-string">&quot;TOTAL&quot;</span>,
+      ]);
+    });
+  });
+
+  <span class="hljs-title function_">describe</span>(<span class="hljs-string">&quot;#.getPreviousRecord&quot;</span>, <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-title function_">it</span>(<span class="hljs-string">&quot;check return value&quot;</span>, <span class="hljs-function">() =&gt;</span> {
+      <span class="hljs-keyword">const</span> r = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Response</span>(rtm.<span class="hljs-title function_">getTemplate</span>(<span class="hljs-string">&quot;listP0&quot;</span>).<span class="hljs-title function_">getPlain</span>(), cmd);
+      r.<span class="hljs-title function_">getNextRecord</span>();
+      <span class="hljs-keyword">const</span> rec = r.<span class="hljs-title function_">getPreviousRecord</span>();
+      <span class="hljs-title function_">expect</span>(rec).<span class="hljs-property">not</span>.<span class="hljs-property">to</span>.<span class="hljs-property">be</span>.<span class="hljs-property">null</span>;
+      <span class="hljs-keyword">if</span> (rec) {
+        <span class="hljs-title function_">expect</span>(rec.<span class="hljs-title function_">getData</span>()).<span class="hljs-property">to</span>.<span class="hljs-title function_">eql</span>({
+          <span class="hljs-attr">COUNT</span>: <span class="hljs-string">&quot;2&quot;</span>,
+          <span class="hljs-attr">DOMAIN</span>: <span class="hljs-string">&quot;0-60motorcycletimes.com&quot;</span>,
+          <span class="hljs-attr">FIRST</span>: <span class="hljs-string">&quot;0&quot;</span>,
+          <span class="hljs-attr">LAST</span>: <span class="hljs-string">&quot;1&quot;</span>,
+          <span class="hljs-attr">LIMIT</span>: <span class="hljs-string">&quot;2&quot;</span>,
+          <span class="hljs-attr">TOTAL</span>: <span class="hljs-string">&quot;2701&quot;</span>,
+        });
+        <span class="hljs-title function_">expect</span>(r.<span class="hljs-title function_">getPreviousRecord</span>()).<span class="hljs-property">to</span>.<span class="hljs-property">be</span>.<span class="hljs-property">null</span>;
+      }
+    });
+  });
+
+  <span class="hljs-title function_">describe</span>(<span class="hljs-string">&quot;#.hasNextPage&quot;</span>, <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-title function_">it</span>(<span class="hljs-string">&quot;check return value [no rows]&quot;</span>, <span class="hljs-function">() =&gt;</span> {
+      <span class="hljs-keyword">const</span> r = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Response</span>(rtm.<span class="hljs-title function_">getTemplate</span>(<span class="hljs-string">&quot;OK&quot;</span>).<span class="hljs-title function_">getPlain</span>(), cmd);
+      <span class="hljs-title function_">expect</span>(r.<span class="hljs-title function_">hasNextPage</span>()).<span class="hljs-property">to</span>.<span class="hljs-property">be</span>.<span class="hljs-property">false</span>;
+    });
+
+    <span class="hljs-title function_">it</span>(<span class="hljs-string">&quot;check return value [rows]&quot;</span>, <span class="hljs-function">() =&gt;</span> {
+      <span class="hljs-keyword">const</span> r = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Response</span>(rtm.<span class="hljs-title function_">getTemplate</span>(<span class="hljs-string">&quot;listP0&quot;</span>).<span class="hljs-title function_">getPlain</span>(), cmd);
+      <span class="hljs-title function_">expect</span>(r.<span class="hljs-title function_">hasNextPage</span>()).<span class="hljs-property">to</span>.<span class="hljs-property">be</span>.<span class="hljs-property">true</span>;
+    });
+  });
+
+  <span class="hljs-title function_">describe</span>(<span class="hljs-string">&quot;#.hasPreviousPage&quot;</span>, <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-title function_">it</span>(<span class="hljs-string">&quot;check return value [no rows]&quot;</span>, <span class="hljs-function">() =&gt;</span> {
+      <span class="hljs-keyword">const</span> r = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Response</span>(rtm.<span class="hljs-title function_">getTemplate</span>(<span class="hljs-string">&quot;OK&quot;</span>).<span class="hljs-title function_">getPlain</span>(), cmd);
+      <span class="hljs-title function_">expect</span>(r.<span class="hljs-title function_">hasPreviousPage</span>()).<span class="hljs-property">to</span>.<span class="hljs-property">be</span>.<span class="hljs-property">false</span>;
+    });
+
+    <span class="hljs-title function_">it</span>(<span class="hljs-string">&quot;check return value [rows]&quot;</span>, <span class="hljs-function">() =&gt;</span> {
+      <span class="hljs-keyword">const</span> r = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Response</span>(rtm.<span class="hljs-title function_">getTemplate</span>(<span class="hljs-string">&quot;listP0&quot;</span>).<span class="hljs-title function_">getPlain</span>(), cmd);
+      <span class="hljs-title function_">expect</span>(r.<span class="hljs-title function_">hasPreviousPage</span>()).<span class="hljs-property">to</span>.<span class="hljs-property">be</span>.<span class="hljs-property">false</span>;
+    });
+  });
+
+  <span class="hljs-title function_">describe</span>(<span class="hljs-string">&quot;#.getLastRecordIndex&quot;</span>, <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-title function_">it</span>(<span class="hljs-string">&quot;check return value [no rows]&quot;</span>, <span class="hljs-function">() =&gt;</span> {
+      <span class="hljs-keyword">const</span> r = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Response</span>(rtm.<span class="hljs-title function_">getTemplate</span>(<span class="hljs-string">&quot;OK&quot;</span>).<span class="hljs-title function_">getPlain</span>(), cmd);
+      <span class="hljs-title function_">expect</span>(r.<span class="hljs-title function_">getLastRecordIndex</span>()).<span class="hljs-property">to</span>.<span class="hljs-property">be</span>.<span class="hljs-property">null</span>;
+    });
+
+    <span class="hljs-title function_">it</span>(<span class="hljs-string">&quot;check return value [w/o LAST in response, rows]&quot;</span>, <span class="hljs-function">() =&gt;</span> {
+      <span class="hljs-keyword">const</span> h = rtm.<span class="hljs-title function_">getTemplate</span>(<span class="hljs-string">&quot;OK&quot;</span>).<span class="hljs-title function_">getHash</span>();
+      h.<span class="hljs-property">PROPERTY</span> = {
+        <span class="hljs-attr">DOMAIN</span>: [<span class="hljs-string">&quot;mydomain1.com&quot;</span>, <span class="hljs-string">&quot;mydomain2.com&quot;</span>],
+      };
+      <span class="hljs-keyword">const</span> r = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Response</span>(<span class="hljs-title class_">ResponseParser</span>.<span class="hljs-title function_">serialize</span>(h), cmd);
+      <span class="hljs-title function_">expect</span>(r.<span class="hljs-title function_">getLastRecordIndex</span>()).<span class="hljs-property">to</span>.<span class="hljs-title function_">equal</span>(<span class="hljs-number">1</span>);
+    });
+  });
+
+  <span class="hljs-title function_">describe</span>(<span class="hljs-string">&quot;#.getNextPageNumber&quot;</span>, <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-title function_">it</span>(<span class="hljs-string">&quot;check return value [no rows]&quot;</span>, <span class="hljs-function">() =&gt;</span> {
+      <span class="hljs-keyword">const</span> r = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Response</span>(rtm.<span class="hljs-title function_">getTemplate</span>(<span class="hljs-string">&quot;OK&quot;</span>).<span class="hljs-title function_">getPlain</span>(), cmd);
+      <span class="hljs-title function_">expect</span>(r.<span class="hljs-title function_">getNextPageNumber</span>()).<span class="hljs-property">to</span>.<span class="hljs-property">be</span>.<span class="hljs-property">null</span>;
+    });
+
+    <span class="hljs-title function_">it</span>(<span class="hljs-string">&quot;check return value [rows]&quot;</span>, <span class="hljs-function">() =&gt;</span> {
+      <span class="hljs-keyword">const</span> r = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Response</span>(rtm.<span class="hljs-title function_">getTemplate</span>(<span class="hljs-string">&quot;listP0&quot;</span>).<span class="hljs-title function_">getPlain</span>(), cmd);
+      <span class="hljs-title function_">expect</span>(r.<span class="hljs-title function_">getNextPageNumber</span>()).<span class="hljs-property">to</span>.<span class="hljs-property">be</span>.<span class="hljs-title function_">equal</span>(<span class="hljs-number">2</span>);
+    });
+  });
+
+  <span class="hljs-title function_">describe</span>(<span class="hljs-string">&quot;#.getNumberOfPages&quot;</span>, <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-title function_">it</span>(<span class="hljs-string">&quot;check return value [no rows]&quot;</span>, <span class="hljs-function">() =&gt;</span> {
+      <span class="hljs-keyword">const</span> r = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Response</span>(rtm.<span class="hljs-title function_">getTemplate</span>(<span class="hljs-string">&quot;OK&quot;</span>).<span class="hljs-title function_">getPlain</span>(), cmd);
+      <span class="hljs-title function_">expect</span>(r.<span class="hljs-title function_">getNumberOfPages</span>()).<span class="hljs-property">to</span>.<span class="hljs-title function_">equal</span>(<span class="hljs-number">0</span>);
+    });
+  });
+
+  <span class="hljs-title function_">describe</span>(<span class="hljs-string">&quot;#.getPreviousPageNumber&quot;</span>, <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-title function_">it</span>(<span class="hljs-string">&quot;check return value [no rows]&quot;</span>, <span class="hljs-function">() =&gt;</span> {
+      <span class="hljs-keyword">const</span> r = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Response</span>(rtm.<span class="hljs-title function_">getTemplate</span>(<span class="hljs-string">&quot;OK&quot;</span>).<span class="hljs-title function_">getPlain</span>(), cmd);
+      <span class="hljs-title function_">expect</span>(r.<span class="hljs-title function_">getPreviousPageNumber</span>()).<span class="hljs-property">to</span>.<span class="hljs-property">be</span>.<span class="hljs-property">null</span>;
+    });
+
+    <span class="hljs-title function_">it</span>(<span class="hljs-string">&quot;check return value [rows]&quot;</span>, <span class="hljs-function">() =&gt;</span> {
+      <span class="hljs-keyword">const</span> r = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Response</span>(rtm.<span class="hljs-title function_">getTemplate</span>(<span class="hljs-string">&quot;listP0&quot;</span>).<span class="hljs-title function_">getPlain</span>(), cmd);
+      <span class="hljs-title function_">expect</span>(r.<span class="hljs-title function_">getPreviousPageNumber</span>()).<span class="hljs-property">to</span>.<span class="hljs-property">be</span>.<span class="hljs-property">null</span>;
+    });
+  });
+
+  <span class="hljs-title function_">describe</span>(<span class="hljs-string">&quot;#.rewindRecordList&quot;</span>, <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-title function_">it</span>(<span class="hljs-string">&quot;check return value&quot;</span>, <span class="hljs-function">() =&gt;</span> {
+      <span class="hljs-keyword">const</span> r = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Response</span>(rtm.<span class="hljs-title function_">getTemplate</span>(<span class="hljs-string">&quot;listP0&quot;</span>).<span class="hljs-title function_">getPlain</span>(), cmd);
+      <span class="hljs-title function_">expect</span>(r.<span class="hljs-title function_">getPreviousRecord</span>()).<span class="hljs-property">to</span>.<span class="hljs-property">be</span>.<span class="hljs-property">null</span>;
+      <span class="hljs-title function_">expect</span>(r.<span class="hljs-title function_">getNextRecord</span>()).<span class="hljs-property">not</span>.<span class="hljs-property">to</span>.<span class="hljs-property">be</span>.<span class="hljs-property">null</span>;
+      <span class="hljs-title function_">expect</span>(r.<span class="hljs-title function_">getNextRecord</span>()).<span class="hljs-property">to</span>.<span class="hljs-property">be</span>.<span class="hljs-property">null</span>;
+      <span class="hljs-title function_">expect</span>(r.<span class="hljs-title function_">rewindRecordList</span>().<span class="hljs-title function_">getPreviousRecord</span>()).<span class="hljs-property">to</span>.<span class="hljs-property">be</span>.<span class="hljs-property">null</span>;
+    });
+  });
+});</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

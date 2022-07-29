@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>column.ts</title>
+  <title>record.spec.ts</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="../docco.css" />
@@ -128,7 +128,7 @@
         
           <li id="title">
               <div class="annotation">
-                  <h1>column.ts</h1>
+                  <h1>record.spec.ts</h1>
               </div>
           </li>
         
@@ -143,63 +143,38 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-comment">/**
- * Column class
- */</span>
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Column</span> {
-  <span class="hljs-comment">/**
-   * count of column data entries
-   */</span>
-  <span class="hljs-keyword">public</span> <span class="hljs-attr">length</span>: <span class="hljs-built_in">number</span>;
-  <span class="hljs-comment">/**
-   * column key name
-   */</span>
-  <span class="hljs-keyword">private</span> <span class="hljs-attr">key</span>: <span class="hljs-built_in">string</span>;
-  <span class="hljs-comment">/**
-   * column data container
-   */</span>
-  <span class="hljs-keyword">private</span> <span class="hljs-attr">data</span>: <span class="hljs-built_in">string</span>[];
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">import</span> chai <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;chai&quot;</span>;
+<span class="hljs-keyword">import</span> <span class="hljs-string">&quot;mocha&quot;</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">Record</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./record.js&quot;</span>;
+<span class="hljs-keyword">const</span> expect = chai.<span class="hljs-property">expect</span>;
 
-  <span class="hljs-keyword">public</span> <span class="hljs-title function_">constructor</span>(<span class="hljs-params">key: <span class="hljs-built_in">string</span>, data: <span class="hljs-built_in">string</span>[]</span>) {
-    <span class="hljs-variable language_">this</span>.<span class="hljs-property">key</span> = key;
-    <span class="hljs-variable language_">this</span>.<span class="hljs-property">data</span> = data;
-    <span class="hljs-variable language_">this</span>.<span class="hljs-property">length</span> = data.<span class="hljs-property">length</span>;
-  }
+<span class="hljs-keyword">let</span> <span class="hljs-attr">rec</span>: <span class="hljs-title class_">Record</span>;
+<span class="hljs-keyword">const</span> <span class="hljs-attr">data</span>: <span class="hljs-built_in">any</span> = {
+  <span class="hljs-attr">DOMAIN</span>: <span class="hljs-string">&quot;mydomain.com&quot;</span>,
+  <span class="hljs-attr">RATING</span>: <span class="hljs-string">&quot;1&quot;</span>,
+  <span class="hljs-attr">RNDINT</span>: <span class="hljs-string">&quot;321&quot;</span>,
+  <span class="hljs-attr">SUM</span>: <span class="hljs-string">&quot;1&quot;</span>,
+};
 
-  <span class="hljs-comment">/**
-   * Get column name
-   * <span class="hljs-doctag">@returns</span> column name
-   */</span>
-  <span class="hljs-keyword">public</span> <span class="hljs-title function_">getKey</span>(): <span class="hljs-built_in">string</span> {
-    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">key</span>;
-  }
+<span class="hljs-title function_">before</span>(<span class="hljs-function">() =&gt;</span> {
+  rec = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Record</span>(data);
+});
 
-  <span class="hljs-comment">/**
-   * Get column data
-   * <span class="hljs-doctag">@returns</span> column data
-   */</span>
-  <span class="hljs-keyword">public</span> <span class="hljs-title function_">getData</span>(): <span class="hljs-built_in">string</span>[] {
-    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">data</span>;
-  }
+<span class="hljs-title function_">describe</span>(<span class="hljs-string">&quot;Record class&quot;</span>, <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) {
+  <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">slow</span>(<span class="hljs-number">1000</span>);
 
-  <span class="hljs-comment">/**
-   * Get column data at given index
-   * <span class="hljs-doctag">@param</span> idx data index
-   * <span class="hljs-doctag">@returns</span> data at given index
-   */</span>
-  <span class="hljs-keyword">public</span> <span class="hljs-title function_">getDataByIndex</span>(<span class="hljs-attr">idx</span>: <span class="hljs-built_in">number</span>): <span class="hljs-built_in">string</span> | <span class="hljs-literal">null</span> {
-    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">hasDataIndex</span>(idx) ? <span class="hljs-variable language_">this</span>.<span class="hljs-property">data</span>[idx] : <span class="hljs-literal">null</span>;
-  }
+  <span class="hljs-title function_">describe</span>(<span class="hljs-string">&quot;#.getData&quot;</span>, <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-title function_">it</span>(<span class="hljs-string">&quot;check return value&quot;</span>, <span class="hljs-function">() =&gt;</span> {
+      <span class="hljs-title function_">expect</span>(rec.<span class="hljs-title function_">getData</span>()).<span class="hljs-property">to</span>.<span class="hljs-title function_">equal</span>(data);
+    });
+  });
 
-  <span class="hljs-comment">/**
-   * Check if column has a given data index
-   * <span class="hljs-doctag">@param</span> idx data index
-   * <span class="hljs-doctag">@returns</span> boolean result
-   */</span>
-  <span class="hljs-keyword">private</span> <span class="hljs-title function_">hasDataIndex</span>(<span class="hljs-attr">idx</span>: <span class="hljs-built_in">number</span>): <span class="hljs-built_in">boolean</span> {
-    <span class="hljs-keyword">return</span> idx &gt;= <span class="hljs-number">0</span> &amp;&amp; idx &lt; <span class="hljs-variable language_">this</span>.<span class="hljs-property">length</span>;
-  }
-}</pre></div></div>
+  <span class="hljs-title function_">describe</span>(<span class="hljs-string">&quot;#.getDataByKey&quot;</span>, <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-title function_">it</span>(<span class="hljs-string">&quot;check return value [column key not found]&quot;</span>, <span class="hljs-function">() =&gt;</span> {
+      <span class="hljs-title function_">expect</span>(rec.<span class="hljs-title function_">getDataByKey</span>(<span class="hljs-string">&quot;KEYNOTEXISTING&quot;</span>)).<span class="hljs-property">to</span>.<span class="hljs-property">be</span>.<span class="hljs-property">null</span>;
+    });
+  });
+});</pre></div></div>
             
         </li>
         

@@ -20,8 +20,18 @@
             <div id="jump_page">
               
                 
+                <a class="source" href="apiclient.spec.html">
+                  src/apiclient.spec.ts
+                </a>
+              
+                
                 <a class="source" href="apiclient.html">
                   src/apiclient.ts
+                </a>
+              
+                
+                <a class="source" href="column.spec.html">
+                  src/column.spec.ts
                 </a>
               
                 
@@ -35,6 +45,11 @@
                 </a>
               
                 
+                <a class="source" href="index.spec.html">
+                  src/index.spec.ts
+                </a>
+              
+                
                 <a class="source" href="index.html">
                   src/index.ts
                 </a>
@@ -45,8 +60,18 @@
                 </a>
               
                 
+                <a class="source" href="record.spec.html">
+                  src/record.spec.ts
+                </a>
+              
+                
                 <a class="source" href="record.html">
                   src/record.ts
+                </a>
+              
+                
+                <a class="source" href="response.spec.html">
+                  src/response.spec.ts
                 </a>
               
                 
@@ -55,8 +80,18 @@
                 </a>
               
                 
+                <a class="source" href="responseparser.spec.html">
+                  src/responseparser.spec.ts
+                </a>
+              
+                
                 <a class="source" href="responseparser.html">
                   src/responseparser.ts
+                </a>
+              
+                
+                <a class="source" href="responsetemplate.spec.html">
+                  src/responsetemplate.spec.ts
                 </a>
               
                 
@@ -65,8 +100,18 @@
                 </a>
               
                 
+                <a class="source" href="responsetemplatemanager.spec.html">
+                  src/responsetemplatemanager.spec.ts
+                </a>
+              
+                
                 <a class="source" href="responsetemplatemanager.html">
                   src/responsetemplatemanager.ts
+                </a>
+              
+                
+                <a class="source" href="socketconfig.spec.html">
+                  src/socketconfig.spec.ts
                 </a>
               
                 
@@ -98,16 +143,16 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">import</span> packageInfo <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;../package.json&quot;</span> assert { <span class="hljs-attr">type</span>: <span class="hljs-string">&quot;json&quot;</span> };
-<span class="hljs-keyword">import</span> fetch <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;node-fetch&quot;</span>;
-<span class="hljs-keyword">import</span> { <span class="hljs-title class_">Logger</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./logger&quot;</span>;
-<span class="hljs-keyword">import</span> { <span class="hljs-title class_">Response</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./response&quot;</span>;
-<span class="hljs-keyword">import</span> { <span class="hljs-title class_">ResponseTemplateManager</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./responsetemplatemanager&quot;</span>;
-<span class="hljs-keyword">import</span> { fixedURLEnc, <span class="hljs-title class_">SocketConfig</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./socketconfig&quot;</span>;
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">import</span> fetch <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;cross-fetch&quot;</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">Logger</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./logger.js&quot;</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">Response</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./response.js&quot;</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">ResponseTemplateManager</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./responsetemplatemanager.js&quot;</span>;
+<span class="hljs-keyword">import</span> { fixedURLEnc, <span class="hljs-title class_">SocketConfig</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./socketconfig.js&quot;</span>;
 
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-variable constant_">ISPAPI_CONNECTION_URL_PROXY</span> = <span class="hljs-string">&quot;http://127.0.0.1/api/call.cgi&quot;</span>;
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-variable constant_">ISPAPI_CONNECTION_URL_LIVE</span> = <span class="hljs-string">&quot;https://api.ispapi.net/api/call.cgi&quot;</span>;
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-variable constant_">ISPAPI_CONNECTION_URL_OTE</span> = <span class="hljs-string">&quot;https://api-ote.ispapi.net/api/call.cgi&quot;</span>;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-variable constant_">ISPAPI_CONNECTION_URL_OTE</span> =
+  <span class="hljs-string">&quot;https://api-ote.ispapi.net/api/call.cgi&quot;</span>;
 
 <span class="hljs-keyword">const</span> rtm = <span class="hljs-title class_">ResponseTemplateManager</span>.<span class="hljs-title function_">getInstance</span>();
 
@@ -287,7 +332,7 @@
    * <span class="hljs-doctag">@returns</span> module version
    */</span>
   <span class="hljs-keyword">public</span> <span class="hljs-title function_">getVersion</span>(): <span class="hljs-built_in">string</span> {
-    <span class="hljs-keyword">return</span> packageInfo.<span class="hljs-property">version</span>;
+    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;8.0.2&quot;</span>;
   }
 
   <span class="hljs-comment">/**
@@ -789,7 +834,6 @@ and ignore commands in string format (even deprecated)</p>
       <span class="hljs-attr">COMMAND</span>: <span class="hljs-string">&quot;ConvertIDN&quot;</span>,
       <span class="hljs-attr">DOMAIN</span>: toconvert,
     });
-    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">dir</span>(r.<span class="hljs-title function_">getPlain</span>());
     <span class="hljs-keyword">if</span> (r.<span class="hljs-title function_">isSuccess</span>()) {
       <span class="hljs-keyword">const</span> col = r.<span class="hljs-title function_">getColumn</span>(<span class="hljs-string">&quot;ACE&quot;</span>);
       <span class="hljs-keyword">if</span> (col) {
