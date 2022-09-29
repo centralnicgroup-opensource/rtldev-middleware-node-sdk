@@ -464,7 +464,7 @@ export class APIClient {
 
   /**
    * Activate High Performance Connection Setup
-   * @see https://github.com/hexonet/node-sdk/blob/master/README.md
+   * @see https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/blob/master/README.md
    * @returns Current APIClient instance for method chaining
    */
   public useHighPerformanceConnectionSetup(): APIClient {

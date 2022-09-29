@@ -17,9 +17,9 @@
     "node": ">=16.15.1",
     "npm": ">=8.11.0"
   },
-  "homepage": "https://github.com/hexonet/node-sdk",
-  "repository": "github:hexonet/node-sdk",
-  "bugs": "https://github.com/hexonet/node-sdk/issues",
+  "homepage": "https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk",
+  "repository": "github:centralnicgroup-opensource/rtldev-middleware-node-sdk",
+  "bugs": "https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/issues",
   "maintainers": [
     {
       "name": "Kai Schwarz",
