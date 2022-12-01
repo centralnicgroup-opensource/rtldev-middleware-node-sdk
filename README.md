@@ -16,7 +16,8 @@ This module is a connector library for the insanely fast HEXONET Backend API. Fo
 
 ## Authors
 
-- **Kai Schwarz** - _lead development_ - [KaiSchwarz-cnic](https://github.com/kaischwarz-cnic)
+- **Kai Schwarz** - [KaiSchwarz-cnic](https://github.com/kaischwarz-cnic)
+- **Asif Nawaz** - [AsifNawaz-cnic](https://github.com/asifnawaz-cnic)
 
 ## FAQ / Notes
 
