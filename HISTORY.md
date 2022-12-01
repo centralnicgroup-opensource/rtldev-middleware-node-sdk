@@ -1,3 +1,10 @@
+## [9.0.1](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/compare/v9.0.0...v9.0.1) (2022-12-01)
+
+
+### Bug Fixes
+
+* **docs:** update repository and documentation urls after migration ([7cb0bef](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/commit/7cb0beff1156378c3b78245edf0862b24811c51d))
+
 # [9.0.0](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/compare/v8.0.2...v9.0.0) (2022-07-29)
 
 
