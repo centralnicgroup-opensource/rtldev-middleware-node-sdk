@@ -11,12 +11,12 @@ This module is a connector library for the insanely fast HEXONET Backend API. Fo
 
 ## Resources
 
-- [Documentation](https://centralnic-reseller.github.io/centralnic-reseller/docs/hexonet/sdks/nodejs-sdk/)
+- [Documentation](https://centralnicgroup-public.github.io/rtldev-middleware-documentation/docs/hexonet/sdks/nodejs-sdk/)
 - [Release Notes](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/releases)
 
 ## Authors
 
-- **Kai Schwarz** - _lead development_ - [PapaKai](https://github.com/papakai)
+- **Kai Schwarz** - _lead development_ - [KaiSchwarz-cnic](https://github.com/kaischwarz-cnic)
 
 ## FAQ / Notes
 
