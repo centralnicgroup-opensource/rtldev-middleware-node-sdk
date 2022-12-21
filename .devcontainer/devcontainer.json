@@ -1,0 +1,24 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.224.2/containers/jekyll
+{
+	"name": "dstack-nodesdk",
+	"dockerComposeFile": [
+		"docker-compose.yml"
+	],
+	"service": "nodesdk",
+	"workspaceFolder": "/usr/share/rtldev-middleware-node-sdk",
+	"shutdownAction": "stopCompose",
+	// Add the IDs of extensions you want installed when the container is created.
+	"extensions": [
+		"GitHub.vscode-pull-request-github",
+		"ms-vscode-remote.remote-containers"
+	],
+	// Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+	"remoteUser": "vscode",
+	// Use 'onCreateCommand' to run commands after the container is created (first time).
+	"postCreateCommand": "zsh /post-create.sh",
+	// Run commands after the container is running
+	"settings": {
+		"terminal.integrated.defaultProfile.linux": "zsh"
+	} // is this the .vscode/settings.json?
+}

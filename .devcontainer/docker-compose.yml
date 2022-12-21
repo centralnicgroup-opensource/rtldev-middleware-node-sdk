@@ -1,0 +1,9 @@
+version: '3.9'
+services:
+  nodesdk:
+    container_name: dstack-nodesdk
+    volumes:
+      - ..:/usr/share/rtldev-middleware-node-sdk:cached
+    build:
+      context: .
+      dockerfile: Dockerfile
