@@ -10,15 +10,15 @@ on:
       - opened
       - synchronize
 
-  workflow_call:    
+  workflow_call:
 
 jobs:
-# separate job to set as required in branch protection,
+  # separate job to set as required in branch protection,
   # as the build names above change each time Node versions change
   test:
     name: "Linting"
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -32,13 +32,12 @@ jobs:
           DEFAULT_BRANCH: master
           VALIDATE_TYPESCRIPT_ES: true
           VALIDATE_ALL_CODEBASE: false
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}          
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   test_matrix:
     strategy:
       matrix:
         node-version:
-          - 16
           - 18
 
     runs-on: ubuntu-latest
@@ -54,7 +53,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'npm'       
+          cache: "npm"
       - name: Build & Validation
         run: |
           npm ci

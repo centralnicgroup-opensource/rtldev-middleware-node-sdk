@@ -1,5 +1,5 @@
 name: Release
-on: 
+on:
   push:
     branches:
       - "master"
@@ -25,12 +25,11 @@ jobs:
         with:
           node-version: lts/*
           check-latest: true
-          cache: npm          
+          cache: npm
       - name: Install dependencies
         run: npm ci
       - name: Release
         env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         # TODO move npm run documentation to semantic-release
         run: |
