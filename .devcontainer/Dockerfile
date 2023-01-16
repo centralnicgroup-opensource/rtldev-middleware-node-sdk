@@ -1,11 +1,11 @@
-FROM node:latest as nodejs
+FROM node:lts as nodejs
 FROM mcr.microsoft.com/devcontainers/base:ubuntu
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV TZ=Europe/Berlin
 ENV APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=DontWarn
 
-ENV REFRESHED_AT 2022-12-20
+ENV REFRESHED_AT 2022-01-16
 ENV CONFIGURATION_DIR_PATH supporting_files/configuration
 ENV SCRIPTS_DIR_PATH supporting_files/scripts
 
@@ -23,7 +23,6 @@ RUN apt-get -y autoremove && \
 
 # Add image configuration and scripts
 ADD ${SCRIPTS_DIR_PATH}/post-create.sh /post-create.sh
-RUN chmod 755 /*.sh
 
 # Time Zone
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
@@ -48,12 +47,8 @@ RUN usermod --shell /usr/bin/zsh ${USERNAME} \
 COPY --from=nodejs /usr/local/include/node /usr/local/include/node
 COPY --from=nodejs /usr/local/lib/node_modules /usr/local/lib/node_modules
 COPY --from=nodejs /usr/local/bin /usr/local/bin
-RUN npm install --global npm@latest
 
 # zsh and commitizen (cz) configurations
 COPY ${CONFIGURATION_DIR_PATH}/.zshrc ${USERHOME}/.zshrc
 COPY ${CONFIGURATION_DIR_PATH}/.czrc ${USERHOME}/.czrc
-RUN chown ${USERNAME}.${USERNAME} ${USERHOME}/.zshrc ${USERHOME}/.czrc \
-    && chmod +x ${USERHOME}/.zshrc ${USERHOME}/.czrc
-
-ENTRYPOINT exec top -b
+RUN chown ${USERNAME}.${USERNAME} ${USERHOME}/.zshrc ${USERHOME}/.czrc
