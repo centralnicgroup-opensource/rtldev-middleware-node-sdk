@@ -8,17 +8,21 @@
 	"service": "nodesdk",
 	"workspaceFolder": "/usr/share/rtldev-middleware-node-sdk",
 	"shutdownAction": "stopCompose",
-	// Add the IDs of extensions you want installed when the container is created.
-	"extensions": [
-		"GitHub.vscode-pull-request-github",
-		"ms-vscode-remote.remote-containers"
-	],
+	"customizations": {
+		"vscode": {
+			// Add the IDs of extensions you want installed when the container is created.
+			"extensions": [
+				"GitHub.vscode-pull-request-github",
+				"ms-vscode-remote.remote-containers"
+			],
+			"settings": {
+				"terminal.integrated.defaultProfile.linux": "zsh"
+			}
+		}
+	},
 	// Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
 	"remoteUser": "vscode",
 	// Use 'onCreateCommand' to run commands after the container is created (first time).
-	"postCreateCommand": "zsh /post-create.sh",
-	// Run commands after the container is running
-	"settings": {
-		"terminal.integrated.defaultProfile.linux": "zsh"
-	} // is this the .vscode/settings.json?
+	// Run commands after first run of the container (post create)
+	"postCreateCommand": "zsh /post-create.sh"
 }
