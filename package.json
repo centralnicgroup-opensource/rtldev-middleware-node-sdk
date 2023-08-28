@@ -82,7 +82,7 @@
     "semantic-release": "^21.0.0",
     "supertest": "^6.2.3",
     "ts-node": "^10.8.1",
-    "typedoc": "^0.24.1",
+    "typedoc": "^0.25.0",
     "typescript": "^5.0.2"
   },
   "dependencies": {
