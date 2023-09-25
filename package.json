@@ -79,7 +79,7 @@
     "nock": "^13.2.7",
     "nyc": "^15.1.0",
     "prettier": "^3.0.0",
-    "semantic-release": "^21.0.0",
+    "semantic-release": "^22.0.5",
     "supertest": "^6.2.3",
     "ts-node": "^10.8.1",
     "typedoc": "^0.25.0",
