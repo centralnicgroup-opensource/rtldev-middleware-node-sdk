@@ -14,8 +14,8 @@
   "//": "...",
   "license": "MIT",
   "engines": {
-    "node": ">=16.15.1",
-    "npm": ">=8.11.0"
+    "node": ">=20.6.1",
+    "npm": ">=9.8.1"
   },
   "homepage": "https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk",
   "repository": "github:centralnicgroup-opensource/rtldev-middleware-node-sdk",
@@ -62,7 +62,7 @@
     "test": "npm run compile && cross-env NODE_ENV=development nyc mocha"
   },
   "devDependencies": {
-    "@semantic-release/changelog": "^6.0.1",
+    "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/exec": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
     "@types/chai": "^4.3.1",
@@ -73,13 +73,15 @@
     "chai-as-promised": "^7.1.1",
     "cross-env": "^7.0.3",
     "docco": "^0.9.1",
+    "gulp": "^4.0.2",
     "jsdoc": "^4.0.0",
     "jsdoc-oblivion": "^0.0.9",
     "mocha": "^10.0.0",
     "nock": "^13.2.7",
     "nyc": "^15.1.0",
     "prettier": "^3.0.0",
-    "semantic-release": "^21.0.0",
+    "rtldev-middleware-gulp-release-notification-plugin": "github:centralnicgroup-opensource/rtldev-middleware-gulp-release-notification-plugin",
+    "semantic-release": "^22.0.5",
     "supertest": "^6.2.3",
     "ts-node": "^10.8.1",
     "typedoc": "^0.25.0",
