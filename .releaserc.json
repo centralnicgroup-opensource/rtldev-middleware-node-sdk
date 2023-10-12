@@ -11,7 +11,8 @@
     [
       "@semantic-release/exec",
       {
-        "prepareCmd": "./updateVersion.sh ${nextRelease.version} && gulp -f gulpfile.cjs publish --notes \"${encodeURIComponent(nextRelease.notes)}\""
+        "prepareCmd": "./updateVersion.sh ${nextRelease.version}",
+        "successCmd": "gulp -f gulpfile.cjs publish --notes \"${encodeURIComponent(nextRelease.notes)}\""
       }
     ],
     "@semantic-release/npm",
