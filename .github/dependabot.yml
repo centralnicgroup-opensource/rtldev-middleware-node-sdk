@@ -1,9 +1,22 @@
 version: 2
 updates:
-- package-ecosystem: npm
-  directory: "/"
-  schedule:
-    interval: daily
-  open-pull-requests-limit: 10
-  commit-message:
-    prefix: chore
+  - package-ecosystem: npm
+    directory: "/"
+    schedule:
+      interval: daily
+    commit-message:
+      prefix: chore
+
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      interval: 'daily'
+    commit-message:
+      prefix: chore
+
+  - package-ecosystem: 'docker'
+    directory: '/.devcontainer'
+    schedule:
+      interval: 'daily'
+    commit-message:
+      prefix: chore
