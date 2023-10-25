@@ -9,5 +9,3 @@ source ~/.zshrc
 
 # install node deps
 npm ci
-
-exit(0)
