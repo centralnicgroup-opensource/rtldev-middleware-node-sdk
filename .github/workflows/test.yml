@@ -1,16 +1,9 @@
 name: Linting
 
 on:
-  pull_request:
-    types:
-      - opened
-      - synchronize
-
   workflow_call:
 
 jobs:
-  # separate job to set as required in branch protection,
-  # as the build names above change each time Node versions change
   test:
     name: 🧪 Linting
     runs-on: ubuntu-latest
