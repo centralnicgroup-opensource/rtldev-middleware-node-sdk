@@ -6,7 +6,9 @@ on:
 jobs:
   test:
     name: 🧪 Linting
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RTLDEV_MW_CI_OS }}
+    permissions:
+      contents: read
 
     steps:
       - name: Checkout
@@ -27,10 +29,12 @@ jobs:
     strategy:
       matrix:
         node-version: ${{ fromJson(vars.RTLDEV_MW_CI_NODE_MATRIX) }}
-          
-    runs-on: ubuntu-latest
-    needs: test
+
     name: 🧪 Testing
+    runs-on: ${{ vars.RTLDEV_MW_CI_OS }}
+    needs: test
+    permissions:
+      contents: read
     steps:
       - name: Checkout
         uses: actions/checkout@v4

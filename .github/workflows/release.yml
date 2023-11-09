@@ -2,18 +2,23 @@ name: Release
 on:
   push:
     branches:
-      - "master"
+      - master
 
 jobs:
   build:
     name: Build
     uses: ./.github/workflows/test.yml
+    permissions:
+      contents: read
 
   release:
-    name: Release @ ubuntu-latest
-    runs-on: ubuntu-latest
+    name: Release
+    runs-on: ${{ vars.RTLDEV_MW_CI_OS }}
     needs: build
-
+    permissions:
+      contents: write
+      issues: write
+      deployments: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -30,9 +35,9 @@ jobs:
         run: npm ci
       - name: Release
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.RTLDEV_MW_CI_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          RTLDEV_MW_NOTIFICATION_URI: ${{ secrets.RTLDEV_MW_NOTIFICATION_URI }}
+          RTLDEV_MW_NOTIFICATION_URI: ${{ secrets.RTLDEV_MW_CI_NOTIFICATION_URI }}
         # TODO move npm run documentation to semantic-release
         run: |
           npm run documentation
