@@ -37,7 +37,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.RTLDEV_MW_CI_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          RTLDEV_MW_NOTIFICATION_URI: ${{ secrets.RTLDEV_MW_CI_NOTIFICATION_URI }}
+          TEAMS_NOTIFICATION_URI: ${{ secrets.RTLDEV_MW_CI_NOTIFICATION_URI }}
+          COMMIT_SHA: ${{ github.sha }}
         # TODO move npm run documentation to semantic-release
         run: |
           npm run documentation

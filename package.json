@@ -79,7 +79,7 @@
     "nock": "^13.2.7",
     "nyc": "^15.1.0",
     "prettier": "^3.0.0",
-    "rtldev-middleware-gulp-release-notification-plugin": "github:centralnicgroup-opensource/rtldev-middleware-gulp-release-notification-plugin",
+    "rtldev-middleware-gulp-release-notification-plugin": "github:centralnicgroup-opensource/rtldev-middleware-gulp-release-notification-plugin#semver:^1.0.0",
     "semantic-release": "^22.0.5",
     "supertest": "^6.2.3",
     "ts-node": "^10.8.1",
