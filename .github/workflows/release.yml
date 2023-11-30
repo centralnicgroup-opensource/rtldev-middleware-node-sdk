@@ -5,41 +5,8 @@ on:
       - master
 
 jobs:
-  build:
-    name: Build
-    uses: ./.github/workflows/test.yml
-    permissions:
-      contents: read
-
   release:
-    name: Release
-    runs-on: ${{ vars.RTLDEV_MW_CI_OS }}
-    needs: build
-    permissions:
-      contents: write
-      issues: write
-      deployments: write
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          persist-credentials: false
-      - name: Setup NodeJS ${{ vars.RTLDEV_MW_CI_NODE_VERSION }}
-        uses: actions/setup-node@v4
-        with:
-          node-version: '${{ vars.RTLDEV_MW_CI_NODE_VERSION }}'
-          check-latest: true
-          cache: npm
-      - name: Install dependencies
-        run: npm ci
-      - name: Release
-        env:
-          GITHUB_TOKEN: ${{ secrets.RTLDEV_MW_CI_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          TEAMS_NOTIFICATION_URI: ${{ secrets.RTLDEV_MW_CI_NOTIFICATION_URI }}
-          COMMIT_SHA: ${{ github.sha }}
-        # TODO move npm run documentation to semantic-release
-        run: |
-          npm run documentation
-          npx semantic-release
+    uses: centralnicgroup-opensource/rtldev-middleware-shareable-workflows/.github/workflows/release.yml
+    secrets: inherit
+    with:
+      repository: ${{ github.repository }}

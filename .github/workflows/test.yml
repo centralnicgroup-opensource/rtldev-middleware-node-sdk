@@ -1,53 +1,13 @@
-name: Linting
-
+name: Dependabot auto-merge & tests
 on:
-  workflow_call:
+  pull_request:
+    types:
+      - opened
+      - synchronize
 
 jobs:
-  test:
-    name: 🧪 Linting
-    runs-on: ${{ vars.RTLDEV_MW_CI_OS }}
-    permissions:
-      contents: read
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          persist-credentials: false
-      - name: Super Linter Code Base
-        uses: github/super-linter/slim@v5
-        env:
-          FILTER_REGEX_INCLUDE: "/src/*"
-          DEFAULT_BRANCH: master
-          VALIDATE_TYPESCRIPT_ES: true
-          VALIDATE_ALL_CODEBASE: false
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  test_matrix:
-    strategy:
-      matrix:
-        node-version: ${{ fromJson(vars.RTLDEV_MW_CI_NODE_MATRIX) }}
-
-    name: 🧪 Testing
-    runs-on: ${{ vars.RTLDEV_MW_CI_OS }}
-    needs: test
-    permissions:
-      contents: read
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          persist-credentials: false
-      - name: Setup NodeJS
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: "npm"
-      - name: Build & Validation
-        run: |
-          npm ci
-          npm run lint
-          npm run test
+  tests:
+    uses: centralnicgroup-opensource/rtldev-middleware-shareable-workflows/.github/workflows/auto-merge-dependabot-pr.yml
+    secrets: inherit
+    with:
+      repository: ${{ github.repository }}
