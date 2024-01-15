@@ -80,7 +80,7 @@
     "nyc": "^15.1.0",
     "prettier": "^3.0.0",
     "rtldev-middleware-gulp-release-notification-plugin": "github:centralnicgroup-opensource/rtldev-middleware-gulp-release-notification-plugin#semver:^2.0.3",
-    "semantic-release": "^22.0.5",
+    "semantic-release": "^23.0.0",
     "supertest": "^6.2.3",
     "ts-node": "^10.8.1",
     "typedoc": "^0.25.0",
