@@ -7,7 +7,7 @@ on:
 
 jobs:
   tests:
-    uses: centralnicgroup-opensource/rtldev-middleware-shareable-workflows/.github/workflows/auto-merge-dependabot-pr.yml
+    uses: centralnicgroup-opensource/rtldev-middleware-shareable-workflows/.github/workflows/auto-merge-dependabot-pr.yml@main
     secrets: inherit
     with:
       repository: ${{ github.repository }}
