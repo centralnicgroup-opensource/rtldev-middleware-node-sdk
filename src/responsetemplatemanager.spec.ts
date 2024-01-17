@@ -1,9 +1,8 @@
-import chai from "chai";
+import { expect } from "chai";
 import "mocha";
 import { ResponseTemplate } from "./responsetemplate.js";
 import { ResponseTemplateManager } from "./responsetemplatemanager.js";
 
-const expect = chai.expect;
 let rtm: ResponseTemplateManager;
 
 before(() => {

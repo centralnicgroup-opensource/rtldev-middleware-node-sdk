@@ -1,7 +1,6 @@
-import chai from "chai";
+import { expect } from "chai";
 import "mocha";
 import { APIClient, Response, ResponseTemplateManager } from "./index.js";
-const expect = chai.expect;
 
 describe("index file", function () {
   this.slow(1000);

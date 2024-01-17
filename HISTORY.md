@@ -1,21 +1,18 @@
 ## [9.0.1](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/compare/v9.0.0...v9.0.1) (2022-12-01)
 
-
 ### Bug Fixes
 
-* **docs:** update repository and documentation urls after migration ([7cb0bef](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/commit/7cb0beff1156378c3b78245edf0862b24811c51d))
+- **docs:** update repository and documentation urls after migration ([7cb0bef](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/commit/7cb0beff1156378c3b78245edf0862b24811c51d))
 
 # [9.0.0](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/compare/v8.0.2...v9.0.0) (2022-07-29)
 
-
 ### chore
 
-* **esm/cjs:** review transpilation, introduce cross-fetch ([ed6ca7f](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/commit/ed6ca7fa0333c30fc9c68eddd1d34b036802f2bb))
-
+- **esm/cjs:** review transpilation, introduce cross-fetch ([ed6ca7f](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/commit/ed6ca7fa0333c30fc9c68eddd1d34b036802f2bb))
 
 ### BREAKING CHANGES
 
-* **esm/cjs:** module format review esm/cjs both to be working
+- **esm/cjs:** module format review esm/cjs both to be working
 
 ## [8.0.2](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/compare/v8.0.1...v8.0.2) (2022-06-10)
 

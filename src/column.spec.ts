@@ -1,7 +1,6 @@
-import chai from "chai";
+import { expect } from "chai";
 import "mocha";
 import { Column } from "./column.js";
-const expect = chai.expect;
 
 let col: Column;
 

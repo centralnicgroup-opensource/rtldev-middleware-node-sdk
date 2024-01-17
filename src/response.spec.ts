@@ -1,10 +1,9 @@
-import chai from "chai";
+import { expect } from "chai";
 import "mocha";
 import { Response } from "./response.js";
 import { ResponseParser } from "./responseparser.js";
 import { ResponseTemplateManager } from "./responsetemplatemanager.js";
 
-const expect = chai.expect;
 const rtm = ResponseTemplateManager.getInstance();
 const cmd = { COMMAND: "StatusContact" };
 
@@ -12,11 +11,11 @@ before(() => {
   rtm
     .addTemplate(
       "listP0",
-      "[RESPONSE]\r\nPROPERTY[TOTAL][0]=2701\r\nPROPERTY[FIRST][0]=0\r\nPROPERTY[DOMAIN][0]=0-60motorcycletimes.com\r\nPROPERTY[DOMAIN][1]=0-be-s01-0.com\r\nPROPERTY[COUNT][0]=2\r\nPROPERTY[LAST][0]=1\r\nPROPERTY[LIMIT][0]=2\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.023\r\nEOF\r\n"
+      "[RESPONSE]\r\nPROPERTY[TOTAL][0]=2701\r\nPROPERTY[FIRST][0]=0\r\nPROPERTY[DOMAIN][0]=0-60motorcycletimes.com\r\nPROPERTY[DOMAIN][1]=0-be-s01-0.com\r\nPROPERTY[COUNT][0]=2\r\nPROPERTY[LAST][0]=1\r\nPROPERTY[LIMIT][0]=2\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.023\r\nEOF\r\n",
     )
     .addTemplate(
       "OK",
-      rtm.generateTemplate("200", "Command completed successfully")
+      rtm.generateTemplate("200", "Command completed successfully"),
     );
 });
 
@@ -33,7 +32,7 @@ describe("Response class", function () {
       r = new Response(
         "",
         { COMMAND: "StatusAccount" },
-        { CONNECTION_URL: "123HXPHFOUND123" }
+        { CONNECTION_URL: "123HXPHFOUND123" },
       );
       expect(/123HXPHFOUND123/.test(r.getDescription())).to.be.true;
     });

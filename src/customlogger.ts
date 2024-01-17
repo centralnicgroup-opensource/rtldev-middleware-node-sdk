@@ -15,7 +15,7 @@ export class CustomLogger extends Logger {
   public log(
     post: string,
     r: Response,
-    error: string | null = null
+    error: string | null = null,
   ): CustomLogger {
     // apply here whatever you need e.g.
     console.log(post);

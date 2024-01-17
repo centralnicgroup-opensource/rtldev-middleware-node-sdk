@@ -1,11 +1,11 @@
-FROM node:lts as nodejs
+FROM node:latest as nodejs
 FROM mcr.microsoft.com/devcontainers/base:ubuntu
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV TZ=Europe/Berlin
 ENV APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=DontWarn
 
-ENV REFRESHED_AT 2022-01-16
+ENV REFRESHED_AT 2024-01-17
 ENV CONFIGURATION_DIR_PATH supporting_files/configuration
 ENV SCRIPTS_DIR_PATH supporting_files/scripts
 

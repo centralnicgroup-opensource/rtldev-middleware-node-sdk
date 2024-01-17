@@ -30,20 +30,20 @@ export class ResponseTemplateManager {
       500: this.generateTemplate("500", "Internal server error"),
       empty: this.generateTemplate(
         "423",
-        "Empty API response. Probably unreachable API end point {CONNECTION_URL}"
+        "Empty API response. Probably unreachable API end point {CONNECTION_URL}",
       ),
       error: this.generateTemplate(
         "421",
-        "Command failed due to server error. Client should try again"
+        "Command failed due to server error. Client should try again",
       ),
       expired: this.generateTemplate("530", "SESSION NOT FOUND"),
       httperror: this.generateTemplate(
         "421",
-        "Command failed due to HTTP communication error"
+        "Command failed due to HTTP communication error",
       ),
       invalid: this.generateTemplate(
         "423",
-        "Invalid API response. Contact Support"
+        "Invalid API response. Contact Support",
       ),
       unauthorized: this.generateTemplate("530", "Unauthorized"),
     };
@@ -80,7 +80,7 @@ export class ResponseTemplateManager {
       return new ResponseTemplate(this.templates[id]);
     }
     return new ResponseTemplate(
-      this.generateTemplate("500", "Response Template not found")
+      this.generateTemplate("500", "Response Template not found"),
     );
   }
 

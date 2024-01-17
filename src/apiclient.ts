@@ -308,8 +308,8 @@ export class APIClient {
         {
           COMMAND: "StartSession",
         },
-        params
-      )
+        params,
+      ),
     );
     if (rr.isSuccess()) {
       const col = rr.getColumn("SESSION");
@@ -405,7 +405,7 @@ export class APIClient {
     const mycmd = rr.getCommand();
     if (Object.prototype.hasOwnProperty.call(mycmd, "LAST")) {
       throw new Error(
-        "Parameter LAST in use. Please remove it to avoid issues in requestNextPage."
+        "Parameter LAST in use. Please remove it to avoid issues in requestNextPage.",
       );
     }
     let first = 0;
@@ -432,7 +432,7 @@ export class APIClient {
   public async requestAllResponsePages(cmd: any): Promise<Response[]> {
     const responses: Response[] = [];
     const rr: Response = await this.request(
-      Object.assign({}, cmd, { FIRST: 0 })
+      Object.assign({}, cmd, { FIRST: 0 }),
     );
     let tmp: Response | null = rr;
     let idx = 0;

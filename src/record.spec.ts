@@ -1,7 +1,6 @@
-import chai from "chai";
+import { expect } from "chai";
 import "mocha";
 import { Record } from "./record.js";
-const expect = chai.expect;
 
 let rec: Record;
 const data: any = {

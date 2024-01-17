@@ -1,7 +1,6 @@
-import chai from "chai";
+import { expect } from "chai";
 import "mocha";
 import { SocketConfig } from "./socketconfig.js";
-const expect = chai.expect;
 
 describe("SocketConfig class", function () {
   this.slow(1000);

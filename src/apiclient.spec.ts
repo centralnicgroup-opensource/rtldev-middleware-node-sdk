@@ -1,4 +1,4 @@
-import chai from "chai";
+import { expect, use } from "chai"; // Using Expect style
 import chaiPromised from "chai-as-promised";
 import "mocha";
 import nock from "nock";
@@ -10,11 +10,10 @@ import {
 } from "./apiclient.js";
 import { Response } from "./response.js";
 import { ResponseTemplateManager } from "./responsetemplatemanager.js";
-chai.use(chaiPromised);
+use(chaiPromised);
 
 const apiScript = "/api/call.cgi";
 const oteHost = ISPAPI_CONNECTION_URL_OTE.replace(apiScript, "");
-const expect = chai.expect;
 const rtm = ResponseTemplateManager.getInstance();
 const cmd = { COMMAND: "StatusAccount" };
 let cl: APIClient;
@@ -28,39 +27,39 @@ before(() => {
   rtm
     .addTemplate(
       "login200",
-      "[RESPONSE]\r\nPROPERTY[SESSION][0]=h8JLZZHdF2WgWWXlwbKWzEG3XrzoW4yshhvtqyg0LCYiX55QnhgYX9cB0W4mlpbx\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.169\r\nEOF\r\n"
+      "[RESPONSE]\r\nPROPERTY[SESSION][0]=h8JLZZHdF2WgWWXlwbKWzEG3XrzoW4yshhvtqyg0LCYiX55QnhgYX9cB0W4mlpbx\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.169\r\nEOF\r\n",
     )
     .addTemplate(
       "login500",
-      rtm.generateTemplate("530", "Authentication failed")
+      rtm.generateTemplate("530", "Authentication failed"),
     )
     .addTemplate(
       "OK",
-      rtm.generateTemplate("200", "Command completed successfully")
+      rtm.generateTemplate("200", "Command completed successfully"),
     )
     .addTemplate(
       "CHECKS",
-      "[RESPONSE]\r\nPROPERTY[TOTAL][0]=2701\r\nPROPERTY[FIRST][0]=0\r\nPROPERTY[DOMAIN][0]=0-60motorcycletimes.com\r\nPROPERTY[DOMAIN][1]=0-be-s01-0.com\r\nPROPERTY[COUNT][0]=2\r\nPROPERTY[LAST][0]=1\r\nPROPERTY[LIMIT][0]=2\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.023\r\nEOF\r\n"
+      "[RESPONSE]\r\nPROPERTY[TOTAL][0]=2701\r\nPROPERTY[FIRST][0]=0\r\nPROPERTY[DOMAIN][0]=0-60motorcycletimes.com\r\nPROPERTY[DOMAIN][1]=0-be-s01-0.com\r\nPROPERTY[COUNT][0]=2\r\nPROPERTY[LAST][0]=1\r\nPROPERTY[LIMIT][0]=2\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.023\r\nEOF\r\n",
     )
     .addTemplate(
       "listP0",
-      "[RESPONSE]\r\nPROPERTY[TOTAL][0]=2701\r\nPROPERTY[FIRST][0]=0\r\nPROPERTY[DOMAIN][0]=0-60motorcycletimes.com\r\nPROPERTY[DOMAIN][1]=0-be-s01-0.com\r\nPROPERTY[COUNT][0]=2\r\nPROPERTY[LAST][0]=1\r\nPROPERTY[LIMIT][0]=2\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.023\r\nEOF\r\n"
+      "[RESPONSE]\r\nPROPERTY[TOTAL][0]=2701\r\nPROPERTY[FIRST][0]=0\r\nPROPERTY[DOMAIN][0]=0-60motorcycletimes.com\r\nPROPERTY[DOMAIN][1]=0-be-s01-0.com\r\nPROPERTY[COUNT][0]=2\r\nPROPERTY[LAST][0]=1\r\nPROPERTY[LIMIT][0]=2\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.023\r\nEOF\r\n",
     )
     .addTemplate(
       "listP1",
-      "[RESPONSE]\r\nPROPERTY[TOTAL][0]=2701\r\nPROPERTY[FIRST][0]=2\r\nPROPERTY[DOMAIN][0]=0-qas-ao17-0.org\r\nPROPERTY[DOMAIN][1]=0-sunnyda222y.com\r\nPROPERTY[COUNT][0]=2\r\nPROPERTY[LAST][0]=3\r\nPROPERTY[LIMIT][0]=2\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.032\r\nEOF\r\n"
+      "[RESPONSE]\r\nPROPERTY[TOTAL][0]=2701\r\nPROPERTY[FIRST][0]=2\r\nPROPERTY[DOMAIN][0]=0-qas-ao17-0.org\r\nPROPERTY[DOMAIN][1]=0-sunnyda222y.com\r\nPROPERTY[COUNT][0]=2\r\nPROPERTY[LAST][0]=3\r\nPROPERTY[LIMIT][0]=2\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.032\r\nEOF\r\n",
     )
     .addTemplate(
       "listFP0",
-      "[RESPONSE]\r\nPROPERTY[TOTAL][0]=3\r\nPROPERTY[FIRST][0]=0\r\nPROPERTY[DOMAIN][0]=0-60motorcycletimes.com\r\nPROPERTY[COUNT][0]=1\r\nPROPERTY[LAST][0]=1\r\nPROPERTY[LIMIT][0]=1\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.023\r\nEOF\r\n"
+      "[RESPONSE]\r\nPROPERTY[TOTAL][0]=3\r\nPROPERTY[FIRST][0]=0\r\nPROPERTY[DOMAIN][0]=0-60motorcycletimes.com\r\nPROPERTY[COUNT][0]=1\r\nPROPERTY[LAST][0]=1\r\nPROPERTY[LIMIT][0]=1\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.023\r\nEOF\r\n",
     )
     .addTemplate(
       "listFP1",
-      "[RESPONSE]\r\nPROPERTY[TOTAL][0]=3\r\nPROPERTY[FIRST][0]=1\r\nPROPERTY[DOMAIN][0]=0-be-s01-0.com\r\nPROPERTY[COUNT][0]=1\r\nPROPERTY[LAST][0]=2\r\nPROPERTY[LIMIT][0]=1\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.032\r\nEOF\r\n"
+      "[RESPONSE]\r\nPROPERTY[TOTAL][0]=3\r\nPROPERTY[FIRST][0]=1\r\nPROPERTY[DOMAIN][0]=0-be-s01-0.com\r\nPROPERTY[COUNT][0]=1\r\nPROPERTY[LAST][0]=2\r\nPROPERTY[LIMIT][0]=1\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.032\r\nEOF\r\n",
     )
     .addTemplate(
       "listFP2",
-      "[RESPONSE]\r\nPROPERTY[TOTAL][0]=3\r\nPROPERTY[FIRST][0]=2\r\nPROPERTY[DOMAIN][0]=0-qas-ao17-0.org\r\nPROPERTY[COUNT][0]=2\r\nPROPERTY[LAST][0]=3\r\nPROPERTY[LIMIT][0]=1\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.032\r\nEOF\r\n"
+      "[RESPONSE]\r\nPROPERTY[TOTAL][0]=3\r\nPROPERTY[FIRST][0]=2\r\nPROPERTY[DOMAIN][0]=0-qas-ao17-0.org\r\nPROPERTY[COUNT][0]=2\r\nPROPERTY[LAST][0]=3\r\nPROPERTY[LIMIT][0]=1\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.032\r\nEOF\r\n",
     );
 });
 
@@ -112,7 +111,7 @@ describe("APIClient class", function () {
           PASSWORD: "test.passw0rd",
           SUBUSER: "test.user",
         },
-        true
+        true,
       );
       cl.setCredentials("", "");
       expect(enc).to.equal(validate);
@@ -161,7 +160,7 @@ describe("APIClient class", function () {
       expect(ua).to.equal(
         `NODE-SDK (${process.platform}; ${
           process.arch
-        }; rv:${cl.getVersion()}) node/${process.version}`
+        }; rv:${cl.getVersion()}) node/${process.version}`,
       );
     });
   });
@@ -174,7 +173,7 @@ describe("APIClient class", function () {
       expect(ua).to.equal(
         `WHMCS (${process.platform}; ${
           process.arch
-        }; rv:7.7.0) node-sdk/${cl.getVersion()} node/${process.version}`
+        }; rv:7.7.0) node-sdk/${cl.getVersion()} node/${process.version}`,
       );
     });
 
@@ -191,7 +190,7 @@ describe("APIClient class", function () {
           process.arch
         }; rv:7.7.0) reg/2.6.2 ssl/7.2.2 dc/8.2.2 node-sdk/${cl.getVersion()} node/${
           process.version
-        }`
+        }`,
       );
     });
   });
@@ -211,7 +210,7 @@ describe("APIClient class", function () {
         COMMAND: "StatusAccount",
       });
       expect(tmp).to.equal(
-        "s_entity=54cd&s_otp=12345678&s_command=COMMAND%3DStatusAccount"
+        "s_entity=54cd&s_otp=12345678&s_command=COMMAND%3DStatusAccount",
       );
     });
 
@@ -231,7 +230,7 @@ describe("APIClient class", function () {
         COMMAND: "StatusAccount",
       });
       expect(tmp).to.equal(
-        "s_entity=54cd&s_session=12345678&s_command=COMMAND%3DStatusAccount"
+        "s_entity=54cd&s_session=12345678&s_command=COMMAND%3DStatusAccount",
       );
     });
 
@@ -244,7 +243,7 @@ describe("APIClient class", function () {
         COMMAND: "StatusAccount",
       });
       expect(tmp).to.equal(
-        "s_entity=54cd&s_session=12345678&s_command=COMMAND%3DStatusAccount"
+        "s_entity=54cd&s_session=12345678&s_command=COMMAND%3DStatusAccount",
       );
     });
 
@@ -271,7 +270,7 @@ describe("APIClient class", function () {
         COMMAND: "StatusAccount",
       });
       expect(tmp).to.equal(
-        "s_entity=54cd&s_session=12345678&s_command=COMMAND%3DStatusAccount"
+        "s_entity=54cd&s_session=12345678&s_command=COMMAND%3DStatusAccount",
       );
     });
   });
@@ -283,7 +282,7 @@ describe("APIClient class", function () {
         COMMAND: "StatusAccount",
       });
       expect(tmp).to.equal(
-        "s_entity=54cd&s_remoteaddr=10.10.10.10&s_command=COMMAND%3DStatusAccount"
+        "s_entity=54cd&s_remoteaddr=10.10.10.10&s_command=COMMAND%3DStatusAccount",
       );
     });
 
@@ -303,7 +302,7 @@ describe("APIClient class", function () {
         COMMAND: "StatusAccount",
       });
       expect(tmp).to.equal(
-        "s_entity=54cd&s_login=myaccountid&s_pw=mypassword&s_command=COMMAND%3DStatusAccount"
+        "s_entity=54cd&s_login=myaccountid&s_pw=mypassword&s_command=COMMAND%3DStatusAccount",
       );
     });
 
@@ -323,7 +322,7 @@ describe("APIClient class", function () {
         COMMAND: "StatusAccount",
       });
       expect(tmp).to.equal(
-        "s_entity=54cd&s_login=myaccountid%21myroleid&s_pw=mypassword&s_command=COMMAND%3DStatusAccount"
+        "s_entity=54cd&s_login=myaccountid%21myroleid&s_pw=mypassword&s_command=COMMAND%3DStatusAccount",
       );
     });
 
@@ -351,7 +350,7 @@ describe("APIClient class", function () {
         expect(rec2).not.to.be.null;
         if (rec2) {
           expect(rec.getDataByKey("SESSION")).to.equal(
-            rec2.getDataByKey("SESSION")
+            rec2.getDataByKey("SESSION"),
           );
         }
       }
@@ -364,7 +363,7 @@ describe("APIClient class", function () {
       cl.useOTESystem().setRoleCredentials(
         "test.user",
         "testrole",
-        "test.passw0rd"
+        "test.passw0rd",
       );
       const r = await cl.login();
       expect(r).to.be.instanceOf(Response);
@@ -376,7 +375,7 @@ describe("APIClient class", function () {
         expect(rec2).not.to.be.null;
         if (rec2) {
           expect(rec.getDataByKey("SESSION")).to.equal(
-            rec2.getDataByKey("SESSION")
+            rec2.getDataByKey("SESSION"),
           );
         }
       }
@@ -438,7 +437,7 @@ describe("APIClient class", function () {
         expect(rec2).not.to.be.null;
         if (rec2) {
           expect(rec.getDataByKey("SESSION")).to.equal(
-            rec2.getDataByKey("SESSION")
+            rec2.getDataByKey("SESSION"),
           );
         }
       }
@@ -578,7 +577,7 @@ describe("APIClient class", function () {
       });
       return expect(cl.requestNextResponsePage(r)).to.be.rejectedWith(
         Error,
-        "Parameter LAST in use. Please remove it to avoid issues in requestNextPage."
+        "Parameter LAST in use. Please remove it to avoid issues in requestNextPage.",
       );
     });
 
