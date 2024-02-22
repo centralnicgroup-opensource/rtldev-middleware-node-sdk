@@ -1,5 +1,5 @@
 import { expect, use } from "chai"; // Using Expect style
-import chaiPromised from "chai-as-promised";
+import { chaiAsPromised } from 'chai-promised';
 import "mocha";
 import nock from "nock";
 import {
@@ -10,7 +10,7 @@ import {
 } from "./apiclient.js";
 import { Response } from "./response.js";
 import { ResponseTemplateManager } from "./responsetemplatemanager.js";
-use(chaiPromised);
+use(chaiAsPromised);
 
 const apiScript = "/api/call.cgi";
 const oteHost = ISPAPI_CONNECTION_URL_OTE.replace(apiScript, "");
