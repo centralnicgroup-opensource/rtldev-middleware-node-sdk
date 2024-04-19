@@ -10,6 +10,7 @@
     "vscode": {
       // Add the IDs of extensions you want installed when the container is created.
       "extensions": [
+        "github.vscode-github-actions",
         "GitHub.vscode-pull-request-github",
         "ms-vscode-remote.remote-containers",
         "ms-azuretools.vscode-docker"
