@@ -12,6 +12,7 @@
       "extensions": [
         "GitHub.vscode-pull-request-github",
         "ms-vscode-remote.remote-containers",
+        "ms-azuretools.vscode-docker"
       ],
       "settings": {
         "terminal.integrated.defaultProfile.linux": "zsh",
