@@ -143,8 +143,8 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">import</span> chai <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;chai&quot;</span>;
-<span class="hljs-keyword">import</span> chaiPromised <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;chai-as-promised&quot;</span>;
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">import</span> { expect, use } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;chai&quot;</span>; <span class="hljs-comment">// Using Expect style</span>
+<span class="hljs-keyword">import</span> { chaiAsPromised } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;chai-promised&#x27;</span>;
 <span class="hljs-keyword">import</span> <span class="hljs-string">&quot;mocha&quot;</span>;
 <span class="hljs-keyword">import</span> nock <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;nock&quot;</span>;
 <span class="hljs-keyword">import</span> {
@@ -155,11 +155,10 @@
 } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./apiclient.js&quot;</span>;
 <span class="hljs-keyword">import</span> { <span class="hljs-title class_">Response</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./response.js&quot;</span>;
 <span class="hljs-keyword">import</span> { <span class="hljs-title class_">ResponseTemplateManager</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./responsetemplatemanager.js&quot;</span>;
-chai.<span class="hljs-title function_">use</span>(chaiPromised);
+<span class="hljs-title function_">use</span>(chaiAsPromised);
 
 <span class="hljs-keyword">const</span> apiScript = <span class="hljs-string">&quot;/api/call.cgi&quot;</span>;
 <span class="hljs-keyword">const</span> oteHost = <span class="hljs-variable constant_">ISPAPI_CONNECTION_URL_OTE</span>.<span class="hljs-title function_">replace</span>(apiScript, <span class="hljs-string">&quot;&quot;</span>);
-<span class="hljs-keyword">const</span> expect = chai.<span class="hljs-property">expect</span>;
 <span class="hljs-keyword">const</span> rtm = <span class="hljs-title class_">ResponseTemplateManager</span>.<span class="hljs-title function_">getInstance</span>();
 <span class="hljs-keyword">const</span> cmd = { <span class="hljs-attr">COMMAND</span>: <span class="hljs-string">&quot;StatusAccount&quot;</span> };
 <span class="hljs-keyword">let</span> <span class="hljs-attr">cl</span>: <span class="hljs-title class_">APIClient</span>;
@@ -173,39 +172,39 @@ chai.<span class="hljs-title function_">use</span>(chaiPromised);
   rtm
     .<span class="hljs-title function_">addTemplate</span>(
       <span class="hljs-string">&quot;login200&quot;</span>,
-      <span class="hljs-string">&quot;[RESPONSE]\r\nPROPERTY[SESSION][0]=h8JLZZHdF2WgWWXlwbKWzEG3XrzoW4yshhvtqyg0LCYiX55QnhgYX9cB0W4mlpbx\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.169\r\nEOF\r\n&quot;</span>
+      <span class="hljs-string">&quot;[RESPONSE]\r\nPROPERTY[SESSION][0]=h8JLZZHdF2WgWWXlwbKWzEG3XrzoW4yshhvtqyg0LCYiX55QnhgYX9cB0W4mlpbx\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.169\r\nEOF\r\n&quot;</span>,
     )
     .<span class="hljs-title function_">addTemplate</span>(
       <span class="hljs-string">&quot;login500&quot;</span>,
-      rtm.<span class="hljs-title function_">generateTemplate</span>(<span class="hljs-string">&quot;530&quot;</span>, <span class="hljs-string">&quot;Authentication failed&quot;</span>)
+      rtm.<span class="hljs-title function_">generateTemplate</span>(<span class="hljs-string">&quot;530&quot;</span>, <span class="hljs-string">&quot;Authentication failed&quot;</span>),
     )
     .<span class="hljs-title function_">addTemplate</span>(
       <span class="hljs-string">&quot;OK&quot;</span>,
-      rtm.<span class="hljs-title function_">generateTemplate</span>(<span class="hljs-string">&quot;200&quot;</span>, <span class="hljs-string">&quot;Command completed successfully&quot;</span>)
+      rtm.<span class="hljs-title function_">generateTemplate</span>(<span class="hljs-string">&quot;200&quot;</span>, <span class="hljs-string">&quot;Command completed successfully&quot;</span>),
     )
     .<span class="hljs-title function_">addTemplate</span>(
       <span class="hljs-string">&quot;CHECKS&quot;</span>,
-      <span class="hljs-string">&quot;[RESPONSE]\r\nPROPERTY[TOTAL][0]=2701\r\nPROPERTY[FIRST][0]=0\r\nPROPERTY[DOMAIN][0]=0-60motorcycletimes.com\r\nPROPERTY[DOMAIN][1]=0-be-s01-0.com\r\nPROPERTY[COUNT][0]=2\r\nPROPERTY[LAST][0]=1\r\nPROPERTY[LIMIT][0]=2\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.023\r\nEOF\r\n&quot;</span>
+      <span class="hljs-string">&quot;[RESPONSE]\r\nPROPERTY[TOTAL][0]=2701\r\nPROPERTY[FIRST][0]=0\r\nPROPERTY[DOMAIN][0]=0-60motorcycletimes.com\r\nPROPERTY[DOMAIN][1]=0-be-s01-0.com\r\nPROPERTY[COUNT][0]=2\r\nPROPERTY[LAST][0]=1\r\nPROPERTY[LIMIT][0]=2\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.023\r\nEOF\r\n&quot;</span>,
     )
     .<span class="hljs-title function_">addTemplate</span>(
       <span class="hljs-string">&quot;listP0&quot;</span>,
-      <span class="hljs-string">&quot;[RESPONSE]\r\nPROPERTY[TOTAL][0]=2701\r\nPROPERTY[FIRST][0]=0\r\nPROPERTY[DOMAIN][0]=0-60motorcycletimes.com\r\nPROPERTY[DOMAIN][1]=0-be-s01-0.com\r\nPROPERTY[COUNT][0]=2\r\nPROPERTY[LAST][0]=1\r\nPROPERTY[LIMIT][0]=2\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.023\r\nEOF\r\n&quot;</span>
+      <span class="hljs-string">&quot;[RESPONSE]\r\nPROPERTY[TOTAL][0]=2701\r\nPROPERTY[FIRST][0]=0\r\nPROPERTY[DOMAIN][0]=0-60motorcycletimes.com\r\nPROPERTY[DOMAIN][1]=0-be-s01-0.com\r\nPROPERTY[COUNT][0]=2\r\nPROPERTY[LAST][0]=1\r\nPROPERTY[LIMIT][0]=2\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.023\r\nEOF\r\n&quot;</span>,
     )
     .<span class="hljs-title function_">addTemplate</span>(
       <span class="hljs-string">&quot;listP1&quot;</span>,
-      <span class="hljs-string">&quot;[RESPONSE]\r\nPROPERTY[TOTAL][0]=2701\r\nPROPERTY[FIRST][0]=2\r\nPROPERTY[DOMAIN][0]=0-qas-ao17-0.org\r\nPROPERTY[DOMAIN][1]=0-sunnyda222y.com\r\nPROPERTY[COUNT][0]=2\r\nPROPERTY[LAST][0]=3\r\nPROPERTY[LIMIT][0]=2\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.032\r\nEOF\r\n&quot;</span>
+      <span class="hljs-string">&quot;[RESPONSE]\r\nPROPERTY[TOTAL][0]=2701\r\nPROPERTY[FIRST][0]=2\r\nPROPERTY[DOMAIN][0]=0-qas-ao17-0.org\r\nPROPERTY[DOMAIN][1]=0-sunnyda222y.com\r\nPROPERTY[COUNT][0]=2\r\nPROPERTY[LAST][0]=3\r\nPROPERTY[LIMIT][0]=2\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.032\r\nEOF\r\n&quot;</span>,
     )
     .<span class="hljs-title function_">addTemplate</span>(
       <span class="hljs-string">&quot;listFP0&quot;</span>,
-      <span class="hljs-string">&quot;[RESPONSE]\r\nPROPERTY[TOTAL][0]=3\r\nPROPERTY[FIRST][0]=0\r\nPROPERTY[DOMAIN][0]=0-60motorcycletimes.com\r\nPROPERTY[COUNT][0]=1\r\nPROPERTY[LAST][0]=1\r\nPROPERTY[LIMIT][0]=1\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.023\r\nEOF\r\n&quot;</span>
+      <span class="hljs-string">&quot;[RESPONSE]\r\nPROPERTY[TOTAL][0]=3\r\nPROPERTY[FIRST][0]=0\r\nPROPERTY[DOMAIN][0]=0-60motorcycletimes.com\r\nPROPERTY[COUNT][0]=1\r\nPROPERTY[LAST][0]=1\r\nPROPERTY[LIMIT][0]=1\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.023\r\nEOF\r\n&quot;</span>,
     )
     .<span class="hljs-title function_">addTemplate</span>(
       <span class="hljs-string">&quot;listFP1&quot;</span>,
-      <span class="hljs-string">&quot;[RESPONSE]\r\nPROPERTY[TOTAL][0]=3\r\nPROPERTY[FIRST][0]=1\r\nPROPERTY[DOMAIN][0]=0-be-s01-0.com\r\nPROPERTY[COUNT][0]=1\r\nPROPERTY[LAST][0]=2\r\nPROPERTY[LIMIT][0]=1\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.032\r\nEOF\r\n&quot;</span>
+      <span class="hljs-string">&quot;[RESPONSE]\r\nPROPERTY[TOTAL][0]=3\r\nPROPERTY[FIRST][0]=1\r\nPROPERTY[DOMAIN][0]=0-be-s01-0.com\r\nPROPERTY[COUNT][0]=1\r\nPROPERTY[LAST][0]=2\r\nPROPERTY[LIMIT][0]=1\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.032\r\nEOF\r\n&quot;</span>,
     )
     .<span class="hljs-title function_">addTemplate</span>(
       <span class="hljs-string">&quot;listFP2&quot;</span>,
-      <span class="hljs-string">&quot;[RESPONSE]\r\nPROPERTY[TOTAL][0]=3\r\nPROPERTY[FIRST][0]=2\r\nPROPERTY[DOMAIN][0]=0-qas-ao17-0.org\r\nPROPERTY[COUNT][0]=2\r\nPROPERTY[LAST][0]=3\r\nPROPERTY[LIMIT][0]=1\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.032\r\nEOF\r\n&quot;</span>
+      <span class="hljs-string">&quot;[RESPONSE]\r\nPROPERTY[TOTAL][0]=3\r\nPROPERTY[FIRST][0]=2\r\nPROPERTY[DOMAIN][0]=0-qas-ao17-0.org\r\nPROPERTY[COUNT][0]=2\r\nPROPERTY[LAST][0]=3\r\nPROPERTY[LIMIT][0]=1\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.032\r\nEOF\r\n&quot;</span>,
     );
 });
 
@@ -257,7 +256,7 @@ chai.<span class="hljs-title function_">use</span>(chaiPromised);
           <span class="hljs-attr">PASSWORD</span>: <span class="hljs-string">&quot;test.passw0rd&quot;</span>,
           <span class="hljs-attr">SUBUSER</span>: <span class="hljs-string">&quot;test.user&quot;</span>,
         },
-        <span class="hljs-literal">true</span>
+        <span class="hljs-literal">true</span>,
       );
       cl.<span class="hljs-title function_">setCredentials</span>(<span class="hljs-string">&quot;&quot;</span>, <span class="hljs-string">&quot;&quot;</span>);
       <span class="hljs-title function_">expect</span>(enc).<span class="hljs-property">to</span>.<span class="hljs-title function_">equal</span>(validate);
@@ -306,7 +305,7 @@ chai.<span class="hljs-title function_">use</span>(chaiPromised);
       <span class="hljs-title function_">expect</span>(ua).<span class="hljs-property">to</span>.<span class="hljs-title function_">equal</span>(
         <span class="hljs-string">`NODE-SDK (<span class="hljs-subst">${process.platform}</span>; <span class="hljs-subst">${
           process.arch
-        }</span>; rv:<span class="hljs-subst">${cl.getVersion()}</span>) node/<span class="hljs-subst">${process.version}</span>`</span>
+        }</span>; rv:<span class="hljs-subst">${cl.getVersion()}</span>) node/<span class="hljs-subst">${process.version}</span>`</span>,
       );
     });
   });
@@ -319,7 +318,7 @@ chai.<span class="hljs-title function_">use</span>(chaiPromised);
       <span class="hljs-title function_">expect</span>(ua).<span class="hljs-property">to</span>.<span class="hljs-title function_">equal</span>(
         <span class="hljs-string">`WHMCS (<span class="hljs-subst">${process.platform}</span>; <span class="hljs-subst">${
           process.arch
-        }</span>; rv:7.7.0) node-sdk/<span class="hljs-subst">${cl.getVersion()}</span> node/<span class="hljs-subst">${process.version}</span>`</span>
+        }</span>; rv:7.7.0) node-sdk/<span class="hljs-subst">${cl.getVersion()}</span> node/<span class="hljs-subst">${process.version}</span>`</span>,
       );
     });
 
@@ -336,7 +335,7 @@ chai.<span class="hljs-title function_">use</span>(chaiPromised);
           process.arch
         }</span>; rv:7.7.0) reg/2.6.2 ssl/7.2.2 dc/8.2.2 node-sdk/<span class="hljs-subst">${cl.getVersion()}</span> node/<span class="hljs-subst">${
           process.version
-        }</span>`</span>
+        }</span>`</span>,
       );
     });
   });
@@ -356,7 +355,7 @@ chai.<span class="hljs-title function_">use</span>(chaiPromised);
         <span class="hljs-attr">COMMAND</span>: <span class="hljs-string">&quot;StatusAccount&quot;</span>,
       });
       <span class="hljs-title function_">expect</span>(tmp).<span class="hljs-property">to</span>.<span class="hljs-title function_">equal</span>(
-        <span class="hljs-string">&quot;s_entity=54cd&amp;s_otp=12345678&amp;s_command=COMMAND%3DStatusAccount&quot;</span>
+        <span class="hljs-string">&quot;s_entity=54cd&amp;s_otp=12345678&amp;s_command=COMMAND%3DStatusAccount&quot;</span>,
       );
     });
 
@@ -376,7 +375,7 @@ chai.<span class="hljs-title function_">use</span>(chaiPromised);
         <span class="hljs-attr">COMMAND</span>: <span class="hljs-string">&quot;StatusAccount&quot;</span>,
       });
       <span class="hljs-title function_">expect</span>(tmp).<span class="hljs-property">to</span>.<span class="hljs-title function_">equal</span>(
-        <span class="hljs-string">&quot;s_entity=54cd&amp;s_session=12345678&amp;s_command=COMMAND%3DStatusAccount&quot;</span>
+        <span class="hljs-string">&quot;s_entity=54cd&amp;s_session=12345678&amp;s_command=COMMAND%3DStatusAccount&quot;</span>,
       );
     });
 
@@ -402,7 +401,7 @@ chai.<span class="hljs-title function_">use</span>(chaiPromised);
         <span class="hljs-attr">COMMAND</span>: <span class="hljs-string">&quot;StatusAccount&quot;</span>,
       });
       <span class="hljs-title function_">expect</span>(tmp).<span class="hljs-property">to</span>.<span class="hljs-title function_">equal</span>(
-        <span class="hljs-string">&quot;s_entity=54cd&amp;s_session=12345678&amp;s_command=COMMAND%3DStatusAccount&quot;</span>
+        <span class="hljs-string">&quot;s_entity=54cd&amp;s_session=12345678&amp;s_command=COMMAND%3DStatusAccount&quot;</span>,
       );
     });
 
@@ -429,7 +428,7 @@ chai.<span class="hljs-title function_">use</span>(chaiPromised);
         <span class="hljs-attr">COMMAND</span>: <span class="hljs-string">&quot;StatusAccount&quot;</span>,
       });
       <span class="hljs-title function_">expect</span>(tmp).<span class="hljs-property">to</span>.<span class="hljs-title function_">equal</span>(
-        <span class="hljs-string">&quot;s_entity=54cd&amp;s_session=12345678&amp;s_command=COMMAND%3DStatusAccount&quot;</span>
+        <span class="hljs-string">&quot;s_entity=54cd&amp;s_session=12345678&amp;s_command=COMMAND%3DStatusAccount&quot;</span>,
       );
     });
   });
@@ -441,7 +440,7 @@ chai.<span class="hljs-title function_">use</span>(chaiPromised);
         <span class="hljs-attr">COMMAND</span>: <span class="hljs-string">&quot;StatusAccount&quot;</span>,
       });
       <span class="hljs-title function_">expect</span>(tmp).<span class="hljs-property">to</span>.<span class="hljs-title function_">equal</span>(
-        <span class="hljs-string">&quot;s_entity=54cd&amp;s_remoteaddr=10.10.10.10&amp;s_command=COMMAND%3DStatusAccount&quot;</span>
+        <span class="hljs-string">&quot;s_entity=54cd&amp;s_remoteaddr=10.10.10.10&amp;s_command=COMMAND%3DStatusAccount&quot;</span>,
       );
     });
 
@@ -461,7 +460,7 @@ chai.<span class="hljs-title function_">use</span>(chaiPromised);
         <span class="hljs-attr">COMMAND</span>: <span class="hljs-string">&quot;StatusAccount&quot;</span>,
       });
       <span class="hljs-title function_">expect</span>(tmp).<span class="hljs-property">to</span>.<span class="hljs-title function_">equal</span>(
-        <span class="hljs-string">&quot;s_entity=54cd&amp;s_login=myaccountid&amp;s_pw=mypassword&amp;s_command=COMMAND%3DStatusAccount&quot;</span>
+        <span class="hljs-string">&quot;s_entity=54cd&amp;s_login=myaccountid&amp;s_pw=mypassword&amp;s_command=COMMAND%3DStatusAccount&quot;</span>,
       );
     });
 
@@ -481,7 +480,7 @@ chai.<span class="hljs-title function_">use</span>(chaiPromised);
         <span class="hljs-attr">COMMAND</span>: <span class="hljs-string">&quot;StatusAccount&quot;</span>,
       });
       <span class="hljs-title function_">expect</span>(tmp).<span class="hljs-property">to</span>.<span class="hljs-title function_">equal</span>(
-        <span class="hljs-string">&quot;s_entity=54cd&amp;s_login=myaccountid%21myroleid&amp;s_pw=mypassword&amp;s_command=COMMAND%3DStatusAccount&quot;</span>
+        <span class="hljs-string">&quot;s_entity=54cd&amp;s_login=myaccountid%21myroleid&amp;s_pw=mypassword&amp;s_command=COMMAND%3DStatusAccount&quot;</span>,
       );
     });
 
@@ -509,7 +508,7 @@ chai.<span class="hljs-title function_">use</span>(chaiPromised);
         <span class="hljs-title function_">expect</span>(rec2).<span class="hljs-property">not</span>.<span class="hljs-property">to</span>.<span class="hljs-property">be</span>.<span class="hljs-property">null</span>;
         <span class="hljs-keyword">if</span> (rec2) {
           <span class="hljs-title function_">expect</span>(rec.<span class="hljs-title function_">getDataByKey</span>(<span class="hljs-string">&quot;SESSION&quot;</span>)).<span class="hljs-property">to</span>.<span class="hljs-title function_">equal</span>(
-            rec2.<span class="hljs-title function_">getDataByKey</span>(<span class="hljs-string">&quot;SESSION&quot;</span>)
+            rec2.<span class="hljs-title function_">getDataByKey</span>(<span class="hljs-string">&quot;SESSION&quot;</span>),
           );
         }
       }
@@ -534,7 +533,7 @@ chai.<span class="hljs-title function_">use</span>(chaiPromised);
       cl.<span class="hljs-title function_">useOTESystem</span>().<span class="hljs-title function_">setRoleCredentials</span>(
         <span class="hljs-string">&quot;test.user&quot;</span>,
         <span class="hljs-string">&quot;testrole&quot;</span>,
-        <span class="hljs-string">&quot;test.passw0rd&quot;</span>
+        <span class="hljs-string">&quot;test.passw0rd&quot;</span>,
       );
       <span class="hljs-keyword">const</span> r = <span class="hljs-keyword">await</span> cl.<span class="hljs-title function_">login</span>();
       <span class="hljs-title function_">expect</span>(r).<span class="hljs-property">to</span>.<span class="hljs-property">be</span>.<span class="hljs-title function_">instanceOf</span>(<span class="hljs-title class_">Response</span>);
@@ -546,7 +545,7 @@ chai.<span class="hljs-title function_">use</span>(chaiPromised);
         <span class="hljs-title function_">expect</span>(rec2).<span class="hljs-property">not</span>.<span class="hljs-property">to</span>.<span class="hljs-property">be</span>.<span class="hljs-property">null</span>;
         <span class="hljs-keyword">if</span> (rec2) {
           <span class="hljs-title function_">expect</span>(rec.<span class="hljs-title function_">getDataByKey</span>(<span class="hljs-string">&quot;SESSION&quot;</span>)).<span class="hljs-property">to</span>.<span class="hljs-title function_">equal</span>(
-            rec2.<span class="hljs-title function_">getDataByKey</span>(<span class="hljs-string">&quot;SESSION&quot;</span>)
+            rec2.<span class="hljs-title function_">getDataByKey</span>(<span class="hljs-string">&quot;SESSION&quot;</span>),
           );
         }
       }
@@ -633,7 +632,7 @@ this case is just to increase coverage</p>
         <span class="hljs-title function_">expect</span>(rec2).<span class="hljs-property">not</span>.<span class="hljs-property">to</span>.<span class="hljs-property">be</span>.<span class="hljs-property">null</span>;
         <span class="hljs-keyword">if</span> (rec2) {
           <span class="hljs-title function_">expect</span>(rec.<span class="hljs-title function_">getDataByKey</span>(<span class="hljs-string">&quot;SESSION&quot;</span>)).<span class="hljs-property">to</span>.<span class="hljs-title function_">equal</span>(
-            rec2.<span class="hljs-title function_">getDataByKey</span>(<span class="hljs-string">&quot;SESSION&quot;</span>)
+            rec2.<span class="hljs-title function_">getDataByKey</span>(<span class="hljs-string">&quot;SESSION&quot;</span>),
           );
         }
       }
@@ -786,7 +785,7 @@ this case is just to increase coverage</p>
       });
       <span class="hljs-keyword">return</span> <span class="hljs-title function_">expect</span>(cl.<span class="hljs-title function_">requestNextResponsePage</span>(r)).<span class="hljs-property">to</span>.<span class="hljs-property">be</span>.<span class="hljs-title function_">rejectedWith</span>(
         <span class="hljs-title class_">Error</span>,
-        <span class="hljs-string">&quot;Parameter LAST in use. Please remove it to avoid issues in requestNextPage.&quot;</span>
+        <span class="hljs-string">&quot;Parameter LAST in use. Please remove it to avoid issues in requestNextPage.&quot;</span>,
       );
     });
 

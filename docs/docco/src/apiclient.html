@@ -453,8 +453,8 @@
         {
           <span class="hljs-attr">COMMAND</span>: <span class="hljs-string">&quot;StartSession&quot;</span>,
         },
-        params
-      )
+        params,
+      ),
     );
     <span class="hljs-keyword">if</span> (rr.<span class="hljs-title function_">isSuccess</span>()) {
       <span class="hljs-keyword">const</span> col = rr.<span class="hljs-title function_">getColumn</span>(<span class="hljs-string">&quot;SESSION&quot;</span>);
@@ -626,7 +626,7 @@ gzip: true,</p>
     <span class="hljs-keyword">const</span> mycmd = rr.<span class="hljs-title function_">getCommand</span>();
     <span class="hljs-keyword">if</span> (<span class="hljs-title class_">Object</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">hasOwnProperty</span>.<span class="hljs-title function_">call</span>(mycmd, <span class="hljs-string">&quot;LAST&quot;</span>)) {
       <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(
-        <span class="hljs-string">&quot;Parameter LAST in use. Please remove it to avoid issues in requestNextPage.&quot;</span>
+        <span class="hljs-string">&quot;Parameter LAST in use. Please remove it to avoid issues in requestNextPage.&quot;</span>,
       );
     }
     <span class="hljs-keyword">let</span> first = <span class="hljs-number">0</span>;
@@ -653,7 +653,7 @@ gzip: true,</p>
   <span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> <span class="hljs-title function_">requestAllResponsePages</span>(<span class="hljs-attr">cmd</span>: <span class="hljs-built_in">any</span>): <span class="hljs-title class_">Promise</span>&lt;<span class="hljs-title class_">Response</span>[]&gt; {
     <span class="hljs-keyword">const</span> <span class="hljs-attr">responses</span>: <span class="hljs-title class_">Response</span>[] = [];
     <span class="hljs-keyword">const</span> <span class="hljs-attr">rr</span>: <span class="hljs-title class_">Response</span> = <span class="hljs-keyword">await</span> <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">request</span>(
-      <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">assign</span>({}, cmd, { <span class="hljs-attr">FIRST</span>: <span class="hljs-number">0</span> })
+      <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">assign</span>({}, cmd, { <span class="hljs-attr">FIRST</span>: <span class="hljs-number">0</span> }),
     );
     <span class="hljs-keyword">let</span> <span class="hljs-attr">tmp</span>: <span class="hljs-title class_">Response</span> | <span class="hljs-literal">null</span> = rr;
     <span class="hljs-keyword">let</span> idx = <span class="hljs-number">0</span>;

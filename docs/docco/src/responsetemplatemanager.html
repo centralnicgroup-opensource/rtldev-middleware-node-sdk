@@ -175,20 +175,20 @@
       <span class="hljs-number">500</span>: <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">generateTemplate</span>(<span class="hljs-string">&quot;500&quot;</span>, <span class="hljs-string">&quot;Internal server error&quot;</span>),
       <span class="hljs-attr">empty</span>: <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">generateTemplate</span>(
         <span class="hljs-string">&quot;423&quot;</span>,
-        <span class="hljs-string">&quot;Empty API response. Probably unreachable API end point {CONNECTION_URL}&quot;</span>
+        <span class="hljs-string">&quot;Empty API response. Probably unreachable API end point {CONNECTION_URL}&quot;</span>,
       ),
       <span class="hljs-attr">error</span>: <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">generateTemplate</span>(
         <span class="hljs-string">&quot;421&quot;</span>,
-        <span class="hljs-string">&quot;Command failed due to server error. Client should try again&quot;</span>
+        <span class="hljs-string">&quot;Command failed due to server error. Client should try again&quot;</span>,
       ),
       <span class="hljs-attr">expired</span>: <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">generateTemplate</span>(<span class="hljs-string">&quot;530&quot;</span>, <span class="hljs-string">&quot;SESSION NOT FOUND&quot;</span>),
       <span class="hljs-attr">httperror</span>: <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">generateTemplate</span>(
         <span class="hljs-string">&quot;421&quot;</span>,
-        <span class="hljs-string">&quot;Command failed due to HTTP communication error&quot;</span>
+        <span class="hljs-string">&quot;Command failed due to HTTP communication error&quot;</span>,
       ),
       <span class="hljs-attr">invalid</span>: <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">generateTemplate</span>(
         <span class="hljs-string">&quot;423&quot;</span>,
-        <span class="hljs-string">&quot;Invalid API response. Contact Support&quot;</span>
+        <span class="hljs-string">&quot;Invalid API response. Contact Support&quot;</span>,
       ),
       <span class="hljs-attr">unauthorized</span>: <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">generateTemplate</span>(<span class="hljs-string">&quot;530&quot;</span>, <span class="hljs-string">&quot;Unauthorized&quot;</span>),
     };
@@ -225,7 +225,7 @@
       <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ResponseTemplate</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">templates</span>[id]);
     }
     <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ResponseTemplate</span>(
-      <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">generateTemplate</span>(<span class="hljs-string">&quot;500&quot;</span>, <span class="hljs-string">&quot;Response Template not found&quot;</span>)
+      <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">generateTemplate</span>(<span class="hljs-string">&quot;500&quot;</span>, <span class="hljs-string">&quot;Response Template not found&quot;</span>),
     );
   }
 

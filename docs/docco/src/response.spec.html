@@ -143,13 +143,12 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">import</span> chai <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;chai&quot;</span>;
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">import</span> { expect } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;chai&quot;</span>;
 <span class="hljs-keyword">import</span> <span class="hljs-string">&quot;mocha&quot;</span>;
 <span class="hljs-keyword">import</span> { <span class="hljs-title class_">Response</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./response.js&quot;</span>;
 <span class="hljs-keyword">import</span> { <span class="hljs-title class_">ResponseParser</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./responseparser.js&quot;</span>;
 <span class="hljs-keyword">import</span> { <span class="hljs-title class_">ResponseTemplateManager</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./responsetemplatemanager.js&quot;</span>;
 
-<span class="hljs-keyword">const</span> expect = chai.<span class="hljs-property">expect</span>;
 <span class="hljs-keyword">const</span> rtm = <span class="hljs-title class_">ResponseTemplateManager</span>.<span class="hljs-title function_">getInstance</span>();
 <span class="hljs-keyword">const</span> cmd = { <span class="hljs-attr">COMMAND</span>: <span class="hljs-string">&quot;StatusContact&quot;</span> };
 
@@ -157,11 +156,11 @@
   rtm
     .<span class="hljs-title function_">addTemplate</span>(
       <span class="hljs-string">&quot;listP0&quot;</span>,
-      <span class="hljs-string">&quot;[RESPONSE]\r\nPROPERTY[TOTAL][0]=2701\r\nPROPERTY[FIRST][0]=0\r\nPROPERTY[DOMAIN][0]=0-60motorcycletimes.com\r\nPROPERTY[DOMAIN][1]=0-be-s01-0.com\r\nPROPERTY[COUNT][0]=2\r\nPROPERTY[LAST][0]=1\r\nPROPERTY[LIMIT][0]=2\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.023\r\nEOF\r\n&quot;</span>
+      <span class="hljs-string">&quot;[RESPONSE]\r\nPROPERTY[TOTAL][0]=2701\r\nPROPERTY[FIRST][0]=0\r\nPROPERTY[DOMAIN][0]=0-60motorcycletimes.com\r\nPROPERTY[DOMAIN][1]=0-be-s01-0.com\r\nPROPERTY[COUNT][0]=2\r\nPROPERTY[LAST][0]=1\r\nPROPERTY[LIMIT][0]=2\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.023\r\nEOF\r\n&quot;</span>,
     )
     .<span class="hljs-title function_">addTemplate</span>(
       <span class="hljs-string">&quot;OK&quot;</span>,
-      rtm.<span class="hljs-title function_">generateTemplate</span>(<span class="hljs-string">&quot;200&quot;</span>, <span class="hljs-string">&quot;Command completed successfully&quot;</span>)
+      rtm.<span class="hljs-title function_">generateTemplate</span>(<span class="hljs-string">&quot;200&quot;</span>, <span class="hljs-string">&quot;Command completed successfully&quot;</span>),
     );
 });
 
@@ -203,7 +202,7 @@
             <div class="content"><div class='highlight'><pre>      r = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Response</span>(
         <span class="hljs-string">&quot;&quot;</span>,
         { <span class="hljs-attr">COMMAND</span>: <span class="hljs-string">&quot;StatusAccount&quot;</span> },
-        { <span class="hljs-attr">CONNECTION_URL</span>: <span class="hljs-string">&quot;123HXPHFOUND123&quot;</span> }
+        { <span class="hljs-attr">CONNECTION_URL</span>: <span class="hljs-string">&quot;123HXPHFOUND123&quot;</span> },
       );
       <span class="hljs-title function_">expect</span>(<span class="hljs-regexp">/123HXPHFOUND123/</span>.<span class="hljs-title function_">test</span>(r.<span class="hljs-title function_">getDescription</span>())).<span class="hljs-property">to</span>.<span class="hljs-property">be</span>.<span class="hljs-property">true</span>;
     });

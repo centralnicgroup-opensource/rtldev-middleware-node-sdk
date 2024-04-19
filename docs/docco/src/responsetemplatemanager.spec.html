@@ -143,12 +143,11 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">import</span> chai <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;chai&quot;</span>;
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">import</span> { expect } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;chai&quot;</span>;
 <span class="hljs-keyword">import</span> <span class="hljs-string">&quot;mocha&quot;</span>;
 <span class="hljs-keyword">import</span> { <span class="hljs-title class_">ResponseTemplate</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./responsetemplate.js&quot;</span>;
 <span class="hljs-keyword">import</span> { <span class="hljs-title class_">ResponseTemplateManager</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./responsetemplatemanager.js&quot;</span>;
 
-<span class="hljs-keyword">const</span> expect = chai.<span class="hljs-property">expect</span>;
 <span class="hljs-keyword">let</span> <span class="hljs-attr">rtm</span>: <span class="hljs-title class_">ResponseTemplateManager</span>;
 
 <span class="hljs-title function_">before</span>(<span class="hljs-function">() =&gt;</span> {

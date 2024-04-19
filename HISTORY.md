@@ -1,3 +1,10 @@
+## [9.0.2](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/compare/v9.0.1...v9.0.2) (2024-04-19)
+
+
+### Bug Fixes
+
+* **release automation test:** replace gulp with semantic-release entirely ([32dd733](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/commit/32dd7338f86f67932fa6491ff4da20090ce48340))
+
 ## [9.0.1](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/compare/v9.0.0...v9.0.1) (2022-12-01)
 
 ### Bug Fixes

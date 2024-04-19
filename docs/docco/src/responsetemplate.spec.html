@@ -143,11 +143,9 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">import</span> chai <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;chai&quot;</span>;
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">import</span> { expect } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;chai&quot;</span>;
 <span class="hljs-keyword">import</span> <span class="hljs-string">&quot;mocha&quot;</span>;
 <span class="hljs-keyword">import</span> { <span class="hljs-title class_">ResponseTemplate</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./responsetemplate.js&quot;</span>;
-
-<span class="hljs-keyword">const</span> expect = chai.<span class="hljs-property">expect</span>;
 
 <span class="hljs-title function_">describe</span>(<span class="hljs-string">&quot;ResponseTemplate class&quot;</span>, <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) {
   <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">slow</span>(<span class="hljs-number">1000</span>);
@@ -157,17 +155,17 @@
       <span class="hljs-keyword">const</span> tpl = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ResponseTemplate</span>(<span class="hljs-string">&quot;&quot;</span>);
       <span class="hljs-title function_">expect</span>(tpl.<span class="hljs-title function_">getCode</span>()).<span class="hljs-property">to</span>.<span class="hljs-title function_">equal</span>(<span class="hljs-number">423</span>);
       <span class="hljs-title function_">expect</span>(tpl.<span class="hljs-title function_">getDescription</span>()).<span class="hljs-property">to</span>.<span class="hljs-title function_">equal</span>(
-        <span class="hljs-string">&quot;Empty API response. Probably unreachable API end point {CONNECTION_URL}&quot;</span>
+        <span class="hljs-string">&quot;Empty API response. Probably unreachable API end point {CONNECTION_URL}&quot;</span>,
       );
     });
 
     <span class="hljs-title function_">it</span>(<span class="hljs-string">&quot;check template `invalid` being returned&quot;</span>, <span class="hljs-function">() =&gt;</span> {
       <span class="hljs-keyword">const</span> tpl = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ResponseTemplate</span>(
-        <span class="hljs-string">&quot;[RESPONSE]\r\ncode=200\r\nqueuetime=0\r\nEOF\r\n&quot;</span>
+        <span class="hljs-string">&quot;[RESPONSE]\r\ncode=200\r\nqueuetime=0\r\nEOF\r\n&quot;</span>,
       );
       <span class="hljs-title function_">expect</span>(tpl.<span class="hljs-title function_">getCode</span>()).<span class="hljs-property">to</span>.<span class="hljs-title function_">equal</span>(<span class="hljs-number">423</span>);
       <span class="hljs-title function_">expect</span>(tpl.<span class="hljs-title function_">getDescription</span>()).<span class="hljs-property">to</span>.<span class="hljs-title function_">equal</span>(
-        <span class="hljs-string">&quot;Invalid API response. Contact Support&quot;</span>
+        <span class="hljs-string">&quot;Invalid API response. Contact Support&quot;</span>,
       );
     });
   });
@@ -177,7 +175,7 @@
       <span class="hljs-keyword">const</span> h = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ResponseTemplate</span>(<span class="hljs-string">&quot;&quot;</span>).<span class="hljs-title function_">getHash</span>();
       <span class="hljs-title function_">expect</span>(h.<span class="hljs-property">CODE</span>).<span class="hljs-property">to</span>.<span class="hljs-title function_">equal</span>(<span class="hljs-string">&quot;423&quot;</span>);
       <span class="hljs-title function_">expect</span>(h.<span class="hljs-property">DESCRIPTION</span>).<span class="hljs-property">to</span>.<span class="hljs-title function_">equal</span>(
-        <span class="hljs-string">&quot;Empty API response. Probably unreachable API end point {CONNECTION_URL}&quot;</span>
+        <span class="hljs-string">&quot;Empty API response. Probably unreachable API end point {CONNECTION_URL}&quot;</span>,
       );
     });
   });
@@ -190,7 +188,7 @@
 
     <span class="hljs-title function_">it</span>(<span class="hljs-string">&quot;check return value [in API response]&quot;</span>, <span class="hljs-function">() =&gt;</span> {
       <span class="hljs-keyword">const</span> tpl = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ResponseTemplate</span>(
-        <span class="hljs-string">&quot;[RESPONSE]\r\ncode=423\r\ndescription=Empty API response. Probably unreachable API end point\r\nqueuetime=0\r\nEOF\r\n&quot;</span>
+        <span class="hljs-string">&quot;[RESPONSE]\r\ncode=423\r\ndescription=Empty API response. Probably unreachable API end point\r\nqueuetime=0\r\nEOF\r\n&quot;</span>,
       );
       <span class="hljs-title function_">expect</span>(tpl.<span class="hljs-title function_">getQueuetime</span>()).<span class="hljs-property">to</span>.<span class="hljs-title function_">equal</span>(<span class="hljs-number">0</span>);
     });
@@ -204,7 +202,7 @@
 
     <span class="hljs-title function_">it</span>(<span class="hljs-string">&quot;check return value [in API response]&quot;</span>, <span class="hljs-function">() =&gt;</span> {
       <span class="hljs-keyword">const</span> tpl = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ResponseTemplate</span>(
-        <span class="hljs-string">&quot;[RESPONSE]\r\ncode=423\r\ndescription=Empty API response. Probably unreachable API end point\r\nruntime=0.12\r\nEOF\r\n&quot;</span>
+        <span class="hljs-string">&quot;[RESPONSE]\r\ncode=423\r\ndescription=Empty API response. Probably unreachable API end point\r\nruntime=0.12\r\nEOF\r\n&quot;</span>,
       );
       <span class="hljs-title function_">expect</span>(tpl.<span class="hljs-title function_">getRuntime</span>()).<span class="hljs-property">to</span>.<span class="hljs-title function_">equal</span>(<span class="hljs-number">0.12</span>);
     });
@@ -218,7 +216,7 @@
 
     <span class="hljs-title function_">it</span>(<span class="hljs-string">&quot;check return value [in API response]&quot;</span>, <span class="hljs-function">() =&gt;</span> {
       <span class="hljs-keyword">const</span> tpl = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ResponseTemplate</span>(
-        <span class="hljs-string">&quot;[RESPONSE]\r\ncode=200\r\ndescription=Command completed successfully\r\npending=1\r\nEOF\r\n&quot;</span>
+        <span class="hljs-string">&quot;[RESPONSE]\r\ncode=200\r\ndescription=Command completed successfully\r\npending=1\r\nEOF\r\n&quot;</span>,
       );
       <span class="hljs-title function_">expect</span>(tpl.<span class="hljs-title function_">isPending</span>()).<span class="hljs-property">to</span>.<span class="hljs-property">be</span>.<span class="hljs-property">true</span>;
     });

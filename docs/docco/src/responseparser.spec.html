@@ -143,18 +143,17 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">import</span> chai <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;chai&quot;</span>;
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">import</span> { expect } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;chai&quot;</span>;
 <span class="hljs-keyword">import</span> <span class="hljs-string">&quot;mocha&quot;</span>;
 <span class="hljs-keyword">import</span> { <span class="hljs-title class_">ResponseParser</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./responseparser.js&quot;</span>;
 <span class="hljs-keyword">import</span> { <span class="hljs-title class_">ResponseTemplateManager</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./responsetemplatemanager.js&quot;</span>;
 
-<span class="hljs-keyword">const</span> expect = chai.<span class="hljs-property">expect</span>;
 <span class="hljs-keyword">const</span> rtm = <span class="hljs-title class_">ResponseTemplateManager</span>.<span class="hljs-title function_">getInstance</span>();
 
 <span class="hljs-title function_">before</span>(<span class="hljs-function">() =&gt;</span> {
   rtm.<span class="hljs-title function_">addTemplate</span>(
     <span class="hljs-string">&quot;OK&quot;</span>,
-    rtm.<span class="hljs-title function_">generateTemplate</span>(<span class="hljs-string">&quot;200&quot;</span>, <span class="hljs-string">&quot;Command completed successfully&quot;</span>)
+    rtm.<span class="hljs-title function_">generateTemplate</span>(<span class="hljs-string">&quot;200&quot;</span>, <span class="hljs-string">&quot;Command completed successfully&quot;</span>),
   );
 });
 
@@ -170,7 +169,7 @@
         <span class="hljs-attr">SUM</span>: [<span class="hljs-number">3</span>],
       };
       <span class="hljs-title function_">expect</span>(<span class="hljs-title class_">ResponseParser</span>.<span class="hljs-title function_">serialize</span>(r)).<span class="hljs-property">to</span>.<span class="hljs-title function_">equal</span>(
-        <span class="hljs-string">&quot;[RESPONSE]\r\nPROPERTY[DOMAIN][0]=mydomain1.com\r\nPROPERTY[DOMAIN][1]=mydomain2.com\r\nPROPERTY[DOMAIN][2]=mydomain3.com\r\nPROPERTY[RATING][0]=1\r\nPROPERTY[RATING][1]=2\r\nPROPERTY[RATING][2]=3\r\nPROPERTY[SUM][0]=3\r\nCODE=200\r\nDESCRIPTION=Command completed successfully\r\nEOF\r\n&quot;</span>
+        <span class="hljs-string">&quot;[RESPONSE]\r\nPROPERTY[DOMAIN][0]=mydomain1.com\r\nPROPERTY[DOMAIN][1]=mydomain2.com\r\nPROPERTY[DOMAIN][2]=mydomain3.com\r\nPROPERTY[RATING][0]=1\r\nPROPERTY[RATING][1]=2\r\nPROPERTY[RATING][2]=3\r\nPROPERTY[SUM][0]=3\r\nCODE=200\r\nDESCRIPTION=Command completed successfully\r\nEOF\r\n&quot;</span>,
       );
     });
 
@@ -205,7 +204,7 @@
       h.<span class="hljs-property">QUEUETIME</span> = <span class="hljs-string">&quot;0&quot;</span>;
       h.<span class="hljs-property">RUNTIME</span> = <span class="hljs-string">&quot;0.12&quot;</span>;
       <span class="hljs-title function_">expect</span>(<span class="hljs-title class_">ResponseParser</span>.<span class="hljs-title function_">serialize</span>(h)).<span class="hljs-property">to</span>.<span class="hljs-title function_">equal</span>(
-        <span class="hljs-string">&quot;[RESPONSE]\r\nCODE=200\r\nDESCRIPTION=Command completed successfully\r\nQUEUETIME=0\r\nRUNTIME=0.12\r\nEOF\r\n&quot;</span>
+        <span class="hljs-string">&quot;[RESPONSE]\r\nCODE=200\r\nDESCRIPTION=Command completed successfully\r\nQUEUETIME=0\r\nRUNTIME=0.12\r\nEOF\r\n&quot;</span>,
       );
     });
   });
