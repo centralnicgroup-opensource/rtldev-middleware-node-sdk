@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import "mocha";
-import { ResponseParser } from "./responseparser.js";
-import { ResponseTemplateManager } from "./responsetemplatemanager.js";
+import { ResponseParser } from "../src/responseparser.js";
+import { ResponseTemplateManager } from "../src/responsetemplatemanager.js";
 
 const rtm = ResponseTemplateManager.getInstance();
 

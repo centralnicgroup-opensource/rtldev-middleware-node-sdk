@@ -9,5 +9,6 @@
     "noImplicitReturns": true,
     "strict": true,
     "noUnusedLocals": true
-  }
+  },
+  "exclude": ["node_modules", "./dist/**/*", "./tests/**/*"]
 }

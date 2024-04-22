@@ -42,13 +42,13 @@
     "application"
   ],
   "scripts": {
-    "compile": "tsc --version && tsc --declaration",
+    "compile": "rm -rf dist && tsc --version && tsc --declaration",
     "lint": "prettier --write .",
     "prepublish": "npm run compile",
     "documentation": "npm run gendocsDocco --silent && npm run gendocsTypedoc --silent",
     "gendocsTypedoc": "typedoc --out docs/typedoc --name @hexonet/ispapi-apiconnector --readme ./README.md --excludeExternals src/*.ts",
     "gendocsDocco": "docco -l parallel -o docs/docco src/*.ts",
-    "test": "npm run compile && cross-env NODE_ENV=development c8 mocha"
+    "test": "cross-env NODE_ENV=development c8 mocha"
   },
   "devDependencies": {
     "@semantic-release/changelog": "^6.0.3",
@@ -71,6 +71,7 @@
     "semantic-release-teams-notify-plugin": "github:centralnicgroup-opensource/rtldev-middleware-semantic-release-notify-plugin#RSRMID-1010-gulp-task-migration",
     "supertest": "^6.2.3",
     "ts-node": "^10.8.1",
+    "tsx": "^4.7.2",
     "typedoc": "^0.25.0",
     "typescript": "^5.3.2"
   },

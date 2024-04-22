@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import "mocha";
-import { SocketConfig } from "./socketconfig.js";
+import { SocketConfig } from "../src/socketconfig.js";
 
 describe("SocketConfig class", function () {
   this.slow(1000);
