@@ -16,13 +16,13 @@
         "ms-azuretools.vscode-docker"
       ],
       "settings": {
-        "terminal.integrated.defaultProfile.linux": "zsh",
-      },
-    },
+        "terminal.integrated.defaultProfile.linux": "zsh"
+      }
+    }
   },
   // Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
   "remoteUser": "vscode",
   // Use 'onCreateCommand' to run commands after the container is created (first time).
   // Run commands after first run of the container (post create)
-  "postCreateCommand": "zsh /post-create.sh",
+  "postCreateCommand": "zsh /post-create.sh"
 }

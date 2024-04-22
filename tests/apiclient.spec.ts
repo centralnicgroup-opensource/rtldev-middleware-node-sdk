@@ -1,5 +1,5 @@
 import { expect, use } from "chai"; // Using Expect style
-import { chaiAsPromised } from 'chai-promised';
+import { chaiAsPromised } from "chai-promised";
 import "mocha";
 import nock from "nock";
 import {
@@ -7,9 +7,9 @@ import {
   ISPAPI_CONNECTION_URL_LIVE,
   ISPAPI_CONNECTION_URL_OTE,
   ISPAPI_CONNECTION_URL_PROXY,
-} from "./apiclient.js";
-import { Response } from "./response.js";
-import { ResponseTemplateManager } from "./responsetemplatemanager.js";
+} from "../src/apiclient.js";
+import { Response } from "../src/response.js";
+import { ResponseTemplateManager } from "../src/responsetemplatemanager.js";
 use(chaiAsPromised);
 
 const apiScript = "/api/call.cgi";

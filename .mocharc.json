@@ -1,9 +1,11 @@
 {
+  "$schema": "https://json.schemastore.org/mocharc.json",
   "extension": ["js"],
-  "spec": "dist/**/*.spec.js",
+  "spec": "tests/**/*.spec.ts",
   "reporter": "spec",
   "check-leaks": true,
   "inline-diffs": true,
   "bail": true,
-  "recursive": true
+  "recursive": true,
+  "require": "tsx"
 }

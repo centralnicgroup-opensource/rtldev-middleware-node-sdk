@@ -1,8 +1,8 @@
 import { expect } from "chai";
 import "mocha";
-import { Response } from "./response.js";
-import { ResponseParser } from "./responseparser.js";
-import { ResponseTemplateManager } from "./responsetemplatemanager.js";
+import { Response } from "../src/response.js";
+import { ResponseParser } from "../src/responseparser.js";
+import { ResponseTemplateManager } from "../src/responsetemplatemanager.js";
 
 const rtm = ResponseTemplateManager.getInstance();
 const cmd = { COMMAND: "StatusContact" };

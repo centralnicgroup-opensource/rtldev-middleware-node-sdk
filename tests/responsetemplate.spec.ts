@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import "mocha";
-import { ResponseTemplate } from "./responsetemplate.js";
+import { ResponseTemplate } from "../src/responsetemplate.js";
 
 describe("ResponseTemplate class", function () {
   this.slow(1000);
