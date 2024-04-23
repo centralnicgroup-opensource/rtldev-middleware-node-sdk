@@ -60,13 +60,13 @@
                 </a>
               
                 
-                <a class="source" href="responsetemplate.html">
-                  src/responsetemplate.ts
+                <a class="source" href="responsetemplatemanager.html">
+                  src/responsetemplatemanager.ts
                 </a>
               
                 
-                <a class="source" href="responsetemplatemanager.html">
-                  src/responsetemplatemanager.ts
+                <a class="source" href="responsetranslator.html">
+                  src/responsetranslator.ts
                 </a>
               
                 
@@ -99,7 +99,7 @@
             </div>
             
             <div class="content"><div class='highlight'><pre><span class="hljs-keyword">import</span> { <span class="hljs-title class_">ResponseParser</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./responseparser.js&quot;</span>;
-<span class="hljs-keyword">import</span> { <span class="hljs-title class_">ResponseTemplate</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./responsetemplate.js&quot;</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">Response</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./response.js&quot;</span>;
 
 <span class="hljs-comment">/**
  * ResponseTemplateManager Singleton Class
@@ -122,30 +122,20 @@
   <span class="hljs-comment">/**
    * template container
    */</span>
-  <span class="hljs-keyword">private</span> <span class="hljs-attr">templates</span>: <span class="hljs-built_in">any</span>;
+  <span class="hljs-keyword">public</span> <span class="hljs-attr">templates</span>: <span class="hljs-built_in">any</span>;
 
   <span class="hljs-keyword">private</span> <span class="hljs-title function_">constructor</span>(<span class="hljs-params"></span>) {
     <span class="hljs-variable language_">this</span>.<span class="hljs-property">templates</span> = {
       <span class="hljs-number">404</span>: <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">generateTemplate</span>(<span class="hljs-string">&quot;421&quot;</span>, <span class="hljs-string">&quot;Page not found&quot;</span>),
       <span class="hljs-number">500</span>: <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">generateTemplate</span>(<span class="hljs-string">&quot;500&quot;</span>, <span class="hljs-string">&quot;Internal server error&quot;</span>),
-      <span class="hljs-attr">empty</span>: <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">generateTemplate</span>(
-        <span class="hljs-string">&quot;423&quot;</span>,
-        <span class="hljs-string">&quot;Empty API response. Probably unreachable API end point {CONNECTION_URL}&quot;</span>,
-      ),
-      <span class="hljs-attr">error</span>: <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">generateTemplate</span>(
-        <span class="hljs-string">&quot;421&quot;</span>,
-        <span class="hljs-string">&quot;Command failed due to server error. Client should try again&quot;</span>,
-      ),
+      <span class="hljs-attr">empty</span>: <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">generateTemplate</span>(<span class="hljs-string">&quot;423&quot;</span>, <span class="hljs-string">&quot;Empty API response. Probably unreachable API end point {CONNECTION_URL}&quot;</span>),
+      <span class="hljs-attr">error</span>: <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">generateTemplate</span>(<span class="hljs-string">&quot;421&quot;</span>, <span class="hljs-string">&quot;Command failed due to server error. Client should try again&quot;</span>),
       <span class="hljs-attr">expired</span>: <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">generateTemplate</span>(<span class="hljs-string">&quot;530&quot;</span>, <span class="hljs-string">&quot;SESSION NOT FOUND&quot;</span>),
-      <span class="hljs-attr">httperror</span>: <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">generateTemplate</span>(
-        <span class="hljs-string">&quot;421&quot;</span>,
-        <span class="hljs-string">&quot;Command failed due to HTTP communication error&quot;</span>,
-      ),
-      <span class="hljs-attr">invalid</span>: <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">generateTemplate</span>(
-        <span class="hljs-string">&quot;423&quot;</span>,
-        <span class="hljs-string">&quot;Invalid API response. Contact Support&quot;</span>,
-      ),
-      <span class="hljs-attr">unauthorized</span>: <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">generateTemplate</span>(<span class="hljs-string">&quot;530&quot;</span>, <span class="hljs-string">&quot;Unauthorized&quot;</span>),
+      <span class="hljs-attr">httperror</span>: <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">generateTemplate</span>(<span class="hljs-string">&quot;421&quot;</span>, <span class="hljs-string">&quot;Command failed due to HTTP communication error&quot;</span>),
+      <span class="hljs-attr">invalid</span>: <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">generateTemplate</span>(<span class="hljs-string">&quot;423&quot;</span>, <span class="hljs-string">&quot;Invalid API response. Contact Support&quot;</span>),
+      <span class="hljs-attr">nocurl</span>: <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">generateTemplate</span>(<span class="hljs-string">&quot;423&quot;</span>, <span class="hljs-string">&quot;API access error: curl_init failed&quot;</span>),
+      <span class="hljs-attr">notfound</span>: <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">generateTemplate</span>(<span class="hljs-string">&quot;500&quot;</span>, <span class="hljs-string">&quot;Response Template not found&quot;</span>),
+      <span class="hljs-attr">unauthorized</span>: <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">generateTemplate</span>(<span class="hljs-string">&quot;530&quot;</span>, <span class="hljs-string">&quot;Unauthorized&quot;</span>)
     };
   }
 
@@ -175,13 +165,11 @@
    * <span class="hljs-doctag">@param</span> id template id
    * <span class="hljs-doctag">@returns</span> template instance
    */</span>
-  <span class="hljs-keyword">public</span> <span class="hljs-title function_">getTemplate</span>(<span class="hljs-attr">id</span>: <span class="hljs-built_in">string</span>): <span class="hljs-title class_">ResponseTemplate</span> {
+  <span class="hljs-keyword">public</span> <span class="hljs-title function_">getTemplate</span>(<span class="hljs-attr">id</span>: <span class="hljs-built_in">string</span>): <span class="hljs-title class_">Response</span> {
     <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-title function_">hasTemplate</span>(id)) {
-      <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ResponseTemplate</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">templates</span>[id]);
+      <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Response</span>(id);
     }
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ResponseTemplate</span>(
-      <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">generateTemplate</span>(<span class="hljs-string">&quot;500&quot;</span>, <span class="hljs-string">&quot;Response Template not found&quot;</span>),
-    );
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Response</span>(<span class="hljs-string">&quot;notfound&quot;</span>);
   }
 
   <span class="hljs-comment">/**
@@ -190,8 +178,8 @@
    */</span>
   <span class="hljs-keyword">public</span> <span class="hljs-title function_">getTemplates</span>(): <span class="hljs-built_in">any</span> {
     <span class="hljs-keyword">const</span> <span class="hljs-attr">tpls</span>: <span class="hljs-built_in">any</span> = {};
-    <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">keys</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">templates</span>).<span class="hljs-title function_">forEach</span>(<span class="hljs-function">(<span class="hljs-params">key</span>) =&gt;</span> {
-      tpls[key] = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ResponseTemplate</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">templates</span>[key]);
+    <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">keys</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">templates</span>).<span class="hljs-title function_">forEach</span>(<span class="hljs-function">(<span class="hljs-params">val, key</span>) =&gt;</span> {
+      tpls[key] = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Response</span>(val);
     });
     <span class="hljs-keyword">return</span> tpls;
   }

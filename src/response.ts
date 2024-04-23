@@ -42,7 +42,7 @@ export class Response {
    * Constructor
    * @param raw API plain response
    * @param cmd API command used within this request
-   * @param $ph placeholder array to get vars in response description dynamically replaced
+   * @param ph placeholder array to get vars in response description dynamically replaced
    */
   public constructor(raw: string, cmd: any = {}, ph: any = {}) {
     this.command = cmd;

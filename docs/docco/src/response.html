@@ -60,13 +60,13 @@
                 </a>
               
                 
-                <a class="source" href="responsetemplate.html">
-                  src/responsetemplate.ts
+                <a class="source" href="responsetemplatemanager.html">
+                  src/responsetemplatemanager.ts
                 </a>
               
                 
-                <a class="source" href="responsetemplatemanager.html">
-                  src/responsetemplatemanager.ts
+                <a class="source" href="responsetranslator.html">
+                  src/responsetranslator.ts
                 </a>
               
                 
@@ -100,12 +100,21 @@
             
             <div class="content"><div class='highlight'><pre><span class="hljs-keyword">import</span> { <span class="hljs-title class_">Column</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./column.js&quot;</span>;
 <span class="hljs-keyword">import</span> { <span class="hljs-title class_">Record</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./record.js&quot;</span>;
-<span class="hljs-keyword">import</span> { <span class="hljs-title class_">ResponseTemplate</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./responsetemplate.js&quot;</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">ResponseTranslator</span> <span class="hljs-keyword">as</span> <span class="hljs-variable constant_">RT</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./responsetranslator.js&quot;</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">ResponseParser</span> <span class="hljs-keyword">as</span> <span class="hljs-variable constant_">RP</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./responseparser.js&quot;</span>;
 
 <span class="hljs-comment">/**
- * Response Class inheriting from ResponseTemplate Class
+ * Response Class
  */</span>
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Response</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">ResponseTemplate</span> {
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Response</span> {
+  <span class="hljs-comment">/**
+   * plain API response
+   */</span>
+  <span class="hljs-keyword">protected</span> <span class="hljs-attr">raw</span>: <span class="hljs-built_in">string</span>;
+  <span class="hljs-comment">/**
+   * hash representation of plain API response
+   */</span>
+  <span class="hljs-keyword">protected</span> <span class="hljs-attr">hash</span>: <span class="hljs-built_in">any</span>;
   <span class="hljs-comment">/**
    * The API Command used within this request
    */</span>
@@ -133,20 +142,9 @@
    * Constructor
    * <span class="hljs-doctag">@param</span> raw API plain response
    * <span class="hljs-doctag">@param</span> cmd API command used within this request
-   * <span class="hljs-doctag">@param</span> $ph placeholder array to get vars in response description dynamically replaced
+   * <span class="hljs-doctag">@param</span> ph placeholder array to get vars in response description dynamically replaced
    */</span>
-  <span class="hljs-keyword">public</span> <span class="hljs-title function_">constructor</span>(<span class="hljs-params">raw: <span class="hljs-built_in">string</span>, cmd: <span class="hljs-built_in">any</span>, ph: <span class="hljs-built_in">any</span> = {}</span>) {
-    <span class="hljs-variable language_">super</span>(raw);
-
-    <span class="hljs-keyword">const</span> keys = <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">keys</span>(ph);
-    keys.<span class="hljs-title function_">forEach</span>(<span class="hljs-function">(<span class="hljs-params">varName: <span class="hljs-built_in">string</span></span>) =&gt;</span> {
-      <span class="hljs-variable language_">this</span>.<span class="hljs-property">raw</span> = <span class="hljs-variable language_">this</span>.<span class="hljs-property">raw</span>.<span class="hljs-title function_">replace</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">RegExp</span>(<span class="hljs-string">`{<span class="hljs-subst">${varName}</span>}`</span>, <span class="hljs-string">&quot;g&quot;</span>), ph[varName]);
-    });
-    <span class="hljs-variable language_">this</span>.<span class="hljs-property">raw</span> = <span class="hljs-variable language_">this</span>.<span class="hljs-property">raw</span>.<span class="hljs-title function_">replace</span>(<span class="hljs-regexp">/\{[A-Z_]+\}/g</span>, <span class="hljs-string">&quot;&quot;</span>);
-    <span class="hljs-comment">/* eslint-disable constructor-super */</span>
-    <span class="hljs-variable language_">super</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">raw</span>);
-    <span class="hljs-comment">/* eslint-enable constructor-super */</span>
-
+  <span class="hljs-keyword">public</span> <span class="hljs-title function_">constructor</span>(<span class="hljs-params">raw: <span class="hljs-built_in">string</span>, cmd: <span class="hljs-built_in">any</span> = {}, ph: <span class="hljs-built_in">any</span> = {}</span>) {
     <span class="hljs-variable language_">this</span>.<span class="hljs-property">command</span> = cmd;
     <span class="hljs-keyword">if</span> (
       <span class="hljs-variable language_">this</span>.<span class="hljs-property">command</span> &amp;&amp;
@@ -168,6 +166,11 @@
             
             <div class="content"><div class='highlight'><pre>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">command</span>.<span class="hljs-property">PASSWORD</span> = <span class="hljs-string">&quot;***&quot;</span>;
     }
+
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">raw</span> = <span class="hljs-variable constant_">RT</span>.<span class="hljs-title function_">translate</span>(raw, cmd, ph);
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">raw</span>);
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;-----------------------------------------&#x27;</span>);
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">hash</span> = <span class="hljs-variable constant_">RP</span>.<span class="hljs-title function_">parse</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">raw</span>);
     <span class="hljs-variable language_">this</span>.<span class="hljs-property">columnkeys</span> = [];
     <span class="hljs-variable language_">this</span>.<span class="hljs-property">columns</span> = [];
     <span class="hljs-variable language_">this</span>.<span class="hljs-property">recordIndex</span> = <span class="hljs-number">0</span>;
@@ -197,6 +200,97 @@
         <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">addRecord</span>(d);
       }
     }
+  }
+
+  <span class="hljs-comment">/**
+   * Get API response code
+   * <span class="hljs-doctag">@returns</span> API response code
+   */</span>
+  <span class="hljs-keyword">public</span> <span class="hljs-title function_">getCode</span>(): <span class="hljs-built_in">number</span> {
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">parseInt</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">hash</span>.<span class="hljs-property">CODE</span>, <span class="hljs-number">10</span>);
+  }
+
+  <span class="hljs-comment">/**
+   * Get API response description
+   * <span class="hljs-doctag">@returns</span> API response description
+   */</span>
+  <span class="hljs-keyword">public</span> <span class="hljs-title function_">getDescription</span>(): <span class="hljs-built_in">string</span> {
+    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">hash</span>.<span class="hljs-property">DESCRIPTION</span>;
+  }
+
+  <span class="hljs-comment">/**
+   * Get Plain API response
+   * <span class="hljs-doctag">@returns</span> Plain API response
+   */</span>
+  <span class="hljs-keyword">public</span> <span class="hljs-title function_">getPlain</span>(): <span class="hljs-built_in">string</span> {
+    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">raw</span>;
+  }
+
+  <span class="hljs-comment">/**
+   * Get Queuetime of API response
+   * <span class="hljs-doctag">@returns</span> Queuetime of API response
+   */</span>
+  <span class="hljs-keyword">public</span> <span class="hljs-title function_">getQueuetime</span>(): <span class="hljs-built_in">number</span> {
+    <span class="hljs-keyword">if</span> (<span class="hljs-title class_">Object</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">hasOwnProperty</span>.<span class="hljs-title function_">call</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">hash</span>, <span class="hljs-string">&quot;QUEUETIME&quot;</span>)) {
+      <span class="hljs-keyword">return</span> <span class="hljs-built_in">parseFloat</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">hash</span>.<span class="hljs-property">QUEUETIME</span>);
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0.0</span>;
+  }
+
+  <span class="hljs-comment">/**
+   * Get API response as Hash
+   * <span class="hljs-doctag">@returns</span> API response hash
+   */</span>
+  <span class="hljs-keyword">public</span> <span class="hljs-title function_">getHash</span>(): <span class="hljs-built_in">any</span> {
+    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">hash</span>;
+  }
+
+  <span class="hljs-comment">/**
+   * Get Runtime of API response
+   * <span class="hljs-doctag">@returns</span> Runtime of API response
+   */</span>
+  <span class="hljs-keyword">public</span> <span class="hljs-title function_">getRuntime</span>(): <span class="hljs-built_in">number</span> {
+    <span class="hljs-keyword">if</span> (<span class="hljs-title class_">Object</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">hasOwnProperty</span>.<span class="hljs-title function_">call</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">hash</span>, <span class="hljs-string">&quot;RUNTIME&quot;</span>)) {
+      <span class="hljs-keyword">return</span> <span class="hljs-built_in">parseFloat</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">hash</span>.<span class="hljs-property">RUNTIME</span>);
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0.0</span>;
+  }
+
+  <span class="hljs-comment">/**
+   * Check if current API response represents an error case
+   * API response code is an 5xx code
+   * <span class="hljs-doctag">@returns</span> boolean result
+   */</span>
+  <span class="hljs-keyword">public</span> <span class="hljs-title function_">isError</span>(): <span class="hljs-built_in">boolean</span> {
+    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">hash</span>.<span class="hljs-property">CODE</span>.<span class="hljs-title function_">charAt</span>(<span class="hljs-number">0</span>) === <span class="hljs-string">&quot;5&quot;</span>;
+  }
+
+  <span class="hljs-comment">/**
+   * Check if current API response represents a success case
+   * API response code is an 2xx code
+   * <span class="hljs-doctag">@returns</span> boolean result
+   */</span>
+  <span class="hljs-keyword">public</span> <span class="hljs-title function_">isSuccess</span>(): <span class="hljs-built_in">boolean</span> {
+    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">hash</span>.<span class="hljs-property">CODE</span>.<span class="hljs-title function_">charAt</span>(<span class="hljs-number">0</span>) === <span class="hljs-string">&quot;2&quot;</span>;
+  }
+
+  <span class="hljs-comment">/**
+   * Check if current API response represents a temporary error case
+   * API response code is an 4xx code
+   * <span class="hljs-doctag">@returns</span> boolean result
+   */</span>
+  <span class="hljs-keyword">public</span> <span class="hljs-title function_">isTmpError</span>(): <span class="hljs-built_in">boolean</span> {
+    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">hash</span>.<span class="hljs-property">CODE</span>.<span class="hljs-title function_">charAt</span>(<span class="hljs-number">0</span>) === <span class="hljs-string">&quot;4&quot;</span>;
+  }
+
+  <span class="hljs-comment">/**
+   * Check if current operation is returned as pending
+   * <span class="hljs-doctag">@returns</span> boolean result
+   */</span>
+  <span class="hljs-keyword">public</span> <span class="hljs-title function_">isPending</span>(): <span class="hljs-built_in">boolean</span> {
+    <span class="hljs-keyword">return</span> <span class="hljs-title class_">Object</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">hasOwnProperty</span>.<span class="hljs-title function_">call</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">hash</span>, <span class="hljs-string">&quot;PENDING&quot;</span>)
+      ? <span class="hljs-variable language_">this</span>.<span class="hljs-property">hash</span>.<span class="hljs-property">PENDING</span> === <span class="hljs-string">&quot;1&quot;</span>
+      : <span class="hljs-literal">false</span>;
   }
 
   <span class="hljs-comment">/**
