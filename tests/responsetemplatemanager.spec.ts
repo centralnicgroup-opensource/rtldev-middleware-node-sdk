@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import "mocha";
-import { ResponseTemplate } from "../src/responsetemplate.js";
-import { ResponseTemplateManager } from "../src/responsetemplatemanager.js";
+import { Response } from "../src/response.ts";
+import { ResponseTemplateManager } from "../src/responsetemplatemanager.ts";
 
 let rtm: ResponseTemplateManager;
 
@@ -38,14 +38,14 @@ describe("ResponseTemplateManager class", function () {
 
   describe("#.isTemplateMatchHash", () => {
     it("check return value [matched]", () => {
-      const tpl = new ResponseTemplate("");
+      const tpl = new Response("");
       expect(rtm.isTemplateMatchHash(tpl.getHash(), "empty")).to.be.true;
     });
   });
 
   describe("#.isTemplateMatchPlain", () => {
     it("check return value [matched]", () => {
-      const tpl = new ResponseTemplate("");
+      const tpl = new Response("");
       expect(rtm.isTemplateMatchPlain(tpl.getPlain(), "empty")).to.be.true;
     });
   });

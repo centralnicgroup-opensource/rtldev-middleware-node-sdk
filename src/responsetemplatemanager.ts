@@ -1,5 +1,5 @@
 import { ResponseParser } from "./responseparser.js";
-import { ResponseTemplate } from "./responsetemplate.js";
+import { Response } from "./response.js";
 
 /**
  * ResponseTemplateManager Singleton Class
@@ -22,30 +22,20 @@ export class ResponseTemplateManager {
   /**
    * template container
    */
-  private templates: any;
+  public templates: any;
 
   private constructor() {
     this.templates = {
       404: this.generateTemplate("421", "Page not found"),
       500: this.generateTemplate("500", "Internal server error"),
-      empty: this.generateTemplate(
-        "423",
-        "Empty API response. Probably unreachable API end point {CONNECTION_URL}",
-      ),
-      error: this.generateTemplate(
-        "421",
-        "Command failed due to server error. Client should try again",
-      ),
+      empty: this.generateTemplate("423", "Empty API response. Probably unreachable API end point {CONNECTION_URL}"),
+      error: this.generateTemplate("421", "Command failed due to server error. Client should try again"),
       expired: this.generateTemplate("530", "SESSION NOT FOUND"),
-      httperror: this.generateTemplate(
-        "421",
-        "Command failed due to HTTP communication error",
-      ),
-      invalid: this.generateTemplate(
-        "423",
-        "Invalid API response. Contact Support",
-      ),
-      unauthorized: this.generateTemplate("530", "Unauthorized"),
+      httperror: this.generateTemplate("421", "Command failed due to HTTP communication error"),
+      invalid: this.generateTemplate("423", "Invalid API response. Contact Support"),
+      nocurl: this.generateTemplate("423", "API access error: curl_init failed"),
+      notfound: this.generateTemplate("500", "Response Template not found"),
+      unauthorized: this.generateTemplate("530", "Unauthorized")
     };
   }
 
@@ -75,13 +65,11 @@ export class ResponseTemplateManager {
    * @param id template id
    * @returns template instance
    */
-  public getTemplate(id: string): ResponseTemplate {
+  public getTemplate(id: string): Response {
     if (this.hasTemplate(id)) {
-      return new ResponseTemplate(this.templates[id]);
+      return new Response(id);
     }
-    return new ResponseTemplate(
-      this.generateTemplate("500", "Response Template not found"),
-    );
+    return new Response("notfound");
   }
 
   /**
@@ -90,8 +78,8 @@ export class ResponseTemplateManager {
    */
   public getTemplates(): any {
     const tpls: any = {};
-    Object.keys(this.templates).forEach((key) => {
-      tpls[key] = new ResponseTemplate(this.templates[key]);
+    Object.keys(this.templates).forEach((val, key) => {
+      tpls[key] = new Response(val);
     });
     return tpls;
   }

@@ -7,9 +7,9 @@ import {
   ISPAPI_CONNECTION_URL_LIVE,
   ISPAPI_CONNECTION_URL_OTE,
   ISPAPI_CONNECTION_URL_PROXY,
-} from "../src/apiclient.js";
-import { Response } from "../src/response.js";
-import { ResponseTemplateManager } from "../src/responsetemplatemanager.js";
+} from "../src/apiclient.ts";
+import { Response } from "../src/response.ts";
+import { ResponseTemplateManager } from "../src/responsetemplatemanager.ts";
 use(chaiAsPromised);
 
 const apiScript = "/api/call.cgi";

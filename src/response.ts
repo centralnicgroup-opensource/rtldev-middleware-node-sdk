@@ -1,11 +1,20 @@
 import { Column } from "./column.js";
 import { Record } from "./record.js";
-import { ResponseTemplate } from "./responsetemplate.js";
+import { ResponseTranslator as RT } from "./responsetranslator.js";
+import { ResponseParser as RP } from "./responseparser.js";
 
 /**
- * Response Class inheriting from ResponseTemplate Class
+ * Response Class
  */
-export class Response extends ResponseTemplate {
+export class Response {
+  /**
+   * plain API response
+   */
+  protected raw: string;
+  /**
+   * hash representation of plain API response
+   */
+  protected hash: any;
   /**
    * The API Command used within this request
    */
@@ -35,18 +44,7 @@ export class Response extends ResponseTemplate {
    * @param cmd API command used within this request
    * @param $ph placeholder array to get vars in response description dynamically replaced
    */
-  public constructor(raw: string, cmd: any, ph: any = {}) {
-    super(raw);
-
-    const keys = Object.keys(ph);
-    keys.forEach((varName: string) => {
-      this.raw = this.raw.replace(new RegExp(`{${varName}}`, "g"), ph[varName]);
-    });
-    this.raw = this.raw.replace(/\{[A-Z_]+\}/g, "");
-    /* eslint-disable constructor-super */
-    super(this.raw);
-    /* eslint-enable constructor-super */
-
+  public constructor(raw: string, cmd: any = {}, ph: any = {}) {
     this.command = cmd;
     if (
       this.command &&
@@ -55,6 +53,11 @@ export class Response extends ResponseTemplate {
       // make password no longer accessible
       this.command.PASSWORD = "***";
     }
+
+    this.raw = RT.translate(raw, cmd, ph);
+    console.log(this.raw);
+    console.log('-----------------------------------------');
+    this.hash = RP.parse(this.raw);
     this.columnkeys = [];
     this.columns = [];
     this.recordIndex = 0;
@@ -84,6 +87,97 @@ export class Response extends ResponseTemplate {
         this.addRecord(d);
       }
     }
+  }
+
+  /**
+   * Get API response code
+   * @returns API response code
+   */
+  public getCode(): number {
+    return parseInt(this.hash.CODE, 10);
+  }
+
+  /**
+   * Get API response description
+   * @returns API response description
+   */
+  public getDescription(): string {
+    return this.hash.DESCRIPTION;
+  }
+
+  /**
+   * Get Plain API response
+   * @returns Plain API response
+   */
+  public getPlain(): string {
+    return this.raw;
+  }
+
+  /**
+   * Get Queuetime of API response
+   * @returns Queuetime of API response
+   */
+  public getQueuetime(): number {
+    if (Object.prototype.hasOwnProperty.call(this.hash, "QUEUETIME")) {
+      return parseFloat(this.hash.QUEUETIME);
+    }
+    return 0.0;
+  }
+
+  /**
+   * Get API response as Hash
+   * @returns API response hash
+   */
+  public getHash(): any {
+    return this.hash;
+  }
+
+  /**
+   * Get Runtime of API response
+   * @returns Runtime of API response
+   */
+  public getRuntime(): number {
+    if (Object.prototype.hasOwnProperty.call(this.hash, "RUNTIME")) {
+      return parseFloat(this.hash.RUNTIME);
+    }
+    return 0.0;
+  }
+
+  /**
+   * Check if current API response represents an error case
+   * API response code is an 5xx code
+   * @returns boolean result
+   */
+  public isError(): boolean {
+    return this.hash.CODE.charAt(0) === "5";
+  }
+
+  /**
+   * Check if current API response represents a success case
+   * API response code is an 2xx code
+   * @returns boolean result
+   */
+  public isSuccess(): boolean {
+    return this.hash.CODE.charAt(0) === "2";
+  }
+
+  /**
+   * Check if current API response represents a temporary error case
+   * API response code is an 4xx code
+   * @returns boolean result
+   */
+  public isTmpError(): boolean {
+    return this.hash.CODE.charAt(0) === "4";
+  }
+
+  /**
+   * Check if current operation is returned as pending
+   * @returns boolean result
+   */
+  public isPending(): boolean {
+    return Object.prototype.hasOwnProperty.call(this.hash, "PENDING")
+      ? this.hash.PENDING === "1"
+      : false;
   }
 
   /**
