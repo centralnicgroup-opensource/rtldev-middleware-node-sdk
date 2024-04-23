@@ -56,7 +56,7 @@ export class Response {
 
     this.raw = RT.translate(raw, cmd, ph);
     console.log(this.raw);
-    console.log('-----------------------------------------');
+    console.log("-----------------------------------------");
     this.hash = RP.parse(this.raw);
     this.columnkeys = [];
     this.columns = [];

@@ -69,16 +69,11 @@
     "prettier": "^3.0.0",
     "semantic-release": "^23.0.0",
     "semantic-release-teams-notify-plugin": "github:centralnicgroup-opensource/rtldev-middleware-semantic-release-notify-plugin#RSRMID-1010-gulp-task-migration",
-    "ts-node": "^10.8.1",
     "tsx": "^4.7.2",
     "typedoc": "^0.25.0",
     "typescript": "^5.3.2"
   },
   "dependencies": {
     "cross-fetch": "^4.0.0"
-  },
-  "overrides": {
-    "glob-parent": "^5.1.2",
-    "chokidar": "^3.5.3"
   }
 }

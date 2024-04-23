@@ -28,14 +28,29 @@ export class ResponseTemplateManager {
     this.templates = {
       404: this.generateTemplate("421", "Page not found"),
       500: this.generateTemplate("500", "Internal server error"),
-      empty: this.generateTemplate("423", "Empty API response. Probably unreachable API end point {CONNECTION_URL}"),
-      error: this.generateTemplate("421", "Command failed due to server error. Client should try again"),
+      empty: this.generateTemplate(
+        "423",
+        "Empty API response. Probably unreachable API end point {CONNECTION_URL}",
+      ),
+      error: this.generateTemplate(
+        "421",
+        "Command failed due to server error. Client should try again",
+      ),
       expired: this.generateTemplate("530", "SESSION NOT FOUND"),
-      httperror: this.generateTemplate("421", "Command failed due to HTTP communication error"),
-      invalid: this.generateTemplate("423", "Invalid API response. Contact Support"),
-      nocurl: this.generateTemplate("423", "API access error: curl_init failed"),
+      httperror: this.generateTemplate(
+        "421",
+        "Command failed due to HTTP communication error",
+      ),
+      invalid: this.generateTemplate(
+        "423",
+        "Invalid API response. Contact Support",
+      ),
+      nocurl: this.generateTemplate(
+        "423",
+        "API access error: curl_init failed",
+      ),
       notfound: this.generateTemplate("500", "Response Template not found"),
-      unauthorized: this.generateTemplate("530", "Unauthorized")
+      unauthorized: this.generateTemplate("530", "Unauthorized"),
     };
   }
 
