@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import "mocha";
-import { Record } from "../src/record.js";
+import { Record } from "../src/record.ts";
 
 let rec: Record;
 const data: any = {

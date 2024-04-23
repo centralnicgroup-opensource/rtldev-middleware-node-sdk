@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import "mocha";
-import { APIClient, Response, ResponseTemplateManager } from "../src/index.js";
+import { APIClient, Response, ResponseTemplateManager } from "../src/index.ts";
 
 describe("index file", function () {
   this.slow(1000);

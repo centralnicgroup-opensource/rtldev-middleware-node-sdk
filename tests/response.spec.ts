@@ -1,8 +1,8 @@
 import { expect } from "chai";
 import "mocha";
-import { Response } from "../src/response.js";
-import { ResponseParser } from "../src/responseparser.js";
-import { ResponseTemplateManager } from "../src/responsetemplatemanager.js";
+import { Response } from "../src/response.ts";
+import { ResponseParser } from "../src/responseparser.ts";
+import { ResponseTemplateManager } from "../src/responsetemplatemanager.ts";
 
 const rtm = ResponseTemplateManager.getInstance();
 const cmd = { COMMAND: "StatusContact" };
@@ -23,6 +23,24 @@ describe("Response class", function () {
   this.slow(1000);
 
   describe("constructor", () => {
+    it("check instance [raw empty string]", () => {
+      const tpl = new Response("");
+      expect(tpl.getCode()).to.equal(423);
+      expect(tpl.getDescription()).to.equal(
+        "Empty API response. Probably unreachable API end point",
+      );
+    });
+
+    it("check template `invalid` being returned", () => {
+      const tpl = new Response(
+        "[RESPONSE]\r\ncode=200\r\nqueuetime=0\r\nEOF\r\n",
+      );
+      expect(tpl.getCode()).to.equal(423);
+      expect(tpl.getDescription()).to.equal(
+        "Invalid API response. Contact Support",
+      );
+    });
+
     it("check place holder vars replacment", () => {
       // ensure no vars are returned in response, just in case no place holder replacements are provided
       let r = new Response("", cmd);
@@ -35,6 +53,58 @@ describe("Response class", function () {
         { CONNECTION_URL: "123HXPHFOUND123" },
       );
       expect(/123HXPHFOUND123/.test(r.getDescription())).to.be.true;
+    });
+  });
+
+  describe("#.getHash", () => {
+    it("check return value", () => {
+      const h = new Response("").getHash();
+      expect(h.CODE).to.equal("423");
+      expect(h.DESCRIPTION).to.equal(
+        "Empty API response. Probably unreachable API end point",
+      );
+    });
+  });
+
+  describe("#.getQueuetime", () => {
+    it("check return value [n/a in API response]", () => {
+      const tpl = new Response("");
+      expect(tpl.getQueuetime()).to.equal(0);
+    });
+
+    it("check return value [in API response]", () => {
+      const tpl = new Response(
+        "[RESPONSE]\r\ncode=423\r\ndescription=Empty API response. Probably unreachable API end point\r\nqueuetime=0\r\nEOF\r\n",
+      );
+      expect(tpl.getQueuetime()).to.equal(0);
+    });
+  });
+
+  describe("#.getRuntime", () => {
+    it("check return value [n/a in API response]", () => {
+      const tpl = new Response("");
+      expect(tpl.getRuntime()).to.equal(0);
+    });
+
+    it("check return value [in API response]", () => {
+      const tpl = new Response(
+        "[RESPONSE]\r\ncode=423\r\ndescription=Empty API response. Probably unreachable API end point\r\nruntime=0.12\r\nEOF\r\n",
+      );
+      expect(tpl.getRuntime()).to.equal(0.12);
+    });
+  });
+
+  describe("#.isPending", () => {
+    it("check return value [n/a in API response]", () => {
+      const tpl = new Response("");
+      expect(tpl.isPending()).to.be.false;
+    });
+
+    it("check return value [in API response]", () => {
+      const tpl = new Response(
+        "[RESPONSE]\r\ncode=200\r\ndescription=Command completed successfully\r\npending=1\r\nEOF\r\n",
+      );
+      expect(tpl.isPending()).to.be.true;
     });
   });
 
