@@ -1,3 +1,10 @@
+## [9.0.3](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/compare/v9.0.2...v9.0.3) (2024-04-23)
+
+
+### Bug Fixes
+
+* **response class:** avoid multiple constructor calls; regenerate docs and tests ([7e9d0d3](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/commit/7e9d0d3198db9b98b33415bc464f5e7b8973df38))
+
 ## [9.0.2](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/compare/v9.0.1...v9.0.2) (2024-04-19)
 
 ### Bug Fixes
