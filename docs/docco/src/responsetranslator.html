@@ -100,7 +100,7 @@
             
             <div class="content"><div class='highlight'><pre><span class="hljs-keyword">import</span> { <span class="hljs-title class_">ResponseTemplateManager</span> <span class="hljs-keyword">as</span> <span class="hljs-variable constant_">RTM</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./responsetemplatemanager.js&quot;</span>;
 
-<span class="hljs-keyword">function</span> <span class="hljs-title function_">preg_quote</span>(<span class="hljs-params">str: <span class="hljs-built_in">string</span>, delimiter: <span class="hljs-built_in">string</span> = <span class="hljs-string">&#x27;&#x27;</span></span>) {</pre></div></div>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">preg_quote</span>(<span class="hljs-params">str: <span class="hljs-built_in">string</span>, delimiter: <span class="hljs-built_in">string</span> = <span class="hljs-string">&quot;&quot;</span></span>) {</pre></div></div>
             
         </li>
         
@@ -115,17 +115,20 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">return</span> (str + <span class="hljs-string">&#x27;&#x27;</span>).<span class="hljs-title function_">replace</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">RegExp</span>(<span class="hljs-string">&#x27;[.\\\\+*?\\[\\^\\]$(){}=!&lt;&gt;|:\\&#x27;</span> + delimiter + <span class="hljs-string">&#x27;-]&#x27;</span>, <span class="hljs-string">&#x27;g&#x27;</span>), <span class="hljs-string">&#x27;\\$&amp;&#x27;</span>)
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">return</span> (str + <span class="hljs-string">&quot;&quot;</span>).<span class="hljs-title function_">replace</span>(
+    <span class="hljs-keyword">new</span> <span class="hljs-title class_">RegExp</span>(<span class="hljs-string">&quot;[.\\\\+*?\\[\\^\\]$(){}=!&lt;&gt;|:\\&quot;</span> + delimiter + <span class="hljs-string">&quot;-]&quot;</span>, <span class="hljs-string">&quot;g&quot;</span>),
+    <span class="hljs-string">&quot;\\$&amp;&quot;</span>,
+  );
 }
 
 <span class="hljs-comment">/**
  * ResponseTranslator class
  */</span>
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ResponseTranslator</span> {
-    <span class="hljs-comment">/**
-     * Regular Expression Mapping for API DESCRIPTION Property translation
-     */</span>
-    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-attr">descriptionRegexMap</span>: <span class="hljs-title class_">Object</span> = {</pre></div></div>
+  <span class="hljs-comment">/**
+   * Regular Expression Mapping for API DESCRIPTION Property translation
+   */</span>
+  <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-attr">descriptionRegexMap</span>: <span class="hljs-title class_">Object</span> = {</pre></div></div>
             
         </li>
         
@@ -140,16 +143,26 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        <span class="hljs-string">&#x27;Authorization failed; Operation forbidden by ACL&#x27;</span>: <span class="hljs-string">&#x27;Authorization failed; Used Command `{COMMAND}` not white-listed by your Access Control List&#x27;</span>,
-        <span class="hljs-string">&#x27;Request is not available; DOMAIN TRANSFER IS PROHIBITED BY STATUS (clientTransferProhibited)/WRONG AUTH&#x27;</span>: <span class="hljs-string">&#x27;This Domain is locked and the given Authorization Code is wrong. Initiating a Transfer is therefore impossible.&#x27;</span>,
-        <span class="hljs-string">&#x27;Request is not available; DOMAIN TRANSFER IS PROHIBITED BY STATUS (clientTransferProhibited)&#x27;</span>: <span class="hljs-string">&#x27;This Domain is locked. Initiating a Transfer is therefore impossible.&#x27;</span>,
-        <span class="hljs-string">&#x27;Request is not available; DOMAIN TRANSFER IS PROHIBITED BY STATUS (requested)&#x27;</span>: <span class="hljs-string">&#x27;Registration of this Domain Name has not yet completed. Initiating a Transfer is therefore impossible.&#x27;</span>,
-        <span class="hljs-string">&#x27;Request is not available; DOMAIN TRANSFER IS PROHIBITED BY STATUS (requestedcreate)&#x27;</span>: <span class="hljs-string">&#x27;Registration of this Domain Name has not yet completed. Initiating a Transfer is therefore impossible.&#x27;</span>,
-        <span class="hljs-string">&#x27;Request is not available; DOMAIN TRANSFER IS PROHIBITED BY STATUS (requesteddelete)&#x27;</span>: <span class="hljs-string">&#x27;Deletion of this Domain Name has been requested. Initiating a Transfer is therefore impossible.&#x27;</span>,
-        <span class="hljs-string">&#x27;Request is not available; DOMAIN TRANSFER IS PROHIBITED BY STATUS (pendingdelete)&#x27;</span>: <span class="hljs-string">&#x27;Deletion of this Domain Name is pending. Initiating a Transfer is therefore impossible.&#x27;</span>,
-        <span class="hljs-string">&#x27;Request is not available; DOMAIN TRANSFER IS PROHIBITED BY WRONG AUTH&#x27;</span>: <span class="hljs-string">&#x27;The given Authorization Code is wrong. Initiating a Transfer is therefore impossible.&#x27;</span>,
-        <span class="hljs-string">&#x27;Request is not available; DOMAIN TRANSFER IS PROHIBITED BY AGE OF THE DOMAIN&#x27;</span>: <span class="hljs-string">&#x27;This Domain Name is within 60 days of initial registration. Initiating a Transfer is therefore impossible.&#x27;</span>,
-        <span class="hljs-string">&#x27;Attribute value is not unique; DOMAIN is already assigned to your account&#x27;</span>: <span class="hljs-string">&#x27;You cannot transfer a domain that is already on your account at the registrar\&#x27;s system.&#x27;</span>,</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-string">&quot;Authorization failed; Operation forbidden by ACL&quot;</span>:
+      <span class="hljs-string">&quot;Authorization failed; Used Command `{COMMAND}` not white-listed by your Access Control List&quot;</span>,
+    <span class="hljs-string">&quot;Request is not available; DOMAIN TRANSFER IS PROHIBITED BY STATUS (clientTransferProhibited)/WRONG AUTH&quot;</span>:
+      <span class="hljs-string">&quot;This Domain is locked and the given Authorization Code is wrong. Initiating a Transfer is therefore impossible.&quot;</span>,
+    <span class="hljs-string">&quot;Request is not available; DOMAIN TRANSFER IS PROHIBITED BY STATUS (clientTransferProhibited)&quot;</span>:
+      <span class="hljs-string">&quot;This Domain is locked. Initiating a Transfer is therefore impossible.&quot;</span>,
+    <span class="hljs-string">&quot;Request is not available; DOMAIN TRANSFER IS PROHIBITED BY STATUS (requested)&quot;</span>:
+      <span class="hljs-string">&quot;Registration of this Domain Name has not yet completed. Initiating a Transfer is therefore impossible.&quot;</span>,
+    <span class="hljs-string">&quot;Request is not available; DOMAIN TRANSFER IS PROHIBITED BY STATUS (requestedcreate)&quot;</span>:
+      <span class="hljs-string">&quot;Registration of this Domain Name has not yet completed. Initiating a Transfer is therefore impossible.&quot;</span>,
+    <span class="hljs-string">&quot;Request is not available; DOMAIN TRANSFER IS PROHIBITED BY STATUS (requesteddelete)&quot;</span>:
+      <span class="hljs-string">&quot;Deletion of this Domain Name has been requested. Initiating a Transfer is therefore impossible.&quot;</span>,
+    <span class="hljs-string">&quot;Request is not available; DOMAIN TRANSFER IS PROHIBITED BY STATUS (pendingdelete)&quot;</span>:
+      <span class="hljs-string">&quot;Deletion of this Domain Name is pending. Initiating a Transfer is therefore impossible.&quot;</span>,
+    <span class="hljs-string">&quot;Request is not available; DOMAIN TRANSFER IS PROHIBITED BY WRONG AUTH&quot;</span>:
+      <span class="hljs-string">&quot;The given Authorization Code is wrong. Initiating a Transfer is therefore impossible.&quot;</span>,
+    <span class="hljs-string">&quot;Request is not available; DOMAIN TRANSFER IS PROHIBITED BY AGE OF THE DOMAIN&quot;</span>:
+      <span class="hljs-string">&quot;This Domain Name is within 60 days of initial registration. Initiating a Transfer is therefore impossible.&quot;</span>,
+    <span class="hljs-string">&quot;Attribute value is not unique; DOMAIN is already assigned to your account&quot;</span>:
+      <span class="hljs-string">&quot;You cannot transfer a domain that is already on your account at the registrar&#x27;s system.&quot;</span>,</pre></div></div>
             
         </li>
         
@@ -164,8 +177,9 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        <span class="hljs-string">&#x27;Missing required attribute; premium domain name. please provide required parameters&#x27;</span>: <span class="hljs-string">&#x27;Confirm the Premium pricing by providing the necessary premium domain price data.&#x27;</span>,
-        <span class="hljs-string">&#x27;SkipPregQuote&#x27;</span>: {</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-string">&quot;Missing required attribute; premium domain name. please provide required parameters&quot;</span>:
+      <span class="hljs-string">&quot;Confirm the Premium pricing by providing the necessary premium domain price data.&quot;</span>,
+    <span class="hljs-title class_">SkipPregQuote</span>: {</pre></div></div>
             
         </li>
         
@@ -180,23 +194,25 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            <span class="hljs-string">&#x27;Invalid attribute value syntax; resource record \[(.+)\]&#x27;</span>: <span class="hljs-string">&#x27;Invalid Syntax for DNSZone Resource Record: $1&#x27;</span>,
-            <span class="hljs-string">&#x27;Missing required attribute; CLASS(?:=| \[MUST BE )PREMIUM_([\w\+]+)[\s\]]&#x27;</span>: <span class="hljs-string">&#x27;Confirm the Premium pricing by providing the parameter CLASS with the value PREMIUM_$1.&#x27;</span>,
-            <span class="hljs-string">&#x27;Syntax error in Parameter DOMAIN \((.+)\)&#x27;</span>: <span class="hljs-string">&#x27;The Domain Name $1 is invalid.&#x27;</span>
-        }
-    };
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-string">&quot;Invalid attribute value syntax; resource record [(.+)]&quot;</span>:
+        <span class="hljs-string">&quot;Invalid Syntax for DNSZone Resource Record: $1&quot;</span>,
+      <span class="hljs-string">&quot;Missing required attribute; CLASS(?:=| [MUST BE )PREMIUM_([w+]+)[s]]&quot;</span>:
+        <span class="hljs-string">&quot;Confirm the Premium pricing by providing the parameter CLASS with the value PREMIUM_$1.&quot;</span>,
+      <span class="hljs-string">&quot;Syntax error in Parameter DOMAIN ((.+))&quot;</span>:
+        <span class="hljs-string">&quot;The Domain Name $1 is invalid.&quot;</span>,
+    },
+  };
 
-    <span class="hljs-comment">/**
-     * translate a raw api response
-     * <span class="hljs-doctag">@param</span> raw API raw response
-     * <span class="hljs-doctag">@param</span> cmd requested API command
-     * <span class="hljs-doctag">@param</span> ph list of place holder vars
-     * <span class="hljs-doctag">@returns</span> new translated raw response
-     */</span>
-    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-title function_">translate</span>(<span class="hljs-attr">raw</span>: <span class="hljs-built_in">string</span>, <span class="hljs-attr">cmd</span>: <span class="hljs-built_in">any</span>, <span class="hljs-attr">ph</span>: <span class="hljs-built_in">any</span> = {}): <span class="hljs-built_in">string</span>
-    {
-        <span class="hljs-keyword">let</span> httperror = <span class="hljs-string">&#x27;&#x27;</span>;
-        <span class="hljs-keyword">let</span> newraw = raw || <span class="hljs-string">&#x27;empty&#x27;</span>;</pre></div></div>
+  <span class="hljs-comment">/**
+   * translate a raw api response
+   * <span class="hljs-doctag">@param</span> raw API raw response
+   * <span class="hljs-doctag">@param</span> cmd requested API command
+   * <span class="hljs-doctag">@param</span> ph list of place holder vars
+   * <span class="hljs-doctag">@returns</span> new translated raw response
+   */</span>
+  <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-title function_">translate</span>(<span class="hljs-attr">raw</span>: <span class="hljs-built_in">string</span>, <span class="hljs-attr">cmd</span>: <span class="hljs-built_in">any</span>, <span class="hljs-attr">ph</span>: <span class="hljs-built_in">any</span> = {}): <span class="hljs-built_in">string</span> {
+    <span class="hljs-keyword">let</span> httperror = <span class="hljs-string">&quot;&quot;</span>;
+    <span class="hljs-keyword">let</span> newraw = raw || <span class="hljs-string">&quot;empty&quot;</span>;</pre></div></div>
             
         </li>
         
@@ -224,10 +240,10 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">const</span> isHTTPError = newraw.<span class="hljs-title function_">substring</span>(<span class="hljs-number">0</span>, <span class="hljs-number">10</span>) === <span class="hljs-string">&quot;httperror|&quot;</span>;
-        <span class="hljs-keyword">if</span> (isHTTPError) {
-            [ newraw, httperror ] = newraw.<span class="hljs-title function_">split</span>(<span class="hljs-string">&#x27;|&#x27;</span>);
-        }</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">const</span> isHTTPError = newraw.<span class="hljs-title function_">substring</span>(<span class="hljs-number">0</span>, <span class="hljs-number">10</span>) === <span class="hljs-string">&quot;httperror|&quot;</span>;
+    <span class="hljs-keyword">if</span> (isHTTPError) {
+      [newraw, httperror] = newraw.<span class="hljs-title function_">split</span>(<span class="hljs-string">&quot;|&quot;</span>);
+    }</pre></div></div>
             
         </li>
         
@@ -242,7 +258,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (<span class="hljs-variable constant_">RTM</span>.<span class="hljs-title function_">getInstance</span>().<span class="hljs-title function_">hasTemplate</span>(newraw)) {</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> (<span class="hljs-variable constant_">RTM</span>.<span class="hljs-title function_">getInstance</span>().<span class="hljs-title function_">hasTemplate</span>(newraw)) {</pre></div></div>
             
         </li>
         
@@ -258,11 +274,11 @@ creating a response instance</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            newraw = <span class="hljs-variable constant_">RTM</span>.<span class="hljs-title function_">getInstance</span>().<span class="hljs-property">templates</span>[newraw];
-            <span class="hljs-keyword">if</span> (isHTTPError &amp;&amp; httperror.<span class="hljs-property">length</span>) {
-                newraw = newraw.<span class="hljs-title function_">replace</span>(<span class="hljs-regexp">/\{HTTPERROR\}/</span>, <span class="hljs-string">&#x27; (&#x27;</span> + httperror + <span class="hljs-string">&#x27;)&#x27;</span>);
-            }
-        }</pre></div></div>
+            <div class="content"><div class='highlight'><pre>      newraw = <span class="hljs-variable constant_">RTM</span>.<span class="hljs-title function_">getInstance</span>().<span class="hljs-property">templates</span>[newraw];
+      <span class="hljs-keyword">if</span> (isHTTPError &amp;&amp; httperror.<span class="hljs-property">length</span>) {
+        newraw = newraw.<span class="hljs-title function_">replace</span>(<span class="hljs-regexp">/\{HTTPERROR\}/</span>, <span class="hljs-string">&quot; (&quot;</span> + httperror + <span class="hljs-string">&quot;)&quot;</span>);
+      }
+    }</pre></div></div>
             
         </li>
         
@@ -277,15 +293,14 @@ creating a response instance</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (
-            (!<span class="hljs-regexp">/description[\s]*=/i</span>.<span class="hljs-title function_">test</span>(newraw) <span class="hljs-comment">// missing description</span>
-                || <span class="hljs-regexp">/description[\s]*=\r\n/i</span>.<span class="hljs-title function_">test</span>(newraw) <span class="hljs-comment">// empty description</span>
-                || !<span class="hljs-regexp">/code[\s]*=/i</span>.<span class="hljs-title function_">test</span>(newraw) <span class="hljs-comment">// missing code</span>
-            )
-            &amp;&amp; <span class="hljs-variable constant_">RTM</span>.<span class="hljs-title function_">getInstance</span>().<span class="hljs-title function_">hasTemplate</span>(<span class="hljs-string">&#x27;invalid&#x27;</span>)
-        ) {
-            newraw = <span class="hljs-variable constant_">RTM</span>.<span class="hljs-title function_">getInstance</span>().<span class="hljs-property">templates</span>.<span class="hljs-property">invalid</span>;
-        }</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> (
+      (!<span class="hljs-regexp">/description[\s]*=/i</span>.<span class="hljs-title function_">test</span>(newraw) || <span class="hljs-comment">// missing description</span>
+        <span class="hljs-regexp">/description[\s]*=\r\n/i</span>.<span class="hljs-title function_">test</span>(newraw) || <span class="hljs-comment">// empty description</span>
+        !<span class="hljs-regexp">/code[\s]*=/i</span>.<span class="hljs-title function_">test</span>(newraw)) &amp;&amp; <span class="hljs-comment">// missing code</span>
+      <span class="hljs-variable constant_">RTM</span>.<span class="hljs-title function_">getInstance</span>().<span class="hljs-title function_">hasTemplate</span>(<span class="hljs-string">&quot;invalid&quot;</span>)
+    ) {
+      newraw = <span class="hljs-variable constant_">RTM</span>.<span class="hljs-title function_">getInstance</span>().<span class="hljs-property">templates</span>.<span class="hljs-property">invalid</span>;
+    }</pre></div></div>
             
         </li>
         
@@ -301,8 +316,10 @@ generic API response description rewrite</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">let</span> <span class="hljs-attr">data</span>: <span class="hljs-built_in">string</span> = <span class="hljs-string">&#x27;&#x27;</span>;
-        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> [ regex, val ] <span class="hljs-keyword">of</span> <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">entries</span>(<span class="hljs-title class_">ResponseTranslator</span>.<span class="hljs-property">descriptionRegexMap</span>)) {</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">let</span> <span class="hljs-attr">data</span>: <span class="hljs-built_in">string</span> = <span class="hljs-string">&quot;&quot;</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> [regex, val] <span class="hljs-keyword">of</span> <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">entries</span>(
+      <span class="hljs-title class_">ResponseTranslator</span>.<span class="hljs-property">descriptionRegexMap</span>,
+    )) {</pre></div></div>
             
         </li>
         
@@ -317,7 +334,7 @@ generic API response description rewrite</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">if</span> (regex === <span class="hljs-string">&quot;SkipPregQuote&quot;</span>) {</pre></div></div>
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">if</span> (regex === <span class="hljs-string">&quot;SkipPregQuote&quot;</span>) {</pre></div></div>
             
         </li>
         
@@ -332,7 +349,7 @@ generic API response description rewrite</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> [ tmpregex, tmpval ] <span class="hljs-keyword">of</span> <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">entries</span>(val)) {</pre></div></div>
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> [tmpregex, tmpval] <span class="hljs-keyword">of</span> <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">entries</span>(val)) {</pre></div></div>
             
         </li>
         
@@ -347,7 +364,13 @@ generic API response description rewrite</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                    data = <span class="hljs-title class_">ResponseTranslator</span>.<span class="hljs-title function_">findMatch</span>(tmpregex, newraw, <span class="hljs-string">&#x27;&#x27;</span> + tmpval, cmd, ph);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>          data = <span class="hljs-title class_">ResponseTranslator</span>.<span class="hljs-title function_">findMatch</span>(
+            tmpregex,
+            newraw,
+            <span class="hljs-string">&quot;&quot;</span> + tmpval,
+            cmd,
+            ph,
+          );</pre></div></div>
             
         </li>
         
@@ -362,12 +385,12 @@ generic API response description rewrite</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                    <span class="hljs-keyword">if</span> (data) {
-                        newraw = data;
-                        <span class="hljs-keyword">break</span>;
-                    }
-                }
-            } <span class="hljs-keyword">else</span> {</pre></div></div>
+            <div class="content"><div class='highlight'><pre>          <span class="hljs-keyword">if</span> (data) {
+            newraw = data;
+            <span class="hljs-keyword">break</span>;
+          }
+        }
+      } <span class="hljs-keyword">else</span> {</pre></div></div>
             
         </li>
         
@@ -382,11 +405,11 @@ generic API response description rewrite</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">const</span> escapedregex = <span class="hljs-title function_">preg_quote</span>(regex);
-                <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(newraw);
-                data = <span class="hljs-title class_">ResponseTranslator</span>.<span class="hljs-title function_">findMatch</span>(escapedregex, newraw, val, cmd, ph);
-                <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(newraw);
-            }</pre></div></div>
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">const</span> escapedregex = <span class="hljs-title function_">preg_quote</span>(regex);
+        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(newraw);
+        data = <span class="hljs-title class_">ResponseTranslator</span>.<span class="hljs-title function_">findMatch</span>(escapedregex, newraw, val, cmd, ph);
+        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(newraw);
+      }</pre></div></div>
             
         </li>
         
@@ -401,36 +424,41 @@ generic API response description rewrite</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">if</span> (data) {
-                newraw = data;
-                <span class="hljs-keyword">break</span>;
-            }
-        }
-
-        <span class="hljs-keyword">const</span> cregex = <span class="hljs-regexp">/\{.+\}/</span>;
-        <span class="hljs-keyword">if</span> (cregex.<span class="hljs-title function_">test</span>(newraw)) {
-            newraw = newraw.<span class="hljs-title function_">replace</span>(cregex, <span class="hljs-string">&#x27;&#x27;</span>);
-        }
-
-        <span class="hljs-keyword">return</span> newraw;
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">if</span> (data) {
+        newraw = data;
+        <span class="hljs-keyword">break</span>;
+      }
     }
-    
-    <span class="hljs-comment">/**
-     * Finds a match in the given text and performs replacements based on patterns and placeholders.
-     *
-     * This function searches for a specified regular expression pattern in the provided text and
-     * performs replacements based on the matched pattern, command data, and placeholder values.
-     *
-     * <span class="hljs-doctag">@param</span> regex The regular expression pattern to search for.
-     * <span class="hljs-doctag">@param</span> newraw The input text where the match will be searched for.
-     * <span class="hljs-doctag">@param</span> val The value to be used in replacement if a match is found.
-     * <span class="hljs-doctag">@param</span> cmd The command data containing replacements, if applicable.
-     * <span class="hljs-doctag">@param</span> ph An array of placeholder values for further replacements.
-     *
-     * <span class="hljs-doctag">@return</span> Returns non-empty string if replacements were performed, empty string otherwise.
-     */</span>
-    <span class="hljs-keyword">protected</span> <span class="hljs-keyword">static</span> <span class="hljs-title function_">findMatch</span>(<span class="hljs-attr">regex</span>: <span class="hljs-built_in">string</span>, <span class="hljs-attr">newraw</span>: <span class="hljs-built_in">string</span>, <span class="hljs-attr">val</span>: <span class="hljs-built_in">string</span>, <span class="hljs-attr">cmd</span>: <span class="hljs-built_in">any</span> = {}, <span class="hljs-attr">ph</span>: <span class="hljs-built_in">any</span> = {}): <span class="hljs-built_in">string</span>
-    {</pre></div></div>
+
+    <span class="hljs-keyword">const</span> cregex = <span class="hljs-regexp">/\{.+\}/</span>;
+    <span class="hljs-keyword">if</span> (cregex.<span class="hljs-title function_">test</span>(newraw)) {
+      newraw = newraw.<span class="hljs-title function_">replace</span>(cregex, <span class="hljs-string">&quot;&quot;</span>);
+    }
+
+    <span class="hljs-keyword">return</span> newraw;
+  }
+
+  <span class="hljs-comment">/**
+   * Finds a match in the given text and performs replacements based on patterns and placeholders.
+   *
+   * This function searches for a specified regular expression pattern in the provided text and
+   * performs replacements based on the matched pattern, command data, and placeholder values.
+   *
+   * <span class="hljs-doctag">@param</span> regex The regular expression pattern to search for.
+   * <span class="hljs-doctag">@param</span> newraw The input text where the match will be searched for.
+   * <span class="hljs-doctag">@param</span> val The value to be used in replacement if a match is found.
+   * <span class="hljs-doctag">@param</span> cmd The command data containing replacements, if applicable.
+   * <span class="hljs-doctag">@param</span> ph An array of placeholder values for further replacements.
+   *
+   * <span class="hljs-doctag">@return</span> Returns non-empty string if replacements were performed, empty string otherwise.
+   */</span>
+  <span class="hljs-keyword">protected</span> <span class="hljs-keyword">static</span> <span class="hljs-title function_">findMatch</span>(
+    <span class="hljs-attr">regex</span>: <span class="hljs-built_in">string</span>,
+    <span class="hljs-attr">newraw</span>: <span class="hljs-built_in">string</span>,
+    <span class="hljs-attr">val</span>: <span class="hljs-built_in">string</span>,
+    <span class="hljs-attr">cmd</span>: <span class="hljs-built_in">any</span> = {},
+    <span class="hljs-attr">ph</span>: <span class="hljs-built_in">any</span> = {},
+  ): <span class="hljs-built_in">string</span> {</pre></div></div>
             
         </li>
         
@@ -447,10 +475,10 @@ it would also match if it is followed by additional text</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">const</span> qregex = <span class="hljs-keyword">new</span> <span class="hljs-title class_">RegExp</span>(<span class="hljs-string">&#x27;/description\s*=\s*&#x27;</span> + regex + <span class="hljs-string">&#x27;([^\\r\\n]+)?/i&#x27;</span>);
-        <span class="hljs-keyword">let</span> ret = <span class="hljs-string">&#x27;&#x27;</span>;
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">const</span> qregex = <span class="hljs-keyword">new</span> <span class="hljs-title class_">RegExp</span>(<span class="hljs-string">&quot;/descriptions*=s*&quot;</span> + regex + <span class="hljs-string">&quot;([^\\r\\n]+)?/i&quot;</span>);
+    <span class="hljs-keyword">let</span> ret = <span class="hljs-string">&quot;&quot;</span>;
 
-        <span class="hljs-keyword">if</span> (qregex.<span class="hljs-title function_">test</span>(newraw)) {</pre></div></div>
+    <span class="hljs-keyword">if</span> (qregex.<span class="hljs-title function_">test</span>(newraw)) {</pre></div></div>
             
         </li>
         
@@ -465,9 +493,9 @@ it would also match if it is followed by additional text</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">if</span> (<span class="hljs-title class_">Object</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">hasOwnProperty</span>.<span class="hljs-title function_">call</span>(cmd, <span class="hljs-string">&quot;COMMAND&quot;</span>)) {
-                val = val.<span class="hljs-title function_">replace</span>(<span class="hljs-string">&#x27;{COMMAND}&#x27;</span>, cmd.<span class="hljs-property">COMMAND</span>);
-            }</pre></div></div>
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">if</span> (<span class="hljs-title class_">Object</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">hasOwnProperty</span>.<span class="hljs-title function_">call</span>(cmd, <span class="hljs-string">&quot;COMMAND&quot;</span>)) {
+        val = val.<span class="hljs-title function_">replace</span>(<span class="hljs-string">&quot;{COMMAND}&quot;</span>, cmd.<span class="hljs-property">COMMAND</span>);
+      }</pre></div></div>
             
         </li>
         
@@ -482,11 +510,11 @@ it would also match if it is followed by additional text</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">let</span> tmp = newraw.<span class="hljs-title function_">replace</span>(qregex, <span class="hljs-string">&quot;description=&quot;</span> + val);
-            <span class="hljs-keyword">if</span> (newraw !== tmp) {
-                ret = tmp;
-            }
-        }</pre></div></div>
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">let</span> tmp = newraw.<span class="hljs-title function_">replace</span>(qregex, <span class="hljs-string">&quot;description=&quot;</span> + val);
+      <span class="hljs-keyword">if</span> (newraw !== tmp) {
+        ret = tmp;
+      }
+    }</pre></div></div>
             
         </li>
         
@@ -501,17 +529,17 @@ it would also match if it is followed by additional text</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">const</span> vregex = <span class="hljs-regexp">/\{[^}]+\}/</span>;
-        <span class="hljs-keyword">if</span> (vregex.<span class="hljs-title function_">test</span>(newraw)) {           
-            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> [ tkey, tval ] <span class="hljs-keyword">of</span> <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">entries</span>(ph)) {
-                newraw = newraw.<span class="hljs-title function_">replace</span>(<span class="hljs-string">&#x27;{&#x27;</span> + tkey + <span class="hljs-string">&#x27;}&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span> + tval);
-            }
-            newraw = newraw.<span class="hljs-title function_">replace</span>(vregex, <span class="hljs-string">&#x27;&#x27;</span>);
-            ret = newraw;
-        }
-        <span class="hljs-keyword">return</span> ret;
-    };
-};</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">const</span> vregex = <span class="hljs-regexp">/\{[^}]+\}/</span>;
+    <span class="hljs-keyword">if</span> (vregex.<span class="hljs-title function_">test</span>(newraw)) {
+      <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> [tkey, tval] <span class="hljs-keyword">of</span> <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">entries</span>(ph)) {
+        newraw = newraw.<span class="hljs-title function_">replace</span>(<span class="hljs-string">&quot;{&quot;</span> + tkey + <span class="hljs-string">&quot;}&quot;</span>, <span class="hljs-string">&quot;&quot;</span> + tval);
+      }
+      newraw = newraw.<span class="hljs-title function_">replace</span>(vregex, <span class="hljs-string">&quot;&quot;</span>);
+      ret = newraw;
+    }
+    <span class="hljs-keyword">return</span> ret;
+  }
+}</pre></div></div>
             
         </li>
         
