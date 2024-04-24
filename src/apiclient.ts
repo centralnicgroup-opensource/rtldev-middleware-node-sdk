@@ -1,4 +1,5 @@
 import fetch from "cross-fetch";
+import { convert } from "idna-uts46-hx";
 import { Logger } from "./logger.js";
 import { Response } from "./response.js";
 import { ResponseTemplateManager } from "./responsetemplatemanager.js";
@@ -580,7 +581,7 @@ export class APIClient {
     if (!keys.length) {
       return cmd;
     }
-    const toconvert: any = [];
+    const toconvert: string[] = [];
     const idxs: string[] = [];
     keys.forEach((key: string) => {
       if (
@@ -596,18 +597,14 @@ export class APIClient {
     if (!toconvert.length) {
       return cmd;
     }
-    const r = await this.request({
-      COMMAND: "ConvertIDN",
-      DOMAIN: toconvert,
-    });
-    if (r.isSuccess()) {
-      const col = r.getColumn("ACE");
-      if (col) {
-        col.getData().forEach((pc: string, idx: any) => {
-          cmd[idxs[idx]] = pc;
-        });
-      }
+
+    const r = convert(toconvert);
+    if (!Array.isArray(r.PC)) {
+      r.PC = [r.PC];
     }
+    r.PC.forEach((pc: string, idx: any) => {
+      cmd[idxs[idx]] = pc;
+    });
     return cmd;
   }
 }

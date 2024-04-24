@@ -1,23 +1,20 @@
 ## [9.0.6](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/compare/v9.0.5...v9.0.6) (2024-04-24)
 
-
 ### Bug Fixes
 
-* **npm:** cleanup old packages; use semantic-release-replace-plugin ([1fbabe4](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/commit/1fbabe4b0b55d062269566939bc12d6aaf7be3e3))
+- **npm:** cleanup old packages; use semantic-release-replace-plugin ([1fbabe4](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/commit/1fbabe4b0b55d062269566939bc12d6aaf7be3e3))
 
 ## [9.0.5](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/compare/v9.0.4...v9.0.5) (2024-04-24)
 
-
 ### Bug Fixes
 
-* **tsconfig:** switch from @tsconfig/node-lts to @tsconfig/node20 ([9bf2a6b](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/commit/9bf2a6bf64010ba078ead10997b38c5c22f45532))
+- **tsconfig:** switch from @tsconfig/node-lts to @tsconfig/node20 ([9bf2a6b](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/commit/9bf2a6bf64010ba078ead10997b38c5c22f45532))
 
 ## [9.0.4](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/compare/v9.0.3...v9.0.4) (2024-04-24)
 
-
 ### Bug Fixes
 
-* **tsconfig:** extend from @tsconfig/recommended ([222bbda](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/commit/222bbda1988b5d58d22a2750b9aac820ea171f44))
+- **tsconfig:** extend from @tsconfig/recommended ([222bbda](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/commit/222bbda1988b5d58d22a2750b9aac820ea171f44))
 
 ## [9.0.3](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/compare/v9.0.2...v9.0.3) (2024-04-23)
 

@@ -1,7 +1,7 @@
 {
-    "$schema": "https://typedoc.org/schema.json",
-    "name": "@hexonet/ispapi-apiconnector",
-    "readme": "./README.md",
-    "entryPoints": ["src/*.ts"],
-    "out": "docs"
+  "$schema": "https://typedoc.org/schema.json",
+  "name": "@hexonet/ispapi-apiconnector",
+  "readme": "./README.md",
+  "entryPoints": ["src/*.ts"],
+  "out": "docs"
 }

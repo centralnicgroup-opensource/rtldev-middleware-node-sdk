@@ -70,6 +70,7 @@
     "typescript": "^5.3.2"
   },
   "dependencies": {
-    "cross-fetch": "^4.0.0"
+    "cross-fetch": "^4.0.0",
+    "idna-uts46-hx": "^6.0.4"
   }
 }

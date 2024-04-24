@@ -6,14 +6,14 @@
     [
       "semantic-release-replace-plugin",
       {
-          "replacements": [
-              {
-                  "files": ["./src/apiclient.ts"],
-                  "from": "\\d+\\.\\d+\\.\\d+",
-                  "to": "${nextRelease.version}",
-                  "countMatches": true
-              }
-          ]
+        "replacements": [
+          {
+            "files": ["./src/apiclient.ts"],
+            "from": "\\d+\\.\\d+\\.\\d+",
+            "to": "${nextRelease.version}",
+            "countMatches": true
+          }
+        ]
       }
     ],
     "@semantic-release/npm",
