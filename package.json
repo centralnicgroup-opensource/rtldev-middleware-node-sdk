@@ -45,9 +45,7 @@
     "compile": "rm -rf dist && tsc --version && tsc --declaration",
     "lint": "prettier --write .",
     "prepublish": "npm run compile",
-    "documentation": "npm run gendocsDocco --silent && npm run gendocsTypedoc --silent",
-    "gendocsTypedoc": "typedoc --out docs/typedoc --name @hexonet/ispapi-apiconnector --readme ./README.md --excludeExternals src/*.ts",
-    "gendocsDocco": "docco -l parallel -o docs/docco src/*.ts",
+    "documentation": "typedoc",
     "test": "cross-env NODE_ENV=development c8 mocha"
   },
   "devDependencies": {
@@ -61,7 +59,6 @@
     "chai": "^5.0.0",
     "chai-promised": "^1.0.1",
     "cross-env": "^7.0.3",
-    "docco": "^0.9.1",
     "mocha": "^10.0.0",
     "nock": "^13.2.7",
     "prettier": "^3.0.0",

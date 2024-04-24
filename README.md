@@ -12,7 +12,7 @@ This module is a connector library for the insanely fast HEXONET Backend API. Fo
 
 ## Resources
 
-- [Documentation](https://centralnicgroup-public.github.io/rtldev-middleware-documentation/docs/hexonet/sdks/nodejs-sdk/)
+- [Documentation](https://www.hexonet.support/hc/en-gb/articles/13652150237981-Self-Development-Kit-for-NodeJS)
 - [Release Notes](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/releases)
 
 ## Authors
