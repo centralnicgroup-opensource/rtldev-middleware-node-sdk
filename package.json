@@ -52,10 +52,8 @@
   },
   "devDependencies": {
     "@semantic-release/changelog": "^6.0.3",
-    "@semantic-release/exec": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
     "@tsconfig/node20": "^20.1.4",
-    "@tsconfig/recommended": "^1.0.6",
     "@types/chai": "^4.3.1",
     "@types/mocha": "^10.0.0",
     "@types/node": "^20.0.0",
@@ -64,15 +62,14 @@
     "chai-promised": "^1.0.1",
     "cross-env": "^7.0.3",
     "docco": "^0.9.1",
-    "jsdoc": "^4.0.0",
-    "jsdoc-oblivion": "^0.0.9",
     "mocha": "^10.0.0",
     "nock": "^13.2.7",
     "prettier": "^3.0.0",
     "semantic-release": "^23.0.0",
+    "semantic-release-replace-plugin": "^1.2.7",
     "semantic-release-teams-notify-plugin": "github:centralnicgroup-opensource/rtldev-middleware-semantic-release-notify-plugin#RSRMID-1010-gulp-task-migration",
     "tsx": "^4.7.2",
-    "typedoc": "^0.25.0",
+    "typedoc": "^0.25.13",
     "typescript": "^5.3.2"
   },
   "dependencies": {

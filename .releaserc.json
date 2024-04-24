@@ -2,16 +2,18 @@
   "plugins": [
     "@semantic-release/commit-analyzer",
     "@semantic-release/release-notes-generator",
+    "@semantic-release/changelog",
     [
-      "@semantic-release/changelog",
+      "semantic-release-replace-plugin",
       {
-        "changelogFile": "HISTORY.md"
-      }
-    ],
-    [
-      "@semantic-release/exec",
-      {
-        "prepareCmd": "./updateVersion.sh ${nextRelease.version}"
+          "replacements": [
+              {
+                  "files": ["./src/apiclient.ts"],
+                  "from": "\\d+\\.\\d+\\.\\d+",
+                  "to": "${nextRelease.version}",
+                  "countMatches": true
+              }
+          ]
       }
     ],
     "@semantic-release/npm",
@@ -19,7 +21,7 @@
       "@semantic-release/git",
       {
         "assets": [
-          "HISTORY.md",
+          "CHANGELOG.md",
           "package?(-lock).json",
           "docs",
           "src/apiclients.ts"
