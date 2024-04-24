@@ -1,3 +1,10 @@
+## [9.0.6](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/compare/v9.0.5...v9.0.6) (2024-04-24)
+
+
+### Bug Fixes
+
+* **npm:** cleanup old packages; use semantic-release-replace-plugin ([1fbabe4](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/commit/1fbabe4b0b55d062269566939bc12d6aaf7be3e3))
+
 ## [9.0.5](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/compare/v9.0.4...v9.0.5) (2024-04-24)
 
 
