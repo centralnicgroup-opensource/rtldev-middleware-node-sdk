@@ -1,3 +1,10 @@
+## [9.0.4](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/compare/v9.0.3...v9.0.4) (2024-04-24)
+
+
+### Bug Fixes
+
+* **tsconfig:** extend from @tsconfig/recommended ([222bbda](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/commit/222bbda1988b5d58d22a2750b9aac820ea171f44))
+
 ## [9.0.3](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/compare/v9.0.2...v9.0.3) (2024-04-23)
 
 ### Bug Fixes
