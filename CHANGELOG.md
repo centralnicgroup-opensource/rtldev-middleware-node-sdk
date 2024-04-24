@@ -1,3 +1,10 @@
+## [9.0.7](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/compare/v9.0.6...v9.0.7) (2024-04-24)
+
+
+### Performance Improvements
+
+* **apiclient:** replace api-side IDN Converter with nodejs library ([d7080c7](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/commit/d7080c76ce5e139a4457b95f129a5bd539270657))
+
 ## [9.0.6](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/compare/v9.0.5...v9.0.6) (2024-04-24)
 
 ### Bug Fixes
