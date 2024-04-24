@@ -1,3 +1,10 @@
+## [9.0.5](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/compare/v9.0.4...v9.0.5) (2024-04-24)
+
+
+### Bug Fixes
+
+* **tsconfig:** switch from @tsconfig/node-lts to @tsconfig/node20 ([9bf2a6b](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/commit/9bf2a6bf64010ba078ead10997b38c5c22f45532))
+
 ## [9.0.4](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/compare/v9.0.3...v9.0.4) (2024-04-24)
 
 
