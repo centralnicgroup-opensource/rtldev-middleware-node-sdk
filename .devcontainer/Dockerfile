@@ -48,7 +48,18 @@ COPY --from=nodejs /usr/local/include/node /usr/local/include/node
 COPY --from=nodejs /usr/local/lib/node_modules /usr/local/lib/node_modules
 COPY --from=nodejs /usr/local/bin /usr/local/bin
 
-# zsh and commitizen (cz) configurations
-COPY ${CONFIGURATION_DIR_PATH}/.zshrc ${USERHOME}/.zshrc
-COPY ${CONFIGURATION_DIR_PATH}/.czrc ${USERHOME}/.czrc
-RUN chown ${USERNAME}.${USERNAME} ${USERHOME}/.zshrc ${USERHOME}/.czrc
+
+# Clone the powerlevel10k theme for zsh and change owner
+RUN git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $ZSH_CUSTOM/themes/powerlevel10k \
+    && chown -R ${USERNAME}:${USERNAME} $ZSH_CUSTOM/themes/powerlevel10k
+
+# Clone the zsh-autosuggestions repository and change owner
+RUN git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions \
+    && chown -R ${USERNAME}:${USERNAME} $ZSH_CUSTOM/plugins/zsh-autosuggestions
+
+# copy zsh and committizen configuration file
+COPY --chown=${USERNAME}:${USERNAME} ${CONFIGURATION_DIR_PATH}/.zshrc ${USERHOME}/.zshrc
+COPY --chown=${USERNAME}:${USERNAME} ${CONFIGURATION_DIR_PATH}/.czrc ${USERHOME}/.czrc
+# zsh theme powerline10k
+COPY --chown=${USERNAME}:${USERNAME} ${CONFIGURATION_DIR_PATH}/.p10k.zsh ${USERHOME}/.p10k.zsh
+COPY --chown=${USERNAME}:${USERNAME} ${CONFIGURATION_DIR_PATH}/p10k-instant-prompt-vscode.zsh ${USERHOME}/.cache/p10k-instant-prompt-vscode.zsh
