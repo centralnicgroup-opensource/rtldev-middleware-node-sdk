@@ -1,19 +1,19 @@
 import { expect, use } from "chai"; // Using Expect style
-import { chaiAsPromised } from "chai-promised";
+import chaiAsPromised from "chai-as-promised";
 import "mocha";
 import nock from "nock";
 import {
   APIClient,
-  ISPAPI_CONNECTION_URL_LIVE,
-  ISPAPI_CONNECTION_URL_OTE,
-  ISPAPI_CONNECTION_URL_PROXY,
+  CNR_CONNECTION_URL_LIVE,
+  CNR_CONNECTION_URL_OTE,
+  CNR_CONNECTION_URL_PROXY,
 } from "../src/apiclient.ts";
 import { Response } from "../src/response.ts";
 import { ResponseTemplateManager } from "../src/responsetemplatemanager.ts";
 use(chaiAsPromised);
 
 const apiScript = "/api/call.cgi";
-const oteHost = ISPAPI_CONNECTION_URL_OTE.replace(apiScript, "");
+const oteHost = CNR_CONNECTION_URL_OTE.replace(apiScript, "");
 const rtm = ResponseTemplateManager.getInstance();
 const cmd = { COMMAND: "StatusAccount" };
 let cl: APIClient;
@@ -27,7 +27,7 @@ before(() => {
   rtm
     .addTemplate(
       "login200",
-      "[RESPONSE]\r\nPROPERTY[SESSION][0]=h8JLZZHdF2WgWWXlwbKWzEG3XrzoW4yshhvtqyg0LCYiX55QnhgYX9cB0W4mlpbx\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.169\r\nEOF\r\n",
+      "[RESPONSE]\r\nproperty[expiration date][0] = 2024-09-19 10:52:51\r\nproperty[sessionid][0] = bb7a884b09b9a674fb4a22211758ce87\r\ndescription = Command completed successfully\r\ncode = 200\r\nqueuetime = 0.004\r\nruntime = 0.023\r\nEOF\r\n",
     )
     .addTemplate(
       "login500",
@@ -39,27 +39,35 @@ before(() => {
     )
     .addTemplate(
       "CHECKS",
-      "[RESPONSE]\r\nPROPERTY[TOTAL][0]=2701\r\nPROPERTY[FIRST][0]=0\r\nPROPERTY[DOMAIN][0]=0-60motorcycletimes.com\r\nPROPERTY[DOMAIN][1]=0-be-s01-0.com\r\nPROPERTY[COUNT][0]=2\r\nPROPERTY[LAST][0]=1\r\nPROPERTY[LIMIT][0]=2\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.023\r\nEOF\r\n",
+      "[RESPONSE]\r\nproperty[total][0] = 4\r\nproperty[first][0] = 0\r\nproperty[domain][0] = cnic-ssl-test1.com\r\nproperty[domain][1] = cnic-ssl-test2.com\r\nproperty[count][0] = 2\r\nproperty[last][0] = 1\r\nproperty[limit][0] = 2\r\ndescription = Command completed successfully\r\ncode = 200\r\nqueuetime = 0\r\nruntime = 0.007\r\nEOF\r\n",
     )
     .addTemplate(
       "listP0",
-      "[RESPONSE]\r\nPROPERTY[TOTAL][0]=2701\r\nPROPERTY[FIRST][0]=0\r\nPROPERTY[DOMAIN][0]=0-60motorcycletimes.com\r\nPROPERTY[DOMAIN][1]=0-be-s01-0.com\r\nPROPERTY[COUNT][0]=2\r\nPROPERTY[LAST][0]=1\r\nPROPERTY[LIMIT][0]=2\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.023\r\nEOF\r\n",
+      "[RESPONSE]\r\nproperty[total][0] = 4\r\nproperty[first][0] = 0\r\nproperty[domain][0] = cnic-ssl-test1.com\r\nproperty[domain][1] = cnic-ssl-test2.com\r\nproperty[count][0] = 2\r\nproperty[last][0] = 1\r\nproperty[limit][0] = 2\r\ndescription = Command completed successfully\r\ncode = 200\r\nqueuetime = 0\r\nruntime = 0.007\r\nEOF\r\n",
     )
     .addTemplate(
       "listP1",
-      "[RESPONSE]\r\nPROPERTY[TOTAL][0]=2701\r\nPROPERTY[FIRST][0]=2\r\nPROPERTY[DOMAIN][0]=0-qas-ao17-0.org\r\nPROPERTY[DOMAIN][1]=0-sunnyda222y.com\r\nPROPERTY[COUNT][0]=2\r\nPROPERTY[LAST][0]=3\r\nPROPERTY[LIMIT][0]=2\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.032\r\nEOF\r\n",
+      "[RESPONSE]\r\nproperty[total][0] = 4\r\nproperty[first][0] = 2\r\nproperty[domain][0] = emailcustomization.com\r\nproperty[domain][1] = test-keysysbe0123.be\r\nproperty[count][0] = 2\r\nproperty[last][0] = 3\r\nproperty[limit][0] = 2\r\ndescription = Command completed successfully\r\ncode = 200\r\nqueuetime = 0\r\nruntime = 0.006\r\nEOF\r\n",
     )
     .addTemplate(
       "listFP0",
-      "[RESPONSE]\r\nPROPERTY[TOTAL][0]=3\r\nPROPERTY[FIRST][0]=0\r\nPROPERTY[DOMAIN][0]=0-60motorcycletimes.com\r\nPROPERTY[COUNT][0]=1\r\nPROPERTY[LAST][0]=1\r\nPROPERTY[LIMIT][0]=1\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.023\r\nEOF\r\n",
+      "[RESPONSE]\r\nproperty[total][0] = 4\r\nproperty[first][0] = 0\r\nproperty[domain][0] = cnic-ssl-test1.com\r\nproperty[count][0] = 1\r\nproperty[last][0] = 0\r\nproperty[limit][0] = 1\r\ndescription = Command completed successfully\r\ncode = 200\r\nqueuetime = 0\r\nruntime = 0.009\r\nEOF\r\n",
     )
     .addTemplate(
       "listFP1",
-      "[RESPONSE]\r\nPROPERTY[TOTAL][0]=3\r\nPROPERTY[FIRST][0]=1\r\nPROPERTY[DOMAIN][0]=0-be-s01-0.com\r\nPROPERTY[COUNT][0]=1\r\nPROPERTY[LAST][0]=2\r\nPROPERTY[LIMIT][0]=1\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.032\r\nEOF\r\n",
+      "[RESPONSE]\r\nproperty[total][0] = 4\r\nproperty[first][0] = 1\r\nproperty[domain][0] = cnic-ssl-test2.com\r\nproperty[count][0] = 1\r\nproperty[last][0] = 1\r\nproperty[limit][0] = 1\r\ndescription = Command completed successfully\r\ncode = 200\r\nqueuetime = 0\r\nruntime = 0.007\r\nEOF\r\n",
     )
     .addTemplate(
       "listFP2",
-      "[RESPONSE]\r\nPROPERTY[TOTAL][0]=3\r\nPROPERTY[FIRST][0]=2\r\nPROPERTY[DOMAIN][0]=0-qas-ao17-0.org\r\nPROPERTY[COUNT][0]=2\r\nPROPERTY[LAST][0]=3\r\nPROPERTY[LIMIT][0]=1\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.032\r\nEOF\r\n",
+      "[RESPONSE]\r\nproperty[total][0] = 4\r\nproperty[first][0] = 2\r\nproperty[domain][0] = emailcustomization.com\r\nproperty[count][0] = 1\r\nproperty[last][0] = 2\r\nproperty[limit][0] = 1\r\ndescription = Command completed successfully\r\ncode = 200\r\nqueuetime = 0\r\nruntime = 0.007\r\nEOF\r\n",
+    )
+    .addTemplate(
+      "subUserSet",
+      "[RESPONSE]\r\nproperty[amount][0] = 670.77\r\nproperty[credit][0] = 0.00\r\nproperty[credit threshold][0] = 0.00\r\nproperty[currency][0] = USD\r\nproperty[registrar][0] = sub1\r\nproperty[vat][0] = 0.00\r\ndescription = Command completed successfully\r\ncode = 200\r\nruntime = 0.008\r\nqueuetime = 0\r\nEOF\r\n",
+    )
+    .addTemplate(
+      "subUserReset",
+      "[RESPONSE]\r\nproperty[amount][0] = 670.77\r\nproperty[credit][0] = 0.00\r\nproperty[credit threshold][0] = 0.00\r\nproperty[currency][0] = USD\r\nproperty[registrar][0] = test\r\nproperty[vat][0] = 0.00\r\ndescription = Command completed successfully\r\ncode = 200\r\nruntime = 0.008\r\nqueuetime = 0\r\nEOF\r\n",
     );
 });
 
@@ -70,7 +78,7 @@ describe("APIClient class", function () {
   describe("#.getPOSTData", () => {
     it("test object input with special chars", () => {
       const validate =
-        "s_entity=54cd&s_command=AUTH%3Dgwrgwqg%25%26%5C44t3%2A%0ACOMMAND%3DModifyDomain";
+        "s_command=AUTH%3Dgwrgwqg%25%26%5C44t3%2A%0ACOMMAND%3DModifyDomain";
       const enc = cl.getPOSTData({
         AUTH: "gwrgwqg%&\\44t3*",
         COMMAND: "ModifyDomain",
@@ -80,11 +88,11 @@ describe("APIClient class", function () {
 
     it("test string input", () => {
       const enc = cl.getPOSTData("gregergege");
-      expect(enc).to.equal("s_entity=54cd&s_command=gregergege");
+      expect(enc).to.equal("s_command=gregergege");
     });
 
     it("test object input with null value in parameter", () => {
-      const validate = "s_entity=54cd&s_command=COMMAND%3DModifyDomain";
+      const validate = "s_command=COMMAND%3DModifyDomain";
       const enc = cl.getPOSTData({
         AUTH: null,
         COMMAND: "ModifyDomain",
@@ -93,7 +101,7 @@ describe("APIClient class", function () {
     });
 
     it("test object input with undefined value in parameter", () => {
-      const validate = "s_entity=54cd&s_command=COMMAND%3DModifyDomain";
+      const validate = "s_command=COMMAND%3DModifyDomain";
       const enc = cl.getPOSTData({
         AUTH: undefined,
         COMMAND: "ModifyDomain",
@@ -102,14 +110,15 @@ describe("APIClient class", function () {
     });
 
     it("test data getting secured correctly", () => {
+      const encodedTestUserName = encodeURIComponent(process.env.CNR_TEST_USER || '');
       const validate =
-        "s_entity=54cd&s_login=test.user&s_pw=***&s_command=COMMAND%3DCheckAuthentication%0APASSWORD%3D%2A%2A%2A%0ASUBUSER%3Dtest.user";
-      cl.setCredentials("test.user", "test.passw0rd");
+        "s_login=" + encodedTestUserName + "&s_pw=***&s_command=COMMAND%3DCheckAuthentication%0APASSWORD%3D%2A%2A%2A%0ASUBUSER%3D" + encodedTestUserName;
+      cl.setCredentials(process.env.CNR_TEST_USER || '', process.env.CNR_TEST_PASSWORD || '');
       const enc = cl.getPOSTData(
         {
           COMMAND: "CheckAuthentication",
           PASSWORD: "test.passw0rd",
-          SUBUSER: "test.user",
+          SUBUSER: process.env.CNR_TEST_USER,
         },
         true,
       );
@@ -130,27 +139,10 @@ describe("APIClient class", function () {
     });
   });
 
-  describe("#.getSession", () => {
-    it("validate response", () => {
-      const session = cl.getSession();
-      expect(session).to.be.null;
-    });
-  });
-
-  describe("#.getSession", () => {
-    it("validate response", () => {
-      const sessid = "testSessionID12345678";
-      cl.setSession(sessid);
-      const session = cl.getSession();
-      expect(session).to.be.equal(sessid);
-      cl.setSession("");
-    });
-  });
-
   describe("#.getURL", () => {
     it("validate default socket url", () => {
       const url = cl.getURL();
-      expect(url).to.equal(ISPAPI_CONNECTION_URL_LIVE);
+      expect(url).to.equal(CNR_CONNECTION_URL_LIVE);
     });
   });
 
@@ -158,8 +150,7 @@ describe("APIClient class", function () {
     it("validate response", () => {
       const ua = cl.getUserAgent();
       expect(ua).to.equal(
-        `NODE-SDK (${process.platform}; ${
-          process.arch
+        `NODE-SDK (${process.platform}; ${process.arch
         }; rv:${cl.getVersion()}) node/${process.version}`,
       );
     });
@@ -171,8 +162,7 @@ describe("APIClient class", function () {
       const ua = cl.getUserAgent();
       expect(cls).to.be.instanceOf(APIClient);
       expect(ua).to.equal(
-        `WHMCS (${process.platform}; ${
-          process.arch
+        `WHMCS (${process.platform}; ${process.arch
         }; rv:7.7.0) node-sdk/${cl.getVersion()} node/${process.version}`,
       );
     });
@@ -186,10 +176,8 @@ describe("APIClient class", function () {
       const ua = cl.getUserAgent();
       expect(cls).to.be.instanceOf(APIClient);
       expect(ua).to.equal(
-        `WHMCS (${process.platform}; ${
-          process.arch
-        }; rv:7.7.0) reg/2.6.2 ssl/7.2.2 dc/8.2.2 node-sdk/${cl.getVersion()} node/${
-          process.version
+        `WHMCS (${process.platform}; ${process.arch
+        }; rv:7.7.0) reg/2.6.2 ssl/7.2.2 dc/8.2.2 node-sdk/${cl.getVersion()} node/${process.version
         }`,
       );
     });
@@ -197,101 +185,34 @@ describe("APIClient class", function () {
 
   describe("#.setURL", () => {
     it("validate http socket url", () => {
-      const url = cl.setURL(ISPAPI_CONNECTION_URL_PROXY).getURL();
-      expect(url).to.equal(ISPAPI_CONNECTION_URL_PROXY);
-      cl.setURL(ISPAPI_CONNECTION_URL_LIVE);
-    });
-  });
-
-  describe("#.setOTP", () => {
-    it("validate getPOSTData response [otp set] ", () => {
-      cl.setOTP("12345678");
-      const tmp = cl.getPOSTData({
-        COMMAND: "StatusAccount",
-      });
-      expect(tmp).to.equal(
-        "s_entity=54cd&s_otp=12345678&s_command=COMMAND%3DStatusAccount",
-      );
-    });
-
-    it("validate getPOSTData response [otp reset]", () => {
-      cl.setOTP("");
-      const tmp = cl.getPOSTData({
-        COMMAND: "StatusAccount",
-      });
-      expect(tmp).to.equal("s_entity=54cd&s_command=COMMAND%3DStatusAccount");
-    });
-  });
-
-  describe("#.setSession", () => {
-    it("validate getPOSTData response [session set] ", () => {
-      cl.setSession("12345678");
-      const tmp = cl.getPOSTData({
-        COMMAND: "StatusAccount",
-      });
-      expect(tmp).to.equal(
-        "s_entity=54cd&s_session=12345678&s_command=COMMAND%3DStatusAccount",
-      );
-    });
-
-    it("validate getPOSTData response [credentials and session set] ", () => {
-      // credentials and otp code have to be unset when session id is set
-      cl.setRoleCredentials("myaccountid", "myrole", "mypassword")
-        .setOTP("12345678")
-        .setSession("12345678");
-      const tmp = cl.getPOSTData({
-        COMMAND: "StatusAccount",
-      });
-      expect(tmp).to.equal(
-        "s_entity=54cd&s_session=12345678&s_command=COMMAND%3DStatusAccount",
-      );
-    });
-
-    it("validate getPOSTData response [session reset]", () => {
-      cl.setSession("");
-      const tmp = cl.getPOSTData({
-        COMMAND: "StatusAccount",
-      });
-      expect(tmp).to.equal("s_entity=54cd&s_command=COMMAND%3DStatusAccount");
+      const url = cl.setURL(CNR_CONNECTION_URL_PROXY).getURL();
+      expect(url).to.equal(CNR_CONNECTION_URL_PROXY);
+      cl.setURL(CNR_CONNECTION_URL_LIVE);
     });
   });
 
   describe("#.saveSession/reuseSession", () => {
     after(() => {
-      cl.setSession("");
+      cl.reuseSession({});
     });
 
-    it("validate correct settings", () => {
+    it("validate correct settings", async () => {
       const sessionobj = {};
-      cl.setSession("12345678").saveSession(sessionobj);
+      const tpl = new Response(rtm.getTemplate("login200").getPlain(), cmd);
+      nock(oteHost).post(apiScript).reply(200, tpl.getPlain());
+      cl.useOTESystem().setCredentials(process.env.CNR_TEST_USER || '', process.env.CNR_TEST_PASSWORD || '');
+      const r = await cl.login();
+      cl.saveSession(sessionobj);
+      expect(r).to.be.instanceOf(Response);
+      expect(r.isSuccess()).to.be.true;
+      const rec = r.getRecord(0);
+      expect(rec).not.to.be.null;
       const cl2 = new APIClient();
       cl2.reuseSession(sessionobj);
       const tmp = cl2.getPOSTData({
         COMMAND: "StatusAccount",
       });
-      expect(tmp).to.equal(
-        "s_entity=54cd&s_session=12345678&s_command=COMMAND%3DStatusAccount",
-      );
-    });
-  });
-
-  describe("#.setRemoteIPAddress", () => {
-    it("validate getPOSTData response [ip set] ", () => {
-      cl.setRemoteIPAddress("10.10.10.10");
-      const tmp = cl.getPOSTData({
-        COMMAND: "StatusAccount",
-      });
-      expect(tmp).to.equal(
-        "s_entity=54cd&s_remoteaddr=10.10.10.10&s_command=COMMAND%3DStatusAccount",
-      );
-    });
-
-    it("validate getPOSTData response [ip reset]", () => {
-      cl.setRemoteIPAddress("");
-      const tmp = cl.getPOSTData({
-        COMMAND: "StatusAccount",
-      });
-      expect(tmp).to.equal("s_entity=54cd&s_command=COMMAND%3DStatusAccount");
+      expect(tmp).to.include("s_sessionid");
     });
   });
 
@@ -302,7 +223,7 @@ describe("APIClient class", function () {
         COMMAND: "StatusAccount",
       });
       expect(tmp).to.equal(
-        "s_entity=54cd&s_login=myaccountid&s_pw=mypassword&s_command=COMMAND%3DStatusAccount",
+        "s_login=myaccountid&s_pw=mypassword&s_command=COMMAND%3DStatusAccount",
       );
     });
 
@@ -311,7 +232,7 @@ describe("APIClient class", function () {
       const tmp = cl.getPOSTData({
         COMMAND: "StatusAccount",
       });
-      expect(tmp).to.equal("s_entity=54cd&s_command=COMMAND%3DStatusAccount");
+      expect(tmp).to.equal("s_command=COMMAND%3DStatusAccount");
     });
   });
 
@@ -322,7 +243,7 @@ describe("APIClient class", function () {
         COMMAND: "StatusAccount",
       });
       expect(tmp).to.equal(
-        "s_entity=54cd&s_login=myaccountid%21myroleid&s_pw=mypassword&s_command=COMMAND%3DStatusAccount",
+        "s_login=myaccountid%3Amyroleid&s_pw=mypassword&s_command=COMMAND%3DStatusAccount",
       );
     });
 
@@ -331,7 +252,7 @@ describe("APIClient class", function () {
       const tmp = cl.getPOSTData({
         COMMAND: "StatusAccount",
       });
-      expect(tmp).to.equal("s_entity=54cd&s_command=COMMAND%3DStatusAccount");
+      expect(tmp).to.equal("s_command=COMMAND%3DStatusAccount");
     });
   });
 
@@ -339,7 +260,7 @@ describe("APIClient class", function () {
     it("validate against mocked API response [login succeeded; no role used]", async () => {
       const tpl = new Response(rtm.getTemplate("login200").getPlain(), cmd);
       nock(oteHost).post(apiScript).reply(200, tpl.getPlain());
-      cl.useOTESystem().setCredentials("test.user", "test.passw0rd");
+      cl.useOTESystem().setCredentials(process.env.CNR_TEST_USER || '', process.env.CNR_TEST_PASSWORD || '');
       const r = await cl.login();
       expect(r).to.be.instanceOf(Response);
       expect(r.isSuccess()).to.be.true;
@@ -349,33 +270,8 @@ describe("APIClient class", function () {
         const rec2 = tpl.getRecord(0);
         expect(rec2).not.to.be.null;
         if (rec2) {
-          expect(rec.getDataByKey("SESSION")).to.equal(
-            rec2.getDataByKey("SESSION"),
-          );
-        }
-      }
-    });
-
-    // skipping test using public accessible role user; we need to review here
-    it.skip("validate against mocked API response [login succeeded; role used]", async () => {
-      const tpl = new Response(rtm.getTemplate("login200").getPlain(), cmd);
-      nock(oteHost).post(apiScript).reply(200, tpl.getPlain());
-      cl.useOTESystem().setRoleCredentials(
-        "test.user",
-        "testrole",
-        "test.passw0rd",
-      );
-      const r = await cl.login();
-      expect(r).to.be.instanceOf(Response);
-      expect(r.isSuccess()).to.be.true;
-      const rec = r.getRecord(0);
-      expect(rec).not.to.be.null;
-      if (rec) {
-        const rec2 = tpl.getRecord(0);
-        expect(rec2).not.to.be.null;
-        if (rec2) {
-          expect(rec.getDataByKey("SESSION")).to.equal(
-            rec2.getDataByKey("SESSION"),
+          expect(rec.getDataByKey("SESSIONID")).to.equal(
+            rec2.getDataByKey("SESSIONID"),
           );
         }
       }
@@ -407,11 +303,11 @@ describe("APIClient class", function () {
     });
 
     it("validate against mocked API response [login succeeded; no session returned] ", async () => {
-      // this case cannot really happen as the api always returns SESSION property.
+      // this case cannot really happen as the api always returns SESSIONID property.
       // this case is just to increase coverage
       const tpl = new Response(rtm.getTemplate("OK").getPlain(), cmd);
       nock(oteHost).post(apiScript).reply(200, tpl.getPlain());
-      cl.useOTESystem().setCredentials("test.user", "test.passw0rd");
+      cl.useOTESystem().setCredentials(process.env.CNR_TEST_USER || '', process.env.CNR_TEST_PASSWORD || '');
       const r = await cl.login();
       expect(r).to.be.instanceOf(Response);
       expect(r.isSuccess()).to.be.true;
@@ -420,38 +316,19 @@ describe("APIClient class", function () {
     });
   });
 
-  describe("#.loginExtended", () => {
-    it("validate against mocked API response [login succeeded; no role used] ", async () => {
-      const tpl = new Response(rtm.getTemplate("login200").getPlain(), cmd);
-      nock(oteHost).post(apiScript).reply(200, tpl.getPlain());
-      cl.useOTESystem().setCredentials("test.user", "test.passw0rd");
-      const r = await cl.loginExtended({
-        TIMEOUT: 60,
-      });
-      expect(r).to.be.instanceOf(Response);
-      expect(r.isSuccess()).to.be.true;
-      const rec = r.getRecord(0);
-      expect(rec).not.to.be.null;
-      if (rec) {
-        const rec2 = tpl.getRecord(0);
-        expect(rec2).not.to.be.null;
-        if (rec2) {
-          expect(rec.getDataByKey("SESSION")).to.equal(
-            rec2.getDataByKey("SESSION"),
-          );
-        }
-      }
-    });
-  });
-
   describe("#.logout", () => {
     it("validate against mocked API response [logout succeeded]", async () => {
       nock(oteHost)
         .post(apiScript)
         .reply(200, rtm.getTemplate("OK").getPlain());
-      const r = await cl.logout();
-      expect(r).to.be.instanceOf(Response);
-      expect(r.isSuccess()).to.be.true;
+
+      // Perform login to establish a session
+      cl.reuseSession({ socketconfig: { login: "myaccountid", session: "12345678" } });
+      // Perform logout
+      const logoutResponse = await cl.logout();
+      console.log("Logout Response:", cl.getPOSTData({ COMMAND: "StatusAccount" }));
+      expect(logoutResponse).to.be.instanceOf(Response);
+      expect(logoutResponse.isSuccess()).to.be.true;
     });
 
     it("validate against mocked API response [logout failed; session no longer exists]", async () => {
@@ -463,10 +340,10 @@ describe("APIClient class", function () {
       const rec2 = tpl.getRecord(0);
       expect(rec2).not.to.be.null;
       if (rec2) {
-        const sessid = rec2.getDataByKey("SESSION");
+        const sessid = rec2.getDataByKey("SESSIONID");
         expect(sessid).not.to.be.null;
         if (sessid) {
-          cl.enableDebugMode().setSession(sessid);
+          cl.enableDebugMode();
           const r = await cl.logout();
           expect(r).to.be.instanceOf(Response);
           expect(r.isError()).to.be.true;
@@ -483,7 +360,7 @@ describe("APIClient class", function () {
         .post(apiScript)
         .reply(404, rtm.getTemplate("404").getPlain());
       cl.enableDebugMode()
-        .setCredentials("test.user", "test.passw0rd")
+        .setCredentials(process.env.CNR_TEST_USER || '', process.env.CNR_TEST_PASSWORD || '')
         .useOTESystem();
       const r = await cl.request(cmd);
       expect(r).to.be.instanceOf(Response);
@@ -509,6 +386,7 @@ describe("APIClient class", function () {
       nock(oteHost)
         .post(apiScript)
         .reply(200, rtm.getTemplate("OK").getPlain());
+        cl.enableDebugMode();
       const r = await cl.request({
         COMMAND: "CheckDomains",
         DOMAIN: ["example.com", "example.net"],
@@ -523,7 +401,7 @@ describe("APIClient class", function () {
       expect(mycmd.DOMAIN1).to.equal("example.net");
     });
 
-    it("test if auto-idn convert works", async () => {
+    it("test if auto-idn convert works on domains", async () => {
       nock.cleanAll();
       const r = await cl.request({
         COMMAND: "CheckDomains",
@@ -531,14 +409,26 @@ describe("APIClient class", function () {
       });
       expect(r).to.be.instanceOf(Response);
       const mycmd = r.getCommand();
+
       const keys = Object.keys(mycmd);
       expect(keys.includes("DOMAIN")).to.be.false;
       expect(keys.includes("DOMAIN0")).to.be.true;
       expect(keys.includes("DOMAIN1")).to.be.true;
       expect(keys.includes("DOMAIN2")).to.be.true;
       expect(mycmd.DOMAIN0).to.equal("example.com");
-      expect(mycmd.DOMAIN1).to.equal("xn--dmin-moa0i.example");
+      expect(mycmd.DOMAIN1).to.equal("dömäin.example");
       expect(mycmd.DOMAIN2).to.equal("example.net");
+    });
+
+    it("test if auto-idn convert works on dnszone", () => {
+      cl.setRoleCredentials("myaccountid", "myroleid", "mypassword");
+      const tmp = cl.getPOSTData({
+        COMMAND: "StatusDNSZone",
+        DNSZONE: "hallööö.com",
+      });
+      expect(tmp).to.equal(
+        "s_login=myaccountid%3Amyroleid&s_pw=mypassword&s_command=COMMAND%3DStatusDNSZone%0ADNSZONE%3Dhall%C3%B6%C3%B6%C3%B6.com",
+      );
     });
   });
 
@@ -628,7 +518,7 @@ describe("APIClient class", function () {
         FIRST: 0,
         LIMIT: 1,
       });
-      expect(nr.length).to.equal(3);
+      expect(nr.length).to.equal(4);
       scope.persist(false);
     });
   });
@@ -637,9 +527,11 @@ describe("APIClient class", function () {
     it("validate against mocked API response", async () => {
       nock(oteHost)
         .post(apiScript)
-        .reply(200, rtm.getTemplate("OK").getPlain());
-      cl.setUserView("hexotestman.com");
-      const r = await cl.request({ COMMAND: "GetUserIndex" });
+        .reply(200, rtm.getTemplate("subUserSet").getPlain());
+      cl.setUserView("sub1");
+      cl.enableDebugMode();
+      const r = await cl.request({ COMMAND: "StatusAccount" });
+      console.log("Response:", r);
       expect(r).to.be.instanceOf(Response);
       expect(r.isSuccess()).to.be.true;
     });
@@ -649,9 +541,9 @@ describe("APIClient class", function () {
     it("validate against mocked API response", async () => {
       nock(oteHost)
         .post(apiScript)
-        .reply(200, rtm.getTemplate("OK").getPlain());
+        .reply(200, rtm.getTemplate("subUserReset").getPlain());
       cl.resetUserView();
-      const r = await cl.request({ COMMAND: "GetUserIndex" });
+      const r = await cl.request({ COMMAND: "StatusAccount" });
       expect(r).to.be.instanceOf(Response);
       expect(r.isSuccess()).to.be.true;
     });
@@ -667,8 +559,8 @@ describe("APIClient class", function () {
 
   describe("#.setReferer", () => {
     it("test setting referer works", () => {
-      cl.setReferer("https://www.hexonet.net");
-      expect(cl.getReferer()).to.equal("https://www.hexonet.net");
+      cl.setReferer("https://www.centralnicreseller.com");
+      expect(cl.getReferer()).to.equal("https://www.centralnicreseller.com");
       cl.setReferer("");
     });
   });
@@ -676,14 +568,14 @@ describe("APIClient class", function () {
   describe("#.useHighPerformanceConnectionSetup", () => {
     it("test setting high performance connection setup works", () => {
       cl.useHighPerformanceConnectionSetup();
-      expect(cl.getURL()).to.equal(ISPAPI_CONNECTION_URL_PROXY);
+      expect(cl.getURL()).to.equal(CNR_CONNECTION_URL_PROXY);
     });
   });
 
   describe("#.useDefaultConnectionSetup", () => {
     it("test setting default connection setup works", () => {
       cl.useDefaultConnectionSetup();
-      expect(cl.getURL()).to.equal(ISPAPI_CONNECTION_URL_LIVE);
+      expect(cl.getURL()).to.equal(CNR_CONNECTION_URL_LIVE);
     });
   });
 });

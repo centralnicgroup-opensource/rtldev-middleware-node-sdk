@@ -36,7 +36,7 @@ export class ResponseTemplateManager {
         "421",
         "Command failed due to server error. Client should try again",
       ),
-      expired: this.generateTemplate("530", "SESSION NOT FOUND"),
+      expired: this.generateTemplate("530", "SESSIONID NOT FOUND"),
       httperror: this.generateTemplate(
         "421",
         "Command failed due to HTTP communication error",
@@ -50,7 +50,7 @@ export class ResponseTemplateManager {
         "API access error: curl_init failed",
       ),
       notfound: this.generateTemplate("500", "Response Template not found"),
-      unauthorized: this.generateTemplate("530", "Unauthorized"),
+      unauthorized: this.generateTemplate("500", "Unauthorized"),
     };
   }
 
@@ -84,6 +84,7 @@ export class ResponseTemplateManager {
     if (this.hasTemplate(id)) {
       return new Response(id);
     }
+    console.log("template id " + id)
     return new Response("notfound");
   }
 
@@ -93,8 +94,8 @@ export class ResponseTemplateManager {
    */
   public getTemplates(): any {
     const tpls: any = {};
-    Object.keys(this.templates).forEach((val, key) => {
-      tpls[key] = new Response(val);
+    Object.keys(this.templates).forEach((key) => {
+      tpls[key] = new Response(key);
     });
     return tpls;
   }
