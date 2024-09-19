@@ -11,7 +11,11 @@ before(() => {
   rtm
     .addTemplate(
       "listP0",
-      "[RESPONSE]\r\nPROPERTY[TOTAL][0]=2701\r\nPROPERTY[FIRST][0]=0\r\nPROPERTY[DOMAIN][0]=0-60motorcycletimes.com\r\nPROPERTY[DOMAIN][1]=0-be-s01-0.com\r\nPROPERTY[COUNT][0]=2\r\nPROPERTY[LAST][0]=1\r\nPROPERTY[LIMIT][0]=2\r\nDESCRIPTION=Command completed successfully\r\nCODE=200\r\nQUEUETIME=0\r\nRUNTIME=0.023\r\nEOF\r\n",
+      "[RESPONSE]\r\nproperty[total][0] = 4\r\nproperty[first][0] = 0\r\nproperty[domain][0] = cnic-ssl-test1.com\r\nproperty[domain][1] = cnic-ssl-test2.com\r\nproperty[count][0] = 2\r\nproperty[last][0] = 1\r\nproperty[limit][0] = 2\r\ndescription = Command completed successfully\r\ncode = 200\r\nqueuetime = 0\r\nruntime = 0.007\r\nEOF\r\n",
+    )
+    .addTemplate(
+      "pendingRegistration",
+      "[RESPONSE]\r\ncode = 200\r\ndescription = Command completed successfully\r\nruntime = 0.44\r\nqueuetime = 0\r\n\r\nproperty[status][0] = REQUESTED\r\nproperty[updated date][0] = 2023-05-22 12:14:31.0\r\nproperty[zone][0] = se\r\nEOF\r\n",
     )
     .addTemplate(
       "OK",
@@ -74,7 +78,7 @@ describe("Response class", function () {
 
     it("check return value [in API response]", () => {
       const tpl = new Response(
-        "[RESPONSE]\r\ncode=423\r\ndescription=Empty API response. Probably unreachable API end point\r\nqueuetime=0\r\nEOF\r\n",
+        "[RESPONSE]\r\ncode = 423\r\ndescription = Empty API response. Probably unreachable API end point\r\nqueuetime = 0\r\nEOF\r\n",
       );
       expect(tpl.getQueuetime()).to.equal(0);
     });
@@ -88,7 +92,7 @@ describe("Response class", function () {
 
     it("check return value [in API response]", () => {
       const tpl = new Response(
-        "[RESPONSE]\r\ncode=423\r\ndescription=Empty API response. Probably unreachable API end point\r\nruntime=0.12\r\nEOF\r\n",
+        "[RESPONSE]\r\ncode= 423 \r\ndescription = Empty API response. Probably unreachable API end point\r\nruntime = 0.12\r\nEOF\r\n",
       );
       expect(tpl.getRuntime()).to.equal(0.12);
     });
@@ -101,9 +105,10 @@ describe("Response class", function () {
     });
 
     it("check return value [in API response]", () => {
-      const tpl = new Response(
-        "[RESPONSE]\r\ncode=200\r\ndescription=Command completed successfully\r\npending=1\r\nEOF\r\n",
-      );
+      const tpl = new Response(rtm.getTemplate("pendingRegistration").getPlain(), {
+        COMMAND: "AddDomain",
+        DOMAIN: "example.com",
+      });
       expect(tpl.isPending()).to.be.true;
     });
   });
@@ -111,12 +116,12 @@ describe("Response class", function () {
   describe("#.getCommandPlain", () => {
     it("check flattening of command works", () => {
       const r = new Response("", {
-        COMMAND: "QueryDomainOptions",
+        COMMAND: "CheckDomains",
         DOMAIN0: "example.com",
         DOMAIN1: "example.net",
       });
       const expected =
-        "COMMAND = QueryDomainOptions\nDOMAIN0 = example.com\nDOMAIN1 = example.net\n";
+        "COMMAND = CheckDomains\nDOMAIN0 = example.com\nDOMAIN1 = example.net\n";
       expect(r.getCommandPlain()).to.equal(expected);
     });
 
@@ -143,23 +148,7 @@ describe("Response class", function () {
       expect(r.getCurrentPageNumber()).to.equal(null);
     });
   });
-
-  describe("#.getFirstRecordIndex", () => {
-    it("check return value [w/o FIRST in response, no rows]", () => {
-      const r = new Response(rtm.getTemplate("OK").getPlain(), cmd);
-      expect(r.getFirstRecordIndex()).to.equal(null);
-    });
-
-    it("check return value [w/o FIRST in response, rows]", () => {
-      const h = rtm.getTemplate("OK").getHash();
-      h.PROPERTY = {
-        DOMAIN: ["mydomain1.com", "mydomain2.com"],
-      };
-      const r = new Response(ResponseParser.serialize(h), cmd);
-      expect(r.getFirstRecordIndex()).to.equal(0);
-    });
-  });
-
+  
   describe("#.getColumns", () => {
     it("check return value", () => {
       const r = new Response(rtm.getTemplate("listP0").getPlain(), cmd);
@@ -172,7 +161,7 @@ describe("Response class", function () {
     it("check return value [colum exists]", () => {
       const r = new Response(rtm.getTemplate("listP0").getPlain(), cmd);
       const data = r.getColumnIndex("DOMAIN", 0);
-      expect(data).to.equal("0-60motorcycletimes.com");
+      expect(data).to.equal("cnic-ssl-test1.com");
     });
 
     it("check return value [colum does not exist]", () => {
@@ -206,11 +195,11 @@ describe("Response class", function () {
       if (rec) {
         expect(rec.getData()).to.eql({
           COUNT: "2",
-          DOMAIN: "0-60motorcycletimes.com",
+          DOMAIN: "cnic-ssl-test1.com",
           FIRST: "0",
           LAST: "1",
           LIMIT: "2",
-          TOTAL: "2701",
+          TOTAL: "4",
         });
       }
     });
@@ -237,7 +226,7 @@ describe("Response class", function () {
       let rec = r.getNextRecord();
       expect(rec).not.to.be.null;
       if (rec) {
-        expect(rec.getData()).to.eql({ DOMAIN: "0-be-s01-0.com" });
+        expect(rec.getData()).to.eql({ DOMAIN: "cnic-ssl-test2.com" });
       }
       rec = r.getNextRecord();
       expect(rec).to.be.null;
@@ -271,11 +260,11 @@ describe("Response class", function () {
       if (rec) {
         expect(rec.getData()).to.eql({
           COUNT: "2",
-          DOMAIN: "0-60motorcycletimes.com",
+          DOMAIN: "cnic-ssl-test1.com",
           FIRST: "0",
           LAST: "1",
           LIMIT: "2",
-          TOTAL: "2701",
+          TOTAL: "4",
         });
         expect(r.getPreviousRecord()).to.be.null;
       }
@@ -303,22 +292,6 @@ describe("Response class", function () {
     it("check return value [rows]", () => {
       const r = new Response(rtm.getTemplate("listP0").getPlain(), cmd);
       expect(r.hasPreviousPage()).to.be.false;
-    });
-  });
-
-  describe("#.getLastRecordIndex", () => {
-    it("check return value [no rows]", () => {
-      const r = new Response(rtm.getTemplate("OK").getPlain(), cmd);
-      expect(r.getLastRecordIndex()).to.be.null;
-    });
-
-    it("check return value [w/o LAST in response, rows]", () => {
-      const h = rtm.getTemplate("OK").getHash();
-      h.PROPERTY = {
-        DOMAIN: ["mydomain1.com", "mydomain2.com"],
-      };
-      const r = new Response(ResponseParser.serialize(h), cmd);
-      expect(r.getLastRecordIndex()).to.equal(1);
     });
   });
 

@@ -1,14 +1,14 @@
 import fetch from "cross-fetch";
-import { convert } from "idna-uts46-hx";
 import { Logger } from "./logger.js";
 import { Response } from "./response.js";
 import { ResponseTemplateManager } from "./responsetemplatemanager.js";
 import { fixedURLEnc, SocketConfig } from "./socketconfig.js";
+import { toAscii } from "idna-uts46-hx";
 
-export const ISPAPI_CONNECTION_URL_PROXY = "http://127.0.0.1/api/call.cgi";
-export const ISPAPI_CONNECTION_URL_LIVE = "https://api.ispapi.net/api/call.cgi";
-export const ISPAPI_CONNECTION_URL_OTE =
-  "https://api-ote.ispapi.net/api/call.cgi";
+export const CNR_CONNECTION_URL_PROXY = "http://127.0.0.1/api/call.cgi";
+export const CNR_CONNECTION_URL_LIVE = "https://api.rrpproxy.net/api/call.cgi";
+export const CNR_CONNECTION_URL_OTE =
+  "https://api-ote.rrpproxy.net/api/call.cgi";
 
 const rtm = ResponseTemplateManager.getInstance();
 
@@ -44,16 +44,26 @@ export class APIClient {
    * logger function for debug mode
    */
   private logger: Logger | null;
+  /**
+   * set sub user account
+   */
+  private subUser: string;
+  /**
+   * set sub user account role seperater
+   */
+  private readonly roleSeparator: string = ":";
 
   public constructor() {
     this.ua = "";
     this.socketURL = "";
     this.debugMode = false;
-    this.setURL(ISPAPI_CONNECTION_URL_LIVE);
+    this.setURL(CNR_CONNECTION_URL_LIVE);
     this.socketConfig = new SocketConfig();
     this.useLIVESystem();
     this.curlopts = {};
     this.logger = null;
+    this.subUser = "";
+    this.roleSeparator = ":";
     this.setDefaultLogger();
   }
 
@@ -93,15 +103,6 @@ export class APIClient {
   }
 
   /**
-   * Get the API Session that is currently set
-   * @returns API Session or null
-   */
-  public getSession(): string | null {
-    const sessid = this.socketConfig.getSession();
-    return sessid === "" ? null : sessid;
-  }
-
-  /**
    * Get the API connection url that is currently set
    * @returns API connection url currently in use
    */
@@ -134,8 +135,7 @@ export class APIClient {
   public getUserAgent(): string {
     if (!this.ua.length) {
       this.ua =
-        `NODE-SDK (${process.platform}; ${
-          process.arch
+        `NODE-SDK (${process.platform}; ${process.arch
         }; rv:${this.getVersion()}) ` + `node/${process.version}`;
     }
     return this.ua;
@@ -198,7 +198,7 @@ export class APIClient {
    */
   public saveSession(session: any): APIClient {
     session.socketcfg = {
-      entity: this.socketConfig.getSystemEntity(),
+      login: this.socketConfig.getLogin(),
       session: this.socketConfig.getSession(),
     };
     return this;
@@ -211,8 +211,11 @@ export class APIClient {
    * @returns Current APIClient instance for method chaining
    */
   public reuseSession(session: any): APIClient {
-    this.socketConfig.setSystemEntity(session.socketcfg.entity);
-    this.setSession(session.socketcfg.session);
+    if (!session || !session.socketcfg || !session.socketcfg.login || !session.socketcfg.session) {
+      return this;
+    }
+    this.setCredentials(session.socketcfg.login);
+    this.socketConfig.setSession(session.socketcfg.session);
     return this;
   }
 
@@ -227,33 +230,12 @@ export class APIClient {
   }
 
   /**
-   * Set one time password to be used for API communication
-   * @param value one time password
-   * @returns Current APIClient instance for method chaining
-   */
-  public setOTP(value: string): APIClient {
-    this.socketConfig.setOTP(value);
-    return this;
-  }
-
-  /**
-   * Set an API session id to be used for API communication
-   * @param value API session id
-   * @returns Current APIClient instance for method chaining
-   */
-  public setSession(value: string): APIClient {
-    this.socketConfig.setSession(value);
-    return this;
-  }
-
-  /**
-   * Set an Remote IP Address to be used for API communication
-   * To be used in case you have an active ip filter setting.
-   * @param value Remote IP Address
-   * @returns Current APIClient instance for method chaining
-   */
-  public setRemoteIPAddress(value: string): APIClient {
-    this.socketConfig.setRemoteAddress(value);
+ * Set Persistent to request session id for API communication
+ * @param value API session id
+ * @returns Current APIClient instance for method chaining
+ */
+  public setPersistent(): APIClient {
+    this.socketConfig.setPersistent();
     return this;
   }
 
@@ -263,7 +245,7 @@ export class APIClient {
    * @param pw account password
    * @returns Current APIClient instance for method chaining
    */
-  public setCredentials(uid: string, pw: string): APIClient {
+  public setCredentials(uid: string, pw: string = ""): APIClient {
     this.socketConfig.setLogin(uid);
     this.socketConfig.setPassword(pw);
     return this;
@@ -276,8 +258,15 @@ export class APIClient {
    * @param pw role user password
    * @returns Current APIClient instance for method chaining
    */
-  public setRoleCredentials(uid: string, role: string, pw: string): APIClient {
-    return this.setCredentials(role ? `${uid}!${role}` : uid, pw);
+  public setRoleCredentials(
+    uid: string,
+    role: string,
+    pw: string = "",
+  ): APIClient {
+    return this.setCredentials(
+      role ? `${uid}${this.roleSeparator}${role}` : uid,
+      pw,
+    );
   }
 
   /**
@@ -285,36 +274,13 @@ export class APIClient {
    * @param otp optional one time password
    * @returns Promise resolving with API Response
    */
-  public async login(otp = ""): Promise<Response> {
-    this.setOTP(otp || "");
-    const rr = await this.request({ COMMAND: "StartSession" });
+  public async login(): Promise<Response> {
+    this.setPersistent();
+    const rr = await this.request({}, false);
+    this.socketConfig.setSession("");
     if (rr.isSuccess()) {
-      const col = rr.getColumn("SESSION");
-      this.setSession(col ? col.getData()[0] : "");
-    }
-    return rr;
-  }
-
-  /**
-   * Perform API login to start session-based communication.
-   * Use given specific command parameters.
-   * @param params given specific command parameters
-   * @param otp optional one time password
-   * @returns Promise resolving with API Response
-   */
-  public async loginExtended(params: any, otp = ""): Promise<Response> {
-    this.setOTP(otp);
-    const rr = await this.request(
-      Object.assign(
-        {
-          COMMAND: "StartSession",
-        },
-        params,
-      ),
-    );
-    if (rr.isSuccess()) {
-      const col = rr.getColumn("SESSION");
-      this.setSession(col ? col.getData()[0] : "");
+      const col = rr.getColumn("SESSIONID");
+      this.socketConfig.setSession(col ? col.getData()[0] : "");
     }
     return rr;
   }
@@ -324,11 +290,14 @@ export class APIClient {
    * @returns Promise resolving with API Response
    */
   public async logout(): Promise<Response> {
-    const rr = await this.request({
-      COMMAND: "EndSession",
-    });
+    const rr = await this.request(
+      {
+        COMMAND: "StopSession",
+      },
+      false,
+    );
     if (rr.isSuccess()) {
-      this.setSession("");
+      this.socketConfig.setSession("");
     }
     return rr;
   }
@@ -338,7 +307,12 @@ export class APIClient {
    * @param cmd API command to request
    * @returns Promise resolving with API Response
    */
-  public async request(cmd: any): Promise<Response> {
+  public async request(cmd: any, setUserView = true): Promise<Response> {
+    // set sub user id if available
+    if (setUserView && this.subUser !== "") {
+      cmd.SUBUSER = this.subUser;
+    }
+
     // flatten nested api command bulk parameters
     let mycmd = this.flattenCommand(cmd);
 
@@ -392,7 +366,7 @@ export class APIClient {
         if (this.debugMode && this.logger) {
           this.logger.log(this.getPOSTData(mycmd, true), rr, err.message);
         }
-        return err;
+        return rr;
       });
   }
 
@@ -420,9 +394,9 @@ export class APIClient {
       mycmd.FIRST = first;
       mycmd.LIMIT = limit;
       return this.request(mycmd);
-    } else {
-      return null;
     }
+
+    return null;
   }
 
   /**
@@ -432,15 +406,13 @@ export class APIClient {
    */
   public async requestAllResponsePages(cmd: any): Promise<Response[]> {
     const responses: Response[] = [];
-    const rr: Response = await this.request(
-      Object.assign({}, cmd, { FIRST: 0 }),
-    );
-    let tmp: Response | null = rr;
-    let idx = 0;
-    do {
-      responses[idx++] = tmp;
-      tmp = await this.requestNextResponsePage(tmp);
-    } while (tmp !== null);
+    let rr: Response | null = await this.request({ ...cmd, FIRST: 0 });
+
+    while (rr !== null) {
+      responses.push(rr);
+      rr = await this.requestNextResponsePage(rr);
+    }
+
     return responses;
   }
 
@@ -450,7 +422,7 @@ export class APIClient {
    * @returns Current APIClient instance for method chaining
    */
   public setUserView(uid: string): APIClient {
-    this.socketConfig.setUser(uid);
+    this.subUser = uid;
     return this;
   }
 
@@ -459,7 +431,7 @@ export class APIClient {
    * @returns Current APIClient instance for method chaining
    */
   public resetUserView(): APIClient {
-    this.socketConfig.setUser("");
+    this.subUser = "";
     return this;
   }
 
@@ -469,7 +441,7 @@ export class APIClient {
    * @returns Current APIClient instance for method chaining
    */
   public useHighPerformanceConnectionSetup(): APIClient {
-    this.setURL(ISPAPI_CONNECTION_URL_PROXY);
+    this.setURL(CNR_CONNECTION_URL_PROXY);
     return this;
   }
 
@@ -478,7 +450,7 @@ export class APIClient {
    * @returns Current APIClient instance for method chaining
    */
   public useDefaultConnectionSetup(): APIClient {
-    this.setURL(ISPAPI_CONNECTION_URL_LIVE);
+    this.setURL(CNR_CONNECTION_URL_LIVE);
     return this;
   }
 
@@ -487,8 +459,7 @@ export class APIClient {
    * @returns Current APIClient instance for method chaining
    */
   public useOTESystem(): APIClient {
-    this.setURL(ISPAPI_CONNECTION_URL_OTE);
-    this.socketConfig.setSystemEntity("1234");
+    this.setURL(CNR_CONNECTION_URL_OTE);
     return this;
   }
 
@@ -497,8 +468,7 @@ export class APIClient {
    * @returns Current APIClient instance for method chaining
    */
   public useLIVESystem(): APIClient {
-    this.setURL(ISPAPI_CONNECTION_URL_LIVE);
-    this.socketConfig.setSystemEntity("54cd");
+    this.setURL(CNR_CONNECTION_URL_LIVE);
     return this;
   }
 
@@ -526,9 +496,12 @@ export class APIClient {
     if (secured) {
       tmp = tmp.replace(/PASSWORD=[^\n]+/, "PASSWORD=***");
     }
-    tmp = tmp.replace(/\n$/, "");
-    data += `${fixedURLEnc("s_command")}=${fixedURLEnc(tmp)}`;
-    return data;
+    tmp = tmp.replace(/\n$/, "");   
+    if (Object.keys(cmd).length > 0) {
+          data += `${fixedURLEnc("s_command")}=${fixedURLEnc(tmp)}`
+    }
+
+    return data.endsWith("&") ? data.slice(0, -1) : data;
   }
 
   /**
@@ -566,45 +539,35 @@ export class APIClient {
    * @returns Promise resolving with api command with IDN values replaced to punycode
    */
   private async autoIDNConvert(cmd: any): Promise<any> {
-    // don't convert for convertidn command to avoid endless loop
-    // and ignore commands in string format (even deprecated)
-    if (
-      typeof cmd === "string" ||
-      cmd instanceof String ||
-      /^CONVERTIDN$/i.test(cmd.COMMAND)
-    ) {
-      return cmd;
-    }
-    const keys = Object.keys(cmd).filter((key) => {
-      return /^(DOMAIN|NAMESERVER|DNSZONE)([0-9]*)$/i.test(key);
-    });
-    if (!keys.length) {
-      return cmd;
-    }
-    const toconvert: string[] = [];
+    const keyPattern = /^(NAMESERVER|NS|DNSZONE)([0-9]*)$/i;
+    const objClassPattern =
+      /^(DOMAIN(APPLICATION|BLOCKING)?|NAMESERVER|NS|DNSZONE)$/i;
+    const asciiPattern = /^[A-Za-z0-9.\-]+$/;
+
+    const toConvert: string[] = [];
     const idxs: string[] = [];
-    keys.forEach((key: string) => {
+
+    Object.keys(cmd).forEach((key) => {
+      const val = cmd[key];
       if (
-        cmd[key] !== null &&
-        cmd[key] !== undefined &&
-        /[^a-z0-9.\- ]/i.test(cmd[key])
+        (keyPattern.test(key) ||
+          (key.toUpperCase() === "OBJECTID" &&
+            cmd.OBJECTCLASS &&
+            objClassPattern.test(cmd.OBJECTCLASS))) &&
+        !asciiPattern.test(val)
       ) {
-        toconvert.push(cmd[key]);
+        toConvert.push(val);
         idxs.push(key);
       }
     });
 
-    if (!toconvert.length) {
-      return cmd;
+    if (toConvert.length > 0) {
+      const convertedValues = toConvert.map((value) => toAscii(value));
+      convertedValues.forEach((convertedValue, idx) => {
+        cmd[idxs[idx]] = convertedValue;
+      });
     }
 
-    const r = convert(toconvert);
-    if (!Array.isArray(r.PC)) {
-      r.PC = [r.PC];
-    }
-    r.PC.forEach((pc: string, idx: any) => {
-      cmd[idxs[idx]] = pc;
-    });
     return cmd;
   }
 }

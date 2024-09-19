@@ -175,9 +175,23 @@ export class Response {
    * @returns boolean result
    */
   public isPending(): boolean {
-    return Object.prototype.hasOwnProperty.call(this.hash, "PENDING")
-      ? this.hash.PENDING === "1"
-      : false;
+    const cmd = this.getCommand();
+
+    // Check if the COMMAND is AddDomain (case-insensitive)
+    if (!cmd.COMMAND || cmd.COMMAND.toLowerCase() !== "adddomain") {
+      return false;
+    }
+
+    // Retrieve the STATUS column and check if its data equals REQUESTED (case-insensitive)
+    const status = this.getColumn("STATUS");
+    if (status) {
+      const statusData = status.getDataByIndex(0);
+      if (statusData && statusData.toLowerCase() === "requested") {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   /**
