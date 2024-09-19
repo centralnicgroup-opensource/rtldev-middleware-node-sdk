@@ -12,7 +12,8 @@
         "github.vscode-github-actions",
         "GitHub.vscode-pull-request-github",
         "ms-vscode-remote.remote-containers",
-        "ms-azuretools.vscode-docker"
+        "ms-azuretools.vscode-docker",
+        "GitHub.copilot"
       ],
       "settings": {
         "terminal.integrated.defaultProfile.linux": "zsh",

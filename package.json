@@ -1,11 +1,11 @@
 {
-  "name": "@hexonet/ispapi-apiconnector",
-  "description": "Node.js SDK for the insanely fast HEXONET API",
+  "name": "@cnr/apiconnector",
+  "description": "Node.js SDK for the insanely fast CentralNic Reseller API",
   "version": "9.0.8",
   "private": false,
   "author": {
     "name": "Kai Schwarz",
-    "email": "kschwarz@hexonet.net"
+    "email": "kai.schwarz@centralnic.com"
   },
   "sideEffects": false,
   "type": "module",
@@ -22,16 +22,16 @@
   "maintainers": [
     {
       "name": "Kai Schwarz",
-      "email": "kschwarz@hexonet.net"
+      "email": "kai.schwarz@centralnic.com"
     }
   ],
   "keywords": [
-    "hexonet",
+    "centralnicreseller",
+    "centralnic",
+    "cnr",
     "domain",
     "api",
     "connector",
-    "isp",
-    "ispapi",
     "ssl",
     "cert",
     "dns",
@@ -46,31 +46,34 @@
     "lint": "prettier --write .",
     "prepublish": "npm run compile",
     "documentation": "typedoc",
-    "test": "cross-env NODE_ENV=development c8 mocha"
+    "test": "cross-env NODE_ENV=development c8 mocha",
+    "test-demo": "npm run prepublish && node ./tests/app.js"
   },
   "devDependencies": {
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
     "@tsconfig/node20": "^20.1.4",
-    "@types/chai": "^4.3.1",
+    "@types/chai": "^4.3.19",
+    "@types/chai-as-promised": "^8.0.0",
     "@types/mocha": "^10.0.0",
+    "@types/nock": "^10.0.3",
     "@types/node": "^22.3.0",
-    "c8": "^10.0.0",
-    "chai": "^5.0.0",
+    "c8": "^10.1.2",
+    "chai": "^5.1.1",
     "chai-as-promised": "^8.0.0",
     "cross-env": "^7.0.3",
-    "mocha": "^10.0.0",
-    "nock": "^13.2.7",
+    "mocha": "^10.7.3",
+    "nock": "^13.5.5",
     "prettier": "^3.0.0",
     "semantic-release": "^24.0.0",
     "semantic-release-replace-plugin": "github:centralnicgroup-opensource/rtldev-middleware-semantic-release-replace-plugin",
     "semantic-release-teams-notify-plugin": "github:centralnicgroup-opensource/rtldev-middleware-semantic-release-notify-plugin",
     "tsx": "^4.7.2",
     "typedoc": "^0.26.2",
-    "typescript": "^5.3.2"
+    "typescript": "^5.6.3"
   },
   "dependencies": {
     "cross-fetch": "^4.0.0",
-    "idna-uts46-hx": "^6.0.4"
+    "idna-uts46-hx": "^6.0.5"
   }
 }
