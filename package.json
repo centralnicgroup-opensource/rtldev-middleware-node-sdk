@@ -1,11 +1,11 @@
 {
-  "name": "@cnr/apiconnector",
+  "name": "@team-internet/apiconnector",
   "description": "Node.js SDK for the insanely fast CentralNic Reseller API",
   "version": "9.0.8",
   "private": false,
   "author": {
     "name": "Kai Schwarz",
-    "email": "kai.schwarz@centralnic.com"
+    "url": "https://github.com/kaischwarz-cnic"
   },
   "sideEffects": false,
   "type": "module",
@@ -22,7 +22,11 @@
   "maintainers": [
     {
       "name": "Kai Schwarz",
-      "email": "kai.schwarz@centralnic.com"
+      "url": "https://github.com/kaischwarz-cnic"
+    },
+    {
+      "name": "Asif Nawaz",
+      "url": "https://github.com/asifnawaz-cnic"
     }
   ],
   "keywords": [
