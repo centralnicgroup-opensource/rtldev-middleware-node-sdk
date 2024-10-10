@@ -42,12 +42,13 @@ ARG USERHOME="/home/${USERNAME}"
 RUN usermod --shell /usr/bin/zsh ${USERNAME} \
     && usermod -a -G www-data ${USERNAME} \
     && usermod -a -G staff ${USERNAME}
+# Set a default value for ZSH_CUSTOM if it's not already set
+ENV ZSH_CUSTOM=${USERHOME}/.oh-my-zsh/custom
 
 # Nodejs Installation
 COPY --from=nodejs /usr/local/include/node /usr/local/include/node
 COPY --from=nodejs /usr/local/lib/node_modules /usr/local/lib/node_modules
 COPY --from=nodejs /usr/local/bin /usr/local/bin
-
 
 # Clone the powerlevel10k theme for zsh and change owner
 RUN git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $ZSH_CUSTOM/themes/powerlevel10k \
