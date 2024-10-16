@@ -32,33 +32,4 @@ export const ResponseParser: any = {
     }
     return hash;
   },
-  /**
-   * Serialize given parsed response hash back to plain text
-   * @param r API response as JS Object (hash)
-   * @returns plain API response
-   */
-  serialize: (r: any): string => {
-    let plain = "[RESPONSE]";
-    if (Object.prototype.hasOwnProperty.call(r, "PROPERTY")) {
-      Object.keys(r.PROPERTY).forEach((key) => {
-        r.PROPERTY[key].forEach((val: string, index: number) => {
-          plain += `\r\nPROPERTY[${key}][${index}]=${val}`;
-        });
-      });
-    }
-    if (Object.prototype.hasOwnProperty.call(r, "CODE")) {
-      plain += `\r\nCODE=${r.CODE}`;
-    }
-    if (Object.prototype.hasOwnProperty.call(r, "DESCRIPTION")) {
-      plain += `\r\nDESCRIPTION=${r.DESCRIPTION}`;
-    }
-    if (Object.prototype.hasOwnProperty.call(r, "QUEUETIME")) {
-      plain += `\r\nQUEUETIME=${r.QUEUETIME}`;
-    }
-    if (Object.prototype.hasOwnProperty.call(r, "RUNTIME")) {
-      plain += `\r\nRUNTIME=${r.RUNTIME}`;
-    }
-    plain += "\r\nEOF\r\n";
-    return plain;
-  },
 };
