@@ -1,16 +1,14 @@
 ## [9.0.8](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/compare/v9.0.7...v9.0.8) (2024-07-25)
 
-
 ### Bug Fixes
 
-* **deps:** bump idna-uts46-hx from 6.0.4 to 6.0.5 ([59ddf2f](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/commit/59ddf2fd575a6596476c4c8309d1993e659fe98a))
+- **deps:** bump idna-uts46-hx from 6.0.4 to 6.0.5 ([59ddf2f](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/commit/59ddf2fd575a6596476c4c8309d1993e659fe98a))
 
 ## [9.0.7](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/compare/v9.0.6...v9.0.7) (2024-04-24)
 
-
 ### Performance Improvements
 
-* **apiclient:** replace api-side IDN Converter with nodejs library ([d7080c7](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/commit/d7080c76ce5e139a4457b95f129a5bd539270657))
+- **apiclient:** replace api-side IDN Converter with nodejs library ([d7080c7](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/commit/d7080c76ce5e139a4457b95f129a5bd539270657))
 
 ## [9.0.6](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/compare/v9.0.5...v9.0.6) (2024-04-24)
 
