@@ -1,7 +1,7 @@
 {
   "name": "@cnr/apiconnector",
   "description": "Node.js SDK for the insanely fast CentralNic Reseller API",
-  "version": "9.0.8",
+  "version": "10.0.0",
   "private": false,
   "author": {
     "name": "Kai Schwarz",

@@ -1,3 +1,16 @@
+# [10.0.0](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/compare/v9.0.8...v10.0.0) (2024-11-11)
+
+
+### Features
+
+* **centralnic reseller node sdk:** Introducing CentralNic Reseller Node SDK API Connector ([d3c5fb1](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/commit/d3c5fb14286cb1f6e00c776b331200b36d077238))
+
+
+### BREAKING CHANGES
+
+* **centralnic reseller node sdk:** This release deprecates the Hexonet Node SDK and introduces the CentralNic Reseller Node SDK.
+- Note: To continue using the Hexonet SDK, please install version 9.0.8 or earlier.
+
 ## [9.0.8](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/compare/v9.0.7...v9.0.8) (2024-07-25)
 
 ### Bug Fixes
