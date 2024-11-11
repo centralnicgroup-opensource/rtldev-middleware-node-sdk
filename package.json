@@ -63,7 +63,7 @@
     "chai-as-promised": "^8.0.0",
     "cross-env": "^7.0.3",
     "mocha": "^10.8.2",
-    "nock": "^13.5.5",
+    "nock": "^13.5.6",
     "prettier": "^3.0.0",
     "semantic-release": "^24.0.0",
     "semantic-release-replace-plugin": "github:centralnicgroup-opensource/rtldev-middleware-semantic-release-replace-plugin",
