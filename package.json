@@ -68,7 +68,7 @@
     "semantic-release": "^24.0.0",
     "semantic-release-replace-plugin": "github:centralnicgroup-opensource/rtldev-middleware-semantic-release-replace-plugin",
     "semantic-release-teams-notify-plugin": "github:centralnicgroup-opensource/rtldev-middleware-semantic-release-notify-plugin",
-    "tsx": "^4.7.2",
+    "tsx": "^4.19.2",
     "typedoc": "^0.26.11",
     "typescript": "^5.6.3"
   },
