@@ -1,5 +1,5 @@
 {
-  "name": "@cnr/apiconnector",
+  "name": "@team-internet/apiconnector",
   "description": "Node.js SDK for the insanely fast CentralNic Reseller (fka RRPProxy) API",
   "version": "9.0.8",
   "private": false,
