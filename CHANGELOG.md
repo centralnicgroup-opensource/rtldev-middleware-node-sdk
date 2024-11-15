@@ -1,3 +1,10 @@
+## [10.0.1](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/compare/v10.0.0...v10.0.1) (2024-11-15)
+
+
+### Bug Fixes
+
+* **readme.md:** reviewed readme.md ([a0d7f7c](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/commit/a0d7f7c007f059c8a1cef6977d13101646f15a30))
+
 # [10.0.0](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/compare/v9.0.8...v10.0.0) (2024-11-15)
 
 
