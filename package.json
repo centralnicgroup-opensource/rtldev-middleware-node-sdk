@@ -1,6 +1,6 @@
 {
   "name": "@cnr/apiconnector",
-  "description": "Node.js SDK for the insanely fast CentralNic Reseller API",
+  "description": "Node.js SDK for the insanely fast CentralNic Reseller (fka RRPProxy) API",
   "version": "10.0.0",
   "private": false,
   "author": {
@@ -23,6 +23,10 @@
     {
       "name": "Kai Schwarz",
       "email": "kai.schwarz@centralnic.com"
+    },
+    {
+      "name": "Asif Nawaz",
+      "email": "asif.nawaz@centralnic.com"
     }
   ],
   "keywords": [
