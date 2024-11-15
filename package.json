@@ -3,6 +3,9 @@
   "description": "Node.js SDK for the insanely fast CentralNic Reseller (fka RRPProxy) API",
   "version": "9.0.8",
   "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
   "author": {
     "name": "Kai Schwarz",
     "email": "kai.schwarz@centralnic.com"
@@ -17,7 +20,10 @@
     "node": ">=20.6.1"
   },
   "homepage": "https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk",
-  "repository": "github:centralnicgroup-opensource/rtldev-middleware-node-sdk",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk.git"
+  },
   "bugs": "https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/issues",
   "maintainers": [
     {
