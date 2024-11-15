@@ -24,8 +24,9 @@ This SDK succeeds the deprecated Hexonet Node.js SDK. It is an enhanced version 
 To run the demo application, follow these steps:
 
 1. **Set Your Credentials**: Ensure your credentials are available. You can either:
-  - Replace them directly in the application file.
-  - Set the environment variables `CNR_TEST_USER` and `CNR_TEST_PASSWORD` in your terminal.
+
+- Replace them directly in the application file.
+- Set the environment variables `CNR_TEST_USER` and `CNR_TEST_PASSWORD` in your terminal.
 
 2. **Execute the Demo**: Once your credentials are set, run the following command in the terminal:
 

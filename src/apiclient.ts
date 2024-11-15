@@ -135,7 +135,8 @@ export class APIClient {
   public getUserAgent(): string {
     if (!this.ua.length) {
       this.ua =
-        `NODE-SDK (${process.platform}; ${process.arch
+        `NODE-SDK (${process.platform}; ${
+          process.arch
         }; rv:${this.getVersion()}) ` + `node/${process.version}`;
     }
     return this.ua;
@@ -211,7 +212,12 @@ export class APIClient {
    * @returns Current APIClient instance for method chaining
    */
   public reuseSession(session: any): APIClient {
-    if (!session || !session.socketcfg || !session.socketcfg.login || !session.socketcfg.session) {
+    if (
+      !session ||
+      !session.socketcfg ||
+      !session.socketcfg.login ||
+      !session.socketcfg.session
+    ) {
       return this;
     }
     this.setCredentials(session.socketcfg.login);
@@ -230,10 +236,10 @@ export class APIClient {
   }
 
   /**
- * Set Persistent to request session id for API communication
- * @param value API session id
- * @returns Current APIClient instance for method chaining
- */
+   * Set Persistent to request session id for API communication
+   * @param value API session id
+   * @returns Current APIClient instance for method chaining
+   */
   public setPersistent(): APIClient {
     this.socketConfig.setPersistent();
     return this;
@@ -496,9 +502,9 @@ export class APIClient {
     if (secured) {
       tmp = tmp.replace(/PASSWORD=[^\n]+/, "PASSWORD=***");
     }
-    tmp = tmp.replace(/\n$/, "");   
+    tmp = tmp.replace(/\n$/, "");
     if (Object.keys(cmd).length > 0) {
-          data += `${fixedURLEnc("s_command")}=${fixedURLEnc(tmp)}`
+      data += `${fixedURLEnc("s_command")}=${fixedURLEnc(tmp)}`;
     }
 
     return data.endsWith("&") ? data.slice(0, -1) : data;

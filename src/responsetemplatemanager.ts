@@ -84,7 +84,7 @@ export class ResponseTemplateManager {
     if (this.hasTemplate(id)) {
       return new Response(id);
     }
-    console.log("template id " + id)
+    console.log("template id " + id);
     return new Response("notfound");
   }
 

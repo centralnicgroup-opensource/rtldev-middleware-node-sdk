@@ -110,10 +110,18 @@ describe("APIClient class", function () {
     });
 
     it("test data getting secured correctly", () => {
-      const encodedTestUserName = encodeURIComponent(process.env.CNR_TEST_USER || '');
+      const encodedTestUserName = encodeURIComponent(
+        process.env.CNR_TEST_USER || "",
+      );
       const validate =
-        "s_login=" + encodedTestUserName + "&s_pw=***&s_command=COMMAND%3DCheckAuthentication%0APASSWORD%3D%2A%2A%2A%0ASUBUSER%3D" + encodedTestUserName;
-      cl.setCredentials(process.env.CNR_TEST_USER || '', process.env.CNR_TEST_PASSWORD || '');
+        "s_login=" +
+        encodedTestUserName +
+        "&s_pw=***&s_command=COMMAND%3DCheckAuthentication%0APASSWORD%3D%2A%2A%2A%0ASUBUSER%3D" +
+        encodedTestUserName;
+      cl.setCredentials(
+        process.env.CNR_TEST_USER || "",
+        process.env.CNR_TEST_PASSWORD || "",
+      );
       const enc = cl.getPOSTData(
         {
           COMMAND: "CheckAuthentication",
@@ -150,7 +158,8 @@ describe("APIClient class", function () {
     it("validate response", () => {
       const ua = cl.getUserAgent();
       expect(ua).to.equal(
-        `NODE-SDK (${process.platform}; ${process.arch
+        `NODE-SDK (${process.platform}; ${
+          process.arch
         }; rv:${cl.getVersion()}) node/${process.version}`,
       );
     });
@@ -162,7 +171,8 @@ describe("APIClient class", function () {
       const ua = cl.getUserAgent();
       expect(cls).to.be.instanceOf(APIClient);
       expect(ua).to.equal(
-        `WHMCS (${process.platform}; ${process.arch
+        `WHMCS (${process.platform}; ${
+          process.arch
         }; rv:7.7.0) node-sdk/${cl.getVersion()} node/${process.version}`,
       );
     });
@@ -176,8 +186,10 @@ describe("APIClient class", function () {
       const ua = cl.getUserAgent();
       expect(cls).to.be.instanceOf(APIClient);
       expect(ua).to.equal(
-        `WHMCS (${process.platform}; ${process.arch
-        }; rv:7.7.0) reg/2.6.2 ssl/7.2.2 dc/8.2.2 node-sdk/${cl.getVersion()} node/${process.version
+        `WHMCS (${process.platform}; ${
+          process.arch
+        }; rv:7.7.0) reg/2.6.2 ssl/7.2.2 dc/8.2.2 node-sdk/${cl.getVersion()} node/${
+          process.version
         }`,
       );
     });
@@ -200,7 +212,10 @@ describe("APIClient class", function () {
       const sessionobj = {};
       const tpl = new Response(rtm.getTemplate("login200").getPlain(), cmd);
       nock(oteHost).post(apiScript).reply(200, tpl.getPlain());
-      cl.useOTESystem().setCredentials(process.env.CNR_TEST_USER || '', process.env.CNR_TEST_PASSWORD || '');
+      cl.useOTESystem().setCredentials(
+        process.env.CNR_TEST_USER || "",
+        process.env.CNR_TEST_PASSWORD || "",
+      );
       const r = await cl.login();
       cl.saveSession(sessionobj);
       expect(r).to.be.instanceOf(Response);
@@ -260,7 +275,10 @@ describe("APIClient class", function () {
     it("validate against mocked API response [login succeeded; no role used]", async () => {
       const tpl = new Response(rtm.getTemplate("login200").getPlain(), cmd);
       nock(oteHost).post(apiScript).reply(200, tpl.getPlain());
-      cl.useOTESystem().setCredentials(process.env.CNR_TEST_USER || '', process.env.CNR_TEST_PASSWORD || '');
+      cl.useOTESystem().setCredentials(
+        process.env.CNR_TEST_USER || "",
+        process.env.CNR_TEST_PASSWORD || "",
+      );
       const r = await cl.login();
       expect(r).to.be.instanceOf(Response);
       expect(r.isSuccess()).to.be.true;
@@ -307,7 +325,10 @@ describe("APIClient class", function () {
       // this case is just to increase coverage
       const tpl = new Response(rtm.getTemplate("OK").getPlain(), cmd);
       nock(oteHost).post(apiScript).reply(200, tpl.getPlain());
-      cl.useOTESystem().setCredentials(process.env.CNR_TEST_USER || '', process.env.CNR_TEST_PASSWORD || '');
+      cl.useOTESystem().setCredentials(
+        process.env.CNR_TEST_USER || "",
+        process.env.CNR_TEST_PASSWORD || "",
+      );
       const r = await cl.login();
       expect(r).to.be.instanceOf(Response);
       expect(r.isSuccess()).to.be.true;
@@ -323,10 +344,15 @@ describe("APIClient class", function () {
         .reply(200, rtm.getTemplate("OK").getPlain());
 
       // Perform login to establish a session
-      cl.reuseSession({ socketconfig: { login: "myaccountid", session: "12345678" } });
+      cl.reuseSession({
+        socketconfig: { login: "myaccountid", session: "12345678" },
+      });
       // Perform logout
       const logoutResponse = await cl.logout();
-      console.log("Logout Response:", cl.getPOSTData({ COMMAND: "StatusAccount" }));
+      console.log(
+        "Logout Response:",
+        cl.getPOSTData({ COMMAND: "StatusAccount" }),
+      );
       expect(logoutResponse).to.be.instanceOf(Response);
       expect(logoutResponse.isSuccess()).to.be.true;
     });
@@ -360,7 +386,10 @@ describe("APIClient class", function () {
         .post(apiScript)
         .reply(404, rtm.getTemplate("404").getPlain());
       cl.enableDebugMode()
-        .setCredentials(process.env.CNR_TEST_USER || '', process.env.CNR_TEST_PASSWORD || '')
+        .setCredentials(
+          process.env.CNR_TEST_USER || "",
+          process.env.CNR_TEST_PASSWORD || "",
+        )
         .useOTESystem();
       const r = await cl.request(cmd);
       expect(r).to.be.instanceOf(Response);
@@ -386,7 +415,7 @@ describe("APIClient class", function () {
       nock(oteHost)
         .post(apiScript)
         .reply(200, rtm.getTemplate("OK").getPlain());
-        cl.enableDebugMode();
+      cl.enableDebugMode();
       const r = await cl.request({
         COMMAND: "CheckDomains",
         DOMAIN: ["example.com", "example.net"],

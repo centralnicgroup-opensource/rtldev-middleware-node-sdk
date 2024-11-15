@@ -105,10 +105,13 @@ describe("Response class", function () {
     });
 
     it("check return value [in API response]", () => {
-      const tpl = new Response(rtm.getTemplate("pendingRegistration").getPlain(), {
-        COMMAND: "AddDomain",
-        DOMAIN: "example.com",
-      });
+      const tpl = new Response(
+        rtm.getTemplate("pendingRegistration").getPlain(),
+        {
+          COMMAND: "AddDomain",
+          DOMAIN: "example.com",
+        },
+      );
       expect(tpl.isPending()).to.be.true;
     });
   });
@@ -148,7 +151,7 @@ describe("Response class", function () {
       expect(r.getCurrentPageNumber()).to.equal(null);
     });
   });
-  
+
   describe("#.getColumns", () => {
     it("check return value", () => {
       const r = new Response(rtm.getTemplate("listP0").getPlain(), cmd);
