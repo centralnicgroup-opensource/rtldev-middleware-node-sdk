@@ -20,10 +20,7 @@
     "node": ">=20.6.1"
   },
   "homepage": "https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk.git"
-  },
+  "repository": "github:centralnicgroup-opensource/rtldev-middleware-node-sdk",
   "bugs": "https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/issues",
   "maintainers": [
     {
