@@ -1,4 +1,4 @@
-# node-sdk
+# CentralNic Reseller NODE-SDK
 
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md)
 [![npm version](https://img.shields.io/npm/v/@cnr/apiconnector.svg?style=flat)](https://www.npmjs.com/package/@cnr/apiconnector)
@@ -8,7 +8,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/blob/master/CONTRIBUTING.md)
 
-This module is a connector library for the insanely fast CentralNic Reseller Backend API. For further informations visit our [homepage](https://www.centralnicreseller.com) and do not hesitate to [contact us](https://www.centralnicreseller.com/contact).
+This module is a connector library for the insanely fast CentralNic Reseller (formerly RRPProxy) Backend API. For further informations visit our [homepage](https://www.centralnicreseller.com) and do not hesitate to [contact us](https://www.centralnicreseller.com/contact).
 
 ## Deprecation Notice: Hexonet Node.js SDK
 
