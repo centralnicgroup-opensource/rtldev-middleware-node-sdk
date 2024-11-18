@@ -1,8 +1,8 @@
 # CentralNic Reseller NODE-SDK
 
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md)
-[![npm version](https://img.shields.io/npm/v/@cnr/apiconnector.svg?style=flat)](https://www.npmjs.com/package/@cnr/apiconnector)
-[![node](https://img.shields.io/node/v/@cnr/apiconnector.svg)](https://www.npmjs.com/package/@cnr/apiconnector)
+[![npm version](https://img.shields.io/npm/v/@team-internet/apiconnector.svg?style=flat)](https://www.npmjs.com/package/@team-internet/apiconnector)
+[![node](https://img.shields.io/node/v/@team-internet/apiconnector.svg)](https://www.npmjs.com/package/@team-internet/apiconnector)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 [![Build Status](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/workflows/Release/badge.svg?branch=master)](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/workflows/Release/badge.svg?branch=master)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
