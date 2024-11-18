@@ -1,6 +1,6 @@
 {
   "$schema": "https://typedoc.org/schema.json",
-  "name": "@cnr/apiconnector",
+  "name": "@team-internet/apiconnector",
   "readme": "./README.md",
   "entryPoints": ["src/*.ts"],
   "out": "docs"
