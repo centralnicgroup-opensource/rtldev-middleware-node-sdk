@@ -1,3 +1,10 @@
+## [10.0.2](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/compare/v10.0.1...v10.0.2) (2024-11-19)
+
+
+### Bug Fixes
+
+* **deps:** bump idna-uts46-hx from 6.0.5 to 6.0.6 ([0c3cdf2](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/commit/0c3cdf2c3b8e7e0af66094ab0923ce4042183213))
+
 ## [10.0.1](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/compare/v10.0.0...v10.0.1) (2024-11-15)
 
 
