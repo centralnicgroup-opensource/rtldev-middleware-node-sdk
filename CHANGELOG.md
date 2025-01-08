@@ -1,3 +1,10 @@
+## [10.0.4](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/compare/v10.0.3...v10.0.4) (2025-01-08)
+
+
+### Bug Fixes
+
+* **deps:** bump cross-fetch from 4.0.0 to 4.1.0 ([7d893ba](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/commit/7d893ba723a8ef35cf351d9ffc9b05dce0bb914e))
+
 ## [10.0.3](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/compare/v10.0.2...v10.0.3) (2024-12-23)
 
 
