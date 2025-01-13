@@ -16,9 +16,6 @@
   "types": "./dist/index.d.ts",
   "//": "...",
   "license": "MIT",
-  "engines": {
-    "node": ">=20.6.1"
-  },
   "homepage": "https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk",
   "repository": "github:centralnicgroup-opensource/rtldev-middleware-node-sdk",
   "bugs": "https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/issues",
@@ -68,7 +65,7 @@
     "chai": "^5.1.2",
     "chai-as-promised": "^8.0.0",
     "cross-env": "^7.0.3",
-    "mocha": "^10.8.2",
+    "mocha": "^11.0.1",
     "nock": "^13.5.6",
     "prettier": "^3.0.0",
     "semantic-release": "^24.2.0",
