@@ -336,6 +336,7 @@ export class APIClient {
       body: this.getPOSTData(mycmd),
       headers: {
         "User-Agent": this.getUserAgent(),
+        "Content-Type": "application/x-www-form-urlencoded"
       },
       method: "POST",
       timeout: APIClient.socketTimeout,
