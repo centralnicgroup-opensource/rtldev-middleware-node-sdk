@@ -1,3 +1,10 @@
+## [10.0.8](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/compare/v10.0.7...v10.0.8) (2025-06-12)
+
+
+### Bug Fixes
+
+* **apiclient:** add content-type header explicitely (sadly not auto-set by cross-fetch) ([46bf589](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/commit/46bf5892d1787f8fc3869ee70b34c2c13fa8ac4f))
+
 ## [10.0.7](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/compare/v10.0.6...v10.0.7) (2025-04-17)
 
 
