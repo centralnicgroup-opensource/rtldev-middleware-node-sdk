@@ -68,7 +68,7 @@
     "mocha": "^11.0.1",
     "nock": "^14.0.0",
     "prettier": "^3.0.0",
-    "semantic-release": "^24.2.0",
+    "semantic-release": "^25.0.0",
     "semantic-release-replace-plugin": "github:centralnicgroup-opensource/rtldev-middleware-semantic-release-replace-plugin",
     "semantic-release-teams-notify-plugin": "github:centralnicgroup-opensource/rtldev-middleware-semantic-release-notify-plugin",
     "tsx": "^4.19.2",
