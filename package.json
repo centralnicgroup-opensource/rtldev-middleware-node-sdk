@@ -51,10 +51,10 @@
   "scripts": {
     "compile": "rm -rf dist && tsc --version && tsc --declaration",
     "lint": "prettier --write . --ignore-path .prettierignore",
-    "prepublish": "npm run compile",
+    "prepublish": "pnpm run compile",
     "documentation": "typedoc",
     "test": "cross-env NODE_ENV=development c8 mocha",
-    "test-demo": "npm run prepublish && node ./tests/app.js"
+    "test-demo": "pnpm run prepublish && node ./tests/app.js"
   },
   "devDependencies": {
     "@semantic-release/changelog": "^6.0.3",
