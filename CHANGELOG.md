@@ -1,3 +1,10 @@
+## [10.0.11](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/compare/v10.0.10...v10.0.11) (2025-11-24)
+
+
+### Bug Fixes
+
+* **deps:** bump glob from 10.4.5 to 10.5.0 ([3f36e23](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/commit/3f36e23cfd6074a0407f862725bf962cdb3bb709))
+
 ## [10.0.10](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/compare/v10.0.9...v10.0.10) (2025-10-28)
 
 
