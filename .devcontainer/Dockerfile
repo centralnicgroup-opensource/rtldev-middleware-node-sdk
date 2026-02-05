@@ -1,41 +1,28 @@
-FROM node:latest as nodejs
+FROM node:lts AS nodejs
 FROM mcr.microsoft.com/devcontainers/base:ubuntu
 
-ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=Europe/Berlin
-ENV APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=DontWarn
 
-ENV REFRESHED_AT 2024-01-17
-ENV CONFIGURATION_DIR_PATH supporting_files/configuration
-ENV SCRIPTS_DIR_PATH supporting_files/scripts
+ENV CONFIGURATION_DIR_PATH=supporting_files/configuration
+ENV SCRIPTS_DIR_PATH=supporting_files/scripts
 
-# Install packages
-# Suppress an apt-key warning about standard out not being a terminal. Use in this script is safe.
+# Install packages and cleanup
 RUN apt-get update \
     && apt-get -y upgrade \
-    && apt-get -y install software-properties-common cron
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv 4F4EA0AAE5267A6C
-# install apt deps (first row for puppeteer)
-RUN apt-get -y install libnss3 libnspr4 libatk1.0-0 libatk-bridge2.0-0 libcups2 libdrm2 libxkbcommon0 libxcomposite1 libxdamage1 libxfixes3 libxrandr2 libgbm1 libasound2 postfix python3-setuptools wget jq sudo git
-# Cleanup
-RUN apt-get -y autoremove && \
-    apt-get -y clean
+    && apt-get -y install wget jq sudo git cron software-properties-common \
+    && apt-get -y autoremove \
+    && apt-get -y clean \
+    && rm -rf /var/lib/apt/lists/*
 
 # Add image configuration and scripts
 ADD ${SCRIPTS_DIR_PATH}/post-create.sh /post-create.sh
+RUN chmod +x /post-create.sh
 
 # Time Zone
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 ######################### DEVELOPMENT ENVIRONMENT ADDITIONS ###############################
-# install latest git & zsh
-RUN add-apt-repository ppa:git-core/ppa \
-    && apt-get update \
-    && apt-get -y install --no-install-recommends git \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* \
-    && update-locale
-
 # specifics to user vscode
 ARG USERNAME="vscode"
 ARG USERHOME="/home/${USERNAME}"
@@ -55,7 +42,7 @@ RUN git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $ZSH_CUSTOM
     && chown -R ${USERNAME}:${USERNAME} $ZSH_CUSTOM/themes/powerlevel10k
 
 # Clone the zsh-autosuggestions repository and change owner
-RUN git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions \
+RUN git clone --depth=1 https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions \
     && chown -R ${USERNAME}:${USERNAME} $ZSH_CUSTOM/plugins/zsh-autosuggestions
 
 # copy zsh and committizen configuration file
