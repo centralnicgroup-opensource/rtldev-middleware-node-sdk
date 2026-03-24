@@ -1,3 +1,10 @@
+## [10.0.12](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/compare/v10.0.11...v10.0.12) (2026-03-24)
+
+
+### Bug Fixes
+
+* **deps:** update dependencies to latest versions for security and compatibility ([aaf9557](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/commit/aaf9557f43034d94b986e1c9b725a1659df1d719))
+
 ## [10.0.11](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/compare/v10.0.10...v10.0.11) (2025-11-24)
 
 
