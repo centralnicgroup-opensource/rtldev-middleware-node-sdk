@@ -17,7 +17,7 @@ importers:
         version: 4.1.0
       idna-uts46-hx:
         specifier: ^6.1.5
-        version: 6.1.5
+        version: 6.1.7
     devDependencies:
       '@semantic-release/changelog':
         specifier: ^6.0.3
@@ -964,8 +964,8 @@ packages:
     resolution: {integrity: sha512-eKCa6bwnJhvxj14kZk5NCPc6Hb6BdsU9DZcOnmQKSnO1VKrfV0zCvtttPZUsBvjmNDn8rpcJfpwSYnHBjc95MQ==}
     engines: {node: '>=18.18.0'}
 
-  idna-uts46-hx@6.1.5:
-    resolution: {integrity: sha512-QJ1FBm/xltw0328Y99SBMhbegf7QbyK74tmF2srsTO/eaE8ctUJkrf/fRjMVPcD+RlS5wTUiP43f46efRBTttA==}
+  idna-uts46-hx@6.1.7:
+    resolution: {integrity: sha512-CcYEtQLQA0qhGvdwuI7tPFdavsK2TjzMi7zmbY+8HDwP+hTU4qtiWwbfScrsgGCeh8LZ0G/uYv6XhmTb4h8+Tg==}
     engines: {node: ^22.14.0 || >= 24.10.0}
 
   import-fresh@3.3.1:
@@ -2838,7 +2838,7 @@ snapshots:
 
   human-signals@8.0.1: {}
 
-  idna-uts46-hx@6.1.5:
+  idna-uts46-hx@6.1.7:
     dependencies:
       tr46: 6.0.0
 
