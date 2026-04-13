@@ -81,5 +81,8 @@
   "dependencies": {
     "cross-fetch": "^4.1.0",
     "idna-uts46-hx": "^6.1.5"
+  },
+  "overrides": {
+    "serialize-javascript@<7.0.5": ">=7.0.5"
   }
 }
