@@ -1,3 +1,10 @@
+## [10.0.14](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/compare/v10.0.13...v10.0.14) (2026-04-13)
+
+
+### Bug Fixes
+
+* **dep bump:** upgrade node deps and regenerate lockfile ([27774ef](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/commit/27774efb0da5f4ea879ad1018b06309642b5793e))
+
 ## [10.0.13](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/compare/v10.0.12...v10.0.13) (2026-04-02)
 
 
