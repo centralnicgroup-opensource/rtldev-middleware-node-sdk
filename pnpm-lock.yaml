@@ -61,16 +61,16 @@ importers:
         version: 14.0.12
       prettier:
         specifier: ^3.8.1
-        version: 3.8.2
+        version: 3.8.3
       semantic-release:
         specifier: ^25.0.3
         version: 25.0.3(typescript@6.0.2)
       semantic-release-replace-plugin:
         specifier: github:centralnicgroup-opensource/rtldev-middleware-semantic-release-replace-plugin
-        version: https://codeload.github.com/centralnicgroup-opensource/rtldev-middleware-semantic-release-replace-plugin/tar.gz/b0df7efc1dc75653f501cba06da8c54f0e3040c7(typescript@6.0.2)
+        version: git+https://git@github.com:centralnicgroup-opensource/rtldev-middleware-semantic-release-replace-plugin.git#b0df7efc1dc75653f501cba06da8c54f0e3040c7(typescript@6.0.2)
       semantic-release-teams-notify-plugin:
         specifier: github:centralnicgroup-opensource/rtldev-middleware-semantic-release-notify-plugin
-        version: https://codeload.github.com/centralnicgroup-opensource/rtldev-middleware-semantic-release-notify-plugin/tar.gz/3fd8549148d6842ecfaa26e5e70ff10e40cdd65d
+        version: git+https://git@github.com:centralnicgroup-opensource/rtldev-middleware-semantic-release-notify-plugin.git#3fd8549148d6842ecfaa26e5e70ff10e40cdd65d
       tsx:
         specifier: ^4.21.0
         version: 4.21.0
@@ -1496,8 +1496,8 @@ packages:
     resolution: {integrity: sha512-C+VUP+8jis7EsQZIhDYmS5qlNtjv2yP4SNtjXK9AP1ZcTRlnSfuumaTnRfYZnYgUUYVIKqL0fRvmUGDV2fmp6g==}
     engines: {node: '>=4'}
 
-  prettier@3.8.2:
-    resolution: {integrity: sha512-8c3mgTe0ASwWAJK+78dpviD+A8EqhndQPUBpNUIPt6+xWlIigCwfN01lWr9MAede4uqXGTEKeQWTvzb3vjia0Q==}
+  prettier@3.8.3:
+    resolution: {integrity: sha512-7igPTM53cGHMW8xWuVTydi2KO233VFiTNyF5hLJqpilHfmn8C8gPf+PS7dUT64YcXFbiMGZxS9pCSxL/Dxm/Jw==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -1577,13 +1577,13 @@ packages:
   safe-buffer@5.1.2:
     resolution: {integrity: sha512-Gd2UZBJDkXlY7GbJxfsE8/nvKkUEU1G38c1siN6QP6a9PT9MmHB8GnpscSmMJSoF8LOIrt8ud/wPtojys4G6+g==}
 
-  semantic-release-replace-plugin@https://codeload.github.com/centralnicgroup-opensource/rtldev-middleware-semantic-release-replace-plugin/tar.gz/b0df7efc1dc75653f501cba06da8c54f0e3040c7:
-    resolution: {tarball: https://codeload.github.com/centralnicgroup-opensource/rtldev-middleware-semantic-release-replace-plugin/tar.gz/b0df7efc1dc75653f501cba06da8c54f0e3040c7}
+  semantic-release-replace-plugin@git+https://git@github.com:centralnicgroup-opensource/rtldev-middleware-semantic-release-replace-plugin.git#b0df7efc1dc75653f501cba06da8c54f0e3040c7:
+    resolution: {commit: b0df7efc1dc75653f501cba06da8c54f0e3040c7, repo: git@github.com:centralnicgroup-opensource/rtldev-middleware-semantic-release-replace-plugin.git, type: git}
     version: 1.2.7
     engines: {node: ^24.10.0}
 
-  semantic-release-teams-notify-plugin@https://codeload.github.com/centralnicgroup-opensource/rtldev-middleware-semantic-release-notify-plugin/tar.gz/3fd8549148d6842ecfaa26e5e70ff10e40cdd65d:
-    resolution: {tarball: https://codeload.github.com/centralnicgroup-opensource/rtldev-middleware-semantic-release-notify-plugin/tar.gz/3fd8549148d6842ecfaa26e5e70ff10e40cdd65d}
+  semantic-release-teams-notify-plugin@git+https://git@github.com:centralnicgroup-opensource/rtldev-middleware-semantic-release-notify-plugin.git#3fd8549148d6842ecfaa26e5e70ff10e40cdd65d:
+    resolution: {commit: 3fd8549148d6842ecfaa26e5e70ff10e40cdd65d, repo: git@github.com:centralnicgroup-opensource/rtldev-middleware-semantic-release-notify-plugin.git, type: git}
     version: 1.0.0
     engines: {node: '>=21.6.2', npm: '>=10.2.4'}
 
@@ -3258,7 +3258,7 @@ snapshots:
       find-up: 2.1.0
       load-json-file: 4.0.0
 
-  prettier@3.8.2: {}
+  prettier@3.8.3: {}
 
   pretty-ms@9.3.0:
     dependencies:
@@ -3341,7 +3341,7 @@ snapshots:
 
   safe-buffer@5.1.2: {}
 
-  semantic-release-replace-plugin@https://codeload.github.com/centralnicgroup-opensource/rtldev-middleware-semantic-release-replace-plugin/tar.gz/b0df7efc1dc75653f501cba06da8c54f0e3040c7(typescript@6.0.2):
+  semantic-release-replace-plugin@git+https://git@github.com:centralnicgroup-opensource/rtldev-middleware-semantic-release-replace-plugin.git#b0df7efc1dc75653f501cba06da8c54f0e3040c7(typescript@6.0.2):
     dependencies:
       replace-in-file: 8.4.0
       semantic-release: 25.0.3(typescript@6.0.2)
@@ -3349,7 +3349,7 @@ snapshots:
       - supports-color
       - typescript
 
-  semantic-release-teams-notify-plugin@https://codeload.github.com/centralnicgroup-opensource/rtldev-middleware-semantic-release-notify-plugin/tar.gz/3fd8549148d6842ecfaa26e5e70ff10e40cdd65d:
+  semantic-release-teams-notify-plugin@git+https://git@github.com:centralnicgroup-opensource/rtldev-middleware-semantic-release-notify-plugin.git#3fd8549148d6842ecfaa26e5e70ff10e40cdd65d:
     dependencies:
       '@semantic-release/error': 4.0.0
       aggregate-error: 5.0.0
