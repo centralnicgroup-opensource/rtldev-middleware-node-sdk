@@ -3,5 +3,8 @@
 coverage
 docs
 node_modules
+.pnpm-store
 src/templates
 CHANGELOG.md
+pnpm-lock.yaml
+pnpm-workspace.yaml

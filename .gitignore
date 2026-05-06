@@ -16,3 +16,4 @@ local.properties
 .DS_Store
 dump.rdb
 dist
+.env

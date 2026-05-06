@@ -117,9 +117,7 @@ export class ResponseTranslator {
       } else {
         // Escape the pattern and attempt to find a match for it
         const escapedregex = preg_quote(regex);
-        console.log(newraw);
         data = ResponseTranslator.findMatch(escapedregex, newraw, val, cmd, ph);
-        console.log(newraw);
       }
 
       // If a match is found, exit the outer loop
