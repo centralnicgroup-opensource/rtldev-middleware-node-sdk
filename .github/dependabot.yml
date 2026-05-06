@@ -4,6 +4,33 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+    groups:
+      dev-deps-major:
+        dependency-type: "development"
+        patterns:
+          - "*"
+        update-types:
+          - "major"
+      dev-deps-non-major:
+        dependency-type: "development"
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+      deps-major:
+        dependency-type: "production"
+        patterns:
+          - "*"
+        update-types:
+          - "major"
+      deps-non-major:
+        dependency-type: "production"
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
     commit-message:
       prefix: "fix"
       prefix-development: "chore"
@@ -13,6 +40,18 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+    groups:
+      github-actions-major:
+        patterns:
+          - "*"
+        update-types:
+          - "major"
+      github-actions-non-major:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
     commit-message:
       prefix: "chore"
       include: "scope"
@@ -21,6 +60,18 @@ updates:
     directory: "/.devcontainer"
     schedule:
       interval: "daily"
+    groups:
+      docker-major:
+        patterns:
+          - "*"
+        update-types:
+          - "major"
+      docker-non-major:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
     commit-message:
       prefix: "chore"
       include: "scope"
