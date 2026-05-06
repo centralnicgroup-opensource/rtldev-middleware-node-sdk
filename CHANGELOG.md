@@ -1,3 +1,10 @@
+## [10.0.15](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/compare/v10.0.14...v10.0.15) (2026-05-06)
+
+
+### Bug Fixes
+
+* **logging:** remove console logs entries ([d28d8d5](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/commit/d28d8d5c1e182ededef40146f8ea58362f28b23c))
+
 ## [10.0.14](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/compare/v10.0.13...v10.0.14) (2026-04-13)
 
 
