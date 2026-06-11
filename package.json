@@ -57,30 +57,30 @@
     "test-demo": "pnpm run prepublish && node ./tests/app.js"
   },
   "devDependencies": {
-    "@semantic-release/changelog": "^6.0.1",
-    "@semantic-release/git": "^10.0.0",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
     "@tsconfig/node20": "^20.1.9",
     "@types/chai": "^5.2.3",
     "@types/chai-as-promised": "^8.0.2",
     "@types/mocha": "^10.0.10",
-    "@types/node": "^25.5.0",
+    "@types/node": "^25.9.3",
     "c8": "^11.0.0",
     "chai": "^6.2.2",
     "chai-as-promised": "^8.0.2",
-    "cross-env": "^10.0.0",
-    "mocha": "^11.7.5",
-    "nock": "^14.0.11",
-    "prettier": "^3.8.0",
-    "semantic-release": "^25.0.3",
+    "cross-env": "^10.1.0",
+    "mocha": "^11.7.6",
+    "nock": "^14.0.15",
+    "prettier": "^3.8.4",
+    "semantic-release": "^25.0.5",
     "semantic-release-replace-plugin": "github:centralnicgroup-opensource/rtldev-middleware-semantic-release-replace-plugin",
     "semantic-release-teams-notify-plugin": "github:centralnicgroup-opensource/rtldev-middleware-semantic-release-notify-plugin",
-    "tsx": "^4.21.0",
-    "typedoc": "^0.28.18",
-    "typescript": "^6.0.2"
+    "tsx": "^4.22.4",
+    "typedoc": "^0.28.19",
+    "typescript": "^6.0.3"
   },
   "dependencies": {
     "cross-fetch": "^4.1.0",
-    "idna-uts46-hx": "^6.1.5"
+    "idna-uts46-hx": "^6.1.7"
   },
   "overrides": {
     "serialize-javascript@<7.0.5": ">=7.0.5"
