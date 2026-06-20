@@ -1567,12 +1567,12 @@ packages:
     resolution: {integrity: sha512-Gd2UZBJDkXlY7GbJxfsE8/nvKkUEU1G38c1siN6QP6a9PT9MmHB8GnpscSmMJSoF8LOIrt8ud/wPtojys4G6+g==}
 
   semantic-release-replace-plugin@https://codeload.github.com/centralnicgroup-opensource/rtldev-middleware-semantic-release-replace-plugin/tar.gz/95296bf535895281b63e13fc5bcb965db4d65259:
-    resolution: {gitHosted: true, tarball: https://codeload.github.com/centralnicgroup-opensource/rtldev-middleware-semantic-release-replace-plugin/tar.gz/95296bf535895281b63e13fc5bcb965db4d65259}
+    resolution: {gitHosted: true, integrity: sha512-LoVHglzc7+dQ6WuMxYxKkEKDTcD7Uvfc+T/6ZC2omZLsZryYluBzXI6G7hFgUmyB/APRdHBo8vKQ84tOiGeXAA==, tarball: https://codeload.github.com/centralnicgroup-opensource/rtldev-middleware-semantic-release-replace-plugin/tar.gz/95296bf535895281b63e13fc5bcb965db4d65259}
     version: 1.2.7
     engines: {node: ^24.10.0}
 
   semantic-release-teams-notify-plugin@https://codeload.github.com/centralnicgroup-opensource/rtldev-middleware-semantic-release-notify-plugin/tar.gz/50742ca66679b77a1275c23bc802cba3b72a9ba2:
-    resolution: {gitHosted: true, tarball: https://codeload.github.com/centralnicgroup-opensource/rtldev-middleware-semantic-release-notify-plugin/tar.gz/50742ca66679b77a1275c23bc802cba3b72a9ba2}
+    resolution: {gitHosted: true, integrity: sha512-2y/MOCvIbeD1vPBYtqfVCUMSWbu2xy2vqW8WJwRM5jGuiB1a9KwZHi9X0exM3sktx/fIsJL7zQo+qyjh0AYPdg==, tarball: https://codeload.github.com/centralnicgroup-opensource/rtldev-middleware-semantic-release-notify-plugin/tar.gz/50742ca66679b77a1275c23bc802cba3b72a9ba2}
     version: 1.0.0
     engines: {node: '>=21.6.2', npm: '>=10.2.4'}
 
@@ -1919,12 +1919,12 @@ packages:
     resolution: {integrity: sha512-7pRTIA9Qc1caZ0bZ6RYRGbHJthJWuakf+WmHK0rVeLkNrrGhfoabBNdue6kdINI6r4if7ocq9aD/n7xwKOdzOA==}
     engines: {node: '>=10'}
 
-  yargs@16.2.0:
-    resolution: {integrity: sha512-D1mvvtDG0L5ft/jGWkLpG1+m0eQxOfaBvTNELraWj22wSVUMWxZUvYgJYcKh6jGGIkJFhH4IZPQhR4TKpc8mBw==}
+  yargs@16.2.2:
+    resolution: {integrity: sha512-Nt9ZJjXTv5R8MHbqby/wXQ6Gi0Bb3TcYZkR1bzuL4yB2OxWPkXknz513gEF0GoA6tn00UpbPvERW8rzCuWCA6w==}
     engines: {node: '>=10'}
 
-  yargs@17.7.2:
-    resolution: {integrity: sha512-7dSzzRQ++CKnNI/krKnYRV7JKKPUXMEh61soaHKg9mrWEhzFWhFnxPxGl+69cD1Ou63C13NUPCnmIcrvqCuM6w==}
+  yargs@17.7.3:
+    resolution: {integrity: sha512-GZtjxm/J/4TSxuL3FNYjCmLktBTnIw/rVmKSIyKeYAZpmJB2ig9VauCC5xsa82GNKVKDAqpOn3KVzNt0zmrU0g==}
     engines: {node: '>=12'}
 
   yargs@18.0.0:
@@ -2398,7 +2398,7 @@ snapshots:
       istanbul-reports: 3.2.0
       test-exclude: 8.0.0
       v8-to-istanbul: 9.3.0
-      yargs: 17.7.2
+      yargs: 17.7.3
       yargs-parser: 21.1.1
 
   callsites@3.1.0: {}
@@ -2446,7 +2446,7 @@ snapshots:
       mz: 2.7.0
       parse5: 5.1.1
       parse5-htmlparser2-tree-adapter: 6.0.1
-      yargs: 16.2.0
+      yargs: 16.2.2
 
   cli-table3@0.6.5:
     dependencies:
@@ -3055,7 +3055,7 @@ snapshots:
       strip-json-comments: 3.1.1
       supports-color: 8.1.1
       workerpool: 9.3.4
-      yargs: 17.7.2
+      yargs: 17.7.3
       yargs-parser: 21.1.1
       yargs-unparser: 2.0.0
 
@@ -3661,7 +3661,7 @@ snapshots:
       flat: 5.0.2
       is-plain-obj: 2.1.0
 
-  yargs@16.2.0:
+  yargs@16.2.2:
     dependencies:
       cliui: 7.0.4
       escalade: 3.2.0
@@ -3671,7 +3671,7 @@ snapshots:
       y18n: 5.0.8
       yargs-parser: 20.2.9
 
-  yargs@17.7.2:
+  yargs@17.7.3:
     dependencies:
       cliui: 8.0.1
       escalade: 3.2.0
