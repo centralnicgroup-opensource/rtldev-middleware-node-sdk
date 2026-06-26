@@ -72,8 +72,7 @@
     "nock": "^14.0.15",
     "prettier": "^3.8.4",
     "semantic-release": "^25.0.5",
-    "semantic-release-replace-plugin": "github:centralnicgroup-opensource/rtldev-middleware-semantic-release-replace-plugin",
-    "semantic-release-teams-notify-plugin": "github:centralnicgroup-opensource/rtldev-middleware-semantic-release-notify-plugin",
+    "@team-internet/semantic-release-plugins": "^1.0.6",
     "tsx": "^4.22.4",
     "typedoc": "^0.28.19",
     "typescript": "^6.0.3"
