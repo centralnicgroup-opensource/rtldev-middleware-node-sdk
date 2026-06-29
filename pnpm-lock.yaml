@@ -60,11 +60,11 @@ importers:
         specifier: ^11.7.6
         version: 11.7.6
       nock:
-        specifier: ^14.0.15
-        version: 14.0.15
+        specifier: ^14.0.16
+        version: 14.0.16
       prettier:
-        specifier: ^3.8.4
-        version: 3.8.4
+        specifier: ^3.9.1
+        version: 3.9.1
       semantic-release:
         specifier: ^25.0.5
         version: 25.0.5(typescript@6.0.3)
@@ -1080,8 +1080,8 @@ packages:
   js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
 
-  js-yaml@4.2.0:
-    resolution: {integrity: sha512-ePWsvanv0DWuDRsW8dnt+R4jQ31SCRCQ7hhNcPXZPsoBZiemuZNYGf7adZdqX2D86j6rvKp3RpCxVTSb8WQlOw==}
+  js-yaml@4.3.0:
+    resolution: {integrity: sha512-1td788aAnnZ5qs7V2QIRl1owjtYpbKt749Y3xauqQgwIIGF/xXWz1wMTEBx5O3LK3lXLVuqXPdPxj2BoFHaW9Q==}
     hasBin: true
 
   json-parse-better-errors@1.0.2:
@@ -1242,8 +1242,8 @@ packages:
   nerf-dart@1.0.0:
     resolution: {integrity: sha512-EZSPZB70jiVsivaBLYDCyntd5eH8NTSMOn3rB+HxwdmKThGELLdYv8qVIMWvZEFy9w8ZZpW9h9OB32l1rGtj7g==}
 
-  nock@14.0.15:
-    resolution: {integrity: sha512-S0a47C9pLvcYx/Ugf0H30BVBEcUgMMBDk9VJIDlJ8XGrfH2QDUD4Tgdp45qDIiHttokBG+IbsOtsvIjGR/j3bg==}
+  nock@14.0.16:
+    resolution: {integrity: sha512-8r4KEc6nT1D/fdLD/R1BO1CPaVEL8o40u/guFRJlXabN7vr3RmMqyjsY5Krt0nMwhsOAwXQ/mtN5vy5Jh3aErg==}
     engines: {node: '>=18.20.0 <20 || >=20.12.1'}
 
   node-emoji@2.2.0:
@@ -1496,8 +1496,8 @@ packages:
     resolution: {integrity: sha512-C+VUP+8jis7EsQZIhDYmS5qlNtjv2yP4SNtjXK9AP1ZcTRlnSfuumaTnRfYZnYgUUYVIKqL0fRvmUGDV2fmp6g==}
     engines: {node: '>=4'}
 
-  prettier@3.8.4:
-    resolution: {integrity: sha512-N2MylSdi48+5N/6S5j+maeHbUSIzzZ5uOcX5Hm4QpV8Dkb1HFjfAKTKX6yNPJQD9AhcT3ifHNB66tWTTJDi11Q==}
+  prettier@3.9.1:
+    resolution: {integrity: sha512-ppiDo2CSwexck1eyZUwJHg/N3nf1+6IRCv7W/VJ5vaLnVCmB7+3CdRfMwoCHBBX6xTrREDTksZ4OZl5SSf4zXA==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -2540,7 +2540,7 @@ snapshots:
     dependencies:
       env-paths: 2.2.1
       import-fresh: 3.3.1
-      js-yaml: 4.2.0
+      js-yaml: 4.3.0
       parse-json: 5.2.0
     optionalDependencies:
       typescript: 6.0.3
@@ -2933,7 +2933,7 @@ snapshots:
 
   js-tokens@4.0.0: {}
 
-  js-yaml@4.2.0:
+  js-yaml@4.3.0:
     dependencies:
       argparse: 2.0.1
 
@@ -3076,7 +3076,7 @@ snapshots:
       glob: 10.5.0
       he: 1.2.0
       is-path-inside: 3.0.3
-      js-yaml: 4.2.0
+      js-yaml: 4.3.0
       log-symbols: 4.1.0
       minimatch: 9.0.9
       ms: 2.1.3
@@ -3101,7 +3101,7 @@ snapshots:
 
   nerf-dart@1.0.0: {}
 
-  nock@14.0.15:
+  nock@14.0.16:
     dependencies:
       '@mswjs/interceptors': 0.41.9
       json-stringify-safe: 5.0.1
@@ -3262,7 +3262,7 @@ snapshots:
       find-up: 2.1.0
       load-json-file: 4.0.0
 
-  prettier@3.8.4: {}
+  prettier@3.9.1: {}
 
   pretty-ms@9.3.0:
     dependencies:
