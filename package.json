@@ -71,7 +71,7 @@
     "mocha": "^11.7.6",
     "nock": "^14.0.16",
     "prettier": "^3.9.5",
-    "semantic-release": "^25.0.7",
+    "semantic-release": "^25.0.8",
     "@team-internet/semantic-release-plugins": "^1.0.7",
     "tsx": "^4.23.1",
     "typedoc": "^0.28.20",
