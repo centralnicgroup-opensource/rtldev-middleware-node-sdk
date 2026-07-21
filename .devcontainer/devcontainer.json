@@ -25,6 +25,9 @@
       }
     }
   },
+  	"mounts": [
+		"source=${localEnv:HOME}/.gitconfig,target=/home/vscode/.gitconfig,type=bind,consistency=cached",
+	],
   "remoteUser": "vscode",
   "postCreateCommand": "zsh /post-create.sh"
 }
