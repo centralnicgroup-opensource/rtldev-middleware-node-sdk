@@ -25,10 +25,10 @@ importers:
         version: 7.0.0(semantic-release@25.0.8(typescript@7.0.2))
       '@semantic-release/git':
         specifier: ^11.0.0
-        version: 11.0.0(semantic-release@25.0.8(typescript@7.0.2))
+        version: 11.0.1(semantic-release@25.0.8(typescript@7.0.2))
       '@team-internet/semantic-release-plugins':
         specifier: ^2.0.0
-        version: 2.0.0(prettier@3.9.5)(semantic-release@25.0.8(typescript@7.0.2))
+        version: 2.2.2(prettier@3.9.6)(semantic-release@25.0.8(typescript@7.0.2))
       '@tsconfig/node20':
         specifier: ^20.1.9
         version: 20.1.9
@@ -43,7 +43,7 @@ importers:
         version: 10.0.10
       '@types/node':
         specifier: ^26.1.1
-        version: 26.1.1
+        version: 26.1.2
       c8:
         specifier: ^12.0.0
         version: 12.0.0
@@ -64,7 +64,7 @@ importers:
         version: 14.0.16
       prettier:
         specifier: ^3.9.5
-        version: 3.9.5
+        version: 3.9.6
       semantic-release:
         specifier: ^25.0.8
         version: 25.0.8(typescript@7.0.2)
@@ -384,8 +384,8 @@ packages:
     resolution: {integrity: sha512-mgdxrHTLOjOddRVYIYDo0fR3/v61GNN1YGkfbrjuIKg/uMgCd+Qzo3UAXJ+woLQQpos4pl5Esuw5A7AoNlzjUQ==}
     engines: {node: '>=18'}
 
-  '@semantic-release/git@11.0.0':
-    resolution: {integrity: sha512-4N1LSbrJhaZTud+DIto09MyJgadIT11oTUy/AyZr7fjKl5wB9sOVWfxZ6SimzqQBteVVXkfdBRwyINVZTXYOcA==}
+  '@semantic-release/git@11.0.1':
+    resolution: {integrity: sha512-Zr8BUYCTZMc8V6wDKN2dpR7nJgewd9I6THL3ydLTnp3OEdTo1/4RBLNYaeRucYMsjMv+BXoCNfXA0NADj1kwhw==}
     engines: {node: ^22.22.2 || >=24.15}
     peerDependencies:
       semantic-release: '>=20.1.0'
@@ -435,8 +435,8 @@ packages:
     resolution: {integrity: sha512-tlqY9xq5ukxTUZBmoOp+m61cqwQD5pHJtFY3Mn8CA8ps6yghLH/Hw8UPdqg4OLmFW3IFlcXnQNmo/dh8HzXYIQ==}
     engines: {node: '>=18'}
 
-  '@team-internet/semantic-release-plugins@2.0.0':
-    resolution: {integrity: sha512-hA0PCZwixfclKkS5m3sPxtbqE20F7w5hLbhKlxeMsI2WE53DzVieu1u98VsXb4h42FXq068o/lONkvO0QBfK7Q==}
+  '@team-internet/semantic-release-plugins@2.2.2':
+    resolution: {integrity: sha512-FixdcdFew2X3+mYnZiSVd0uu9GU2nBzCEtghExTqbD6L2bo14CdT+zzeP+MyjNWUsBge1p9tMn3AquRsz8Dhtg==}
     engines: {node: ^22.14.0 || >=24.10.0}
     peerDependencies:
       prettier: '>=3'
@@ -471,8 +471,8 @@ packages:
   '@types/mocha@10.0.10':
     resolution: {integrity: sha512-xPyYSz1cMPnJQhl0CLMH68j3gprKZaTjG3s5Vi+fDgx+uhG9NOXwbVt52eFS8ECyXhyKcjDLCBEqBExKuiZb7Q==}
 
-  '@types/node@26.1.1':
-    resolution: {integrity: sha512-nxAkRSVkN1Y0JC1W8ky/fTfkGsMmcrRsbx+3XoZE+rMOX71kLYTV7fLXpqud1GpbpP5TuffXFqfX7fH2GgZREw==}
+  '@types/node@26.1.2':
+    resolution: {integrity: sha512-Vu4a5UFA9rIIFJ7rB/Vaafh9lrCQszopTCx6KjFboXTGQbPNasehVR5TEiithSDGyd1DEiUByggTZsg8jukeIg==}
 
   '@types/normalize-package-data@2.4.4':
     resolution: {integrity: sha512-37i+OaWTh9qeK4LSHPsyRC7NahnGotNuZvjLSgcPzblpHB3rrCJxAOgI5gCdKm7coonsaX1Of0ILiTcnZjbfxA==}
@@ -726,6 +726,10 @@ packages:
   brace-expansion@5.0.7:
     resolution: {integrity: sha512-7oFy703dxfY3/NLxC1fh2SUCQ0H9rmAY+5EpDVfXjUTTs+HEwR2nYaqLv+GWcTsumwxPfiz6CzCNkwXwBUwqCA==}
     engines: {node: 18 || 20 || >=22}
+
+  brace-expansion@5.0.9:
+    resolution: {integrity: sha512-ScQ4IuvIEF1TMlP7Zt+vjJ//9zlPb2SDcxWxM3bk8s6t6GGdJ7KO1dCcTidOPJKePW30LE/2cT7wCyPho9/Wxg==}
+    engines: {node: 20 || >=22}
 
   braces@3.0.3:
     resolution: {integrity: sha512-yQbXgO/OSZVD2IsiLlro+7Hf6Q18EJrKSEsdoMzKePKXct3gvD8oLcOQdIzGupr5Fj+EDe8gO/lxc1BzfMpxvA==}
@@ -1398,6 +1402,10 @@ packages:
     resolution: {integrity: sha512-MULkVLfKGYDFYejP07QOurDLLQpcjk7Fw+7jXS2R2czRQzR56yHRveU5NDJEOviH+hETZKSkIk5c+T23GjFUMg==}
     engines: {node: 18 || 20 || >=22}
 
+  minimatch@10.2.6:
+    resolution: {integrity: sha512-vpLQEs+VLCr1nU0BXS07maYoFwlDAH0gngQuuttxIwutDFEMHq2blX+8vpgxDdK3J1PwjCJiep77OitTZ4Ll1A==}
+    engines: {node: 18 || 20 || >=22}
+
   minimatch@9.0.9:
     resolution: {integrity: sha512-OBwBN9AL4dqmETlpS2zasx+vTeWclWzkblfZk7KTA5j3jeOONz/tRCnZomUyvNg83wL5Zv9Ss6HMJXAgL8R2Yg==}
     engines: {node: '>=16 || 14 >=14.17'}
@@ -1672,8 +1680,8 @@ packages:
     resolution: {integrity: sha512-C+VUP+8jis7EsQZIhDYmS5qlNtjv2yP4SNtjXK9AP1ZcTRlnSfuumaTnRfYZnYgUUYVIKqL0fRvmUGDV2fmp6g==}
     engines: {node: '>=4'}
 
-  prettier@3.9.5:
-    resolution: {integrity: sha512-/FVl766LpUfB5vXgCYOYa0MeV/441Ia99AeICQIQFTY/Nw0roZwULcXpku5i1/m5kt/baz+s4Zogspd839HSMg==}
+  prettier@3.9.6:
+    resolution: {integrity: sha512-OpN0zzVdiaiAhxpuuj5efpIS4sY9j7bY6uR5mnj5yPzGkdkjNKSJeUThPb60Jw29QuAZgA4o+/iB49kFiaBX6g==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -1854,6 +1862,10 @@ packages:
   string-width@7.2.0:
     resolution: {integrity: sha512-tsaTIkKW9b4N+AEj+SVA+WhJzV7/zMhcSu78mLKWSk7cXMOSHsBKFWUs0fWwq8QyK3MgJBQRX6Gbi4kYbdvGkQ==}
     engines: {node: '>=18'}
+
+  string-width@8.2.2:
+    resolution: {integrity: sha512-GaPUh5gfdrYzqeVNZvUfT23vYYxXzKYidUcnMtJg/3rxRV63EFZy3k6xfKlmfeJD0176lnUV/Usr3XcwSvFzpg==}
+    engines: {node: '>=20'}
 
   string_decoder@1.1.1:
     resolution: {integrity: sha512-n/ShnvDi6FHbbVfviro+WojiFzv+s8MPMHBczVePfUpDJLwoLT0ht1l4YwBCbi8pJAveEEdnkHyPyTP/mzRfwg==}
@@ -2142,12 +2154,20 @@ packages:
     resolution: {integrity: sha512-4UEqdc2RYGHZc7Doyqkrqiln3p9X2DZVxaGbwhn2pi7MrRagKaOcIKe8L3OxYcbhXLgLFUS3zAYuQjKBQgmuNg==}
     engines: {node: ^20.19.0 || ^22.12.0 || >=23}
 
+  yargs@18.1.0:
+    resolution: {integrity: sha512-2rAgRKu54VsHkqI0/tYkmluGXHD4KW7yZoycuqDQ15QOTnc2VVfy0nN/1eMhnQLO00A+dwtK20xuCnc1YGeUyg==}
+    engines: {node: ^20.19.0 || ^22.12.0 || >=23}
+
   yocto-queue@0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
 
   yoctocolors@2.1.2:
     resolution: {integrity: sha512-CzhO+pFNo8ajLM2d2IW/R93ipy99LWjtwblvC1RsoSUMZgyLbYFr221TnSNT7GjGdYui6P459mw9JH/g/zW2ug==}
+    engines: {node: '>=18'}
+
+  yoctocolors@2.2.0:
+    resolution: {integrity: sha512-xYqdZFUK/VYazNl/oCDYN+3WloWQwMfZxBoiNt6qNyk+xfOdi598muWE42rNZFp1kNOiqW936q5RhUdnpqElSg==}
     engines: {node: '>=18'}
 
   zip-stream@7.0.5:
@@ -2411,13 +2431,13 @@ snapshots:
 
   '@semantic-release/error@4.0.0': {}
 
-  '@semantic-release/git@11.0.0(semantic-release@25.0.8(typescript@7.0.2))':
+  '@semantic-release/git@11.0.1(semantic-release@25.0.8(typescript@7.0.2))':
     dependencies:
       '@semantic-release/error': 4.0.0
       aggregate-error: 5.0.0
       debug: 4.4.3(supports-color@8.1.1)
       dir-glob: 3.0.1
-      execa: 9.6.1
+      execa: 10.0.0
       lodash-es: 4.18.1
       micromatch: 4.0.8
       p-reduce: 3.0.0
@@ -2508,7 +2528,7 @@ snapshots:
 
   '@sindresorhus/merge-streams@4.0.0': {}
 
-  '@team-internet/semantic-release-plugins@2.0.0(prettier@3.9.5)(semantic-release@25.0.8(typescript@7.0.2))':
+  '@team-internet/semantic-release-plugins@2.2.2(prettier@3.9.6)(semantic-release@25.0.8(typescript@7.0.2))':
     dependencies:
       '@semantic-release/error': 4.0.0
       archiver: 8.0.0
@@ -2517,7 +2537,7 @@ snapshots:
       micromatch: 4.0.8
       replace-in-file: 8.4.0
     optionalDependencies:
-      prettier: 3.9.5
+      prettier: 3.9.6
       semantic-release: 25.0.8(typescript@7.0.2)
     transitivePeerDependencies:
       - bare-abort-controller
@@ -2545,7 +2565,7 @@ snapshots:
 
   '@types/mocha@10.0.10': {}
 
-  '@types/node@26.1.1':
+  '@types/node@26.1.2':
     dependencies:
       undici-types: 8.3.0
 
@@ -2716,6 +2736,10 @@ snapshots:
       balanced-match: 1.0.2
 
   brace-expansion@5.0.7:
+    dependencies:
+      balanced-match: 4.0.4
+
+  brace-expansion@5.0.9:
     dependencies:
       balanced-match: 4.0.4
 
@@ -3019,7 +3043,7 @@ snapshots:
       signal-exit: 4.1.0
       strip-final-newline: 4.0.0
       which-command: 0.1.0
-      yoctocolors: 2.1.2
+      yoctocolors: 2.2.0
 
   execa@8.0.1:
     dependencies:
@@ -3133,7 +3157,7 @@ snapshots:
 
   glob@13.0.6:
     dependencies:
-      minimatch: 10.2.5
+      minimatch: 10.2.6
       minipass: 7.1.3
       path-scurry: 2.0.2
 
@@ -3397,6 +3421,10 @@ snapshots:
     dependencies:
       brace-expansion: 5.0.7
 
+  minimatch@10.2.6:
+    dependencies:
+      brace-expansion: 5.0.9
+
   minimatch@9.0.9:
     dependencies:
       brace-expansion: 2.1.2
@@ -3594,7 +3622,7 @@ snapshots:
       find-up: 2.1.0
       load-json-file: 4.0.0
 
-  prettier@3.9.5: {}
+  prettier@3.9.6: {}
 
   pretty-ms@9.3.0:
     dependencies:
@@ -3669,7 +3697,7 @@ snapshots:
 
   readdir-glob@3.0.0:
     dependencies:
-      minimatch: 10.2.5
+      minimatch: 10.2.6
 
   readdirp@4.1.2: {}
 
@@ -3681,7 +3709,7 @@ snapshots:
     dependencies:
       chalk: 5.6.2
       glob: 13.0.6
-      yargs: 18.0.0
+      yargs: 18.1.0
 
   require-directory@2.1.1: {}
 
@@ -3805,6 +3833,11 @@ snapshots:
   string-width@7.2.0:
     dependencies:
       emoji-regex: 10.6.0
+      get-east-asian-width: 1.6.0
+      strip-ansi: 7.2.0
+
+  string-width@8.2.2:
+    dependencies:
       get-east-asian-width: 1.6.0
       strip-ansi: 7.2.0
 
@@ -4109,9 +4142,20 @@ snapshots:
       y18n: 5.0.8
       yargs-parser: 22.0.0
 
+  yargs@18.1.0:
+    dependencies:
+      cliui: 9.0.1
+      escalade: 3.2.0
+      get-caller-file: 2.0.5
+      string-width: 8.2.2
+      y18n: 5.0.8
+      yargs-parser: 22.0.0
+
   yocto-queue@0.1.0: {}
 
   yoctocolors@2.1.2: {}
+
+  yoctocolors@2.2.0: {}
 
   zip-stream@7.0.5:
     dependencies:
