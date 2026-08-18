@@ -31,7 +31,7 @@ importers:
         version: 2.2.4(prettier@3.9.6)(semantic-release@25.0.9(typescript@7.0.2))
       '@tsconfig/node20':
         specifier: ^20.1.9
-        version: 20.1.9
+        version: 20.1.10
       '@types/chai':
         specifier: ^5.2.3
         version: 5.2.3
@@ -456,8 +456,8 @@ packages:
       skia-canvas:
         optional: true
 
-  '@tsconfig/node20@20.1.9':
-    resolution: {integrity: sha512-IjlTv1RsvnPtUcjTqtVsZExKVq+KQx4g5pCP5tI7rAs6Xesl2qFwSz/tPDBC4JajkL/MlezBu3gPUwqRHl+RIg==}
+  '@tsconfig/node20@20.1.10':
+    resolution: {integrity: sha512-5OZgdnxbFuvwm05iVwPXMU5/7iPuVDDZzAnxPDLj+kjN7fwQZSSVgHQhKTNkBPOO6Qef2D5MxPAoPLCGqE2VuQ==}
 
   '@types/chai-as-promised@8.0.2':
     resolution: {integrity: sha512-meQ1wDr1K5KRCSvG2lX7n7/5wf70BeptTKst0axGvnN6zqaVpRqegoIbugiAPSqOW9K9aL8gDVrm7a2LXOtn2Q==}
@@ -2540,7 +2540,7 @@ snapshots:
       - bare-buffer
       - react-native-b4a
 
-  '@tsconfig/node20@20.1.9': {}
+  '@tsconfig/node20@20.1.10': {}
 
   '@types/chai-as-promised@8.0.2':
     dependencies:
