@@ -1,0 +1,10 @@
+[
+  {
+    "raw": "[RESPONSE]\ncode = 200\ndescription = Command completed successfully\nruntime = 0.011\nqueuetime = 0\nproperty[column][0] = domain\nproperty[count][0] = 2\nproperty[domain][0] = 0005251.com\nproperty[domain][1] = 02023.no\nproperty[first][0] = 0\nproperty[last][0] = 1\nproperty[limit][0] = 2\nproperty[total][0] = 1858\nEOF\n",
+    "error": null
+  },
+  {
+    "raw": "[RESPONSE]\ncode = 200\ndescription = Command completed successfully\nqueuetime = 0\nruntime = 0.011\nproperty[column][0] = domain\nproperty[count][0] = 2\nproperty[domain][0] = 05153.fm\nproperty[domain][1] = 1.im\nproperty[first][0] = 2\nproperty[last][0] = 3\nproperty[limit][0] = 2\nproperty[total][0] = 1858\nEOF\n",
+    "error": null
+  }
+]

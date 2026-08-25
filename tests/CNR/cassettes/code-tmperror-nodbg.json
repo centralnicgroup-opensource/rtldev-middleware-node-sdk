@@ -1,0 +1,6 @@
+[
+  {
+    "raw": "[RESPONSE]\ncode = 200\ndescription = Command completed successfully\nruntime = 0.006\nqueuetime = 0\nproperty[amount][0] = 100219.89\nproperty[credit][0] = 0.00\nproperty[credit threshold][0] = 22000.00\nproperty[currency][0] = GBP\nproperty[registrar][0] = qmtest\nproperty[vat][0] = 19.00\nEOF\n",
+    "error": null
+  }
+]

@@ -8,10 +8,18 @@
       {
         "replacements": [
           {
-            "files": ["./src/apiclient.ts"],
-            "from": "\\d+\\.\\d+\\.\\d+",
-            "to": "${nextRelease.version}",
-            "countMatches": true
+            "files": ["./src/version.ts"],
+            "from": "VERSION = \"\\d+\\.\\d+\\.\\d+\"",
+            "to": "VERSION = \"${nextRelease.version}\"",
+            "countMatches": true,
+            "results": [
+              {
+                "file": "./src/version.ts",
+                "hasChanged": true,
+                "numMatches": 1,
+                "numReplacements": 1
+              }
+            ]
           }
         ]
       }
@@ -20,12 +28,7 @@
     [
       "@semantic-release/git",
       {
-        "assets": [
-          "CHANGELOG.md",
-          "package?(-lock).json",
-          "docs",
-          "src/apiclients.ts"
-        ]
+        "assets": ["CHANGELOG.md", "package?(-lock).json", "src/version.ts"]
       }
     ],
     "@team-internet/semantic-release-plugins/teams-notify",

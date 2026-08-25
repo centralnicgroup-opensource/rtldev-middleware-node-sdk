@@ -1,0 +1,6 @@
+[
+  {
+    "raw": "{\"transactid\":\"3430e241808160855bb91ebbd2f1025a\",\"status\":\"UNAVAILABLE\",\"domain\":\"tronexats.com\",\"minregperiod\":\"1Y\",\"maxregperiod\":\"10Y\",\"registrarlockallowed\":\"YES\",\"privatewhoisallowed\":\"YES\",\"realtimeregistration\":\"YES\",\"price\":{\"ispremium\":\"NO\"}}",
+    "error": null
+  }
+]

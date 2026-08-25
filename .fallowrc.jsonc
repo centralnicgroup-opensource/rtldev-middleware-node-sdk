@@ -1,0 +1,110 @@
+{
+  "$schema": "./node_modules/fallow/schema.json",
+
+  // CNR/IBS are deliberate siblings (decision 1 in the port plan), not a
+  // copy-paste accident — each brand declares its own class rather than
+  // sharing one via a generic (decision 11). Same class names on purpose in
+  // both directories, including the two namespace barrels.
+  "ignoreExports": [
+    {
+      "file": "src/CNR/*.ts",
+      "exports": [
+        "Client",
+        "Logger",
+        "Response",
+        "ResponseTemplateManager",
+        "SensitiveFields",
+        "SocketConfig",
+      ],
+    },
+    {
+      "file": "src/IBS/*.ts",
+      "exports": [
+        "Client",
+        "Logger",
+        "Response",
+        "ResponseTemplateManager",
+        "SensitiveFields",
+        "SocketConfig",
+      ],
+    },
+  ],
+
+  // fallow's reachability analysis doesn't count tests/** as usage, and
+  // doesn't resolve a call chained through a covariant return type (e.g.
+  // `this.getSocketConfig().setSession(...)`) back to the specific member
+  // it's calling. Every member below has a real call site — confirmed with
+  // grep, not asserted blind — either in tests/ (public library API with no
+  // src/-internal caller) or via exactly that chained-call pattern.
+  "usedClassMembers": [
+    // CNR.SocketConfig — all called from CNR/Client.ts via
+    // `this.getSocketConfig().<member>(...)`.
+    "setPersistent",
+    "getRoleSeparator",
+    // CNR.Client — public API for a host application restoring connection
+    // state across requests; exercised by tests/CNR/Client.spec.ts.
+    "reuseSession",
+    // IBS.Client.request — the public entry point every consumer calls;
+    // nothing in src/ calls it because it IS the surface (unlike CNR, which
+    // also calls its own request() internally for pagination).
+    { "extends": "AbstractClient", "members": ["request"] },
+    // CNR.SocketConfig.getSession/setSession — same chained-call pattern as
+    // setPersistent/getRoleSeparator above. Scoped to AbstractSocketConfig
+    // subclasses since these two names are otherwise generic.
+    {
+      "extends": "AbstractSocketConfig",
+      "members": ["getSession", "setSession"],
+    },
+  ],
+
+  // Copy-and-adapt samples, not imported by this package — matches PHP's
+  // examples/ directory, which is equally unreachable from src/ by design.
+  // Note this key covers *dead-code* findings only; duplication has its own
+  // "duplicates.ignore" below.
+  "ignoreFindings": ["examples/**"],
+
+  // Reached through `"extends": "@tsconfig/node22/tsconfig.json"` in
+  // .github/linters/tsconfig.json, which tsconfig.json in turn extends.
+  // fallow resolves imports, not tsconfig inheritance, so it counts zero
+  // usages. Suppressed rather than removed: `pnpm run typecheck` fails
+  // without the package. Left unsuppressed it was a permanently red finding,
+  // which is worse than no finding at all — it teaches everyone to skim past
+  // the output that is supposed to be empty.
+  "ignoreDependencies": ["@tsconfig/node22"],
+
+  "duplicates": {
+    // Sample scripts, same rationale as ignoreFindings above. PHP's
+    // bulk_app_CNR.php has the identical session-less/session-based pair of
+    // near-identical loops; the repetition is what makes the example
+    // readable top to bottom.
+    "ignore": ["examples/**"],
+
+    // Without a threshold `fallow dupes` prints its findings and exits 0 —
+    // it reported 3.1% duplication while `pnpm lint` stayed green, the same
+    // way .nycrc's unset check-coverage once let a 0% run pass.
+    //
+    // 3.0% is the measured floor, and the floor is entirely the three
+    // CNR/IBS sibling clone groups (Response, ResponseTemplateManager,
+    // SocketConfig). Those are kept on purpose: brands are siblings, not a
+    // shared generic (architecture.md decisions 1 and 11), and PHP carries
+    // the identical duplication file for file, so extracting it here would
+    // be a deviation from the source of truth rather than a cleanup. The
+    // pairs are structurally alike but not interchangeable — CNR's
+    // getPOSTDataParams() also places session and persistent, and its
+    // populate() reads the PROPERTY sub-array where IBS reads a flat map.
+    //
+    // Deliberately a percentage rather than duplicates.ignoredClones, which
+    // was tried first and is unsafe here: clone keys that share a
+    // fingerprint are distinguished by a positional "-N" suffix assigned
+    // over the reported set, so suppressing a group renumbers the rest and
+    // a stale key silently absorbs the next *new* clone. Verified — with
+    // the four keys that made this run clean, a freshly planted duplicate
+    // pair was swallowed and the gate still exited 0. A percentage cannot
+    // be gamed that way: new duplication raises it.
+    //
+    // Non-vacuity re-checked by planting a duplicate pair in src/ and
+    // confirming this exits 1. Re-measure and move the number if a genuine
+    // refactor changes the floor; do not raise it to silence a finding.
+    "threshold": 3.0,
+  },
+}

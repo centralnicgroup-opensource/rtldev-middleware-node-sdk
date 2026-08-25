@@ -10,5 +10,10 @@ onlyBuiltDependencies:
 
 overrides:
   diff: "8.0.3"
-  serialize-javascript: "7.0.3"
+  # CVE-2026-34043 (GHSA-qj8w-gfj5-8c6v): CPU-exhaustion DoS via a crafted
+  # array-like object, fixed in 7.0.5. Force anything resolving below that
+  # up to a patched version — do not add a flat "serialize-javascript"
+  # pin below 7.0.5 alongside this; a previous "7.0.3" pin did exactly
+  # that, silently reintroducing the vulnerable version underneath this
+  # override's own constraint.
   serialize-javascript@<7.0.5: '>=7.0.5'

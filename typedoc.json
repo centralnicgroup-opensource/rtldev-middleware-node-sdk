@@ -2,6 +2,7 @@
   "$schema": "https://typedoc.org/schema.json",
   "name": "@team-internet/apiconnector",
   "readme": "./README.md",
-  "entryPoints": ["src/*.ts"],
-  "out": "docs"
+  "entryPoints": ["src/index.ts"],
+  "entryPointStrategy": "resolve",
+  "out": "docs/api"
 }

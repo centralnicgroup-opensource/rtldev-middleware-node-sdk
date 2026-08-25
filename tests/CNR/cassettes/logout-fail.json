@@ -1,0 +1,6 @@
+[
+  {
+    "raw": "[RESPONSE]\ncode = 530\ndescription = Authentication failed\nruntime = 0.019\nqueuetime = 0.002\nEOF\n",
+    "error": null
+  }
+]

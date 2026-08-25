@@ -1,0 +1,6 @@
+[
+  {
+    "raw": "[RESPONSE]\ncode = 200\ndescription = Command completed successfully\nruntime = 0.017\nqueuetime = 0\nproperty[column][0] = domaincheck\nproperty[column][1] = domainchecktime\nproperty[domaincheck][0] = 211 Domain name not available\nproperty[domainchecktime][0] = 0\nproperty[domaincheck][1] = 541 Invalid attribute value\nproperty[domainchecktime][1] = 0\nproperty[domaincheck][2] = 211 Domain name not available\nproperty[domainchecktime][2] = 0\nEOF\n",
+    "error": null
+  }
+]

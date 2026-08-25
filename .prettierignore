@@ -2,8 +2,10 @@
 .nyc_output
 coverage
 docs
+dist
 node_modules
 .pnpm-store
+rtldev-middleware-php-sdk
 src/templates
 CHANGELOG.md
 pnpm-lock.yaml
