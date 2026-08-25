@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json.schemastore.org/c8.json",
+  "reporter": ["html", "text"],
+  "check-coverage": true,
+  "all": true,
+  "src": ["src"],
+  "exclude": [
+    "tests/**",
+    "examples/**",
+    "dist/**",
+    "src/types.ts",
+    "src/*Interface.ts"
+  ],
+  "lines": 92,
+  "statements": 92,
+  "branches": 85,
+  "functions": 90
+}

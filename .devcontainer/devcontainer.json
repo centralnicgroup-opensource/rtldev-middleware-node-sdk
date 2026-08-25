@@ -13,7 +13,8 @@
         "GitHub.vscode-pull-request-github",
         "ms-vscode-remote.remote-containers",
         "ms-azuretools.vscode-docker",
-        "GitHub.copilot"
+        "anthropic.claude-code",
+        "anthropic.claude-vscode"
       ],
       "settings": {
         "terminal.integrated.defaultProfile.linux": "zsh",
@@ -25,9 +26,16 @@
       }
     }
   },
-  	"mounts": [
-		"source=${localEnv:HOME}/.gitconfig,target=/home/vscode/.gitconfig,type=bind,consistency=cached",
-	],
+  "features": {
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/anthropics/devcontainer-features/claude-code:1": {}
+  },
+  "mounts": [
+    "source=${localEnv:HOME}/.ssh,target=/home/vscode/.ssh,type=bind,readonly",
+    "source=${localEnv:HOME}/.gitconfig,target=/home/vscode/.gitconfig,type=bind,consistency=cached",
+    "source=${localEnv:HOME}${localEnv:USERPROFILE},target=/WSL_USER,type=bind,consistency=cached",
+    "source=${localEnv:HOME}/.claude,target=/home/vscode/.claude,type=bind,consistency=cached"
+  ],
   "remoteUser": "vscode",
   "postCreateCommand": "zsh /post-create.sh"
 }

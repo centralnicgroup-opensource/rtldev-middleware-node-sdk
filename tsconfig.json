@@ -3,7 +3,17 @@
   "compilerOptions": {
     "rootDir": "./src",
     "outDir": "./dist",
-    "types": ["node"]
+    "types": ["node"],
+    "target": "es2022",
+    "noImplicitOverride": true,
+    "verbatimModuleSyntax": true,
+    "noUncheckedIndexedAccess": true
   },
-  "exclude": ["node_modules", "./dist/**/*", "./tests/**/*"]
+  "exclude": [
+    "node_modules",
+    "./dist/**/*",
+    "./tests/**/*",
+    "./examples/**/*",
+    "./scripts/**/*"
+  ]
 }

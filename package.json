@@ -1,6 +1,6 @@
 {
   "name": "@team-internet/apiconnector",
-  "description": "Node.js SDK for the insanely fast CentralNic Reseller (fka RRPProxy) API",
+  "description": "Node.js SDK for the CentralNic Reseller (CNR, fka RRPProxy), Internet.bs (IBS) and Moniker registrar APIs",
   "version": "10.0.15",
   "private": false,
   "publishConfig": {
@@ -14,6 +14,17 @@
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "//": "...",
   "license": "MIT",
   "homepage": "https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk",
@@ -35,7 +46,14 @@
   "keywords": [
     "centralnicreseller",
     "centralnic",
+    "cnic",
     "cnr",
+    "reseller",
+    "internet.bs",
+    "ibs",
+    "moniker",
+    "sdk",
+    "isp",
     "domain",
     "api",
     "connector",
@@ -50,38 +68,46 @@
   ],
   "scripts": {
     "compile": "rm -rf dist && tsc --version && tsc --declaration",
-    "lint": "prettier --write . --ignore-path .prettierignore",
-    "prepublish": "pnpm run compile",
+    "lint": "prettier --check . --ignore-path .prettierignore && pnpm typecheck && pnpm eslint && pnpm fallow && pnpm run pack:check",
+    "pack:check": "tsx scripts/pack-check.ts",
+    "lint:fix": "prettier --write . --ignore-path .prettierignore && eslint . --fix",
+    "eslint": "eslint . --max-warnings 0",
+    "fallow": "fallow dead-code && fallow dupes",
+    "prepare": "pnpm run compile",
     "documentation": "typedoc",
+    "typecheck": "tsc --noEmit -p tsconfig.test.json",
     "test": "cross-env NODE_ENV=development c8 mocha",
-    "test-demo": "pnpm run prepublish && node ./tests/app.js"
+    "test:record": "cross-env RTLDEV_MW_RECORD=1 cross-env NODE_ENV=development c8 mocha",
+    "demo:cnr": "tsx examples/app_CNR.ts",
+    "demo:ibs": "tsx examples/app_IBS.ts",
+    "demo:moniker": "tsx examples/app_MONIKER.ts",
+    "demo:datetime": "tsx examples/datetime.ts"
   },
   "devDependencies": {
     "@semantic-release/changelog": "^7.0.0",
     "@semantic-release/git": "^11.0.1",
     "@team-internet/semantic-release-plugins": "^2.2.4",
-    "@tsconfig/node20": "^20.1.9",
+    "@tsconfig/node22": "^22.0.6",
     "@types/chai": "^5.2.3",
-    "@types/chai-as-promised": "^8.0.2",
     "@types/mocha": "^10.0.10",
     "@types/node": "^26.2.0",
     "c8": "^12.0.0",
     "chai": "^6.2.2",
-    "chai-as-promised": "^8.0.2",
     "cross-env": "^10.1.0",
+    "dotenv": "^17.4.2",
+    "eslint": "^10.8.1",
+    "fallow": "3.17.0",
     "mocha": "^11.8.0",
     "nock": "^14.0.17",
     "prettier": "^3.9.6",
     "semantic-release": "^25.0.9",
     "tsx": "^4.23.12",
     "typedoc": "^0.28.20",
-    "typescript": "^7.0.2"
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.67.0"
   },
   "dependencies": {
-    "cross-fetch": "^4.1.0",
-    "idna-uts46-hx": "^6.1.7"
-  },
-  "overrides": {
-    "serialize-javascript@<7.0.5": ">=7.0.5"
+    "idna-uts46-hx": "^6.1.7",
+    "undici": "^8.10.0"
   }
 }

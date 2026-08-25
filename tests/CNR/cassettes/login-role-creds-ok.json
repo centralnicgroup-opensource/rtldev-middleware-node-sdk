@@ -1,0 +1,6 @@
+[
+  {
+    "raw": "[RESPONSE]\ncode = 200\ndescription = Command completed successfully\nqueuetime = 0.004\nruntime = 0.027\nproperty[expiration date][0] = 2026-07-25 07:46:36\nproperty[sessionid][0] = 934e29292bf57daa51e2f21d593cb948\nEOF\n",
+    "error": null
+  }
+]

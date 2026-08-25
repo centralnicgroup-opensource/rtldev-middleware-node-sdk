@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    // The base config's rootDir ("./src") is intentional for `pnpm compile`,
+    // which only ever emits src/ — but this config type-checks tests/ too,
+    // so the common root has to widen to cover both trees.
+    "rootDir": ".",
+    // This config is the `typecheck` script's target only; it never emits.
+    // Test specs import their src/ counterparts by relative ".ts" path
+    // (tsx resolves those directly at run time), which otherwise fails
+    // under "moduleResolution": "node16" — allowed here because noEmit
+    // makes it safe (nothing tries to ship a ".ts" import at runtime).
+    "noEmit": true,
+    "allowImportingTsExtensions": true
+  },
+  "include": ["src/**/*.ts", "tests/**/*.ts", "scripts/**/*.ts"],
+  "exclude": ["node_modules", "dist", "examples"]
+}

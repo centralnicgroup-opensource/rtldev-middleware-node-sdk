@@ -7,5 +7,6 @@
   "inline-diffs": true,
   "bail": true,
   "recursive": true,
-  "require": "tsx"
+  "require": "tsx",
+  "file": "tests/setup.ts"
 }
