@@ -14,7 +14,7 @@
             "countMatches": true,
             "results": [
               {
-                "file": "./src/version.ts",
+                "file": "src/version.ts",
                 "hasChanged": true,
                 "numMatches": 1,
                 "numReplacements": 1
