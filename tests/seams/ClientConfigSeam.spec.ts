@@ -8,6 +8,7 @@ import { Client as MONIKERClient } from "../../src/MONIKER/Client.ts";
 import { SocketConfig as MONIKERSocketConfig } from "../../src/MONIKER/SocketConfig.ts";
 import { ClientFactory as CF } from "../../src/ClientFactory.ts";
 import { AbstractSocketConfig } from "../../src/AbstractSocketConfig.ts";
+import { UnsupportedFeatureException } from "../../src/Exception/UnsupportedFeatureException.ts";
 import type { AbstractClient } from "../../src/AbstractClient.ts";
 import type { PostDataParams } from "../../src/AbstractSocketConfig.ts";
 
@@ -268,5 +269,31 @@ describe("Seam: clients accept a pre-built, per-brand SocketConfig at constructi
     // IBS.SocketConfig would silently point a Moniker client at the IBS
     // host, which is exactly what this line must never compile into.
     new MONIKERClient(new IBSSocketConfig());
+  });
+
+  // The other half of the narrowing accessor: its documented `@throws`.
+  //
+  // CNR.Client.getSocketConfig() refuses a non-CNR config rather than
+  // asserting, so a subclass that seated the wrong one gets a named SDK
+  // exception instead of an undefined-method failure deeper in. Nothing
+  // exercised that branch, which left both the exception type and the
+  // diagnostic — it names the class actually found — free to drift.
+  //
+  // Reaching it needs the one route the narrowing does not close. Both
+  // writers of the property are typed to CNR.SocketConfig, so the cast is
+  // what a subclass bypassing the narrowed constructor would amount to at
+  // runtime; that is the case the guard is written for, not a poke past the
+  // type system for its own sake. PHP added the same coverage in v33.0.3.
+  it("CNR.Client.getSocketConfig() refuses a foreign config with a named exception", () => {
+    const cl = CF.cnr();
+    (cl as unknown as { socketConfig: AbstractSocketConfig }).socketConfig =
+      new IBSSocketConfig();
+
+    expect(() => cl.getSocketConfig())
+      .to.throw(UnsupportedFeatureException)
+      .with.property(
+        "message",
+        "CNR session and role handling require a CNIC.CNR.SocketConfig, got SocketConfig.",
+      );
   });
 });
