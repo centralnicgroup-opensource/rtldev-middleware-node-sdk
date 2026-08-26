@@ -215,6 +215,31 @@ Node fixed it under RSRMID-2974 and it was filed against PHP as
 response is still returned when one was received, and the session/flag is still only cleared on success.
 Verified against the v33.0.1 source on 2026-08-21. Converged, not an open gap.
 
+## Converged: the CNR session id is masked in the secured POST body
+
+`CNR.SocketConfig.getPOSTDataParams()` masked `s_pw` under `maskSecrets` but appended `s_sessionid`
+unmasked, so the debug body `AbstractClient.performRequest()` hands the logger carried a working
+credential. A session id is not a lesser credential than the password but an alternative to it —
+`setSession()` clears the password precisely because the newer of the two is authoritative on the wire —
+so this bit hardest on the persistent-session path, where masking reduced the body to login + session,
+i.e. everything needed to authenticate, with no password left beside it to mask.
+
+Both SDKs shipped it unmasked, so this was inherited behaviour rather than a port defect. PHP fixed it
+first in **v33.0.3** (`c926f23`, "fix(cnr): mask the session id in the secured POST body"); Node now
+matches, same condition and same `CommandRedactor.MASK`. Verified by reading the v33.0.3 source, not the
+changelog. Guard: `tests/seams/RedactionParitySeam.spec.ts` — the masked and unmasked cases both, proven
+non-vacuous by reverting the branch and confirming the masked case fails.
+
+**Deliberately not extended to IBS/Moniker's `apikey`**, and PHP did not either: `apikey` is the `login`
+field's counterpart, IBS auth needs apikey *and* password, and the password is masked — so the logged
+record is not by itself a usable credential the way CNR's login + session pair was.
+
+**Not closed by this on its own:** the logger also prints `response.getPlain()` verbatim, and
+`CNR.Client.login()` mints the session id by reading `SESSIONID` off exactly that response — so a debug
+log covering a `login()` call still contains the id from the response side. Masking the request half is
+correct and matches PHP; anyone treating debug output as safe to retain needs to know the response half
+is still open. Same in PHP.
+
 ## Converged: pagination continuation no longer resends a masked value <a id="fixed-in-node-ahead-of-php"></a>
 
 Briefly a deliberate Node-ahead-of-PHP divergence (RSRMID-2975); PHP has since caught up (`b50cd88`, PHP v33.0.0) and **arrived at the same design independently** — a `WeakMap`/`SplObjectStorage`-equivalent held on the client, keyed by `Response`, never on the Response itself, for the same redaction-leak reason. Recorded here as a converged decision, not an open gap.

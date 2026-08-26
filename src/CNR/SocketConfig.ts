@@ -88,8 +88,16 @@ export class SocketConfig extends AbstractSocketConfig {
         ? CommandRedactor.MASK
         : this.password;
     }
+    // Masked for the same reason s_pw is: a session id is not a lesser
+    // credential than the password but an alternative to it — see
+    // setSession(), which clears the password because the newer of the two is
+    // authoritative on the wire. Masking one and logging the other left the
+    // debug body carrying a working credential on exactly the
+    // persistent-session path, where there is no password left to mask.
     if (this.session.length !== 0) {
-      params[this.parameters.session] = this.session;
+      params[this.parameters.session] = maskSecrets
+        ? CommandRedactor.MASK
+        : this.session;
     }
     if (Object.keys(command).length !== 0) {
       const cmd = maskSecrets ? this.maskSensitiveCommand(command) : command;

@@ -160,6 +160,41 @@ describe("Seam: sensitive-field redaction parity", () => {
       );
       expect(enc).to.include("hunter2");
     });
+
+    // The session id is masked for the same reason s_pw is: it is not a
+    // lesser credential than the password but an alternative to it —
+    // setSession() clears the password precisely because the newer of the two
+    // is authoritative on the wire. Masking one and logging the other left the
+    // debug body carrying a working credential on exactly the
+    // persistent-session path, where there is no password left beside it to
+    // mask. Asserted with a login present, which is the shape the fix is
+    // about: unmasked, the body reduced to login + session, i.e. everything
+    // needed to authenticate. PHP shipped the identical fix in v33.0.3
+    // (c926f23).
+    it("masks the session id, not just the password", () => {
+      const cfg = new CNRSocketConfig();
+      cfg
+        .setLogin(`myaccountid${cfg.getRoleSeparator()}myrole`)
+        .setSession("12345678");
+
+      const enc = cfg.getPOSTData({ COMMAND: "StatusAccount" }, true);
+
+      expect(enc).not.to.include("12345678");
+      expect(enc).to.include(`s_sessionid=${ENCODED_MASK}`);
+      expect(
+        enc,
+        "the login is not a secret and stays readable, as in PHP",
+      ).to.include("myaccountid");
+    });
+
+    it("does not mask the session id on an unmasked call", () => {
+      const cfg = new CNRSocketConfig();
+      cfg.setSession("12345678");
+
+      expect(cfg.getPOSTData({ COMMAND: "StatusAccount" }, false)).to.include(
+        "12345678",
+      );
+    });
   });
 
   describe("IBS.SocketConfig masks its command before encoding", () => {
