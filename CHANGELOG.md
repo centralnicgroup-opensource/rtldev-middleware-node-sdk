@@ -1,3 +1,46 @@
+# [11.0.0](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/compare/v10.0.15...v11.0.0) (2026-08-26)
+
+
+### Bug Fixes
+
+* **CNR:** mask the API session id in the secured POST body ([f31922c](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/commit/f31922c529522cccbded1757b32d7b2f3c771cbb))
+
+
+### Features
+
+* **sdk:** add Internet.bs and Moniker clients behind a single ClientFactory ([887692d](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/commit/887692d99128914d55eea6d0052b719179d963bf))
+
+
+### BREAKING CHANGES
+
+* **sdk:** Construct clients via ClientFactory.cnr()/ibs()/moniker()
+instead of `new APIClient()`. Only the package's root export works now --
+importing internal files directly is no longer supported. If you registered
+custom response templates, register them on your own template-manager
+instance and pass it in per request; a shared instance is no longer used
+automatically. If you used a custom logger, have it return a formatted
+string and pass a log sink to write it, instead of overriding a method that
+prints directly. Replace getNextRecord()/rewindRecordList() with standard
+iteration over the response (for...of, or getRecord(index)). If you
+customized the HTTP layer, pass your own transport via setTransport().
+Session and role-based login remain specific to CentralNic Reseller clients
+-- Internet.bs and Moniker clients do not expose them. setUserView(),
+resetUserView() and useDefaultConnectionSetup() have been removed; see
+MIGRATION.md for the direct replacement for each. If you imported the
+bundled example custom-logger class from the package, copy it from
+examples/CustomLoggerClass.ts into your own project instead.
+Pagination and status metadata (CNR TOTAL/FIRST/LAST/COUNT/LIMIT, IBS
+transactid/status/message/code/count keys) is no longer registered as a
+column; getColumnKeys() drops its filter-boolean parameter; getPagination()
+returns a Paginator instead of a plain object (call .toArray() for the old
+shape); CNR.SessionClient is removed, its methods live on CNR.Client;
+ResponseTemplateManagerInterface no longer declares getTemplate()/
+getTemplates()/isTemplateMatchHash()/isTemplateMatchPlain() -- see the new
+ResponseTemplateFactoryInterface; Column.length is removed, use getLength().
+
+See MIGRATION.md -> v11.0.0 for full upgrade steps:
+https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/blob/master/MIGRATION.md#-v1100
+
 ## [10.0.15](https://github.com/centralnicgroup-opensource/rtldev-middleware-node-sdk/compare/v10.0.14...v10.0.15) (2026-05-06)
 
 

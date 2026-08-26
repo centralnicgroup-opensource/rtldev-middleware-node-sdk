@@ -1,7 +1,7 @@
 {
   "name": "@team-internet/apiconnector",
   "description": "Node.js SDK for the CentralNic Reseller (CNR, fka RRPProxy), Internet.bs (IBS) and Moniker registrar APIs",
-  "version": "10.0.15",
+  "version": "11.0.0",
   "private": false,
   "publishConfig": {
     "access": "public"
