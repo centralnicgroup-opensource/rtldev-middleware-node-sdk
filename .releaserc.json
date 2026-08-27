@@ -1,4 +1,5 @@
 {
+  "repositoryUrl": "git@github.com:centralnicgroup-opensource/rtldev-middleware-node-sdk.git",
   "plugins": [
     "@semantic-release/commit-analyzer",
     "@semantic-release/release-notes-generator",
