@@ -9,4 +9,9 @@ on:
 jobs:
   tests:
     uses: centralnicgroup-opensource/rtldev-middleware-shareable-workflows/.github/workflows/node-sdk-test.yml@main
+    with:
+      # Empty, so pnpm/action-setup resolves the version from
+      # `devEngines.packageManager` in package.json rather than installing whatever
+      # pnpm is newest. (RSRMID-3008)
+      pnpm-version: ""
     secrets: inherit
