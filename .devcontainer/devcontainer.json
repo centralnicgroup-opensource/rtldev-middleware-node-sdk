@@ -30,10 +30,23 @@
     "ghcr.io/devcontainers/features/github-cli:1": {},
     "ghcr.io/anthropics/devcontainer-features/claude-code:1": {}
   },
+  // The history bind below names a *file*, and Docker creates a missing bind source
+  // itself, as a directory on the host, where it outlives the container.
+  "initializeCommand": "touch ${localEnv:HOME}/.zsh_history",
+  // Narrowed from a mount of the whole host home at /WSL_USER, which handed this
+  // container read-write reach over the host's SSH keys, credentials and every other
+  // repository on the machine in order to reach one history file. (RSRMID-3052)
+  //
+  // Be aware that path currently feeds nothing here: /WSL_USER/.zsh_history is read by
+  // the devbase Feature, and this frame does not list it. The "migrate onto the shared
+  // devbase Feature" commit added .dockerignore and env-info.conf but never the Feature
+  // itself, so this repository has no history persistence to break — and the
+  // env-info.conf beside this file is read by nobody. Completing that migration is a
+  // separate change; this one only stops the mount being wider than it needs to be.
   "mounts": [
     "source=${localEnv:HOME}/.ssh,target=/home/vscode/.ssh,type=bind,readonly",
-    "source=${localEnv:HOME}/.gitconfig,target=/home/vscode/.gitconfig,type=bind,consistency=cached",
-    "source=${localEnv:HOME}${localEnv:USERPROFILE},target=/WSL_USER,type=bind,consistency=cached",
+    "source=${localEnv:HOME}/.gitconfig,target=/home/vscode/.gitconfig,type=bind,readonly",
+    "source=${localEnv:HOME}/.zsh_history,target=/WSL_USER/.zsh_history,type=bind,consistency=cached",
     "source=${localEnv:HOME}/.claude,target=/home/vscode/.claude,type=bind,consistency=cached"
   ],
   "remoteUser": "vscode",
