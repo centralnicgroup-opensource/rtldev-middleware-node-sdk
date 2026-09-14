@@ -1,54 +1,99 @@
-// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
-// https://github.com/microsoft/vscode-dev-containers/tree/v0.224.2/containers/jekyll
 {
+  // Everything shared with the other RTLDEV middleware repositories lives in the
+  // devbase Feature, not here: zsh with the team prompt, commitizen, pnpm, Node
+  // LTS, the GitHub CLI, the gh credential helper, dependency installation,
+  // persistent shell history, the shared VS Code extension set and the on-attach
+  // toolchain banner.
+  //
+  // What stays in this file is what a Feature cannot set — the name, the
+  // workspace paths, the remote user, initializeCommand and the host mounts.
+  // This repository has no runtime beyond what devbase already brings (Node LTS
+  // plus the GitHub CLI), so there is nothing repository-specific left to add.
+  //
+  // The compose frame this replaced ran a single service and needed no backing
+  // services, so it is now the single-container shape — one container built from
+  // ./Dockerfile, as php-sdk and dnscontrol-dnsconfig use.
+  //
+  // Feature options and troubleshooting:
+  // https://github.com/centralnicgroup-opensource/rtldev-middleware-devcontainer-features
   "name": "dstack-nodesdk",
-  "dockerComposeFile": ["docker-compose.yml"],
-  "service": "nodesdk",
-  "workspaceFolder": "/usr/share/rtldev-middleware-node-sdk",
-  "shutdownAction": "stopCompose",
+  "build": {
+    "context": ".",
+    "dockerfile": "Dockerfile"
+  },
+
+  // localWorkspaceFolderBasename is the repository directory name, so these two
+  // cannot drift apart from it or from each other. Resolves to the same
+  // /usr/share/rtldev-middleware-node-sdk as the compose volume did.
+  "workspaceMount": "source=${localWorkspaceFolder},target=/usr/share/${localWorkspaceFolderBasename},type=bind,consistency=cached",
+  "workspaceFolder": "/usr/share/${localWorkspaceFolderBasename}",
+  "shutdownAction": "stopContainer",
+
+  // Host-side preflight for the binds at the bottom of this file: Docker creates
+  // a missing bind source itself, as a root-owned *directory*. For ~/.ssh and
+  // ~/.claude that yields a directory nobody in the container can write to; for
+  // ~/.gitconfig and ~/.zsh_history it yields a directory where a file is expected,
+  // on the host too, where the damage outlives the container.
+  // Runs on the host, so it cannot move into a Feature.
+  "initializeCommand": {
+    "claude-state": "mkdir -p ${localEnv:HOME}/.claude",
+    "ssh-dir": "mkdir -p ${localEnv:HOME}/.ssh",
+    "gitconfig": "touch ${localEnv:HOME}/.gitconfig",
+    "zsh-history": "touch ${localEnv:HOME}/.zsh_history"
+  },
+
+  "features": {
+    // The shared behaviour layer. It declares Node LTS and the GitHub CLI as its
+    // own dependencies, so neither is listed here. The Claude Code CLI was a third
+    // until devbase 2.0.0 dropped it — the VS Code extension runs its own bundled
+    // runtime (RSRMID-3053). Do NOT re-declare node:2 to change its version: one
+    // Feature id with two option sets counts as two Features under the spec's
+    // equality rule, so Node would install twice into the same nvm path.
+    //
+    // There is a package.json here, so installProjectDependencies stays at its
+    // default (true): devbase runs `pnpm i` for us, reading the pnpm version off
+    // devEngines.packageManager the same way CI does.
+    "ghcr.io/centralnicgroup-opensource/rtldev-middleware-devcontainer-features/devbase:2": {}
+  },
+
   "customizations": {
     "vscode": {
-      "extensions": [
-        "github.vscode-github-actions",
-        "GitHub.vscode-pull-request-github",
-        "ms-vscode-remote.remote-containers",
-        "ms-azuretools.vscode-docker",
-        "anthropic.claude-code",
-        "anthropic.claude-vscode"
-      ],
-      "settings": {
-        "terminal.integrated.defaultProfile.linux": "zsh",
-        "terminal.integrated.profiles.linux": {
-          "zsh": {
-            "path": "/bin/zsh"
-          }
-        }
-      }
+      // TypeScript tooling only. devbase contributes the shared layer — GitHub
+      // Actions, GitHub PRs, Remote Containers, Containers, both Claude
+      // extensions, shellcheck / shell-format / vscode-yaml — plus the zsh
+      // terminal profile and the shellcheck/npm settings that go with them.
+      // TypeScript itself needs no extension (VS Code bundles the language
+      // service). eslint and prettier are added here rather than carried over —
+      // the old list had neither — because they are what `pnpm lint` actually
+      // runs, so the editor should flag in place what CI would fail on.
+      "extensions": ["dbaeumer.vscode-eslint", "esbenp.prettier-vscode"]
     }
   },
-  "features": {
-    "ghcr.io/devcontainers/features/github-cli:1": {},
-    "ghcr.io/anthropics/devcontainer-features/claude-code:1": {}
-  },
-  // The history bind below names a *file*, and Docker creates a missing bind source
-  // itself, as a directory on the host, where it outlives the container.
-  "initializeCommand": "touch ${localEnv:HOME}/.zsh_history",
-  // Narrowed from a mount of the whole host home at /WSL_USER, which handed this
-  // container read-write reach over the host's SSH keys, credentials and every other
-  // repository on the machine in order to reach one history file. (RSRMID-3052)
+
+  "remoteUser": "vscode",
+
+  // .ssh and .gitconfig make git work as it does on the host, both readonly: the
+  // container reads that identity, it does not maintain it. devbase writes its
+  // credential and signing config with `git config --local`, never `--global`,
+  // exactly so the host's file stays untouched, so readonly costs nothing here.
+  // /WSL_USER/.zsh_history is the single file devbase's history persistence
+  // reads; .claude carries the Claude Code session state.
   //
-  // Be aware that path currently feeds nothing here: /WSL_USER/.zsh_history is read by
-  // the devbase Feature, and this frame does not list it. The "migrate onto the shared
-  // devbase Feature" commit added .dockerignore and env-info.conf but never the Feature
-  // itself, so this repository has no history persistence to break — and the
-  // env-info.conf beside this file is read by nobody. Completing that migration is a
-  // separate change; this one only stops the mount being wider than it needs to be.
+  // The history entry binds that one file and never the host home. Mounting
+  // ${localEnv:HOME} at /WSL_USER to reach a single file inside it handed the
+  // container read-write reach over the host's SSH keys, credentials and every
+  // other repository on the machine — and in the workspace repository it made the
+  // readonly flag on the GitHub tokens decorative, since the same inodes were
+  // writable by that second path. (RSRMID-3052)
+  //
+  // Narrowing it also retired the ${localEnv:HOME}${localEnv:USERPROFILE}
+  // concatenation, which resolved to neither path on a host defining both and left
+  // Docker mounting an empty directory. A single-file bind needs the host file to
+  // exist first instead — see the touch in initializeCommand above.
   "mounts": [
     "source=${localEnv:HOME}/.ssh,target=/home/vscode/.ssh,type=bind,readonly",
     "source=${localEnv:HOME}/.gitconfig,target=/home/vscode/.gitconfig,type=bind,readonly",
     "source=${localEnv:HOME}/.zsh_history,target=/WSL_USER/.zsh_history,type=bind,consistency=cached",
     "source=${localEnv:HOME}/.claude,target=/home/vscode/.claude,type=bind,consistency=cached"
-  ],
-  "remoteUser": "vscode",
-  "postCreateCommand": "zsh /post-create.sh"
+  ]
 }
