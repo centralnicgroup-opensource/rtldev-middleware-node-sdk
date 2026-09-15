@@ -161,11 +161,11 @@ describe("Seam: sessions and role credentials are CNR-only, by type", () => {
     const moniker = new MONIKERClient(new MONIKERSocketConfig());
 
     // @ts-expect-error — sessions are CNR-only; IBS.Client must not declare login().
-    void ibs.login;
+    ibs.login;
     // @ts-expect-error — MONIKER extends IBS.Client and must not acquire one either.
-    void moniker.setSession;
+    moniker.setSession;
     // @ts-expect-error — role credentials are CNR-only (RoleCredentialsInterface).
-    void ibs.setRoleCredentials;
+    ibs.setRoleCredentials;
   });
 
   it("the persistent parameter is emitted by CNR's own config, not the shared base", () => {

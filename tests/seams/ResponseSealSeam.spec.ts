@@ -127,13 +127,13 @@ describe("Seam: a Response is sealed by its constructor", () => {
     );
 
     // @ts-expect-error — addRecord() is protected on AbstractResponse and absent from ResponseInterface.
-    void r.addRecord;
+    r.addRecord;
     // @ts-expect-error — addColumn() is protected on each brand Response, called only by its populate().
-    void r.addColumn;
+    r.addColumn;
     // @ts-expect-error — the record cursor was removed; iterate with for…of instead.
-    void r.getNextRecord;
+    r.getNextRecord;
     // @ts-expect-error — same, and rewinding is meaningless once iteration is a fresh generator.
-    void r.rewindRecordList;
+    r.rewindRecordList;
   });
 
   it("assembly happens once — the record list is not doubled by a second read", () => {
@@ -143,8 +143,8 @@ describe("Seam: a Response is sealed by its constructor", () => {
     );
 
     expect(r.getRecordsCount()).to.equal(2);
-    void [...r];
-    void r.getRecords();
+    [...r];
+    r.getRecords();
     expect(
       r.getRecordsCount(),
       "reading the records must not re-run assembly",
