@@ -212,8 +212,8 @@ importers:
   .:
     dependencies:
       idna-uts46-hx:
-        specifier: 6.1.7
-        version: 6.1.7
+        specifier: ^6.2.2
+        version: 6.2.2
       undici:
         specifier: ^8.10.2
         version: 8.10.2
@@ -226,7 +226,7 @@ importers:
         version: 11.0.1(semantic-release@25.0.9(supports-color@8.1.1)(typescript@6.0.3))(supports-color@8.1.1)
       '@team-internet/semantic-release-plugins':
         specifier: ^2.5.1
-        version: 2.5.1(@semantic-release/release-notes-generator@14.1.1(semantic-release@25.0.9(supports-color@8.1.1)(typescript@6.0.3))(supports-color@8.1.1))(conventional-changelog-angular@8.3.1)(prettier@3.9.6)(semantic-release@25.0.9(supports-color@8.1.1)(typescript@6.0.3))
+        version: 2.5.1(@semantic-release/release-notes-generator@14.1.1(semantic-release@25.0.9(supports-color@8.1.1)(typescript@6.0.3))(supports-color@8.1.1))(conventional-changelog-angular@8.3.1)(prettier@3.9.7)(semantic-release@25.0.9(supports-color@8.1.1)(typescript@6.0.3))
       '@tsconfig/node22':
         specifier: ^22.0.6
         version: 22.0.6
@@ -237,8 +237,8 @@ importers:
         specifier: ^10.0.10
         version: 10.0.10
       '@types/node':
-        specifier: ^26.5.1
-        version: 26.5.1
+        specifier: ^26.6.1
+        version: 26.6.1
       c8:
         specifier: ^12.0.0
         version: 12.0.0
@@ -255,8 +255,8 @@ importers:
         specifier: ^10.10.0
         version: 10.10.0(supports-color@8.1.1)
       fallow:
-        specifier: 3.17.0
-        version: 3.17.0
+        specifier: 3.26.0
+        version: 3.26.0
       mocha:
         specifier: ^11.8.0
         version: 11.8.0
@@ -264,8 +264,8 @@ importers:
         specifier: ^14.0.17
         version: 14.0.17
       prettier:
-        specifier: ^3.9.6
-        version: 3.9.6
+        specifier: ^3.9.7
+        version: 3.9.7
       semantic-release:
         specifier: ^25.0.9
         version: 25.0.9(supports-color@8.1.1)(typescript@6.0.3)
@@ -507,43 +507,43 @@ packages:
     resolution: {integrity: sha512-IkO+/KEUvwbVpiURZg+P7zF74z5Jxe0UgJxVni+RtoHQ6IZieXaO02kmadomap/q+l6bc/jdPGGqTjhuZnuz1Q==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24}
 
-  '@fallow-cli/darwin-arm64@3.17.0':
-    resolution: {integrity: sha512-u9O4aQaTSdaZaa4MAVEZEiwOx6QQzChymyQPrxV6KvDcVbcl0oYSekJKdvN4gEqUY8ClMze9gWS1tbn/W3N4dQ==}
+  '@fallow-cli/darwin-arm64@3.26.0':
+    resolution: {integrity: sha512-aEU7H20lyoWHbb/UejjmQn9kt8Q340Br2HPUYCM55eZ2WUxD+DZgGQMo4d8COO0o9w32Mob1hFxzsVbWkvt//g==}
     cpu: [arm64]
     os: [darwin]
 
-  '@fallow-cli/darwin-x64@3.17.0':
-    resolution: {integrity: sha512-l3tZJovnCa8j+im4qTl4GVSfrx4gisJYeHDwb5TbcdTGaWYz42gHriAaz5MhOR8S24q3xRegX8QrI8PA4XXU4g==}
+  '@fallow-cli/darwin-x64@3.26.0':
+    resolution: {integrity: sha512-dMHyDxvjNlkRvuoMjGkdip2dDlbhDOwqF/LKBQUFXElIsa7CCFRJ2RnS7DQycpqqNKEb9g468/HiYZwtjSqcMQ==}
     cpu: [x64]
     os: [darwin]
 
-  '@fallow-cli/linux-arm64-gnu@3.17.0':
-    resolution: {integrity: sha512-IAjS6qR4tHcRo1y5lzYT6mktN/ATPyPNrJ6yjwTORwwQV1YfMO58A5zGBfJlPBY+lUmaMZ9w37ftvH9a2AS4dQ==}
+  '@fallow-cli/linux-arm64-gnu@3.26.0':
+    resolution: {integrity: sha512-S0rWQwvtFIrF8Zj4dg4KIDVYzXIeqlul9+3O0s5ImEaEPPW4xuUzPiOmCqnYu0OtwksA0NNE+pn4Q3fToUQ+Lg==}
     cpu: [arm64]
     os: [linux]
 
-  '@fallow-cli/linux-arm64-musl@3.17.0':
-    resolution: {integrity: sha512-Oe1dvk5Wt5Bmnxfc6HufJTaFY9SEwDVrZpnSdVQlv+nvz7DzrTK1r91cR3Ip477ANSLa9XD/MHPMpfqqo0dlZg==}
+  '@fallow-cli/linux-arm64-musl@3.26.0':
+    resolution: {integrity: sha512-tmRpWTjaCIdpXMZj+iLAis9xZ9YAmqM3/eBVfqiEjE1gI2xaCb06hWylAPEsl4LgQvL7NW0zUn44CHLdr6tuwA==}
     cpu: [arm64]
     os: [linux]
 
-  '@fallow-cli/linux-x64-gnu@3.17.0':
-    resolution: {integrity: sha512-XgLU2a51zuky7gifjVDHuiJGToAReDsVCDcyDF84TQz/h3bqO0iRkpDL8dh7+HODku84+EffpK5ZHY19n6Ij0w==}
+  '@fallow-cli/linux-x64-gnu@3.26.0':
+    resolution: {integrity: sha512-MPMXSboHqEME25R6IhB1lLY1eTzF8RRvZ2tf669tLr5a3yL3irEKGM61AZw3XbWQnVPkQM98Pp0YwngRru7fFw==}
     cpu: [x64]
     os: [linux]
 
-  '@fallow-cli/linux-x64-musl@3.17.0':
-    resolution: {integrity: sha512-GnDZx2kbLKKdYAp05NSKv6CZHgzEKvhRd0btCKFMMpUEhdzmr4uh2Qb4UzKDBg/q2r1EhkzN4b/qC+tbFCmtwA==}
+  '@fallow-cli/linux-x64-musl@3.26.0':
+    resolution: {integrity: sha512-b7uY1GreWd4kyR9E8Ghdw8XQpjZoTAHCsZPty+NptbeS0e40KaOD8chLnlNQlz4fiPXRDyPQFLxcPjNSivJkZQ==}
     cpu: [x64]
     os: [linux]
 
-  '@fallow-cli/win32-arm64-msvc@3.17.0':
-    resolution: {integrity: sha512-u9n5WzPuKuC1PKegKQknWtngAUJ2szQaRXsbY54s7UMqeFNyC+W04LV5D+sEZywU7L0kzL+Kck9LxFLXBQcgvA==}
+  '@fallow-cli/win32-arm64-msvc@3.26.0':
+    resolution: {integrity: sha512-w3XKnWpkDrFCJHIw8sICMUkViB/Oe8GKClQ+bnScpUgj3n4337OrPp62McU5prtQ2u/20uMkgDCROIiZdmfPhw==}
     cpu: [arm64]
     os: [win32]
 
-  '@fallow-cli/win32-x64-msvc@3.17.0':
-    resolution: {integrity: sha512-/OcyxHuCKabzQ9hKIjM/CFJ9fr30n0Mw5MK6nzi5rn26mbYUgh073UZq4FONOpPJ/FqHtC726rxpgBtR4qS+gg==}
+  '@fallow-cli/win32-x64-msvc@3.26.0':
+    resolution: {integrity: sha512-+tFINHlI1DBA4A2jYmffaVQpQc2eVwgtMjX/eJBqTGpvyO9wrvKBPqKbH0BJS9EqwgwATD4PC+obEJBcibidZw==}
     cpu: [x64]
     os: [win32]
 
@@ -807,8 +807,8 @@ packages:
   '@types/mocha@10.0.10':
     resolution: {integrity: sha512-xPyYSz1cMPnJQhl0CLMH68j3gprKZaTjG3s5Vi+fDgx+uhG9NOXwbVt52eFS8ECyXhyKcjDLCBEqBExKuiZb7Q==}
 
-  '@types/node@26.5.1':
-    resolution: {integrity: sha512-CzNm2FezW4VR/LjG6yUdiEgLE/rAQ9Slj5gCu/C2VrdcW7I0ahNZ8DRbHT7zOZ6r3ONgd/bsQIeSaoDGrd1C6g==}
+  '@types/node@26.6.1':
+    resolution: {integrity: sha512-VqGJBMCtdhqkBUCcBLvywI0NJ+KLuVzgNnlBUNFOQjqVxzo2lxLUNg1DSey8+u2u6ktswSAxg+s68QLzWHNOuA==}
 
   '@types/normalize-package-data@2.4.4':
     resolution: {integrity: sha512-37i+OaWTh9qeK4LSHPsyRC7NahnGotNuZvjLSgcPzblpHB3rrCJxAOgI5gCdKm7coonsaX1Of0ILiTcnZjbfxA==}
@@ -1471,13 +1471,13 @@ packages:
     resolution: {integrity: sha512-9Be3ZoN4LmYR90tUoVu2te2BsbzHfhJyfEiAVfz7N5/zv+jduIfLrV2xdQXOHbaD6KgpGdO9PRPM1Y4Q9QkPkA==}
     engines: {node: ^18.19.0 || >=20.5.0}
 
-  fallow-type-aware@3.17.0:
-    resolution: {integrity: sha512-DFtZUK5oqP56tSsrBWPzjrTIwPPxwlBV8QoSaGghMru347Nqj8ZBY6u9HFa/TIPcxvFU/zIZMRF8xS/XAWQTzg==}
+  fallow-type-aware@3.26.0:
+    resolution: {integrity: sha512-IGINPM9FAgqDSUzSnRhYo0bLpm2AoIpuW7NbwqGj3zNBL6t7NvTxi+VPEsLtQ/jE3SGVia3paNxbd1NMjY0mnQ==}
     engines: {node: '>=20'}
     hasBin: true
 
-  fallow@3.17.0:
-    resolution: {integrity: sha512-tbLuvsPq3I2CzpoF/9MgSQ7hWzOqlj3avFUAmCr1J9OERE6z714SlDmA38NVvNy/zuK/70utXB3/b33xC9z29g==}
+  fallow@3.26.0:
+    resolution: {integrity: sha512-4Nw5ydA7VC0N8j6e/pGwGBi8PKAackfirsdj7mdQwNCayedMbLRuaQUZ2s0bg0MNN3C8qDo8IAst7xwgziH0Tg==}
     engines: {node: '>=22'}
     hasBin: true
 
@@ -1663,9 +1663,10 @@ packages:
     resolution: {integrity: sha512-eKCa6bwnJhvxj14kZk5NCPc6Hb6BdsU9DZcOnmQKSnO1VKrfV0zCvtttPZUsBvjmNDn8rpcJfpwSYnHBjc95MQ==}
     engines: {node: '>=18.18.0'}
 
-  idna-uts46-hx@6.1.7:
-    resolution: {integrity: sha512-CcYEtQLQA0qhGvdwuI7tPFdavsK2TjzMi7zmbY+8HDwP+hTU4qtiWwbfScrsgGCeh8LZ0G/uYv6XhmTb4h8+Tg==}
-    engines: {node: ^22.14.0 || >= 24.10.0}
+  idna-uts46-hx@6.2.2:
+    resolution: {integrity: sha512-XKLpPDhloJlnONwexSmh3RF593sBoepE1N5BJUOw05gDtBLrJFih5JyKUHhlfzNc2m30gfcynW7kAvmWqBTYZw==}
+    engines: {node: ^24.15.0 || ^26.0.0, npm: '>=12.0.0'}
+    hasBin: true
 
   ieee754@1.2.1:
     resolution: {integrity: sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==}
@@ -2205,8 +2206,8 @@ packages:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
 
-  prettier@3.9.6:
-    resolution: {integrity: sha512-OpN0zzVdiaiAhxpuuj5efpIS4sY9j7bY6uR5mnj5yPzGkdkjNKSJeUThPb60Jw29QuAZgA4o+/iB49kFiaBX6g==}
+  prettier@3.9.7:
+    resolution: {integrity: sha512-T3mF5P7HFzZVLDQuCUNtJj6WK1pcpLMweMNUVwGb01bLNkH9AkKxtZvmInw8K6bnn2O3d6/5RHl6zSHiBAD0Og==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -2872,28 +2873,28 @@ snapshots:
       '@eslint/core': 1.2.1
       levn: 0.4.1
 
-  '@fallow-cli/darwin-arm64@3.17.0':
+  '@fallow-cli/darwin-arm64@3.26.0':
     optional: true
 
-  '@fallow-cli/darwin-x64@3.17.0':
+  '@fallow-cli/darwin-x64@3.26.0':
     optional: true
 
-  '@fallow-cli/linux-arm64-gnu@3.17.0':
+  '@fallow-cli/linux-arm64-gnu@3.26.0':
     optional: true
 
-  '@fallow-cli/linux-arm64-musl@3.17.0':
+  '@fallow-cli/linux-arm64-musl@3.26.0':
     optional: true
 
-  '@fallow-cli/linux-x64-gnu@3.17.0':
+  '@fallow-cli/linux-x64-gnu@3.26.0':
     optional: true
 
-  '@fallow-cli/linux-x64-musl@3.17.0':
+  '@fallow-cli/linux-x64-musl@3.26.0':
     optional: true
 
-  '@fallow-cli/win32-arm64-msvc@3.17.0':
+  '@fallow-cli/win32-arm64-msvc@3.26.0':
     optional: true
 
-  '@fallow-cli/win32-x64-msvc@3.17.0':
+  '@fallow-cli/win32-x64-msvc@3.26.0':
     optional: true
 
   '@gerrit0/mini-shiki@3.23.0':
@@ -3175,7 +3176,7 @@ snapshots:
 
   '@sindresorhus/merge-streams@4.0.0': {}
 
-  '@team-internet/semantic-release-plugins@2.5.1(@semantic-release/release-notes-generator@14.1.1(semantic-release@25.0.9(supports-color@8.1.1)(typescript@6.0.3))(supports-color@8.1.1))(conventional-changelog-angular@8.3.1)(prettier@3.9.6)(semantic-release@25.0.9(supports-color@8.1.1)(typescript@6.0.3))':
+  '@team-internet/semantic-release-plugins@2.5.1(@semantic-release/release-notes-generator@14.1.1(semantic-release@25.0.9(supports-color@8.1.1)(typescript@6.0.3))(supports-color@8.1.1))(conventional-changelog-angular@8.3.1)(prettier@3.9.7)(semantic-release@25.0.9(supports-color@8.1.1)(typescript@6.0.3))':
     dependencies:
       '@semantic-release/error': 4.0.0
       archiver: 8.0.0
@@ -3186,7 +3187,7 @@ snapshots:
     optionalDependencies:
       '@semantic-release/release-notes-generator': 14.1.1(semantic-release@25.0.9(supports-color@8.1.1)(typescript@6.0.3))(supports-color@8.1.1)
       conventional-changelog-angular: 8.3.1
-      prettier: 3.9.6
+      prettier: 3.9.7
       semantic-release: 25.0.9(supports-color@8.1.1)(typescript@6.0.3)
     transitivePeerDependencies:
       - bare-abort-controller
@@ -3216,7 +3217,7 @@ snapshots:
 
   '@types/mocha@10.0.10': {}
 
-  '@types/node@26.5.1':
+  '@types/node@26.6.1':
     dependencies:
       undici-types: 8.9.0
 
@@ -3889,24 +3890,24 @@ snapshots:
       strip-final-newline: 4.0.0
       yoctocolors: 2.2.0
 
-  fallow-type-aware@3.17.0:
+  fallow-type-aware@3.26.0:
     dependencies:
       typescript: 7.0.2
     optional: true
 
-  fallow@3.17.0:
+  fallow@3.26.0:
     dependencies:
       detect-libc: 2.1.2
     optionalDependencies:
-      '@fallow-cli/darwin-arm64': 3.17.0
-      '@fallow-cli/darwin-x64': 3.17.0
-      '@fallow-cli/linux-arm64-gnu': 3.17.0
-      '@fallow-cli/linux-arm64-musl': 3.17.0
-      '@fallow-cli/linux-x64-gnu': 3.17.0
-      '@fallow-cli/linux-x64-musl': 3.17.0
-      '@fallow-cli/win32-arm64-msvc': 3.17.0
-      '@fallow-cli/win32-x64-msvc': 3.17.0
-      fallow-type-aware: 3.17.0
+      '@fallow-cli/darwin-arm64': 3.26.0
+      '@fallow-cli/darwin-x64': 3.26.0
+      '@fallow-cli/linux-arm64-gnu': 3.26.0
+      '@fallow-cli/linux-arm64-musl': 3.26.0
+      '@fallow-cli/linux-x64-gnu': 3.26.0
+      '@fallow-cli/linux-x64-musl': 3.26.0
+      '@fallow-cli/win32-arm64-msvc': 3.26.0
+      '@fallow-cli/win32-x64-msvc': 3.26.0
+      fallow-type-aware: 3.26.0
 
   fast-deep-equal@3.1.3: {}
 
@@ -4082,7 +4083,7 @@ snapshots:
 
   human-signals@8.0.1: {}
 
-  idna-uts46-hx@6.1.7:
+  idna-uts46-hx@6.2.2:
     dependencies:
       tr46: 6.0.0
 
@@ -4518,7 +4519,7 @@ snapshots:
 
   prelude-ls@1.2.1: {}
 
-  prettier@3.9.6: {}
+  prettier@3.9.7: {}
 
   pretty-ms@9.3.1:
     dependencies:
