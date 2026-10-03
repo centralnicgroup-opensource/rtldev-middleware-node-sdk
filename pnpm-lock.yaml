@@ -215,8 +215,8 @@ importers:
         specifier: ^11.0.1
         version: 11.0.1(semantic-release@25.0.9(supports-color@8.1.1)(typescript@6.0.3))(supports-color@8.1.1)
       '@team-internet/semantic-release-plugins':
-        specifier: ^2.5.1
-        version: 2.5.1(@semantic-release/release-notes-generator@14.1.1(semantic-release@25.0.9(supports-color@8.1.1)(typescript@6.0.3))(supports-color@8.1.1))(conventional-changelog-angular@8.3.1)(prettier@3.9.9)(semantic-release@25.0.9(supports-color@8.1.1)(typescript@6.0.3))
+        specifier: ^2.5.2
+        version: 2.5.2(@semantic-release/release-notes-generator@14.1.1(semantic-release@25.0.9(supports-color@8.1.1)(typescript@6.0.3))(supports-color@8.1.1))(conventional-changelog-angular@8.3.1)(prettier@3.9.9)(semantic-release@25.0.9(supports-color@8.1.1)(typescript@6.0.3))
       '@tsconfig/node22':
         specifier: ^22.0.6
         version: 22.0.6
@@ -227,8 +227,8 @@ importers:
         specifier: ^10.0.10
         version: 10.0.10
       '@types/node':
-        specifier: ^26.6.3
-        version: 26.6.3
+        specifier: ^26.6.4
+        version: 26.6.4
       c8:
         specifier: ^12.0.0
         version: 12.0.0
@@ -740,8 +740,8 @@ packages:
     resolution: {integrity: sha512-tlqY9xq5ukxTUZBmoOp+m61cqwQD5pHJtFY3Mn8CA8ps6yghLH/Hw8UPdqg4OLmFW3IFlcXnQNmo/dh8HzXYIQ==}
     engines: {node: '>=18'}
 
-  '@team-internet/semantic-release-plugins@2.5.1':
-    resolution: {integrity: sha512-YDH06IokB3jLT/eXoF44ClrjFZ1C7h7nC3w4ITRMb5p/6kTOUjGEK4xOuvhm9avDQtH7HkPeFUgaLFk+eePdIQ==}
+  '@team-internet/semantic-release-plugins@2.5.2':
+    resolution: {integrity: sha512-8Y9SHk+4+IuwiEh1CNm3AWoKB31vExDnyiLbWuVGYKOhXFiNvgoYyyweUMW4ngIB1XO144BQSCaPDRPj/mI6/A==}
     engines: {node: ^24.15.0 || ^26.0.0, npm: '>=12.0.0'}
     peerDependencies:
       '@semantic-release/release-notes-generator': '>=14'
@@ -791,8 +791,8 @@ packages:
   '@types/mocha@10.0.10':
     resolution: {integrity: sha512-xPyYSz1cMPnJQhl0CLMH68j3gprKZaTjG3s5Vi+fDgx+uhG9NOXwbVt52eFS8ECyXhyKcjDLCBEqBExKuiZb7Q==}
 
-  '@types/node@26.6.3':
-    resolution: {integrity: sha512-dsqMQQoeTLqu9wynDD00q573mNzso3IdQOAfHRJqLCcmCFPoGo9A1bDpUcv/9tnKpErQWv9uKeGfl37EIS02Yg==}
+  '@types/node@26.6.4':
+    resolution: {integrity: sha512-ldVPDCzj7fsaGZrLB0NuHuTvJcsNasysBAqMolr/cgxrLd1xbqxIr3XJiPnHHJUCxj5sNF1vnRj9aWnrVh5Jcg==}
 
   '@types/normalize-package-data@2.4.4':
     resolution: {integrity: sha512-37i+OaWTh9qeK4LSHPsyRC7NahnGotNuZvjLSgcPzblpHB3rrCJxAOgI5gCdKm7coonsaX1Of0ILiTcnZjbfxA==}
@@ -3154,7 +3154,7 @@ snapshots:
 
   '@sindresorhus/merge-streams@4.0.0': {}
 
-  '@team-internet/semantic-release-plugins@2.5.1(@semantic-release/release-notes-generator@14.1.1(semantic-release@25.0.9(supports-color@8.1.1)(typescript@6.0.3))(supports-color@8.1.1))(conventional-changelog-angular@8.3.1)(prettier@3.9.9)(semantic-release@25.0.9(supports-color@8.1.1)(typescript@6.0.3))':
+  '@team-internet/semantic-release-plugins@2.5.2(@semantic-release/release-notes-generator@14.1.1(semantic-release@25.0.9(supports-color@8.1.1)(typescript@6.0.3))(supports-color@8.1.1))(conventional-changelog-angular@8.3.1)(prettier@3.9.9)(semantic-release@25.0.9(supports-color@8.1.1)(typescript@6.0.3))':
     dependencies:
       '@semantic-release/error': 4.0.0
       archiver: 8.0.0
@@ -3195,7 +3195,7 @@ snapshots:
 
   '@types/mocha@10.0.10': {}
 
-  '@types/node@26.6.3':
+  '@types/node@26.6.4':
     dependencies:
       undici-types: 8.9.0
 
