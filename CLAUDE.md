@@ -103,6 +103,14 @@ Short reminders; full detail in the linked docs.
 - **Breaking changes:** add a `BREAKING CHANGE: <summary>` line to the commit body (blank line after the subject) — this triggers a major bump. In the **same change** you must extend [MIGRATION.md](MIGRATION.md) with a `→ vX.0.0` section plus its compatibility-table row, and link that section from the commit footer.
 - **Check the repo's merge strategy before writing a `BREAKING CHANGE:` footer.** If PRs are squash-merged, the footer must live in the squash commit body, or the major bump will not happen.
 - **Default branch:** `master`. Versioning: semantic-release via the CI release workflow.
+- **Branch naming:** prefix with the Jira issue ID — `RSRMID-1234-short-description`.
+- **Pull requests:** include the Jira issue link in the description; after opening, add the PR URL as a comment on the Jira issue.
+
+## Atlassian / JIRA
+
+Work is tracked in **Jira Cloud**, project `RSRMID` — not GitHub Issues. Load the
+`jira-conventions` skill before creating, editing or transitioning an issue: it carries the
+required fields, this repository's title prefix and component, and the worklog rule for Done and Cancelled.
 
 ## Do NOT
 
@@ -122,4 +130,4 @@ Detailed, on-demand reference lives under `docs/agents/` — read the relevant f
 - **[testing.md](docs/agents/testing.md)** — cassette record/replay harness, seam specs, doubles, MONIKER/IBS duplication.
 - **[project-policies.md](docs/agents/project-policies.md)** — Node version policy, lockfiles, distribution/`files` allowlist, lint toolchain (including the TS7/TS6 story and every eslint rule override), secrets scheme.
 - **[ci-release.md](docs/agents/ci-release.md)** — CI/GitHub Actions wiring, the shared-workflows repo, the docs/release decoupling fix.
-- **[issue-tracker.md](docs/agents/issue-tracker.md)** — Jira Cloud, project `RSRMID`.
+- **[issue-tracker.md](docs/agents/issue-tracker.md)** — which RSRMID ticket references in these docs were not re-verified against Jira; the conventions themselves are in the `jira-conventions` skill.

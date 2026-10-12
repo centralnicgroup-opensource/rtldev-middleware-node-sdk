@@ -1,11 +1,8 @@
 # Issue Tracker
 
-Work is tracked in **Jira Cloud**, project **`RSRMID`** — this document itself was produced under [RSRMID-2974](https://centralnic.atlassian.net/browse/RSRMID-2974) ("Prepare Node-SDK for IBS/Moniker/IWMN Availability check MCP"). The PHP SDK's equivalent file scopes issues to a `PHP-SDK` component; this repo's issues should carry the Node-SDK equivalent component — **confirm the exact component name in the Jira project before relying on it for filtering**, since it is not independently verified here.
+Work is tracked in **Jira Cloud**, project **`RSRMID`** — this document itself was produced under [RSRMID-2974](https://centralnic.atlassian.net/browse/RSRMID-2974) ("Prepare Node-SDK for IBS/Moniker/IWMN Availability check MCP").
 
-Always-on rules, carried over from the PHP SDK's convention:
-
-- **Descriptions must be ADF** (Atlassian Document Format, JSON) — never markdown, which renders literal `\n` in Jira's UI.
-- **Log time before Done:** an issue should not move to **Done** without a worklog attached first.
+**Conventions live in the `jira-conventions` skill** (`.claude/skills/jira-conventions/SKILL.md`) — required fields, this repository's title prefix and component (`NODE-SDK`), the parent epic, transition IDs, Markdown descriptions, and the worklog required before Done or Cancelled. Load it before creating, editing or transitioning an issue; this page does not repeat it.
 
 Branch naming, PR description linking, and commit-message conventions are in [CLAUDE.md → Git Conventions](../../CLAUDE.md#git-conventions).
 
