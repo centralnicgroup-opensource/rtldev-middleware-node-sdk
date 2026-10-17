@@ -115,7 +115,7 @@
     "typescript-eslint": "^8.71.2"
   },
   "dependencies": {
-    "idna-uts46-hx": "^6.2.2",
-    "undici": "^8.12.1"
+    "idna-uts46-hx": "^6.2.3",
+    "undici": "^8.12.2"
   }
 }
