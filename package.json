@@ -104,7 +104,7 @@
     "cross-env": "^10.1.0",
     "dotenv": "^17.4.2",
     "eslint": "^10.14.0",
-    "fallow": "3.39.0",
+    "fallow": "3.40.0",
     "mocha": "^11.8.0",
     "nock": "^14.0.17",
     "prettier": "^3.9.10",
@@ -116,6 +116,6 @@
   },
   "dependencies": {
     "idna-uts46-hx": "^6.2.4",
-    "undici": "^8.12.3"
+    "undici": "^8.12.4"
   }
 }
