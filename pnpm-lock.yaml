@@ -216,10 +216,10 @@ importers:
         version: 11.0.1(semantic-release@25.0.9(supports-color@8.1.1)(typescript@6.0.3))(supports-color@8.1.1)
       '@team-internet/semantic-release-plugins':
         specifier: ^2.5.2
-        version: 2.5.2(@semantic-release/release-notes-generator@14.1.1(semantic-release@25.0.9(supports-color@8.1.1)(typescript@6.0.3))(supports-color@8.1.1))(bare-buffer@3.7.1)(conventional-changelog-angular@8.3.1)(prettier@3.9.10)(semantic-release@25.0.9(supports-color@8.1.1)(typescript@6.0.3))
+        version: 2.5.2(@semantic-release/release-notes-generator@14.1.1(semantic-release@25.0.9(supports-color@8.1.1)(typescript@6.0.3))(supports-color@8.1.1))(bare-buffer@3.7.1)(conventional-changelog-angular@8.3.1)(prettier@3.10.0)(semantic-release@25.0.9(supports-color@8.1.1)(typescript@6.0.3))
       '@tsconfig/node22':
-        specifier: ^22.0.6
-        version: 22.0.6
+        specifier: ^22.0.7
+        version: 22.0.7
       '@types/chai':
         specifier: ^5.2.3
         version: 5.2.3
@@ -254,8 +254,8 @@ importers:
         specifier: ^14.0.17
         version: 14.0.17
       prettier:
-        specifier: ^3.9.10
-        version: 3.9.10
+        specifier: ^3.10.0
+        version: 3.10.0
       semantic-release:
         specifier: ^25.0.9
         version: 25.0.9(supports-color@8.1.1)(typescript@6.0.3)
@@ -764,8 +764,8 @@ packages:
       skia-canvas:
         optional: true
 
-  '@tsconfig/node22@22.0.6':
-    resolution: {integrity: sha512-/5thavHAnWDZwH2H6eEn/T8pBEBhtuKaWGMslsj82kJfvzQgOgEMK7X4goBbIUjgVtAzPTtM9Ml64LA0uxO6Iw==}
+  '@tsconfig/node22@22.0.7':
+    resolution: {integrity: sha512-xnYM5q+HTeLm+jRBIB7Mu61OyOmNpgzPmJuhwPODSyITDPIWVK2TXxn/+O5fJ4n/P0u/gPsgSyPw/Dl3Cz/L4g==}
 
   '@types/chai@5.2.3':
     resolution: {integrity: sha512-Mw558oeA9fFbv65/y4mHtXDs9bPnFMZAL/jxdPFUpOHHIXX91mcgEHbS5Lahr+pwZFR8A7GQleRWeI6cGFC2UA==}
@@ -1116,11 +1116,11 @@ packages:
   bottleneck@2.19.5:
     resolution: {integrity: sha512-VHiNCbI1lKdl44tGrhNfU3lup0Tj/ZBMJB5/2ZbNXRCPuRCO7ed2mgcK4r17y+KB2EfuYuRaVlwNbAeaWGSpbw==}
 
-  brace-expansion@2.1.7:
-    resolution: {integrity: sha512-uZbew1NqdmPDTMJ8ah1y+b+9QEJrfkXFk3RcTQw3X0jW/xRUvFKsg1CfQdSYGdTbXZWExtU3J3ccxtnfw1Fi0g==}
+  brace-expansion@2.1.8:
+    resolution: {integrity: sha512-BnlDzDYQoplTsZSvPi86CNzmbcb07X8ufR8fk1zivaiEJlXJkiq1MQyDCVmlWcsWbj6aWXqHnrwwevbrm/Saig==}
 
-  brace-expansion@5.0.12:
-    resolution: {integrity: sha512-YovQ3rzhaLMIrDjNDMkNS01tea93qhEhG5xy8f6+R0l+dw3Ki+5sCoIoI942iuLZTHWogWktgwVDhU09iNEimQ==}
+  brace-expansion@5.0.13:
+    resolution: {integrity: sha512-Vh3dmFbc4wZeox7M9I/0L9GfFd83Su4+yCck/OF9Gi/P/dAHn0RT7X4K9R7gMNMhDck3DvhR6QXsnQdjjgwNvQ==}
     engines: {node: 20 || >=22}
 
   braces@3.0.3:
@@ -2199,8 +2199,8 @@ packages:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
 
-  prettier@3.9.10:
-    resolution: {integrity: sha512-skGHTH1Yb9QvaTC4hWnRTzEYtCpApF0UMBPz+t/0ZPzP8ihefo/btKd+QA7pUE0fEwA1SbS/NmhyEcstdXOIdA==}
+  prettier@3.10.0:
+    resolution: {integrity: sha512-mBi4765LgjO1PFjlEs7pUeK0nb1bw71c+N4/ItfeUWNdY5cV2pRKaFpbbFRYmDJMO+5ZwzGxHRqHxFZna7iv5w==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -3163,7 +3163,7 @@ snapshots:
 
   '@sindresorhus/merge-streams@4.0.0': {}
 
-  '@team-internet/semantic-release-plugins@2.5.2(@semantic-release/release-notes-generator@14.1.1(semantic-release@25.0.9(supports-color@8.1.1)(typescript@6.0.3))(supports-color@8.1.1))(bare-buffer@3.7.1)(conventional-changelog-angular@8.3.1)(prettier@3.9.10)(semantic-release@25.0.9(supports-color@8.1.1)(typescript@6.0.3))':
+  '@team-internet/semantic-release-plugins@2.5.2(@semantic-release/release-notes-generator@14.1.1(semantic-release@25.0.9(supports-color@8.1.1)(typescript@6.0.3))(supports-color@8.1.1))(bare-buffer@3.7.1)(conventional-changelog-angular@8.3.1)(prettier@3.10.0)(semantic-release@25.0.9(supports-color@8.1.1)(typescript@6.0.3))':
     dependencies:
       '@semantic-release/error': 4.0.0
       archiver: 8.0.0(bare-buffer@3.7.1)
@@ -3174,14 +3174,14 @@ snapshots:
     optionalDependencies:
       '@semantic-release/release-notes-generator': 14.1.1(semantic-release@25.0.9(supports-color@8.1.1)(typescript@6.0.3))(supports-color@8.1.1)
       conventional-changelog-angular: 8.3.1
-      prettier: 3.9.10
+      prettier: 3.10.0
       semantic-release: 25.0.9(supports-color@8.1.1)(typescript@6.0.3)
     transitivePeerDependencies:
       - bare-abort-controller
       - bare-buffer
       - react-native-b4a
 
-  '@tsconfig/node22@22.0.6': {}
+  '@tsconfig/node22@22.0.7': {}
 
   '@types/chai@5.2.3':
     dependencies:
@@ -3480,11 +3480,11 @@ snapshots:
 
   bottleneck@2.19.5: {}
 
-  brace-expansion@2.1.7:
+  brace-expansion@2.1.8:
     dependencies:
       balanced-match: 1.0.2
 
-  brace-expansion@5.0.12:
+  brace-expansion@5.0.13:
     dependencies:
       balanced-match: 4.0.4
 
@@ -4306,11 +4306,11 @@ snapshots:
 
   minimatch@10.2.6:
     dependencies:
-      brace-expansion: 5.0.12
+      brace-expansion: 5.0.13
 
   minimatch@9.0.9:
     dependencies:
-      brace-expansion: 2.1.7
+      brace-expansion: 2.1.8
 
   minimist@1.2.8: {}
 
@@ -4514,7 +4514,7 @@ snapshots:
 
   prelude-ls@1.2.1: {}
 
-  prettier@3.9.10: {}
+  prettier@3.10.0: {}
 
   pretty-ms@9.3.1:
     dependencies:
