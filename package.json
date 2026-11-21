@@ -104,7 +104,7 @@
     "cross-env": "^10.1.0",
     "dotenv": "^17.4.2",
     "eslint": "^10.15.0",
-    "fallow": "3.43.1",
+    "fallow": "3.44.0",
     "mocha": "^11.8.0",
     "nock": "^14.0.17",
     "prettier": "^3.10.1",
@@ -112,7 +112,7 @@
     "tsx": "^4.23.15",
     "typedoc": "^0.28.20",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.72.2"
+    "typescript-eslint": "^8.73.0"
   },
   "dependencies": {
     "idna-uts46-hx": "^6.2.4",
